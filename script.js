@@ -1,86 +1,78 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const menuBtn = document.getElementById("menu-btn");
-    const sidebar = document.getElementById("sidebar");
-    const themeToggle = document.getElementById("theme-toggle");
 
-    // Mở/đóng menu bằng cùng một nút
-    menuBtn.addEventListener("click", function() {
-        sidebar.classList.toggle("active");
-    });
+        
+        const sections = document.querySelectorAll("section[id]");
 
-    const editor = document.getElementById("editor");
-    const buttons = document.querySelectorAll(".toolbar button");
-    const markdownOutput = document.getElementById("markdown-output");
-    const copyBtn = document.getElementById("copyBtn");
-    const downloadBtn = document.getElementById("downloadBtn");
+        // Add an event listener listening for scroll
+        window.addEventListener("scroll", navHighlighter);
 
-    // Chuyển đổi nội dung HTML sang Markdown
-    function convertToMarkdown() {
-        let html = editor.innerHTML;
+        function navHighlighter() {
 
-        html = html.replace(/<h1>(.*?)<\/h1>/g, "# $1\n");
-        html = html.replace(/<h2>(.*?)<\/h2>/g, "## $1\n");
-        html = html.replace(/<h3>(.*?)<\/h3>/g, "### $1\n");
-        html = html.replace(/<b>(.*?)<\/b>/g, "**$1**");
-        html = html.replace(/<i>(.*?)<\/i>/g, "_$1_");
-        html = html.replace(/<a href="(.*?)">(.*?)<\/a>/g, "[$2]($1)");
+            // Get current scroll position
+            let scrollY = window.pageYOffset;
 
-        html = html.replace(/<ul>(.*?)<\/ul>/gs, match =>
-            match.replace(/<li>(.*?)<\/li>/g, "- $1\n")
-        );
-        html = html.replace(/<ol>(.*?)<\/ol>/gs, match =>
-            match.replace(/<li>(.*?)<\/li>/g, (item, content, index) => `${index + 1}. ${content}\n`)
-        );
+            // Now we loop through sections to get height, top and ID values for each
+            sections.forEach(current => {
+                const sectionHeight = current.offsetHeight;
+                const sectionTop = current.offsetTop - 50;
+                sectionId = current.getAttribute("id");
 
-        markdownOutput.value = html.trim();
-    }
+                /*
+                - If our current scroll position enters the space where current section on screen is, add .active class to corresponding navigation link, else remove it
+                - To know which link needs an active class, we use sectionId variable we are getting while looping through sections as an selector
+                */
+                if (
+                    scrollY > sectionTop &&
+                    scrollY <= sectionTop + sectionHeight
+                ) {
+                    document.querySelector(".nav__menu a[href*=" + sectionId + "]").classList.add("active-link");
+                } else {
+                    document.querySelector(".nav__menu a[href*=" + sectionId + "]").classList.remove("active-link");
+                }
+            });
+        }
 
-    // Xử lý khi nhấn nút công cụ
-    buttons.forEach(button => {
-        button.addEventListener("click", function () {
-            const command = this.getAttribute("data-command");
-            const value = this.getAttribute("data-value");
 
-            editor.focus(); // Giữ focus
 
-            if (command === "formatBlock") {
-                document.execCommand("formatBlock", false, value);
-            } else if (command === "createLink") {
-                let url = prompt("Nhập URL:");
-                if (url) document.execCommand("createLink", false, url);
+
+        // theme
+        const body = document.querySelector("body"),
+            modeToggle = document.querySelector(".dark-light");
+
+
+
+        // js code to toggle dark and light mode
+        modeToggle.addEventListener("click", () => {
+            modeToggle.classList.toggle("active");
+            body.classList.toggle("dark");
+
+            // js code to keep user selected mode even page refresh or file reopen
+            if (!body.classList.contains("dark")) {
+                localStorage.setItem("mode", "light-mode");
             } else {
-                document.execCommand(command, false, null);
+                localStorage.setItem("mode", "dark-mode");
             }
-
-            convertToMarkdown();
         });
-    });
 
-    // Sao chép Markdown
-    copyBtn.addEventListener("click", () => {
-        markdownOutput.select();
-        document.execCommand("copy");
-        alert("✅ Markdown đã được sao chép!");
-    });
+        //
 
-    // Tải xuống Markdown
-    downloadBtn.addEventListener("click", () => {
-        const blob = new Blob([markdownOutput.value], { type: "text/markdown" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = "document.md";
-        a.click();
-    });
-});
 
-// Cập nhật Markdown khi nhập nội dung
-    editor.addEventListener("input", convertToMarkdown);
-    
-// Hiển thị section và đóng menu
-function showSection(id) {
-    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
 
-    // Đóng menu sau khi chọn
-    document.getElementById("sidebar").classList.remove("active");
-}
+
+
+
+        // animation
+        const sr = ScrollReveal({
+            origin: 'top',
+            distance: '60px',
+            duration: 2500,
+            delay: 200,
+            reset: true,
+        })
+        sr.reveal(`.profile__border, .profile__name`)
+        sr.reveal(`
+          .profile__social,
+          .profile_profession, 
+          .profile__info-group,
+          .profile__buttons,
+          .projects__card,
+          .skills__area`, { delay: 300, origin: 'bottom' })
