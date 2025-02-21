@@ -1,6 +1,4 @@
-
-        
-        const sections = document.querySelectorAll("section[id]");
+const sections = document.querySelectorAll("section[id]");
 
         // Add an event listener listening for scroll
         window.addEventListener("scroll", navHighlighter);
