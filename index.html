@@ -444,13 +444,14 @@ Chuyển đổi thiết kế web của bạn bằng hoạt hình 3D quyến rũ 
 
                 <div class="contact__box_area">
                     <div class="contact__box">
-                        <form>
-                            <input name="name" type="text" placeholder="Name">
-                            <input name="email" type="email" placeholder="Email">
-                            <textarea name="text" rows="6" placeholder="Message"></textarea>
-                            <a href="https://formsubmit.co/phung.dz.moder@gmail.com" class="see__more">Send me
-                                <i class="fi fi-br-arrow-small-right arrow"></i>
-                            </a>
+                        <form action="https://formsubmit.co/phung.dz.moder@gmail.com" method="POST">
+    <input name="name" type="text" placeholder="Name" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <textarea name="message" rows="6" placeholder="Message" required></textarea>
+    
+    <button type="submit" class="see__more">
+        Send me <i class="fi fi-br-arrow-small-right arrow"></i>
+    </button>
                         </form>
                     </div>
                 </div>
