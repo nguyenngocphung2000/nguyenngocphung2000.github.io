@@ -1,81 +1,503 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Web</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Tổng hợp các liên kết MXH của Nguyễn Ngọc Phụng. Bạn có thể tìm thấy mọi thông tin liên hệ khi truy cập vào">
+    <meta name="keywords" content="website">
+    <meta property="og:url" content="https://fb.com/yufeng2k" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tổng hợp các liên kết MXH của Nguyễn Ngọc Phụng. Bạn có thể tìm thấy mọi thông tin liên hệ khi truy cập vào" />
+    <meta property="og:description" content="website" />
+    <meta property="og:image" content="https://i.imgur.com/9KL7Ugv.jpg" />
+    <title>Nguyễn Ngọc Phụng</title>
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+
 </head>
+
+
 <body>
 
-    <!-- Thanh Header -->
-    <header id="header">
-        <button id="menu-btn">☰</button>
+    <header>
+        <div class="header-area pt-3 pb-3">
+            <div class="container">
+                <div class="header">
+                    <a href="https://fb.com/yufeng2k/" class="h__logo">Nguyễn Ngọc Phụng</a>
+
+                    <div class="dark-light">
+                        <i class="fi fi-br-moon moon"></i>
+                        <i class="fi fi-br-sun sun"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- Menu Trượt -->
-    <nav id="sidebar">
-        <ul>
-                        <li><a href="#" onclick="showSection('home')">Trang chủ</a></li>
-            <li><a href="#" onclick="showSection('TextToHtml')">Text to HTML</a></li>
-            <li><a href="#" onclick="showSection('services')">Dịch vụ</a></li>
-            <li><a href="#" onclick="showSection('note1')">Capcut pro on Pc</a></li>
-        </ul>
-    </nav>
-
-    <!-- Nội dung các Section -->
     <main>
-        <section id="home" class="section active">
-            <h1>Trang Chủ</h1>
-            <p>Chào mừng bạn đến với trang web của Phụng, các thông tin được thu thập từ nhiều nguồn, nhưng yên tâm tôi lấy từ nguồn nào thì sẽ ghi rõ.</p>
-        </section>
+        <section class="profile" id="home">
+            <div class="container">
+                <div class="profile__area grid">
 
-        <section id="TextToHtml" class="section">
-            <div class="editor-container">
-            <div class="toolbar">
-                <button data-command="bold"><b>B</b></button>
-                <button data-command="italic"><i>I</i></button>
-                <button data-command="formatBlock" data-value="<h1>">H1</button>
-                <button data-command="formatBlock" data-value="<h2>">H2</button>
-                <button data-command="formatBlock" data-value="<h3>">H3</button>
-                <button data-command="insertUnorderedList">•</button>
-                <button data-command="insertOrderedList">1.</button>
-                <button data-command="createLink">🔗</button>
+                    <div class="profile__data">
+                        <div class="profile__border">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500"
+                                style="enable-background:new 0 0 500 500;" xml:space="preserve">
+
+                                <g>
+                                    <path class="st0" style=" fill: none;
+                                    stroke: var(--ac);
+                                    stroke-width: 10;
+                                    stroke-linecap: round;
+                                    stroke-linejoin: round;
+                                    stroke-dasharray: 188.5031, 188.5031;" d="M471.5,157.6c51.1,122.3-6.7,262.9-129,313.9c-298.7,111-473.7-308.8-184.9-443
+	                             	C279.9-22.5,420.4,35.2,471.5,157.6L471.5,157.6z" />
+                                </g>
+                            </svg>
+                            <div class="profile__perfil">
+                                <iframe src="https://drive.google.com/file/d/1WLZZ4EM1mBPdVq-icfTI8I21D3RiNdvJ/preview" width="500" height="100" ></iframe>
+                            </div>
+
+                        </div>
+
+                        <h2 class="profile__name">Nguyễn Ngọc Phụng</h2>
+                        <h3 class="profile_profession">📩 TIME WORK: 5:00 - 22:00 📩</h3>
+
+                        <ul class="profile__social">
+                            <a href="https://t.me/nothing3272" class="profile__social_link">
+                                <i class="fi fi-brands-telegram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/Yufeng2k" class="profile__social_link">
+                                <i class="fi fi-brands-facebook"></i>
+                            </a>
+                            <a href="https://github.com/nguyenngocphung2000" class="profile__social_link">
+                                <i class="fi fi-brands-github"></i>
+                            </a>
+                        </ul>
+
+                    </div>
+
+                    <div class="profile__info grid">
+                        <div class="profile__info-group">
+                            <h3 class="profile__info_number">Police</h3>
+                            <p class="profile__info-description">
+                              Job
+                            </p>
+                        </div>
+                        <div class="profile__info-group">
+                            <h3 class="profile__info_number">2000</h3>
+                            <p class="profile__info-description">
+                                Year of Birth
+                            </p>
+                        </div>
+                        <div class="profile__info-group">
+                            <h3 class="profile__info_number">Cà Mau</h3>
+                            <p class="profile__info-description">
+                                Location
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="profile__buttons">
+                        <a download="" href="zalo.me/84948668664" class="button">
+                            Contact Me<i class="fi fi-sr-download"></i>
+                        </a>
+                        <div class="profile__buttons-small">
+                            <a href="https://chat.zalo.me/?phone=0948668664"
+                                target="_blank" class="button button__small button__gray">
+                                <i class="fi fi-brands-whatsapp"></i>
+                            </a>
+                            <a href="http://m.me/Yufeng2k?hash=AbZXhO1sl28S6a0F&source_id=6946816" target="_blank"
+                                class="button button__small button__gray">
+                                <i class="fi fi-brands-facebook-messenger"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div id="editor" contenteditable="true"></div>
-        </div>
+        </section>
 
-        <!-- Hộp hiển thị Markdown -->
-        <div class="markdown-container">
-            <div class="markdown-toolbar">
-                <button id="copyBtn">📋</button>
-                <button id="downloadBtn">⬇️</button>
+        <section id="project">
+            <div class="container">
+
+                <div class="project__content">
+                    <h2 class="project__title">My Project</h2>
+                </div>
+
+                <div class="projects__content grid">
+
+                    <article class="projects__card">
+                      <iframe class="projects__img" src="https://drive.google.com/file/d/1iGy9Pm1VsQIzoia12PX8eNvXtr_r36jW/preview" allowfullscreen></iframe>
+                            
+                        <div class="projects__modal">
+                            <div>
+                                <span class="projects__subtitle">Bot quản lý tài chính từ telegram</span>
+                                <h3 class="projects__title">Telegram, Google sheet</h3>
+                                <a href="https://github.com/nguyenngocphung2000/BOTTelegram-QLCT" class="projects__button button button_small">
+                                    <i class="fi fi-br-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="projects__card">
+                        <img src="https://cdn.dribbble.com/users/4502458/screenshots/17778694/media/c0e06aabf0e5ed8b361b8d90a0fe7cc9.png"
+                            class="projects__img">
+                        <div class="projects__modal">
+                            <div>
+                                <span class="projects__subtitle">web</span>
+                                <h3 class="projects__title">profolio</h3>
+                                <a href="#" class="projects__button button button_small">
+                                    <i class="fi fi-br-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
             </div>
-            <textarea id="markdown-output" readonly></textarea>
-        </div>
         </section>
 
-        <section id="services" class="section">
-            <h1>Dịch Vụ</h1>
-            <p>Danh sách dịch vụ của chúng tôi.</p>
+        <section id="skills">
+            <div class="container">
+
+                <div class="skills__content">
+                    <h2 class="skills__title">My Skills</h2>
+                </div>
+
+                <div class="skills__content grid">
+                    <div class="skills__area">
+                        <h3 class="skills_title">Frontend Developer</h3>
+
+                        <div class="skills__box">
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">HTML</h3>
+                                        <span class="skills__level">Advanced</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">CSS</h3>
+                                        <span class="skills__level">Advanced</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">JavaScript</h3>
+                                        <span class="skills__level">Intermediate</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">React</h3>
+                                        <span class="skills__level">Advanced</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Bootstrap</h3>
+                                        <span class="skills__level">Intermediate</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Git</h3>
+                                        <span class="skills__level">Advanced</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skills__area">
+                        <h3 class="skills_title">Backend Developer</h3>
+
+                        <div class="skills__box">
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">PHP</h3>
+                                        <span class="skills__level">Intermediate</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">MySQL</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Firebase</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Python</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Node Js
+                                        </h3>
+                                        <span class="skills__level">Basic</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Mango</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skills__area">
+                        <h3 class="skills_title">Animation</h3>
+
+                        <div class="skills__box">
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Premiere Pro</h3>
+                                        <span class="skills__level">Intermediate</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">After Effects</h3>
+                                        <span class="skills__level">Intermediate</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Animate CC</h3>
+                                        <span class="skills__level">Intermediate</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Blender</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Unreal Engine</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Unity</h3>
+                                        <span class="skills__level">Basic</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skills__area">
+                        <h3 class="skills_title">Design</h3>
+
+                        <div class="skills__box">
+                            <div class="skills__group">
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Illustrator</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">Photoshop</h3>
+                                        <span class="skills__level">Advance</span>
+                                    </div>
+                                </div>
+                                <div class="skills__data">
+                                    <i class="fi fi-br-circle-small"></i>
+                                    <div>
+                                        <h3 class="skills__name">XD</h3>
+                                        <span class="skills__level">Basic</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </section>
-        
-       <section id="note1" class="section">
-        <div class="box">
-    <h2>Capcut Pro - miễn phí áp dụng trên PC</h2>
-    <p><strong>Đường dẫn:</strong> <a href="https://voz.ee/s/voavlWuHE" target="_blank">https://voz.ee/s/voavlWuHE</a> 📋</p>
-    <div class="box-content">
-        <p>Chắc hẳn nhiều ae đã dùng, ae nào biết rồi vui lòng không toxic. Để hạn chế việc ae phải nhờ TK quét gấp. Chỉ áp dụng trên PC.</p>
-        <ol>
-            <li>Trên PC, log acc dùng mọi thứ pro như bình thường (acc free), không xuất video ngay.</li>
-            <li>Cài Urban Proxy link: <a href="https://www.urban-vpn.com/thank-you/" target="_blank">https://www.urban-vpn.com/thank-you/</a></li>
-        </ol>
-    </div>
-</div>
-    </section>
-    
+
+        <section id="services">
+            <div class="container">
+
+                <div class="services__content">
+                    <h2 class="services__title">My Services</h2>
+                </div>
+
+                <div class="services__box_area grid">
+                    <div class="service__box">
+                        <span class="icon"><img src="assets/01.png" alt=""></span>
+                        <h5>Web Design
+                        </h5>
+                        <p>
+                            Tạo một thiết kế web tuyệt đẹp với giao diện người dùng trực quan, bố cục đáp ứng và hình ảnh hấp dẫn. Tối ưu hóa hiệu suất, đảm bảo khả năng truy cập và thúc đẩy sự tương tác thông qua bố cục sạch sẽ và tích hợp phương tiện truyền thông xã hội. Đạt được sự tăng trưởng với thiết kế có thể mở rộng, các kỹ thuật thân thiện với SEO và các biện pháp bảo mật mạnh mẽ. Gây ấn tượng và thành công với thiết kế web theo kết quả của chúng tôi.
+
+</p>
+
+                    </div>
+                    <div class="service__box">
+                        <span class="icon"><img src="assets/02.png" alt=""></span>
+                        <h5>3D Animation
+                        </h5>
+                        <p>
+
+Trải nghiệm sức mạnh của hoạt hình 3D trong thiết kế web. Nhóm của chúng tôi kết hợp công nghệ tiên tiến với cách kể chuyện sáng tạo để đưa trang web của bạn vào cuộc sống. Từ đồ họa 3D tương tác đến hoạt ảnh linh hoạt, chúng tôi tạo ra trải nghiệm trực quan hấp dẫn thu hút và làm hài lòng khách truy cập của bạn. Đắm chìm khán giả của bạn trong một thế giới chuyển động năng động và chuyển tiếp liền mạch, nâng thiết kế web của bạn lên một tầm cao mới. Mở khóa tiềm năng của hoạt hình 3D và làm cho trang web của bạn thực sự khó quên.
+
+</p>
+
+                    </div>
+
+
+                    <div class="service__box">
+                        <span class="icon"><img src="assets/03.png"></span>
+                        <h5>Motion Graphics</h5>
+                     <p>
+
+Chuyển đổi thiết kế web của bạn bằng đồ họa chuyển động đầy mê hoặc. Nhóm của chúng tôi chuyên tạo ra các hình ảnh động tuyệt đẹp để thêm nét động và quyến rũ cho trang web của bạn. Từ các hiệu ứng chuyển động tinh tế đến các hiệu ứng chuyển tiếp bắt mắt, chúng tôi tận dụng sức mạnh của đồ họa chuyển động để thu hút khán giả và truyền tải thông điệp thương hiệu của bạn theo một cách độc đáo và đáng nhớ. Nâng cao cách kể chuyện trực quan của trang web của bạn và tạo ra trải nghiệm nhập vai để lại ấn tượng lâu dài. Hãy để chuyên môn của chúng tôi về đồ họa chuyển động làm cho thiết kế web của bạn trở nên sống động.
+
+</p>
+
+                    </div>
+                    <div class="service__box">
+                        <span class="icon"><img src="assets/04.png"></span>
+                        <h5>Graphis Design
+                        </h5>
+                    <p>
+
+Chuyển đổi thiết kế web của bạn bằng hoạt hình 3D quyến rũ và đồ họa chuyển động đầy mê hoặc. Đội ngũ chuyên gia của chúng tôi kết hợp công nghệ tiên tiến và cách kể chuyện sáng tạo để đưa trang web của bạn vào cuộc sống. Nâng tầm thương hiệu của bạn với hình ảnh tuyệt đẹp và hình ảnh động hấp dẫn để lại ấn tượng lâu dài.
+
+</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+
+                <div class="contact__content">
+                    <h2 class="contact__title">Contact Me</h2>
+                </div>
+
+                <div class="contact__box_area">
+                    <div class="contact__box">
+                        <form>
+                            <input name="name" type="text" placeholder="Name">
+                            <input name="email" type="email" placeholder="Email">
+                            <textarea name="text" rows="6" placeholder="Message"></textarea>
+                            <a href="https://formsubmit.co/phung.dz.moder@gmail.com" class="see__more">Send me
+                                <i class="fi fi-br-arrow-small-right arrow"></i>
+                            </a>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
-    <script src="script.js"></script>
+    <section class="navbar">
+        <div class="nav__menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="#home" class="nav__link active-link">
+                        <i class="fi fi-sr-home"></i>
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#project" class="nav__link">
+                        <i class="fi fi-sr-star"></i>
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#skills" class="nav__link">
+                        <i class="fi fi-sr-book-open-cover"></i>
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#services" class="nav__link">
+                        <i class="fi fi-sr-briefcase"></i>
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#contact" class="nav__link">
+                        <i class="fi fi-sr-comment-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="footer container">
+        <span class="footer__copy">
+            &#169; Nguyễn Ngọc Phụng
+        </span>
+    </footer>
+
+
 </body>
+
 </html>
