@@ -1,584 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Profile của Nguyễn Ngọc Phụng.">
-    <meta name="keywords" content="ngocphung.pages.dev">
-    <meta property="og:url" content="https://ngocphung.pages.dev" />
-    <meta property="og:type" content="ngocphung.pages.dev" />
-    <meta property="og:title" content="Profile của Nguyễn Ngọc Phụng." />
-    <meta property="og:description" content="ngocphung.pages.dev" />
-    <meta property="og:image" content="B0BD4727-F7C6-40AE-A26A-4B9D59D3C20A.jpeg" />
-    <title>Phụng</title>
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css">
+    <title>Húp Vội - Công Cụ Tính Toán</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-
 </head>
+<body class="text-gray-800">
 
-	
-<body>
+    <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4 sticky top-0 bg-white/60 backdrop-blur-md z-50">
+        <div class="flex items-center space-x-2 mb-4 md:mb-0">
+            <div class="logo-box">Húp Vội</div>
+            <span class="font-bold text-gray-700 uppercase text-xs tracking-widest">Sale Hunter</span>
+        </div>
+        
+        <nav class="flex items-center space-x-1 md:space-x-6 text-sm font-medium">
+            <button onclick="switchTab('trang-chu', this)" class="nav-item">🏠 Trang chủ</button>
+            <button onclick="switchTab('chuyen-doi', this)" class="nav-item">🔗 Chuyển đổi link</button>
+            <button onclick="switchTab('phan-tram', this)" class="nav-item tab-active">% Phần trăm</button>
+        </nav>
 
-    <header>
-        <div class="header-area pt-3 pb-3">
-            <div class="container">
-                <div class="header">
-                    <a href="https://ngocphung.pages.dev" class="h__logo"><strong>Hi! I'm Phụng</strong></a>
+        <button class="btn-join">Tham gia ngay ↗</button>
+    </header>
 
-                    <div class="dark-light">
-                        <i class="fi fi-br-moon moon"></i>
-                        <i class="fi fi-br-sun sun"></i>
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        
+        <div class="text-center mb-12">
+            <span class="badge">Công cụ tính toán</span>
+            <h1 class="text-4xl md:text-5xl font-bold mt-4 mb-2">Tính <span class="text-red-500">Phần Trăm</span> 🧮</h1>
+            <p class="text-gray-500 italic">Tính nhanh % giảm giá, tiết kiệm bao nhiêu...</p>
+        </div>
+
+        <div id="tab-phan-tram" class="tab-content space-y-6">
+            <div class="glass-card p-8 rounded-[2rem]">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="icon-sq">%</span>
+                    <h3 class="font-bold text-lg">X phần trăm của Y là bao nhiêu?</h3>
+                </div>
+                <div class="grid-inputs">
+                    <div>
+                        <label class="label-min">Phần trăm</label>
+                        <input type="number" id="percent-x" placeholder="30" class="input-field">
                     </div>
-
+                    <span class="mt-6 font-bold text-gray-400 text-center">% của</span>
+                    <div>
+                        <label class="label-min">Giá trị</label>
+                        <input type="number" id="value-y" placeholder="250000" class="input-field">
+                    </div>
+                    <span class="mt-6 font-bold text-gray-400 text-center">=</span>
+                    <div>
+                        <label class="label-min">Kết quả</label>
+                        <input readonly id="result-1" placeholder="?" class="input-field result-field">
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
 
-    <main>
-        <section class="profile" id="home">
-            <div class="container">
-                <div class="profile__area grid">
-
-                    <div class="profile__data">
-                        <div class="profile__border">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500"
-                                style="enable-background:new 0 0 500 500;" xml:space="preserve">
-
-                                <g>
-                                    <path class="st0" style=" fill: none;
-                                    stroke: var(--ac);
-                                    stroke-width: 10;
-                                    stroke-linecap: round;
-                                    stroke-linejoin: round;
-                                    stroke-dasharray: 188.5031, 188.5031;" d="M471.5,157.6c51.1,122.3-6.7,262.9-129,313.9c-298.7,111-473.7-308.8-184.9-443
-	                             	C279.9-22.5,420.4,35.2,471.5,157.6L471.5,157.6z" />
-                                </g>
-                            </svg>
-                            <div class="profile__perfil">
-                                <img src="IMG_6654.jpeg">
-                            </div>
-
-                        </div>
-
-                        <h2 class="profile__name">Nguyễn Ngọc Phụng</h2>
-                        <h3 class="profile_profession">📩 TIME WORK: 5:00 - 22:00 📩</h3>
-
-                        <ul class="profile__social">
-                            <a href="https://t.me/nothing3272" class="profile__social_link">
-                                <i class="fi fi-brands-telegram"></i>
-                            </a>
-                            <a href="https://www.facebook.com/Yufeng2k" class="profile__social_link">
-                                <i class="fi fi-brands-facebook"></i>
-                            </a>
-                            <a href="https://github.com/nguyenngocphung2000" class="profile__social_link">
-                                <i class="fi fi-brands-github"></i>
-                            </a>
-                        </ul>
-
-                    </div>
-
-                    <div class="profile__info grid">
-                        <div class="profile__info-group">
-                            <h3 class="profile__info_number">Police</h3>
-                            <p class="profile__info-description">
-                              Job
-                            </p>
-                        </div>
-                        <div class="profile__info-group">
-                            <h3 class="profile__info_number">2000</h3>
-                            <p class="profile__info-description">
-                                Year of Birth
-                            </p>
-                        </div>
-                        <div class="profile__info-group">
-                            <h3 class="profile__info_number">Cà Mau</h3>
-                            <p class="profile__info-description">
-                                Location
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="profile__buttons">
-                        <a download="" href="tel:+84948668664" class="button">
-                            Contact Me
-                        </a>
-                        <div class="profile__buttons-small">
-                            <a href="tel:+84948668664"
-                                target="_blank" class="button button__small button__gray">
-                                <i class="fi fi-brands-whatsapp"></i>
-                            </a>
-                            <a href="sms:+84948668664" target="_blank"
-                                class="button button__small button__gray">
-                                <i class="fi fi-brands-facebook-messenger"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="project">
-            <div class="container">
-
-                <div class="project__content">
-                    <h2 class="project__title">My Project</h2>
-                </div>
-
-                <div class="projects__content grid">
-
-                    <article class="projects__card">
-                      <img  src="A87E2C5E-8C1A-4DBB-BF7B-AA6AD2D56AA8.jpeg"
-                            class="projects__img">
-                        <div class="projects__modal">
-                            <div>
-                                <span class="projects__subtitle">Bot quản lý tài chính từ telegram</span>
-                                <h3 class="projects__title">Telegram, Google sheet</h3>
-                                <a href="https://github.com/nguyenngocphung2000/BOTTelegram-QLCT" class="projects__button button button_small">
-                                    <i class="fi fi-br-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                    
-                    <article class="projects__card">
-                        <img src="E99E8C93-E08A-4DD4-A81E-5E51C6662C05.jpeg"
-                            class="projects__img">
-                        <div class="projects__modal">
-                            <div>
-                                <span class="projects__subtitle">Chặn quảng cáo trên IOS và những nơi khác</span>
-                                <h3 class="projects__title">NextDNS, IOS</h3>
-                                <a href="https://github.com/nguyenngocphung2000/NextDnsForIphone" class="projects__button button button_small">
-                                    <i class="fi fi-br-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section id="skills">
-            <div class="container">
-
-                <div class="skills__content">
-                    <h2 class="skills__title">My Skills</h2>
-                </div>
-
-                <div class="skills__content grid">
-                    <div class="skills__area">
-                        <h3 class="skills_title">Frontend Developer</h3>
-
-                        <div class="skills__box">
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">HTML</h3>
-                                        <span class="skills__level">Advanced</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">CSS</h3>
-                                        <span class="skills__level">Advanced</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">JavaScript</h3>
-                                        <span class="skills__level">Intermediate</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">React</h3>
-                                        <span class="skills__level">Advanced</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Bootstrap</h3>
-                                        <span class="skills__level">Intermediate</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Git</h3>
-                                        <span class="skills__level">Advanced</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skills__area">
-                        <h3 class="skills_title">Backend Developer</h3>
-
-                        <div class="skills__box">
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">PHP</h3>
-                                        <span class="skills__level">Intermediate</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">MySQL</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Firebase</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Python</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Node Js
-                                        </h3>
-                                        <span class="skills__level">Basic</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Mango</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skills__area">
-                        <h3 class="skills_title">Animation</h3>
-
-                        <div class="skills__box">
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Premiere Pro</h3>
-                                        <span class="skills__level">Intermediate</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">After Effects</h3>
-                                        <span class="skills__level">Intermediate</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Animate CC</h3>
-                                        <span class="skills__level">Intermediate</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Blender</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Unreal Engine</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Unity</h3>
-                                        <span class="skills__level">Basic</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skills__area">
-                        <h3 class="skills_title">Design</h3>
-
-                        <div class="skills__box">
-                            <div class="skills__group">
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Illustrator</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">Photoshop</h3>
-                                        <span class="skills__level">Advance</span>
-                                    </div>
-                                </div>
-                                <div class="skills__data">
-                                    <i class="fi fi-br-circle-small"></i>
-                                    <div>
-                                        <h3 class="skills__name">XD</h3>
-                                        <span class="skills__level">Basic</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section id="services">
-            <div class="container">
-
-                <div class="services__content">
-                    <h2 class="services__title">My Services</h2>
-                </div>
-
-                <div class="services__box_area grid">
-                    <div class="service__box">
-                        <span class="icon"><img src="01.png" alt=""></span>
-                        <h5>Web Design
-                        </h5>
-                       <p style="text-align: justify;">
-                            Tạo một thiết kế web tuyệt đẹp với giao diện người dùng trực quan, bố cục đáp ứng và hình ảnh hấp dẫn. Tối ưu hóa hiệu suất, đảm bảo khả năng truy cập và thúc đẩy sự tương tác thông qua bố cục sạch sẽ và tích hợp phương tiện truyền thông xã hội. Đạt được sự tăng trưởng với thiết kế có thể mở rộng, các kỹ thuật thân thiện với SEO và các biện pháp bảo mật mạnh mẽ. Gây ấn tượng và thành công với thiết kế web theo kết quả của chúng tôi.
-
-</p>
-
-                    </div>
-                    <div class="service__box">
-                        <span class="icon"><img src="02.png" alt=""></span>
-                        <h5>3D Animation
-                        </h5>
-                      <p style="text-align: justify;">
-
-Trải nghiệm sức mạnh của hoạt hình 3D trong thiết kế web. Nhóm của chúng tôi kết hợp công nghệ tiên tiến với cách kể chuyện sáng tạo để đưa trang web của bạn vào cuộc sống. Từ đồ họa 3D tương tác đến hoạt ảnh linh hoạt, chúng tôi tạo ra trải nghiệm trực quan hấp dẫn thu hút và làm hài lòng khách truy cập của bạn. Đắm chìm khán giả của bạn trong một thế giới chuyển động năng động và chuyển tiếp liền mạch, nâng thiết kế web của bạn lên một tầm cao mới. Mở khóa tiềm năng của hoạt hình 3D và làm cho trang web của bạn thực sự khó quên.
-
-</p>
-
-                    </div>
-
-
-                    <div class="service__box">
-                        <span class="icon"><img src="03.png"></span>
-                        <h5>Motion Graphics</h5>
-                    <p style="text-align: justify;">
-
-Chuyển đổi thiết kế web của bạn bằng đồ họa chuyển động đầy mê hoặc. Nhóm của chúng tôi chuyên tạo ra các hình ảnh động tuyệt đẹp để thêm nét động và quyến rũ cho trang web của bạn. Từ các hiệu ứng chuyển động tinh tế đến các hiệu ứng chuyển tiếp bắt mắt, chúng tôi tận dụng sức mạnh của đồ họa chuyển động để thu hút khán giả và truyền tải thông điệp thương hiệu của bạn theo một cách độc đáo và đáng nhớ. Nâng cao cách kể chuyện trực quan của trang web của bạn và tạo ra trải nghiệm nhập vai để lại ấn tượng lâu dài. Hãy để chuyên môn của chúng tôi về đồ họa chuyển động làm cho thiết kế web của bạn trở nên sống động.
-
-</p>
-
-                    </div>
-                    <div class="service__box">
-                        <span class="icon"><img src="04.png"></span>
-                        <h5>Graphis Design
-                        </h5>
-                    <p style="text-align: justify;">
-
-Chuyển đổi thiết kế web của bạn bằng hoạt hình 3D quyến rũ và đồ họa chuyển động đầy mê hoặc. Đội ngũ chuyên gia của chúng tôi kết hợp công nghệ tiên tiến và cách kể chuyện sáng tạo để đưa trang web của bạn vào cuộc sống. Nâng tầm thương hiệu của bạn với hình ảnh tuyệt đẹp và hình ảnh động hấp dẫn để lại ấn tượng lâu dài.
-
-</p>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section id="contact">
-            <div class="container">
-
-                <div class="contact__content">
-                    <h2 class="contact__title">Contact Me</h2>
-                </div>
-
-                <div class="contact__box_area">
-                    <div class="contact__box">
-                        <form action="https://formsubmit.co/el/yuyuba" method="POST">
-    <input name="name" type="text" placeholder="Name" required>
-    <input name="email" type="email" placeholder="Email" required>
-    <textarea name="message" rows="6" placeholder="Message" required></textarea>
-    
-    <button type="submit" class="see__more">
-        Send me <i class="fi fi-br-arrow-small-right arrow"></i>
-    </button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+        <div id="tab-trang-chu" class="tab-content hidden py-20 text-center">
+            <h2 class="text-2xl font-bold">Chào mừng bạn đến với Húp Vội!</h2>
+        </div>
+        
+        <div id="tab-chuyen-doi" class="tab-content hidden py-20 text-center">
+            <h2 class="text-2xl font-bold">Tính năng Chuyển đổi link đang phát triển...</h2>
+        </div>
 
     </main>
 
-    <section class="navbar">
-        <div class="nav__menu">
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a href="#home" class="nav__link active-link">
-                        <i class="fi fi-sr-home"></i>
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#project" class="nav__link">
-                        <i class="fi fi-sr-star"></i>
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#skills" class="nav__link">
-                        <i class="fi fi-sr-book-open-cover"></i>
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#services" class="nav__link">
-                        <i class="fi fi-sr-briefcase"></i>
-                    </a>
-                </li>
-                <li class="nav__item">
-                    <a href="#contact" class="nav__link">
-                        <i class="fi fi-sr-comment-alt"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <footer class="footer container">
-        <span class="footer__copy">
-            &#169; Nguyễn Ngọc Phụng
-        </span>
-    </footer>
-    <script>
-        // Get all sections that have an ID defined
-        const sections = document.querySelectorAll("section[id]");
-
-        // Add an event listener listening for scroll
-        window.addEventListener("scroll", navHighlighter);
-
-        function navHighlighter() {
-
-            // Get current scroll position
-            let scrollY = window.pageYOffset;
-
-            // Now we loop through sections to get height, top and ID values for each
-            sections.forEach(current => {
-                const sectionHeight = current.offsetHeight;
-                const sectionTop = current.offsetTop - 50;
-                sectionId = current.getAttribute("id");
-
-                /*
-                - If our current scroll position enters the space where current section on screen is, add .active class to corresponding navigation link, else remove it
-                - To know which link needs an active class, we use sectionId variable we are getting while looping through sections as an selector
-                */
-                if (
-                    scrollY > sectionTop &&
-                    scrollY <= sectionTop + sectionHeight
-                ) {
-                    document.querySelector(".nav__menu a[href*=" + sectionId + "]").classList.add("active-link");
-                } else {
-                    document.querySelector(".nav__menu a[href*=" + sectionId + "]").classList.remove("active-link");
-                }
-            });
-        }
-
-
-
-
-        // theme
-        const body = document.querySelector("body"),
-            modeToggle = document.querySelector(".dark-light");
-
-
-
-        // js code to toggle dark and light mode
-        modeToggle.addEventListener("click", () => {
-            modeToggle.classList.toggle("active");
-            body.classList.toggle("dark");
-
-            // js code to keep user selected mode even page refresh or file reopen
-            if (!body.classList.contains("dark")) {
-                localStorage.setItem("mode", "light-mode");
-            } else {
-                localStorage.setItem("mode", "dark-mode");
-            }
-        });
-
-        //
-
-
-
-
-
-
-        // animation
-        const sr = ScrollReveal({
-            origin: 'top',
-            distance: '60px',
-            duration: 2500,
-            delay: 200,
-            reset: true,
-        })
-        sr.reveal(`.profile__border, .profile__name`)
-        sr.reveal(`
-          .profile__social,
-          .profile_profession, 
-          .profile__info-group,
-          .profile__buttons,
-          .projects__card,
-          .skills__area`, { delay: 300, origin: 'bottom' })
-
-    </script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
