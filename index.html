@@ -5,98 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cu Cộng</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 pb-20">
 
-    <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4 sticky top-0 bg-white/60 backdrop-blur-md z-50">
-        <div class="flex items-center space-x-2 mb-4 md:mb-0">
-            <div class="logo-box">Cu Cộng</div>
-            <span class="font-bold text-gray-700 uppercase text-xs tracking-widest">Not Nothing</span>
-        </div>
-        
-        <nav class="flex items-center space-x-1 md:space-x-6 text-sm font-medium">
-            <button onclick="switchTab('trang-chu', this)" class="nav-item">🏠 Trang chủ</button>
-            <button onclick="switchTab('tab-markdown', this)" class="nav-item">📃 Đọc Markdown</button>
-            <button onclick="switchTab('chuyen-doi', this)" class="nav-item">🔗 Chuyển đổi link</button>
-            <button onclick="switchTab('phan-tram', this)" class="nav-item tab-active">% Phần trăm</button>
-        </nav>
-
-        <button class="btn-join">Tham gia ngay ↗</button>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-4 py-12">
-        
-        <div class="text-center mb-12">
-            <span class="badge">Công cụ tính toán</span>
-            <h1 class="text-4xl md:text-5xl font-bold mt-4 mb-2">Tính <span class="text-red-500">Phần Trăm</span> 🧮</h1>
-            <p class="text-gray-500 italic">Tính nhanh % giảm giá, tiết kiệm bao nhiêu...</p>
-        </div>
-
-        <div id="tab-phan-tram" class="tab-content space-y-6">
-            <div class="glass-card p-8 rounded-[2rem]">
-                <div class="flex items-center space-x-3 mb-6">
-                    <span class="icon-sq">%</span>
-                    <h3 class="font-bold text-lg">X phần trăm của Y là bao nhiêu?</h3>
-                </div>
-                <div class="grid-inputs">
-                    <div>
-                        <label class="label-min">Phần trăm</label>
-                        <input type="number" id="percent-x" placeholder="30" class="input-field">
-                    </div>
-                    <span class="mt-6 font-bold text-gray-400 text-center">% của</span>
-                    <div>
-                        <label class="label-min">Giá trị</label>
-                        <input type="number" id="value-y" placeholder="250000" class="input-field">
-                    </div>
-                    <span class="mt-6 font-bold text-gray-400 text-center">=</span>
-                    <div>
-                        <label class="label-min">Kết quả</label>
-                        <input readonly id="result-1" placeholder="?" class="input-field result-field">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-trang-chu" class="tab-content hidden py-20 text-center">
-            <h2 class="text-2xl font-bold">Chào mừng bạn đến với Húp Vội!</h2>
-        </div>
-        
-        <div id="tab-chuyen-doi" class="tab-content hidden py-20 text-center">
-            <h2 class="text-2xl font-bold">Tính năng Chuyển đổi link đang phát triển...</h2>
-        </div>
-
-        <div id="tab-markdown" class="tab-content hidden space-y-6">
-    <div class="glass-card p-6 md:p-8 rounded-[2rem]">
-        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-            <div class="flex items-center space-x-3">
-                <span class="icon-sq">MD</span>
-                <h3 class="font-bold text-lg">Trình đọc & Thực thi Markdown</h3>
-            </div>
-            <label class="cursor-pointer bg-orange-100 text-orange-600 px-4 py-2 rounded-xl hover:bg-orange-200 transition text-sm font-semibold flex items-center justify-center">
-                <span>📁 Mở file .md</span>
-                <input type="file" id="md-file-input" accept=".md" class="hidden">
-            </label>
-        </div>
-        
-        <div class="space-y-6">
-            <div>
-                <label class="label-min">Trình soạn thảo</label>
-                <textarea id="md-input" class="input-field h-40 font-mono text-sm shadow-inner" placeholder="Nhập nội dung markdown hoặc chọn file..."></textarea>
+    <header class="sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-orange-100">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold">Cu Cộng</div>
+                <span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest hidden sm:block">No Nothing</span>
             </div>
             
-            <div>
-                <label class="label-min">Nội dung hiển thị</label>
-                <div id="md-render" class="preview-box min-h-[300px] bg-white rounded-2xl p-6 md:p-10 border border-orange-100 shadow-sm">
-                    </div>
-            </div>
-        </div>
-    </div>
-</div>
+            <nav id="desktop-nav" class="hidden md:flex items-center space-x-2 text-sm text-gray-600"></nav>
 
-        
-    </main>
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-orange-500 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-orange-50 absolute w-full shadow-lg">
+            <div id="mobile-nav" class="flex flex-col py-2"></div>
+        </div>
+    </header>
+
+    <main id="app-container" class="max-w-4xl mx-auto px-4 mt-8"></main>
 
     <script src="script.js"></script>
 </body>
