@@ -1,11 +1,12 @@
 // --- 3. Tool Markdown ---
 registerTool({
     id: 'tab-md',
-    name: 'Đọc Markdown(MD)',
+    name: 'Đọc Markdown',
     icon: '📝',
     html: `
         <div class="text-center mb-6">
-            <h2 class="text-3xl font-bold mt-2">Trình đọc <span class="text-orange-500">Markdown</span></h2>
+           <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Trình đọc</span>
+            <h2 class="text-3xl font-bold mt-2">Ngôn ngữ<span class="text-orange-500">Markdown</span></h2>
         </div>
         <div class="glass-card p-6 md:p-8 rounded-[2rem]">
             

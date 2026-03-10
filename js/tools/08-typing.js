@@ -122,7 +122,7 @@ registerTool({
                 </div>
             </div>
 
-            <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán văn bản Tiếng Việt dài vào đây. Hệ thống sẽ tự động chia nhỏ mỗi tiến trình ~50 từ để bạn dễ gõ..."></textarea>
+            <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán văn bản vào đây. Hệ thống sẽ tự động chia nhỏ mỗi tiến trình ~50 từ để bạn dễ gõ..."></textarea>
 
             <button id="tp-btn-start" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl transition shadow-lg text-lg flex justify-center items-center gap-2">
                 🚀 BẮT ĐẦU
@@ -150,7 +150,8 @@ registerTool({
 
                 <textarea id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                 
-                <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Chạm vào vùng chữ nếu chưa thấy bàn phím (trên điện thoại) *</div>
+                <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Múa phím thần sầu - Đánh thức bản năng
+ *</div>
             </div>
         </div>
 
