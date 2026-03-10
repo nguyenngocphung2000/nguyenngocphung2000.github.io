@@ -513,10 +513,10 @@ registerTool({
         }
     }
 });
-// --- 4. Tool Game Tuổi Thơ (Bản FULL Lõi - Chơi Thật 100%) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Đã fix lỗi màn hình trắng) ---
 registerTool({
     id: 'tab-game',
-    name: ' Chơi Game Java(.jar) ',
+    name: 'Game Tuổi Thơ',
     icon: '🕹️',
     html: `
         <div class="text-center mb-6">
@@ -526,7 +526,6 @@ registerTool({
         </div>
 
         <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
-            
             <div class="flex justify-center mb-6">
                 <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
                     <span>📁 Chọn file Game (.jar)</span>
@@ -537,7 +536,6 @@ registerTool({
             <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
                 <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative">
                     <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black"></iframe>
-                    
                     <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4">
                         <span class="text-4xl mb-2">👾</span>
                         <p class="text-gray-400 text-xs font-mono">CHƯA CÓ GAME</p>
@@ -572,13 +570,12 @@ registerTool({
             </div>
         </div>
     `,
-            logic: function() {
+    logic: function() {
         const fileInput = document.getElementById('jar-file');
         const iframe = document.getElementById('game-iframe');
         const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        // 1. PHÉP THUẬT ĐỌC FILE (BẢN CHUẨN XÁC 100% CHO LÕI JS2ME)
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -587,26 +584,19 @@ registerTool({
 
             const tryLoadGame = () => {
                 try {
-                    // Lấy tài liệu bên trong iframe
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    
-                    // Lõi JS2ME chuẩn luôn dùng thẻ <input type="file" id="file">
                     const innerInput = iframeDoc.getElementById('file');
                     
                     if (innerInput) {
-                        // Dùng DataTransfer để bê file từ ngoài nhét vào trong
                         const dt = new DataTransfer();
                         dt.items.add(file);
                         innerInput.files = dt.files;
                         
-                        // Kích hoạt Lõi chạy
                         innerInput.dispatchEvent(new Event('change', { bubbles: true }));
                         
-                        // Ẩn màn hình chờ, hiện Game
                         loadingScreen.classList.add('hidden');
                         iframe.classList.remove('hidden');
                         
-                        // Chỉnh CSS để Lõi hiển thị đẹp, không bị thanh cuộn
                         iframeDoc.body.style.margin = "0";
                         iframeDoc.body.style.overflow = "hidden";
                         iframe.focus();
@@ -614,7 +604,6 @@ registerTool({
                         throw new Error("Không tìm thấy input#file trong Lõi j2me/index.html");
                     }
                 } catch (err) {
-                    // Cải tiến lỗi: Thêm nút bấm trực tiếp để bạn test thử link
                     loadingScreen.innerHTML = `
                         <span class="text-3xl mb-2 block">⚠️</span>
                         <p class="text-orange-400 text-xs font-bold">Lỗi kết nối Lõi J2ME</p>
@@ -627,7 +616,6 @@ registerTool({
                 }
             };
 
-            // Canh me Lõi load xong mới bơm data
             if (iframe.contentWindow && iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
                 tryLoadGame();
             } else {
@@ -635,23 +623,21 @@ registerTool({
             }
         });
 
-        // 2. BỘ ÁNH XẠ PHÍM NOKIA SIÊU CHUẨN
         const triggerKey = (keyName, isDown) => {
             if (iframe && !iframe.classList.contains('hidden')) {
-                // Dịch tên phím ảo thành mã phím (keyCode) mà giả lập Java hiểu được
                 let keyCode = 0;
                 switch(keyName) {
-                    case 'SoftLeft': keyCode = 112; break; // F1 (Trái)
-                    case 'SoftRight': keyCode = 113; break; // F2 (Phải)
+                    case 'SoftLeft': keyCode = 112; break;
+                    case 'SoftRight': keyCode = 113; break;
                     case 'ArrowUp': keyCode = 38; break;
                     case 'ArrowDown': keyCode = 40; break;
                     case 'ArrowLeft': keyCode = 37; break;
                     case 'ArrowRight': keyCode = 39; break;
                     case 'Enter': keyCode = 13; break;
                     default: 
-                        if (!isNaN(keyName)) keyCode = keyName.charCodeAt(0); // Số 0-9
-                        else if (keyName === '*') keyCode = 106; // Numpad *
-                        else if (keyName === '#') keyCode = 111; // Numpad / (hoặc custom)
+                        if (!isNaN(keyName)) keyCode = keyName.charCodeAt(0);
+                        else if (keyName === '*') keyCode = 106;
+                        else if (keyName === '#') keyCode = 111;
                 }
 
                 if (keyCode !== 0) {
@@ -677,3 +663,4 @@ registerTool({
             btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
         });
     }
+});
