@@ -513,12 +513,6 @@ registerTool({
         }
     }
 });
-<<<<<<< main
-// --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Đã fix lỗi màn hình trắng) ---
-registerTool({
-    id: 'tab-game',
-    name: 'Chơi Game Java(.jar)',
-=======
 // --- 4. Tool Game Tuổi Thơ (Bản Kho Game Đám Mây Chuyên Nghiệp) ---
 registerTool({
     id: 'tab-game',
@@ -583,6 +577,9 @@ registerTool({
                     ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
                         <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 aspect-[5/3] text-lg flex flex-col items-center justify-center group" data-key="${num}">
                             <span>${num}</span>
+                            <span class="text-[8px] text-gray-400 group-active:text-orange-400 font-normal tracking-widest leading-none mt-0.5 h-2 block">
+                                ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
+                            </span>
                         </button>
                     `).join('')}
                 </div>
@@ -599,12 +596,10 @@ registerTool({
             const gameUrl = this.value;
             if (!gameUrl) return;
 
-            // Hiện loading
             iframe.classList.add('hidden');
             loadingScreen.classList.remove('hidden');
             loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-400 font-mono font-bold mt-2">ĐANG NẠP BĂNG GAME...</p>';
 
-            // Load iframe
             iframe.src = `./j2me/index.html?url=${encodeURIComponent(gameUrl)}&t=${Date.now()}`;
 
             iframe.onload = function() {
