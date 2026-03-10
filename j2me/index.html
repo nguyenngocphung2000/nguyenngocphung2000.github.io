@@ -94,44 +94,57 @@
 		</div>
 	</div>
 <style>
-    /* 1. Tàng hình toàn bộ chữ nghĩa, nút bấm, báo lỗi rác của Lõi */
+    /* Tàng hình mọi thứ của Lõi, trả lại màn hình đen */
     body { background: black !important; color: transparent !important; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
     #menu, .menu, button, .box-header, .keypad, form, #screen-resolution { display: none !important; }
-    
-    /* 2. Chỉ chừa lại mỗi cái màn hình Game để nó hiện ra */
     canvas { max-width: 100%; height: auto !important; border-radius: 8px; display: block !important; }
 </style>
 
 <script>
     window.addEventListener('load', function() {
-        const params = new URLSearchParams(window.location.search);
-        const gameUrl = params.get('url');
-        
-        if (gameUrl) {
-            // Tải file game ngầm từ repo của bạn về bộ nhớ
-            fetch(gameUrl)
-                .then(function(res) { return res.blob(); })
-                .then(function(blob) {
-                    // Lấy tên game từ link (VD: hautayduky.jar)
-                    const fileName = gameUrl.split('/').pop() || "game.jar";
-                    
-                    // Giả lập 1 cục file như người dùng tự bấm tải lên
-                    const file = new File([blob], fileName, { type: "application/java-archive" });
-                    
-                    // Tìm đúng cái nút "Chọn File" gốc của cái Lõi
-                    const fileInput = document.getElementById('file');
-                    if (fileInput) {
-                        // Ép cục file vừa nặn vào cái nút đó
-                        const dt = new DataTransfer();
-                        dt.items.add(file);
-                        fileInput.files = dt.files;
+        // Chờ 1 giây để Lõi khởi động xong hoàn toàn
+        setTimeout(function() {
+            var params = new URLSearchParams(window.location.search);
+            var gameUrl = params.get('url');
+            
+            if (gameUrl) {
+                // IN CHỮ LÊN MÀN HÌNH ĐỂ THEO DÕI
+                document.body.insertAdjacentHTML('beforeend', '<div id="my-loader" style="color:#4ADE80; position:absolute; z-index:9999; font-family:monospace; text-align:center; font-size:12px; font-weight:bold;">⏳ Đang kéo game từ kho...<br><span style="color:#9CA3AF;font-size:10px">' + gameUrl + '</span></div>');
+                
+                // Tải file game về
+                fetch(gameUrl)
+                    .then(function(res) { 
+                        if (!res.ok) throw new Error("LỖI 404: KHÔNG TÌM THẤY FILE TRÊN GITHUB!");
+                        return res.blob(); 
+                    })
+                    .then(function(blob) {
+                        document.getElementById('my-loader').innerHTML = "✅ Tải xong! Đang bơm vào Lõi...";
                         
-                        // Kích hoạt Lõi: "Ê, có người tải file lên rồi kìa, chạy đi!"
-                        fileInput.dispatchEvent(new Event('change', { bubbles: true }));
-                    }
-                })
-                .catch(function(err) { console.error("Lỗi kéo game:", err); });
-        }
+                        // Nặn thành file (Có hỗ trợ iPhone đời cũ)
+                        var file;
+                        try {
+                            file = new File([blob], "game.jar", { type: "application/java-archive" });
+                        } catch (e) {
+                            file = blob;
+                            file.name = "game.jar";
+                        }
+                        
+                        // Bơm TRỰC TIẾP vào hàm cốt lõi của giả lập (Bỏ qua mấy cái nút bấm)
+                        if (window.js2me && window.js2me.loadJAR) {
+                            window.js2me.loadJAR(file);
+                            // Ẩn chữ đi để nhường chỗ cho Game
+                            document.getElementById('my-loader').style.display = 'none';
+                        } else {
+                            throw new Error("LỖI: LÕI JS2ME BỊ HỎNG HOẶC CHƯA SẴN SÀNG!");
+                        }
+                    })
+                    .catch(function(err) { 
+                        // NẾU CÓ LỖI, IN ĐỎ LÊN MÀN HÌNH LUÔN
+                        document.getElementById('my-loader').innerHTML = "❌ " + err.message;
+                    });
+            }
+        }, 1000); 
     });
 </script>
+
 </body>
