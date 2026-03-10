@@ -516,7 +516,7 @@ registerTool({
 // --- 4. Tool Game Tuổi Thơ (Bản FULL Lõi - Chơi Thật 100%) ---
 registerTool({
     id: 'tab-game',
-    name: 'Game Tuổi Thơ',
+    name: ' Chơi Game Java(.jar) ',
     icon: '🕹️',
     html: `
         <div class="text-center mb-6">
@@ -572,44 +572,59 @@ registerTool({
             </div>
         </div>
     `,
-        logic: function() {
+            logic: function() {
         const fileInput = document.getElementById('jar-file');
         const iframe = document.getElementById('game-iframe');
         const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        // 1. PHÉP THUẬT ĐỌC FILE VÀ BƠM TRỰC TIẾP (VƯỢT RÀO SAFARI/APPLE)
+        // 1. PHÉP THUẬT ĐỌC FILE (BẢN CHUẨN XÁC 100% CHO LÕI JS2ME)
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
 
-            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang băm nhỏ file và khởi động Engine...</p>';
+            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang ép xung Engine...</p>';
 
             const tryLoadGame = () => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    try {
-                        // Chuyển file .jar thành dữ liệu nhị phân (ArrayBuffer -> Uint8Array)
-                        const data = new Uint8Array(event.target.result);
+                try {
+                    // Lấy tài liệu bên trong iframe
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    // Lõi JS2ME chuẩn luôn dùng thẻ <input type="file" id="file">
+                    const innerInput = iframeDoc.getElementById('file');
+                    
+                    if (innerInput) {
+                        // Dùng DataTransfer để bê file từ ngoài nhét vào trong
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        innerInput.files = dt.files;
                         
-                        // Kiểm tra xem Lõi J2ME đã sống dậy chưa
-                        if (iframe.contentWindow && iframe.contentWindow.js2me) {
-                            // Ẩn màn hình chờ, hiện khung Game
-                            loadingScreen.classList.add('hidden');
-                            iframe.classList.remove('hidden');
-                            
-                            // Bơm trực tiếp dữ liệu nhị phân vào não của Engine
-                            iframe.contentWindow.js2me.loadJAR(data);
-                            iframe.focus();
-                        } else {
-                            throw new Error("Không tìm thấy biến js2me. Khả năng cao do sai đường dẫn j2me/index.html");
-                        }
-                    } catch (err) {
-                        loadingScreen.innerHTML = '<span class="text-3xl mb-2 block">⚠️</span><p class="text-orange-400 text-xs font-bold">Lỗi khởi chạy Engine</p><p class="text-gray-400 text-[10px] mt-2">Đảm bảo cấu trúc GitHub là: j2me/index.html (Không bị lồng thư mục)</p>';
-                        console.error(err);
+                        // Kích hoạt Lõi chạy
+                        innerInput.dispatchEvent(new Event('change', { bubbles: true }));
+                        
+                        // Ẩn màn hình chờ, hiện Game
+                        loadingScreen.classList.add('hidden');
+                        iframe.classList.remove('hidden');
+                        
+                        // Chỉnh CSS để Lõi hiển thị đẹp, không bị thanh cuộn
+                        iframeDoc.body.style.margin = "0";
+                        iframeDoc.body.style.overflow = "hidden";
+                        iframe.focus();
+                    } else {
+                        throw new Error("Không tìm thấy input#file trong Lõi j2me/index.html");
                     }
-                };
-                reader.readAsArrayBuffer(file);
+                } catch (err) {
+                    // Cải tiến lỗi: Thêm nút bấm trực tiếp để bạn test thử link
+                    loadingScreen.innerHTML = `
+                        <span class="text-3xl mb-2 block">⚠️</span>
+                        <p class="text-orange-400 text-xs font-bold">Lỗi kết nối Lõi J2ME</p>
+                        <p class="text-gray-400 text-[10px] mt-2 leading-relaxed">
+                            Hãy bấm vào link dưới đây để kiểm tra:<br>
+                            <a href="./j2me/index.html" target="_blank" class="text-blue-400 underline font-bold text-xs mt-1 block">MỞ THỬ LÕI J2ME</a>
+                            Nếu báo 404, nghĩa là GitHub chưa up xong!
+                        </p>`;
+                    console.error("Chi tiết lỗi:", err);
+                }
             };
 
             // Canh me Lõi load xong mới bơm data
@@ -620,13 +635,33 @@ registerTool({
             }
         });
 
-        // 2. PHÉP THUẬT TRUYỀN TÍN HIỆU PHÍM (GIỮ NGUYÊN)
+        // 2. BỘ ÁNH XẠ PHÍM NOKIA SIÊU CHUẨN
         const triggerKey = (keyName, isDown) => {
             if (iframe && !iframe.classList.contains('hidden')) {
-                const eventType = isDown ? 'keydown' : 'keyup';
-                const event = new KeyboardEvent(eventType, { key: keyName, code: keyName, bubbles: true });
-                iframe.contentWindow.dispatchEvent(event);
-                iframe.contentDocument.dispatchEvent(event);
+                // Dịch tên phím ảo thành mã phím (keyCode) mà giả lập Java hiểu được
+                let keyCode = 0;
+                switch(keyName) {
+                    case 'SoftLeft': keyCode = 112; break; // F1 (Trái)
+                    case 'SoftRight': keyCode = 113; break; // F2 (Phải)
+                    case 'ArrowUp': keyCode = 38; break;
+                    case 'ArrowDown': keyCode = 40; break;
+                    case 'ArrowLeft': keyCode = 37; break;
+                    case 'ArrowRight': keyCode = 39; break;
+                    case 'Enter': keyCode = 13; break;
+                    default: 
+                        if (!isNaN(keyName)) keyCode = keyName.charCodeAt(0); // Số 0-9
+                        else if (keyName === '*') keyCode = 106; // Numpad *
+                        else if (keyName === '#') keyCode = 111; // Numpad / (hoặc custom)
+                }
+
+                if (keyCode !== 0) {
+                    const eventType = isDown ? 'keydown' : 'keyup';
+                    const event = new KeyboardEvent(eventType, { 
+                        key: keyName, code: keyName, keyCode: keyCode, which: keyCode, bubbles: true 
+                    });
+                    iframe.contentWindow.dispatchEvent(event);
+                    iframe.contentDocument.dispatchEvent(event);
+                }
             }
         };
 
