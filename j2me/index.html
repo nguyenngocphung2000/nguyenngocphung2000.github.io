@@ -93,4 +93,21 @@
 			<button class="done">Done</button>
 		</div>
 	</div>
+	<script>
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        const gameUrl = params.get('url');
+        
+        if (gameUrl && window.js2me && window.js2me.loadJAR) {
+            window.js2me.loadJAR(gameUrl);
+        }
+    }
+</script>
+<style>
+    /* Ẩn các nút rác của Lõi */
+    #menu, .menu, button, .box-header, input, .keypad { display: none !important; }
+    body { background: black !important; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+    canvas { max-width: 100%; height: auto !important; border-radius: 8px; }
+</style>
+
 </body>
