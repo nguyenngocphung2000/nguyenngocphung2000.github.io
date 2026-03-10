@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================
-   PHẦN 2: CÁC CÔNG CỤ CỦA BẠN (THÊM THOẢI MÁI Ở ĐÂY)
+   PHẦN 2: CÁC CÔNG CỤ
 ========================================================== */
 
 // --- 1. Tool Trang Chủ ---
@@ -94,7 +94,7 @@ registerTool({
     `
 });
 
-// --- 2. Tool Tính Phần Trăm (Đẳng cấp 2 chiều + Lịch sử) ---
+// --- 2. Tool Tính Phần Trăm ---
 registerTool({
     id: 'tab-calc',
     name: 'Tính Toán',
@@ -198,38 +198,34 @@ registerTool({
             <div class="mt-8 bg-white/60 backdrop-blur-md p-6 rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/50">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-gray-800 flex items-center gap-2"><span>🕒</span> Lịch sử tính toán</h3>
-                    <button id="clear-history" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded-full">🗑️ Xoá lịch sử</button>
+                    <button id="clear-history" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded-full transition">🗑️ Xoá lịch sử</button>
                 </div>
                 <ul id="history-list" class="space-y-3 text-sm text-gray-600 max-h-60 overflow-y-auto pr-2">
-                    <li class="italic text-gray-400 text-center py-4 empty-msg">Chưa có lịch sử nào. Hãy bấm "Lưu KQ" ở các bảng tính!</li>
-                </ul>
+                    </ul>
             </div>
         </div>
     `,
     logic: function() {
         // --- CÁC HÀM TIỆN ÍCH ---
         const fmt = (num) => Number.isInteger(num) ? num.toLocaleString('vi-VN') : Number(num.toFixed(2)).toLocaleString('vi-VN');
-        const clean = (num) => parseFloat(num.toFixed(2)); // Tránh lỗi số lẻ dài ngoằng
+        const clean = (num) => parseFloat(num.toFixed(2));
 
-        // HÀM MAGIC: Quyết định xem ô nào là ô CẦN BỊ GHI ĐÈ
         const getTarget = (i1, i2, i3) => {
             const arr = [i1, i2, i3].map(el => ({ el, time: parseInt(el.dataset.last || 0) }));
-            arr.sort((a, b) => a.time - b.time); // Sắp xếp thời gian gõ từ cũ -> mới
-            return arr[0].el; // Ô bị bỏ không lâu nhất sẽ là ô nhận Kết quả
+            arr.sort((a, b) => a.time - b.time);
+            return arr[0].el;
         };
 
         const attachLogic = (inputs, calcFunc) => {
             inputs.forEach(input => {
                 input.addEventListener('input', (e) => {
-                    e.target.dataset.last = Date.now(); // Đánh dấu ô này vừa được gõ
+                    e.target.dataset.last = Date.now();
                     calcFunc();
                 });
             });
         };
 
         // --- LOGIC TÍNH TOÁN 2 CHIỀU ---
-
-        // C1: X % của Y = Res
         const c1P = document.getElementById('c1-p'), c1V = document.getElementById('c1-v'), c1Res = document.getElementById('c1-res');
         const calc1 = () => {
             const target = getTarget(c1P, c1V, c1Res);
@@ -240,7 +236,6 @@ registerTool({
         };
         attachLogic([c1P, c1V, c1Res], calc1);
 
-        // C2: X là Res % của Y
         const c2X = document.getElementById('c2-x'), c2Y = document.getElementById('c2-y'), c2Res = document.getElementById('c2-res');
         const calc2 = () => {
             const target = getTarget(c2X, c2Y, c2Res);
@@ -251,7 +246,6 @@ registerTool({
         };
         attachLogic([c2X, c2Y, c2Res], calc2);
 
-        // C3: Thay đổi (Old -> New) = Res %
         const c3Old = document.getElementById('c3-old'), c3New = document.getElementById('c3-new'), c3Res = document.getElementById('c3-res');
         const calc3 = () => {
             const target = getTarget(c3Old, c3New, c3Res);
@@ -262,23 +256,53 @@ registerTool({
         };
         attachLogic([c3Old, c3New, c3Res], calc3);
 
-        // --- LOGIC NÚT XOÁ ---
+        // --- LOGIC NÚT XOÁ Ô ---
         document.getElementById('c1-clear').onclick = () => { c1P.value = c1V.value = c1Res.value = ""; c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0; };
         document.getElementById('c2-clear').onclick = () => { c2X.value = c2Y.value = c2Res.value = ""; c2X.dataset.last = c2Y.dataset.last = c2Res.dataset.last = 0; };
         document.getElementById('c3-clear').onclick = () => { c3Old.value = c3New.value = c3Res.value = ""; c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0; };
 
-        // --- LOGIC LỊCH SỬ ---
+        // ==========================================================
+        //  MAGIC: LƯU TRỮ LỊCH SỬ VĨNH VIỄN
+        // ==========================================================
         const historyList = document.getElementById('history-list');
-        const addHistory = (text) => {
-            const emptyMsg = historyList.querySelector('.empty-msg');
-            if (emptyMsg) emptyMsg.remove();
+        const STORAGE_KEY = 'hupvoi_calc_history'; // Tên ổ khóa lưu trữ
+
+        // 1. Hàm hiển thị lịch sử từ ổ cứng ra màn hình
+        const loadHistory = () => {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            let historyArr = savedData ? JSON.parse(savedData) : [];
             
-            const li = document.createElement('li');
-            li.className = 'bg-white p-3 rounded-xl border border-orange-50 shadow-sm flex items-center before:content-["✓"] before:text-green-500 before:mr-2 before:font-bold text-gray-700 font-medium';
-            li.innerHTML = text;
-            historyList.prepend(li); // Thêm lên đầu danh sách
+            historyList.innerHTML = ''; // Xóa sạch để vẽ lại
+            
+            if (historyArr.length > 0) {
+                historyArr.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'bg-white p-3 rounded-xl border border-orange-50 shadow-sm flex items-center before:content-["✓"] before:text-green-500 before:mr-2 before:font-bold text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
+                    li.innerHTML = item;
+                    historyList.appendChild(li); // Thêm vào danh sách hiển thị
+                });
+            } else {
+                historyList.innerHTML = '<li class="italic text-gray-400 text-center py-4 empty-msg">Chưa có lịch sử nào. Hãy bấm "Lưu KQ" ở các bảng tính!</li>';
+            }
         };
 
+        // 2. Hàm thêm mới một mẩu lịch sử vào ổ cứng
+        const addHistory = (textHTML) => {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            let historyArr = savedData ? JSON.parse(savedData) : [];
+            
+            historyArr.unshift(textHTML); // Đẩy cái mới nhất lên đầu mảng
+            
+            // Giới hạn chỉ lưu 20 cái cho nhẹ web
+            if (historyArr.length > 20) {
+                historyArr.pop(); // Xóa cái cũ nhất ở cuối đuôi
+            }
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArr)); // Lưu đè lại vào ổ cứng
+            loadHistory(); // Bắt màn hình vẽ lại ngay lập tức
+        };
+
+        // 3. Gắn sự kiện cho các nút "Lưu KQ"
         document.getElementById('c1-save').onclick = () => {
             if(c1P.value && c1V.value && c1Res.value) addHistory(`<span class="text-orange-500">${fmt(parseFloat(c1P.value))}%</span> của ${fmt(parseFloat(c1V.value))} = <span class="text-red-500">${fmt(parseFloat(c1Res.value))}</span>`);
         };
@@ -293,13 +317,16 @@ registerTool({
             }
         };
 
+        // 4. Gắn sự kiện Xóa sạch lịch sử
         document.getElementById('clear-history').onclick = () => {
-            historyList.innerHTML = '<li class="italic text-gray-400 text-center py-4 empty-msg">Đã xoá lịch sử.</li>';
+            localStorage.removeItem(STORAGE_KEY); // Phá ổ khóa, xóa sạch dữ liệu
+            loadHistory(); // Vẽ lại màn hình trống
         };
+
+        // 5. Tự động gọi hàm Load khi vừa mở Tab này lên
+        loadHistory();
     }
 });
-
-
 
 // --- 3. Tool Markdown (Đã thêm nút Mở File) ---
 registerTool({
