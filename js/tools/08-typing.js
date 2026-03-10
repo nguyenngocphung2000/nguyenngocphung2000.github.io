@@ -1,4 +1,4 @@
-// --- 8. Tool Luyện Đánh Máy (Bản Hoàn Hảo - Sửa dứt điểm Đếm ngược & Telex Mobile) ---
+// --- 8. Tool Luyện Đánh Máy (Bản Hoàn Hảo - Chữ mờ hóa đậm & Tiến trình 50 từ) ---
 registerTool({
     id: 'tab-typing',
     name: 'Gõ Phím',
@@ -21,7 +21,7 @@ registerTool({
             .type-theme-dark {
                 --bg-color: #0f172a;
                 --border-glow: 0 0 25px rgba(56, 189, 248, 0.4);
-                --text-normal: #475569;
+                --text-normal: #64748b; /* Sáng hơn chút để nhìn lớp mờ dễ hơn */
                 --text-correct: #38bdf8;
                 --text-glow: 0 0 10px rgba(56, 189, 248, 0.8);
                 --caret-color: #38bdf8;
@@ -41,15 +41,30 @@ registerTool({
                 line-height: 1.8;
                 position: relative;
                 color: var(--text-normal);
-                /* Bắt buộc phải có dòng này để trình duyệt không nuốt mất dấu cách */
                 white-space: pre-wrap; 
                 word-wrap: break-word;
             }
             @media (min-width: 768px) { .typing-text-area { font-size: 1.6rem; } }
 
-            .char { transition: color 0.1s ease; border-radius: 4px; }
-            .char.correct { color: var(--text-correct); text-shadow: var(--text-glow); font-weight: 500; }
-            .char.incorrect { color: var(--error-color); background-color: var(--error-bg); }
+            /* HIỆU ỨNG MỜ -> ĐẬM NHƯ Ý BẠN YÊU CẦU */
+            .char { 
+                opacity: 0.4; /* Lớp phủ mờ ban đầu */
+                font-weight: 400;
+                transition: all 0.15s ease; 
+                border-radius: 4px; 
+            }
+            .char.correct { 
+                opacity: 1; /* Gõ đúng thì sáng rõ lên */
+                color: var(--text-correct); 
+                text-shadow: var(--text-glow); 
+                font-weight: 700; /* In đậm lên cho dễ nhìn */
+            }
+            .char.incorrect { 
+                opacity: 1;
+                color: var(--error-color); 
+                background-color: var(--error-bg); 
+                font-weight: 700;
+            }
             
             #caret {
                 position: absolute;
@@ -57,7 +72,7 @@ registerTool({
                 height: 1.5rem;
                 background-color: var(--caret-color);
                 box-shadow: var(--text-glow);
-                transition: left 0.1s ease, top 0.1s ease; /* Mượt mà bám sát chữ */
+                transition: left 0.1s ease, top 0.1s ease;
                 animation: blink 1s infinite;
                 top: 0; left: 0;
                 border-radius: 2px;
@@ -65,29 +80,25 @@ registerTool({
             }
             @keyframes blink { 50% { opacity: 0; } }
 
-            /* BÍ THUẬT: Ép điện thoại bật bàn phím ảo và gõ Telex không lỗi */
             #hidden-input { 
                 position: absolute; 
                 top: 0; left: 0; 
                 width: 100%; height: 100%; 
-                opacity: 1; /* Bắt buộc bằng 1 */
+                opacity: 1; 
                 z-index: 50; 
                 cursor: text;
-                color: transparent; /* Giấu chữ thật đi */
+                color: transparent; 
                 background: transparent; 
-                caret-color: transparent; /* Giấu luôn con trỏ mặc định */
+                caret-color: transparent; 
                 border: none; outline: none; resize: none;
-                font-size: 16px; /* Bắt buộc 16px để Safari không tự Zoom màn hình */
+                font-size: 16px; 
                 padding: 0; margin: 0;
                 overflow: hidden;
             }
 
             #countdown-overlay { backdrop-filter: blur(8px); }
             
-            /* Giải pháp đếm ngược thuần CSS, 100% không bao giờ kẹt */
-            .count-num {
-                animation: popIn 1s infinite;
-            }
+            .count-num { animation: popIn 1s infinite; }
             @keyframes popIn {
                 0% { transform: scale(0.5); opacity: 0; }
                 50% { transform: scale(1.2); opacity: 1; text-shadow: var(--text-glow); color: var(--text-correct); }
@@ -116,7 +127,7 @@ registerTool({
                 </div>
             </div>
 
-            <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán văn bản Tiếng Việt dài vào đây. Hệ thống sẽ tự động chia nhỏ ra từng màn hình để bạn dễ gõ..."></textarea>
+            <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán văn bản Tiếng Việt dài vào đây. Hệ thống sẽ tự động chia nhỏ mỗi tiến trình ~50 từ để bạn dễ gõ..."></textarea>
 
             <button id="tp-btn-start" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl transition shadow-lg text-lg flex justify-center items-center gap-2">
                 🚀 BẮT ĐẦU
@@ -133,6 +144,7 @@ registerTool({
                 <div class="flex flex-wrap justify-between items-center mb-6 border-b border-gray-200/20 pb-4 z-30 gap-2">
                     <div class="text-sm font-bold opacity-70" style="color: var(--text-correct)">Tốc độ: <span id="live-wpm" class="text-xl">0</span> WPM</div>
                     <div class="text-sm font-bold opacity-70" style="color: var(--text-normal)">Chính xác: <span id="live-acc">100</span>%</div>
+                    <div class="text-sm font-bold opacity-70" style="color: var(--text-normal)">Thời gian: <span id="live-time">0</span>s</div>
                     <div class="text-sm font-bold opacity-70 bg-gray-100/10 px-3 py-1 rounded-lg" style="color: var(--text-normal)">Tiến trình: <span id="live-progress">1/1</span></div>
                 </div>
 
@@ -225,7 +237,8 @@ registerTool({
         const chunkText = (text) => {
             const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
             const chunks = [];
-            const WORDS_PER_SCREEN = 20; 
+            // Đã đổi thành 50 từ mỗi tiến trình theo yêu cầu
+            const WORDS_PER_SCREEN = 50; 
 
             for (let i = 0; i < words.length; i += WORDS_PER_SCREEN) {
                 let chunkStr = words.slice(i, i + WORDS_PER_SCREEN).join(' ');
@@ -360,7 +373,6 @@ registerTool({
         const startBtn = document.getElementById('tp-btn-start');
         const countText = document.getElementById('countdown-text');
 
-        // Hàm đếm ngược siêu chuẩn
         const startCountdown = () => {
             if(countIntervalObj) clearInterval(countIntervalObj);
             
@@ -380,7 +392,7 @@ registerTool({
                     isPlaying = true;
                     hiddenInput.focus();
                 }
-            }, 1000); // Mỗi 1 giây cập nhật số 1 lần, khớp 100% với CSS Animation
+            }, 1000); 
         };
 
         startBtn.onclick = () => {
@@ -396,7 +408,6 @@ registerTool({
             initGame(text);
             startCountdown();
             
-            // Trượt màn hình xuống cho Điện thoại để không bị che khuất
             gameScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
 
