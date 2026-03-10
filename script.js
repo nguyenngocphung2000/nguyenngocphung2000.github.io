@@ -513,10 +513,10 @@ registerTool({
         }
     }
 });
-// --- 4. Tool Game Tuổi Thơ (Bản Kết Nối Trực Tiếp) ---
+// --- 4. Tool Game Tuổi Thơ ---
 registerTool({
     id: 'tab-game',
-    name: 'Game Tuổi Thơ',
+    name: 'Chơi Game Java',
     icon: '🕹️',
     html: `
         <div class="text-center mb-4">
@@ -524,23 +524,18 @@ registerTool({
         </div>
 
         <div class="glass-card p-4 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400 shadow-2xl">
-            
-            <div class="relative bg-black rounded-2xl p-1 mb-2 border-4 border-gray-800 mx-auto overflow-hidden" style="width: 320px; height: 260px;">
+            <div class="relative bg-black rounded-2xl p-1 mb-2 border-4 border-gray-800 mx-auto overflow-hidden shadow-inner" style="width: 320px; height: 260px;">
                 <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 bg-black"></iframe>
             </div>
-
-            <p class="text-[10px] text-gray-400 text-center mb-4 italic">Mẹo: Bấm nút ">" trong màn hình đen để chọn file .jar nếu game không tự load.</p>
 
             <div class="bg-white/50 backdrop-blur-md p-3 rounded-[1.5rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
                 <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden mb-2 border border-gray-100">
                     <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftLeft">L-SOFT</button>
                     <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowUp">↑</button>
                     <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftRight">R-SOFT</button>
-                    
                     <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowLeft">←</button>
-                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 aspect-[4/3] text-lg" data-key="Enter">OK</button>
+                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
                     <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowRight">→</button>
-                    
                     <div class="bg-gray-50"></div>
                     <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowDown">↓</button>
                     <div class="bg-gray-50"></div>
@@ -562,9 +557,7 @@ registerTool({
 
         const triggerKey = (keyName, isDown) => {
             if (!iframe.contentWindow) return;
-            
             let keyCode = 0;
-            // Ánh xạ phím chuẩn Nokia cho bộ giả lập
             switch(keyName) {
                 case 'SoftLeft': keyCode = 112; break; 
                 case 'SoftRight': keyCode = 113; break; 
@@ -575,15 +568,8 @@ registerTool({
                 case 'Enter': keyCode = 13; break;
                 default: keyCode = keyName.charCodeAt(0);
             }
-
             const eventType = isDown ? 'keydown' : 'keyup';
-            const event = new KeyboardEvent(eventType, {
-                keyCode: keyCode,
-                which: keyCode,
-                bubbles: true
-            });
-            
-            // Truyền tín hiệu vào cả window và document của iframe
+            const event = new KeyboardEvent(eventType, { keyCode: keyCode, which: keyCode, bubbles: true });
             iframe.contentWindow.dispatchEvent(event);
             iframe.contentDocument.dispatchEvent(event);
         };
