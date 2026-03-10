@@ -93,20 +93,27 @@
 			<button class="done">Done</button>
 		</div>
 	</div>
-	<script>
-    window.onload = function() {
-        const params = new URLSearchParams(window.location.search);
-        const gameUrl = params.get('url');
-        
-        if (gameUrl && window.js2me && window.js2me.loadJAR) {
-            window.js2me.loadJAR(gameUrl);
-        }
-    }
-</script>
 <style>
-    /* Ẩn các nút rác của Lõi */
-    #menu, .menu, button, .box-header, input, .keypad { display: none !important; }
-    body { background: black !important; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-    canvas { max-width: 100%; height: auto !important; border-radius: 8px; }
+    /* Bùa tàng hình: Xóa sạch chữ, nút bấm và nền trắng của Lõi */
+    body { background: black !important; color: transparent !important; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    #menu, .menu, button, .box-header, input, .keypad, form { display: none !important; }
+    #screen-resolution, div { color: transparent !important; }
+    /* Chỉ cho phép hình ảnh Game (Canvas) hiện hình */
+    #screen, canvas { display: block !important; max-width: 100%; height: auto !important; border-radius: 8px; }
 </style>
+<script>
+    // Bùa gọi hồn: Dùng addEventListener để không giết chết lệnh gốc của Lõi
+    window.addEventListener('load', function() {
+        // Đợi 0.5 giây cho não của Lõi khởi động xong hoàn toàn
+        setTimeout(function() {
+            const params = new URLSearchParams(window.location.search);
+            const gameUrl = params.get('url');
+            
+            // Nếu có link game truyền vào thì ép Lõi nhai ngay lập tức
+            if (gameUrl && window.js2me && window.js2me.loadJAR) {
+                window.js2me.loadJAR(gameUrl);
+            }
+        }, 500);
+    });
+</script>
 </body>
