@@ -1,11 +1,12 @@
-// --- 8. Tool Luyện Đánh Máy ---
+// --- 8. Tool Luyện Đánh Máy (Bản Hoàn Hảo - Hỗ trợ Telex Mobile & Chia Đoạn) ---
 registerTool({
     id: 'tab-typing',
     name: 'Gõ Phím',
     icon: '⌨️',
     html: `
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
+            /* Dùng Font Roboto Mono hỗ trợ Tiếng Việt cực chuẩn và cực đẹp */
+            @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 
             .type-theme-light {
                 --bg-color: #ffffff;
@@ -33,17 +34,16 @@ registerTool({
                 background-color: var(--bg-color);
                 box-shadow: var(--border-glow);
                 transition: all 0.5s ease;
-                font-family: 'Fira Code', monospace;
+                font-family: 'Roboto Mono', monospace; /* Áp dụng font mới */
             }
 
-            /* Responsive cho text to nhỏ tuỳ màn hình */
             .typing-text-area {
-                font-size: 1.2rem;
+                font-size: 1.25rem;
                 line-height: 1.8;
                 position: relative;
                 color: var(--text-normal);
             }
-            @media (min-width: 768px) { .typing-text-area { font-size: 1.5rem; } }
+            @media (min-width: 768px) { .typing-text-area { font-size: 1.6rem; } }
 
             .char { transition: color 0.1s ease; border-radius: 4px; }
             .char.correct { color: var(--text-correct); text-shadow: var(--text-glow); font-weight: 500; }
@@ -62,17 +62,19 @@ registerTool({
             }
             @keyframes blink { 50% { opacity: 0; } }
 
-            /* BÍ QUYẾT CHO MOBILE: Lớp kính tàng hình che phủ toàn bộ khung */
+            /* BÍ QUYẾT ĐỂ GÕ TELEX TRÊN ĐIỆN THOẠI KHÔNG LỖI */
             #hidden-input { 
                 position: absolute; 
                 top: 0; left: 0; 
                 width: 100%; height: 100%; 
-                opacity: 0; 
-                z-index: 20; 
+                opacity: 1; /* Phải để 1 để mobile nhận diện */
+                z-index: 50; 
                 cursor: text;
-                color: transparent; 
+                color: transparent; /* Làm chữ vô hình */
                 background: transparent; 
+                caret-color: transparent; /* Giấu con trỏ thật */
                 border: none; outline: none; resize: none;
+                font-size: 16px; /* Bắt buộc 16px để iPhone không auto-zoom */
             }
 
             #countdown-overlay { backdrop-filter: blur(8px); }
@@ -84,6 +86,14 @@ registerTool({
                 50% { transform: scale(1.2); opacity: 1; text-shadow: var(--text-glow); color: var(--text-correct); }
                 100% { transform: scale(1); opacity: 0; }
             }
+
+            /* Hiệu ứng nháy khi chuyển đoạn */
+            @keyframes flash-screen {
+                0% { opacity: 1; }
+                50% { opacity: 0.3; }
+                100% { opacity: 1; }
+            }
+            .flash-effect { animation: flash-screen 0.3s ease; }
         </style>
 
         <div class="text-center mb-6">
@@ -94,13 +104,13 @@ registerTool({
         <div id="tp-setup-screen" class="glass-card p-6 md:p-8 rounded-[2rem] max-w-4xl mx-auto border-t-4 border-t-pink-400 shadow-xl space-y-6 block">
             <div class="flex justify-between items-center">
                 <h3 class="font-bold text-gray-800 text-lg">1. Dán văn bản cần luyện</h3>
-                <div class="flex items-center bg-gray-100 p-1 rounded-xl">
-                    <button id="tp-btn-light" class="px-4 py-1.5 rounded-lg text-sm font-bold bg-white text-pink-500 shadow-sm transition">Sáng (Hồng)</button>
-                    <button id="tp-btn-dark" class="px-4 py-1.5 rounded-lg text-sm font-bold text-gray-500 hover:text-blue-500 transition">Tối (Xanh)</button>
+                <div class="flex items-center bg-gray-100 p-1 rounded-xl shrink-0 ml-4">
+                    <button id="tp-btn-light" class="px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-white text-pink-500 shadow-sm transition">Sáng</button>
+                    <button id="tp-btn-dark" class="px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-blue-500 transition">Tối</button>
                 </div>
             </div>
 
-            <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán đoạn văn bản (Tiếng Việt) bạn muốn luyện tập vào đây..."></textarea>
+            <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán văn bản Tiếng Việt dài vào đây. Hệ thống sẽ tự động chia nhỏ ra từng màn hình để bạn dễ gõ..."></textarea>
 
             <button id="tp-btn-start" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl transition shadow-lg text-lg flex justify-center items-center gap-2">
                 🚀 BẮT ĐẦU LUYỆN TẬP
@@ -114,10 +124,10 @@ registerTool({
 
             <div id="typing-container" class="type-theme-light p-6 md:p-12 rounded-[2rem] border border-gray-100 relative overflow-hidden min-h-[300px] flex flex-col">
                 
-                <div class="flex justify-between items-center mb-6 border-b border-gray-200/20 pb-4 z-30">
+                <div class="flex flex-wrap justify-between items-center mb-6 border-b border-gray-200/20 pb-4 z-30 gap-2">
                     <div class="text-sm font-bold opacity-70" style="color: var(--text-correct)">Tốc độ: <span id="live-wpm" class="text-xl">0</span> WPM</div>
                     <div class="text-sm font-bold opacity-70" style="color: var(--text-normal)">Chính xác: <span id="live-acc">100</span>%</div>
-                    <div class="text-sm font-bold opacity-70" style="color: var(--text-normal)">Time: <span id="live-time">0</span>s</div>
+                    <div class="text-sm font-bold opacity-70 bg-gray-100/10 px-3 py-1 rounded-lg" style="color: var(--text-normal)">Tiến trình: <span id="live-progress">1/1</span></div>
                 </div>
 
                 <div class="typing-text-area flex-1 relative" id="text-display-area">
@@ -127,12 +137,12 @@ registerTool({
 
                 <textarea id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                 
-                <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Chạm vào vùng chữ bất kỳ để hiện bàn phím (nếu gõ trên điện thoại) *</div>
+                <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Chạm vào vùng chữ nếu chưa thấy bàn phím (trên điện thoại) *</div>
             </div>
         </div>
 
         <div id="tp-result-screen" class="hidden glass-card p-6 md:p-8 rounded-[2rem] max-w-2xl mx-auto border-t-4 border-t-green-400 shadow-2xl mt-8">
-            <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">🎉 Hoàn Thành!</h3>
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">🎉 Hoàn Thành Xuất Sắc!</h3>
             
             <div class="grid grid-cols-3 gap-2 md:gap-4 mb-8">
                 <div class="text-center p-3 md:p-4 bg-green-50 rounded-2xl border border-green-100">
@@ -150,20 +160,21 @@ registerTool({
             </div>
 
             <div class="flex flex-col md:flex-row gap-4">
-                <button id="tp-btn-retry" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition">🔁 Thử lại bài này</button>
-                <button id="tp-btn-new" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow-md">📝 Dán bài mới</button>
+                <button id="tp-btn-retry" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition">🔁 Gõ lại bài này</button>
+                <button id="tp-btn-new" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow-md">📝 Bài mới</button>
             </div>
         </div>
     `,
     logic: function() {
+        // --- 1. THEME SWITCHER ---
         const btnLight = document.getElementById('tp-btn-light');
         const btnDark = document.getElementById('tp-btn-dark');
         const typeContainer = document.getElementById('typing-container');
         const countOverlay = document.getElementById('countdown-overlay');
 
         btnLight.onclick = () => {
-            btnLight.className = 'px-4 py-1.5 rounded-lg text-sm font-bold bg-white text-pink-500 shadow-sm transition';
-            btnDark.className = 'px-4 py-1.5 rounded-lg text-sm font-bold text-gray-500 hover:text-blue-500 transition';
+            btnLight.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-white text-pink-500 shadow-sm transition';
+            btnDark.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-blue-500 transition';
             typeContainer.classList.remove('type-theme-dark');
             typeContainer.classList.add('type-theme-light');
             countOverlay.classList.remove('bg-gray-900/80');
@@ -171,14 +182,15 @@ registerTool({
         };
 
         btnDark.onclick = () => {
-            btnDark.className = 'px-4 py-1.5 rounded-lg text-sm font-bold bg-gray-700 text-blue-400 shadow-sm transition';
-            btnLight.className = 'px-4 py-1.5 rounded-lg text-sm font-bold text-gray-500 hover:text-pink-500 transition';
+            btnDark.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-gray-700 text-blue-400 shadow-sm transition';
+            btnLight.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-pink-500 transition';
             typeContainer.classList.remove('type-theme-light');
             typeContainer.classList.add('type-theme-dark');
             countOverlay.classList.remove('bg-white/80');
             countOverlay.classList.add('bg-gray-900/80');
         };
 
+        // --- 2. HỆ THỐNG BIẾN & CHIA ĐOẠN ---
         const sourceText = document.getElementById('tp-source-text');
         const setupScreen = document.getElementById('tp-setup-screen');
         const gameScreen = document.getElementById('tp-game-screen');
@@ -188,18 +200,41 @@ registerTool({
         const hiddenInput = document.getElementById('hidden-input');
         const caret = document.getElementById('caret');
         
-        let targetText = "";
+        let textChunks = [];       // Mảng chứa các đoạn chữ
+        let currentChunkIdx = 0;   // Đang ở đoạn nào
+        let targetText = "";       // Chữ của đoạn hiện tại
         let charElements = []; 
+        
         let startTime = null;
         let timerInterval = null;
         let isPlaying = false;
+        
+        // Lưu trữ để tính WPM tổng
+        let previousCorrectChars = 0; 
+        let previousTotalTyped = 0;
 
         const liveWpm = document.getElementById('live-wpm');
         const liveAcc = document.getElementById('live-acc');
         const liveTime = document.getElementById('live-time');
+        const liveProgress = document.getElementById('live-progress');
 
-        const initGame = (text) => {
-            targetText = text.trim().replace(/\n/g, ' '); // Đổi \n thực tế thành khoảng trắng
+        // Hàm chia đoạn văn bản (mỗi đoạn khoảng 20 từ)
+        const chunkText = (text) => {
+            const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
+            const chunks = [];
+            const WORDS_PER_SCREEN = 20; 
+
+            for (let i = 0; i < words.length; i += WORDS_PER_SCREEN) {
+                // Thêm dấu cách ở cuối mỗi đoạn (trừ đoạn cuối cùng) để nối mượt
+                let chunkStr = words.slice(i, i + WORDS_PER_SCREEN).join(' ');
+                if (i + WORDS_PER_SCREEN < words.length) chunkStr += ' ';
+                chunks.push(chunkStr);
+            }
+            return chunks;
+        };
+
+        const loadChunk = (index) => {
+            targetText = textChunks[index];
             wordsContainer.innerHTML = '';
             charElements = [];
             
@@ -213,6 +248,23 @@ registerTool({
 
             hiddenInput.value = '';
             hiddenInput.maxLength = targetText.length;
+            liveProgress.innerText = \`\${index + 1}/\${textChunks.length}\`;
+            
+            updateCaret();
+            hiddenInput.focus();
+
+            // Hiệu ứng chớp màn hình khi chuyển cảnh
+            typeContainer.classList.remove('flash-effect');
+            void typeContainer.offsetWidth; // trigger reflow
+            typeContainer.classList.add('flash-effect');
+        };
+
+        const initGame = (text) => {
+            textChunks = chunkText(text);
+            currentChunkIdx = 0;
+            previousCorrectChars = 0;
+            previousTotalTyped = 0;
+
             isPlaying = false;
             startTime = null;
             
@@ -220,14 +272,29 @@ registerTool({
             liveAcc.innerText = '100';
             liveTime.innerText = '0';
             
-            updateCaret();
-            // Tự động focus để bung phím
-            hiddenInput.focus();
+            loadChunk(currentChunkIdx);
         };
 
         const updateCaret = () => {
             const currentLen = hiddenInput.value.length;
-            if(currentLen >= targetText.length) { finishGame(); return; }
+            
+            if(currentLen >= targetText.length) {
+                // Xử lý lưu kết quả đoạn hiện tại
+                const typedText = hiddenInput.value;
+                for(let i=0; i<typedText.length; i++) {
+                    if(typedText[i] === targetText[i]) previousCorrectChars++;
+                }
+                previousTotalTyped += typedText.length;
+
+                // Chuyển sang đoạn tiếp theo hoặc kết thúc
+                if (currentChunkIdx < textChunks.length - 1) {
+                    currentChunkIdx++;
+                    loadChunk(currentChunkIdx);
+                } else {
+                    finishGame();
+                }
+                return;
+            }
 
             const targetChar = charElements[currentLen];
             if(targetChar) {
@@ -239,12 +306,17 @@ registerTool({
 
         const calculateStats = (timeSecs) => {
             const typedText = hiddenInput.value;
-            let correctChars = 0;
+            let currentCorrect = 0;
             for(let i=0; i<typedText.length; i++) {
-                if(typedText[i] === targetText[i]) correctChars++;
+                if(typedText[i] === targetText[i]) currentCorrect++;
             }
-            let wpm = timeSecs > 0 ? Math.round((correctChars / 5) / (timeSecs / 60)) : 0;
-            let acc = typedText.length > 0 ? Math.round((correctChars / typedText.length) * 100) : 100;
+
+            let totalCorrect = previousCorrectChars + currentCorrect;
+            let totalTyped = previousTotalTyped + typedText.length;
+
+            let wpm = timeSecs > 0 ? Math.round((totalCorrect / 5) / (timeSecs / 60)) : 0;
+            let acc = totalTyped > 0 ? Math.round((totalCorrect / totalTyped) * 100) : 100;
+            
             return { wpm, acc };
         };
 
@@ -274,13 +346,9 @@ registerTool({
             updateCaret();
         });
 
-        // Bắt buộc focus để gọi bàn phím khi user nhấp vào khung gõ
+        // Bắt focus trên mọi thiết bị
         typeContainer.addEventListener('click', () => {
-            if (isPlaying) {
-                hiddenInput.focus();
-                // Scroll tới vùng gõ để không bị bàn phím che
-                typeContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            if (isPlaying) hiddenInput.focus();
         });
 
         const startBtn = document.getElementById('tp-btn-start');
@@ -318,7 +386,7 @@ registerTool({
         const finishGame = () => {
             isPlaying = false;
             clearInterval(timerInterval);
-            hiddenInput.blur(); // Tắt bàn phím ảo khi hoàn thành
+            hiddenInput.blur(); 
 
             const secs = Math.floor((Date.now() - startTime) / 1000);
             const stats = calculateStats(secs);
