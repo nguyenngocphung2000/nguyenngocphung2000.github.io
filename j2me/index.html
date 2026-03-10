@@ -94,57 +94,66 @@
 		</div>
 	</div>
 <style>
-    /* Tàng hình mọi thứ của Lõi, trả lại màn hình đen */
-    body { background: black !important; color: transparent !important; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-    #menu, .menu, button, .box-header, .keypad, form, #screen-resolution { display: none !important; }
-    canvas { max-width: 100%; height: auto !important; border-radius: 8px; display: block !important; }
+    /* 1. KHÔNG CHE GIẤU NỮA: Trả lại nền trắng, chữ đen để đọc được mọi thông báo */
+    body { background-color: #ffffff !important; color: #000000 !important; text-align: center; padding: 10px; font-family: sans-serif; overflow-y: auto; }
+    
+    /* 2. Chỉ ẩn duy nhất cái bàn phím ảo mặc định của Lõi vì mình đã có bàn phím riêng */
+    #keypad, .keypad { display: none !important; }
+    
+    /* 3. Làm nổi bật khung Game và các ô nhập liệu/nút bấm của Lõi */
+    canvas { border: 2px dashed #ff0000; margin-top: 10px; max-width: 100%; }
+    input, button { padding: 8px; margin: 5px; border: 1px solid #333; background: #eee; color: black; }
+    
+    /* 4. Khung Debug hiển thị trạng thái */
+    #debug-log { margin-bottom: 15px; font-family: monospace; font-size: 12px; text-align: left; background: #f8f9fa; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
 </style>
 
+<div id="debug-log">
+    <strong>🛠️ BẢNG THEO DÕI HỆ THỐNG:</strong><br>
+    <span id="log-text">Đang chờ lệnh...</span>
+</div>
+
 <script>
+    function log(msg, color) {
+        document.getElementById('log-text').innerHTML += `<br><span style="color:${color}">➔ ${msg}</span>`;
+    }
+
     window.addEventListener('load', function() {
-        // Chờ 1 giây để Lõi khởi động xong hoàn toàn
-        setTimeout(function() {
-            var params = new URLSearchParams(window.location.search);
-            var gameUrl = params.get('url');
+        var params = new URLSearchParams(window.location.search);
+        var gameUrl = params.get('url');
+        
+        if (gameUrl) {
+            log(`Đã nhận lệnh tải game: ${gameUrl}`, 'blue');
             
-            if (gameUrl) {
-                // IN CHỮ LÊN MÀN HÌNH ĐỂ THEO DÕI
-                document.body.insertAdjacentHTML('beforeend', '<div id="my-loader" style="color:#4ADE80; position:absolute; z-index:9999; font-family:monospace; text-align:center; font-size:12px; font-weight:bold;">⏳ Đang kéo game từ kho...<br><span style="color:#9CA3AF;font-size:10px">' + gameUrl + '</span></div>');
-                
-                // Tải file game về
-                fetch(gameUrl)
-                    .then(function(res) { 
-                        if (!res.ok) throw new Error("LỖI 404: KHÔNG TÌM THẤY FILE TRÊN GITHUB!");
-                        return res.blob(); 
-                    })
-                    .then(function(blob) {
-                        document.getElementById('my-loader').innerHTML = "✅ Tải xong! Đang bơm vào Lõi...";
-                        
-                        // Nặn thành file (Có hỗ trợ iPhone đời cũ)
-                        var file;
-                        try {
-                            file = new File([blob], "game.jar", { type: "application/java-archive" });
-                        } catch (e) {
-                            file = blob;
-                            file.name = "game.jar";
-                        }
-                        
-                        // Bơm TRỰC TIẾP vào hàm cốt lõi của giả lập (Bỏ qua mấy cái nút bấm)
+            // Bắt đầu kéo file từ GitHub
+            fetch(gameUrl)
+                .then(function(res) { 
+                    log(`Phản hồi từ máy chủ: HTTP ${res.status}`, res.ok ? 'green' : 'red');
+                    if (!res.ok) throw new Error("Không tìm thấy file trên GitHub (Lỗi " + res.status + ")");
+                    return res.blob(); 
+                })
+                .then(function(blob) {
+                    log(`Tải file thành công! Dung lượng: ${blob.size} bytes`, 'green');
+                    blob.name = gameUrl.split('/').pop() || "game.jar";
+                    
+                    log(`Đang chờ Lõi JS2ME khởi động...`, 'orange');
+                    
+                    // Rình Lõi khởi động để bơm file
+                    setTimeout(function() {
                         if (window.js2me && window.js2me.loadJAR) {
-                            window.js2me.loadJAR(file);
-                            // Ẩn chữ đi để nhường chỗ cho Game
-                            document.getElementById('my-loader').style.display = 'none';
+                            log(`Đã chèn file vào Lõi! Hãy xem Lõi báo gì ở bên dưới 👇`, 'purple');
+                            window.js2me.loadJAR(blob);
                         } else {
-                            throw new Error("LỖI: LÕI JS2ME BỊ HỎNG HOẶC CHƯA SẴN SÀNG!");
+                            log(`LỖI: Lõi JS2ME không tồn tại hoặc bị hỏng file js!`, 'red');
                         }
-                    })
-                    .catch(function(err) { 
-                        // NẾU CÓ LỖI, IN ĐỎ LÊN MÀN HÌNH LUÔN
-                        document.getElementById('my-loader').innerHTML = "❌ " + err.message;
-                    });
-            }
-        }, 1000); 
+                    }, 1000);
+                })
+                .catch(function(err) {
+                    log(`LỖI NGHIÊM TRỌNG: ${err.message}`, 'red');
+                });
+        } else {
+            log(`Chưa có link game nào được truyền vào.`, 'gray');
+        }
     });
 </script>
-
 </body>
