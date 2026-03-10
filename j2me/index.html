@@ -94,35 +94,44 @@
 		</div>
 	</div>
 <style>
-    /* Bùa tàng hình: Giấu toàn bộ giao diện rác, chữ báo lỗi của Lõi */
+    /* 1. Tàng hình toàn bộ chữ nghĩa, nút bấm, báo lỗi rác của Lõi */
     body { background: black !important; color: transparent !important; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-    #menu, .menu, button, .box-header, input, .keypad, form, #screen-resolution { display: none !important; }
+    #menu, .menu, button, .box-header, .keypad, form, #screen-resolution { display: none !important; }
     
-    /* Chỉ giữ lại duy nhất khung Game (canvas) để hiển thị */
+    /* 2. Chỉ chừa lại mỗi cái màn hình Game để nó hiện ra */
     canvas { max-width: 100%; height: auto !important; border-radius: 8px; display: block !important; }
 </style>
 
 <script>
-    // Bùa gọi hồn: Dùng Fetch tải file biến thành Nhị Phân (Uint8Array)
     window.addEventListener('load', function() {
-        // Đợi nửa giây cho não Lõi khởi động xong
-        setTimeout(function() {
-            const params = new URLSearchParams(window.location.search);
-            const gameUrl = params.get('url');
-            
-            if (gameUrl && window.js2me && window.js2me.loadJAR) {
-                // Tải file .jar từ kho games của bạn về
-                fetch(gameUrl)
-                    .then(function(response) { return response.arrayBuffer(); })
-                    .then(function(buffer) {
-                        // Băm nhỏ thành dữ liệu nhị phân
-                        const data = new Uint8Array(buffer);
-                        // Bơm trực tiếp vào não Lõi
-                        window.js2me.loadJAR(data);
-                    })
-                    .catch(function(err) { console.error("Lỗi nạp game:", err); });
-            }
-        }, 500); 
+        const params = new URLSearchParams(window.location.search);
+        const gameUrl = params.get('url');
+        
+        if (gameUrl) {
+            // Tải file game ngầm từ repo của bạn về bộ nhớ
+            fetch(gameUrl)
+                .then(function(res) { return res.blob(); })
+                .then(function(blob) {
+                    // Lấy tên game từ link (VD: hautayduky.jar)
+                    const fileName = gameUrl.split('/').pop() || "game.jar";
+                    
+                    // Giả lập 1 cục file như người dùng tự bấm tải lên
+                    const file = new File([blob], fileName, { type: "application/java-archive" });
+                    
+                    // Tìm đúng cái nút "Chọn File" gốc của cái Lõi
+                    const fileInput = document.getElementById('file');
+                    if (fileInput) {
+                        // Ép cục file vừa nặn vào cái nút đó
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        fileInput.files = dt.files;
+                        
+                        // Kích hoạt Lõi: "Ê, có người tải file lên rồi kìa, chạy đi!"
+                        fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                })
+                .catch(function(err) { console.error("Lỗi kéo game:", err); });
+        }
     });
 </script>
 </body>
