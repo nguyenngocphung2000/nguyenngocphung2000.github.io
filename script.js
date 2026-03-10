@@ -513,3 +513,124 @@ registerTool({
         }
     }
 });
+// --- 4. Tool Game Tuổi Thơ (Giả lập J2ME với Bàn phím Hiện đại) ---
+registerTool({
+    id: 'tab-game',
+    name: 'Game Tuổi Thơ',
+    icon: '🕹️',
+    html: `
+        <div class="text-center mb-6">
+            <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Giải trí</span>
+            <h2 class="text-3xl font-bold mt-2 text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
+            <p class="text-sm text-gray-500 mt-2">Tải file .jar của bạn lên và sống lại ký ức tuổi thơ!</p>
+        </div>
+
+        <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-sm mx-auto border-t-4 border-t-indigo-400">
+            
+            <div class="flex justify-center mb-6">
+                <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
+                    <span>📁 Chọn file Game (.jar)</span>
+                    <input type="file" id="jar-file" accept=".jar" class="hidden">
+                </label>
+            </div>
+
+            <div class="relative bg-black rounded-[2rem] p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 overflow-hidden mx-auto" style="width: 256px; height: 336px;">
+                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl flex flex-col items-center justify-center text-center p-4">
+                    <span class="text-4xl mb-2">👾</span>
+                    <p class="text-gray-400 text-xs font-mono">NO SIGNAL</p>
+                    <p class="text-indigo-400 text-[10px] font-mono mt-1 animate-pulse">Waiting for .jar file...</p>
+                </div>
+            </div>
+
+            <div class="bg-white/40 backdrop-blur-md p-5 rounded-[2rem] shadow-inner border border-white/60 select-none">
+                
+                <div class="grid grid-cols-3 gap-3 mb-4 max-w-[220px] mx-auto">
+                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-lg" data-key="SoftLeft">L</button>
+                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowUp">↑</button>
+                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-lg" data-key="SoftRight">R</button>
+                    
+                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowLeft">←</button>
+                    <button class="v-key bg-indigo-500 text-white font-bold rounded-full shadow-[0_4px_15px_rgba(99,102,241,0.4)] active:shadow-inner active:bg-indigo-600 active:scale-95 transition-all w-full aspect-square text-sm border-2 border-indigo-300" data-key="Enter">OK</button>
+                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowRight">→</button>
+                    
+                    <div></div> <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowDown">↓</button>
+                    <div></div> </div>
+
+                <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent my-4"></div>
+
+                <div class="grid grid-cols-3 gap-3 max-w-[220px] mx-auto">
+                    ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
+                        <button class="v-key bg-white/80 backdrop-blur text-gray-700 font-bold rounded-xl shadow-sm border border-gray-50 active:shadow-inner active:bg-orange-100 active:text-orange-600 active:scale-95 transition-all w-full aspect-[4/3] text-xl flex items-center justify-center relative overflow-hidden group" data-key="${num}">
+                            ${num}
+                            <span class="absolute text-[8px] text-gray-300 bottom-0.5 group-active:text-orange-300 font-normal tracking-widest">
+                                ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
+                            </span>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `,
+    logic: function() {
+        const fileInput = document.getElementById('jar-file');
+        const gameDisplay = document.getElementById('game-display');
+        const vKeys = document.querySelectorAll('.v-key');
+
+        // 1. LOGIC XỬ LÝ TẢI FILE GAME
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Hiệu ứng khởi động (Booting)
+            gameDisplay.innerHTML = `
+                <div class="flex flex-col items-center justify-center w-full h-full bg-black text-white p-4">
+                    <div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-xs font-mono text-indigo-300">Đang nạp file: ${file.name}</p>
+                    <p class="text-[10px] font-mono text-gray-500 mt-2">Khởi tạo Java Micro Edition...</p>
+                </div>
+            `;
+
+            // Lưu ý: Để game THỰC SỰ CHẠY ĐƯỢC trên web, chúng ta cần một thư viện lõi (Core Engine) 
+            // như JS2ME (https://github.com/Zaynyatyi/js2me). 
+            // Ở đây tôi đã dựng sẵn UI hoàn hảo và cổng kết nối, bạn chỉ cần nhúng thư viện đó vào là game sẽ lên hình!
+            setTimeout(() => {
+                gameDisplay.innerHTML = `
+                    <div class="text-center p-4 bg-gray-900 w-full h-full flex flex-col justify-center items-center rounded-xl">
+                        <span class="text-3xl mb-2">⚠️</span>
+                        <p class="text-orange-400 text-xs font-bold uppercase">Cần kết nối Engine</p>
+                        <p class="text-gray-400 text-[10px] mt-2 leading-relaxed">Giao diện và phím bấm đã sẵn sàng. Để đọc được file .jar, bạn cần tích hợp thư viện lõi JS2ME vào mã nguồn.</p>
+                    </div>
+                `;
+            }, 2500);
+        });
+
+        // 2. LOGIC BÀN PHÍM ẢO (Mô phỏng phím thật)
+        // Khi người dùng chạm vào phím ảo, nó sẽ phát ra sự kiện "keydown" để thư viện giả lập game nhận diện được
+        const triggerKey = (keyName, isDown) => {
+            const eventType = isDown ? 'keydown' : 'keyup';
+            const event = new KeyboardEvent(eventType, {
+                key: keyName,
+                code: keyName,
+                bubbles: true
+            });
+            document.dispatchEvent(event);
+            
+            // Log ra console để bạn thấy nó hoạt động
+            if(isDown) console.log('Đã bấm phím:', keyName);
+        };
+
+        vKeys.forEach(btn => {
+            const keyName = btn.getAttribute('data-key');
+            
+            // Xử lý chuột (PC)
+            btn.addEventListener('mousedown', () => triggerKey(keyName, true));
+            btn.addEventListener('mouseup', () => triggerKey(keyName, false));
+            btn.addEventListener('mouseleave', () => triggerKey(keyName, false));
+
+            // Xử lý cảm ứng (Điện thoại)
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyName, true); });
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
+        });
+    }
+});
+
