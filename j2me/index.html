@@ -25,49 +25,21 @@
 	<script type="text/javascript" src="js/workers.js"></script>
 	<script type="text/javascript" src="js/utils.js"></script>
 <style>
-    /* 1. Ẩn hoàn toàn các nút menu mặc định (mũi tên >, i, X) */
-    #menu, .menu, button[title="Open"], button[title="Info"], .box-header { 
-        display: none !important; 
-    }
 
-    /* 2. Thiết lập nền đen và đưa nội dung ra giữa màn hình */
-    body { 
-        background: black !important; 
-        color: white !important; 
-        margin: 0; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        justify-content: center; 
-        height: 100vh;
-        overflow: hidden;
-    }
+#keypad,
+.keypad,
+.controls,
+.touch-controls{
+display:none !important;
+}
 
-    /* 3. Biến nút chọn file thành nút bấm hiện đại ngay giữa màn hình đen */
-    input[type="file"] {
-        display: block !important;
-        visibility: visible !important;
-        position: relative !important;
-        z-index: 999;
-        background: #4F46E5; /* Màu xanh Indigo cho đồng bộ */
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        width: 85%;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        text-align: center;
-    }
+html,body{
+margin:0;
+overflow:hidden;
+background:black;
+}
 
-    /* 4. Đảm bảo game hiển thị đúng kích thước khi khởi chạy */
-    canvas { 
-        max-width: 100%; 
-        height: auto !important;
-        border-radius: 8px;
-    }
 </style>
-
 </head>
 <body>
 	<div id="frame">
@@ -137,4 +109,27 @@
 			<button class="done">Done</button>
 		</div>
 	</div>
+	<input type="file" id="fileInput" style="display:none">
+
+<script>
+
+window.addEventListener("message", async function(e){
+
+    const file = e.data;
+
+    if(!file) return;
+
+    if(file.name.endsWith(".jar")){
+
+        const buffer = await file.arrayBuffer();
+
+        if(window.js2me){
+            js2me.loadJAR(buffer);
+        }
+
+    }
+
+});
+
+</script>
 </body>
