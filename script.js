@@ -513,10 +513,17 @@ registerTool({
         }
     }
 });
+<<<<<<< main
 // --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Đã fix lỗi màn hình trắng) ---
 registerTool({
     id: 'tab-game',
     name: 'Chơi Game Java(.jar)',
+=======
+// --- 4. Tool Game Tuổi Thơ (Bản Cực Hạn - Vượt Rào Apple) ---
+registerTool({
+    id: 'tab-game',
+    name: 'Game Jav',
+>>>>>>> origin/main
     icon: '🕹️',
     html: `
         <div class="text-center mb-6">
@@ -580,11 +587,16 @@ registerTool({
             const file = e.target.files[0];
             if (!file) return;
 
+<<<<<<< main
             loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang ép xung Engine...</p>';
+=======
+            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang ép xung Lõi...</p>';
+>>>>>>> origin/main
 
             const tryLoadGame = () => {
                 try {
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+<<<<<<< main
                     const innerInput = iframeDoc.getElementById('file');
                     
                     if (innerInput) {
@@ -613,6 +625,49 @@ registerTool({
                             Nếu báo 404, nghĩa là GitHub chưa up xong!
                         </p>`;
                     console.error("Chi tiết lỗi:", err);
+=======
+                    
+                    // LUÔN LUÔN HIỂN THỊ LÕI
+                    loadingScreen.classList.add('hidden');
+                    iframe.classList.remove('hidden');
+                    
+                    // Xóa sổ cái bàn phím xấu xí của Lõi
+                    try {
+                        const style = iframeDoc.createElement('style');
+                        style.innerHTML = '#keypad, .keypad, .controls, .touch-controls { display: none !important; } html, body { overflow: hidden !important; background: white; margin: 0; }';
+                        iframeDoc.head.appendChild(style);
+                    } catch(e) {}
+
+                    let injected = false;
+
+                    // TUYỆT KỸ 1: Đánh lừa Input của Lõi
+                    const fileInputs = iframeDoc.querySelectorAll('input[type="file"]');
+                    if (fileInputs.length > 0) {
+                        fileInputs.forEach(input => {
+                            try {
+                                Object.defineProperty(input, 'files', { get: () => [file] });
+                                input.dispatchEvent(new Event('change', { bubbles: true }));
+                                injected = true;
+                            } catch(err) {}
+                        });
+                    }
+
+                    // TUYỆT KỸ 2: Giả lập Drop file vào màn hình
+                    if (!injected) {
+                        try {
+                            const dropTarget = iframeDoc.querySelector('canvas') || iframeDoc.body;
+                            const dt = new DataTransfer();
+                            try { dt.items.add(file); } catch(e) {}
+                            Object.defineProperty(dt, 'files', { get: () => [file] });
+                            const dropEvent = new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: dt });
+                            dropTarget.dispatchEvent(dropEvent);
+                        } catch(err) {}
+                    }
+                    
+                    iframe.focus();
+                } catch (err) {
+                    console.error("Lỗi:", err);
+>>>>>>> origin/main
                 }
             };
 
@@ -664,5 +719,8 @@ registerTool({
         });
     }
 });
+<<<<<<< main
 
 
+=======
+>>>>>>> origin/main
