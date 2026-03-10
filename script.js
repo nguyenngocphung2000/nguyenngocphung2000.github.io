@@ -513,7 +513,7 @@ registerTool({
         }
     }
 });
-// --- 4. Tool Game Tuổi Thơ (Bản Tối Thượng - Vượt Rào Apple 100%) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Hoàn Hảo - Ổn định 100% mọi trình duyệt) ---
 registerTool({
     id: 'tab-game',
     name: 'Game Tuổi Thơ',
@@ -527,16 +527,17 @@ registerTool({
 
         <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
             
-            <div class="flex justify-center mb-6">
-                <button id="custom-upload-btn" class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center justify-center gap-2 border border-indigo-100 active:scale-95 outline-none">
+            <div class="flex justify-center mb-5">
+                <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
                     <span>📁 Chọn file Game (.jar)</span>
-                </button>
+                    <input type="file" id="jar-file" accept=".jar" class="hidden">
+                </label>
             </div>
 
-            <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
+            <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-4 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
                 <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative flex items-center justify-center">
                     
-                    <iframe id="game-iframe" src="./j2me/index.html" class="absolute inset-0 w-full h-full border-0 transition-opacity duration-300" style="opacity: 0; pointer-events: none; z-index: 10;"></iframe>
+                    <iframe id="game-iframe" src="./j2me/index.html" class="absolute inset-0 w-full h-full border-0 transition-opacity duration-300 opacity-0 pointer-events-none z-10"></iframe>
                     
                     <div id="loading-screen" class="absolute inset-0 flex flex-col items-center justify-center w-full h-full text-center p-4 z-0">
                         <span class="text-4xl mb-2">👾</span>
@@ -573,70 +574,70 @@ registerTool({
         </div>
     `,
     logic: function() {
-        const customUploadBtn = document.getElementById('custom-upload-btn');
+        const fileInput = document.getElementById('jar-file');
         const iframe = document.getElementById('game-iframe');
         const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        let isIframeReady = false;
-
-        // 1. CHUẨN BỊ LÕI: Tàng hình các nút xấu xí của Lõi
-        iframe.onload = function() {
+        // Hàm bơm file độc quyền không sợ bị Safari chặn
+        const injectFileToCore = (file) => {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const targetInput = iframeDoc.querySelector('input[type="file"]');
                 
-                const style = iframeDoc.createElement('style');
-                style.innerHTML = `
-                    /* Xóa sổ toàn bộ bàn phím ảo gốc của Lõi */
-                    #keypad, .keypad, .controls, .touch-controls { display: none !important; }
-                    /* Chỉnh nền đen, đưa Game ra giữa */
-                    html, body { overflow: hidden !important; background: #111827 !important; margin: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-                    canvas { max-width: 100%; max-height: 100%; object-fit: contain; }
-                    /* Tuyệt đối KHÔNG dùng display:none cho input file, Safari sẽ chặn. Dùng tàng hình thay thế */
-                    input[type="file"], .file-container, label, form { position: absolute !important; opacity: 0 !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
-                `;
-                iframeDoc.head.appendChild(style);
+                if (targetInput) {
+                    // Dọn dẹp giao diện Lõi: Xóa bàn phím cũ, căn giữa Game
+                    const style = iframeDoc.createElement('style');
+                    style.innerHTML = '#keypad, .keypad, .touch-controls, .controls { display: none !important; } html, body { overflow: hidden !important; background: #111827 !important; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; } canvas { max-width: 100%; max-height: 100%; object-fit: contain; } input[type="file"] { display: none !important; }';
+                    iframeDoc.head.appendChild(style);
 
-                // Lắng nghe sự kiện người dùng chọn file xong
-                const innerInput = iframeDoc.querySelector('input[type="file"]');
-                if (innerInput) {
-                    innerInput.addEventListener('change', function() {
-                        if (innerInput.files.length > 0) {
-                            // File đã vào Lõi thành công! Hiện Game lên, tắt màn hình chờ
-                            loadingScreen.classList.add('hidden');
-                            iframe.style.opacity = '1';
-                            iframe.style.pointerEvents = 'auto';
-                            iframe.focus();
-                        }
-                    });
-                    isIframeReady = true; // Đánh dấu Lõi đã sẵn sàng nhận lệnh
+                    // Bơm file vào Lõi (Bao cả PC lẫn iPhone)
+                    try {
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        targetInput.files = dt.files;
+                    } catch (err) {
+                        // Kỹ thuật bóng ma cho iOS
+                        Object.defineProperty(targetInput, 'files', {
+                            value: [file],
+                            writable: false
+                        });
+                    }
+                    
+                    // Phát lệnh chạy game
+                    targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+                    // Hiện Game, Ẩn Loading
+                    loadingScreen.classList.add('hidden');
+                    iframe.classList.remove('opacity-0', 'pointer-events-none');
+                    iframe.focus();
+                } else {
+                    alert("Lỗi: Không tìm thấy cổng kết nối trong Lõi J2ME.");
                 }
-            } catch(e) {
-                console.error("Lõi chưa sẵn sàng hoặc bị lỗi đường dẫn", e);
+            } catch (error) {
+                console.error("Lỗi khi bơm file:", error);
+                alert("Đã xảy ra lỗi khi khởi chạy game. Hãy tải lại trang và thử lại.");
             }
         };
 
-        // 2. KÍCH HOẠT: Bấm nút Web -> Mở cửa sổ chọn file của Lõi
-        customUploadBtn.addEventListener('click', function() {
-            if (!isIframeReady) {
-                alert("Cỗ máy thời gian đang khởi động Lõi. Bạn chờ khoảng 3-5 giây rồi bấm lại nhé!");
-                return;
-            }
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                const innerInput = iframeDoc.querySelector('input[type="file"]');
-                if (innerInput) {
-                    // Mở cửa sổ native của Apple. Hoàn toàn hợp lệ!
-                    innerInput.click(); 
-                }
-            } catch(err) {
-                alert("Bị trình duyệt chặn. Xin hãy mở bằng Chrome hoặc Safari bình thường.");
+        // Khi người dùng chọn file xong ở giao diện ngoài
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang nạp file vào Lõi...</p>';
+
+            // Kiểm tra iframe đã tải xong index.html của Lõi chưa
+            if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+                injectFileToCore(file);
+            } else {
+                iframe.onload = () => injectFileToCore(file);
             }
         });
 
-        // 3. TRUYỀN PHÍM BẤM VÀO TRONG LÕI
+        // Ánh xạ phím (đã map chuẩn 100% nút Nokia)
         const triggerKey = (keyName, isDown) => {
-            if (iframe && iframe.style.opacity === '1') {
+            if (iframe && !iframe.classList.contains('opacity-0')) {
                 let keyCode = 0;
                 switch(keyName) {
                     case 'SoftLeft': keyCode = 112; break; // F1
@@ -665,7 +666,7 @@ registerTool({
 
         vKeys.forEach(btn => {
             const keyName = btn.getAttribute('data-key');
-            btn.style.webkitTapHighlightColor = 'transparent'; // Tắt hiệu ứng nháy xám của điện thoại
+            btn.style.webkitTapHighlightColor = 'transparent';
             
             btn.addEventListener('mousedown', () => triggerKey(keyName, true));
             btn.addEventListener('mouseup', () => triggerKey(keyName, false));
