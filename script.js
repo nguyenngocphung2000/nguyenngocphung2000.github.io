@@ -624,7 +624,7 @@ registerTool({
 
             outLines.innerText = text.length === 0 ? 0 : text.split('\n').length;
 
-            // Đã đổi sang KB
+            // Tính KB làm tròn 2 chữ số thập phân
             const byteSize = new Blob([text]).size;
             outBytes.innerText = (byteSize / 1024).toFixed(2);
 
@@ -650,7 +650,7 @@ registerTool({
     }
 });
 
-// --- 5. Tool Kí tự đặc biệt (Bản Siêu Cấp: PNG Photoshop + 100 Tên) ---
+// --- 5. Tool Kí tự đặc biệt (Bản Siêu Cấp: Chữ Thư Pháp + PNG Photoshop) ---
 registerTool({
     id: 'tab-special-chars',
     name: 'Kí Tự Đặc Biệt',
@@ -659,7 +659,7 @@ registerTool({
         <div class="text-center mb-6">
             <span class="bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Sáng tạo</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Tạo Tên <span class="text-purple-500">Đặc Biệt</span> ✨</h2>
-            <p class="text-sm text-gray-500 mt-2 italic">Tạo 100+ tên ngầu & Studio xuất ảnh PNG tách nền cho Photoshop!</p>
+            <p class="text-sm text-gray-500 mt-2 italic">100+ đề xuất ngầu & Studio chữ thư pháp PNG tách nền!</p>
         </div>
 
         <div class="space-y-6 max-w-4xl mx-auto">
@@ -670,7 +670,7 @@ registerTool({
                         <div class="bg-indigo-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🔤</div>
                         <div>
                             <h3 class="font-bold text-gray-800">Studio Chữ Nghệ Thuật (Tải PNG)</h3>
-                            <p class="text-xs text-gray-500">Tải font, căn lề, viết dọc và tải ảnh trong suốt!</p>
+                            <p class="text-xs text-gray-500">Tải font, viết thư pháp dọc và xuất ảnh trong suốt!</p>
                         </div>
                     </div>
                     <label class="cursor-pointer bg-indigo-100 text-indigo-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-indigo-200 transition shadow-sm whitespace-nowrap text-center h-fit">
@@ -683,11 +683,10 @@ registerTool({
                     <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-indigo-200 shadow-sm font-bold text-indigo-700 transition" data-align="left" title="Căn trái">⬅️ Trái</button>
                     <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-transparent font-bold text-indigo-700 transition" data-align="center" title="Căn giữa">↔️ Giữa</button>
                     <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-transparent font-bold text-indigo-700 transition" data-align="right" title="Căn phải">➡️ Phải</button>
-                    <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-transparent font-bold text-indigo-700 transition" data-align="justify" title="Căn đều">⇎ Đều</button>
 
                     <div class="w-px h-6 bg-indigo-300 mx-1 hidden md:block"></div>
 
-                    <button id="btn-vertical" class="p-2 rounded-lg hover:bg-indigo-200 bg-white border border-indigo-100 shadow-sm font-bold text-indigo-700 transition" title="Chuyển đổi chữ dọc">⬇️ Dọc</button>
+                    <button id="btn-vertical" class="p-2 rounded-lg hover:bg-indigo-200 bg-white border border-indigo-100 shadow-sm font-bold text-indigo-700 transition" title="Xếp từ theo chiều dọc">⬇️ Dọc</button>
 
                     <div class="w-px h-6 bg-indigo-300 mx-1 hidden md:block"></div>
 
@@ -699,7 +698,7 @@ registerTool({
                     <div class="w-full md:w-px md:h-6 bg-transparent md:bg-indigo-300 mx-1"></div>
 
                     <button id="btn-download-png" class="flex-1 md:flex-none bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold px-4 py-2 rounded-lg text-xs shadow-md transition ml-auto flex justify-center items-center gap-2">
-                        <span>📥</span> TẢI PNG TRONG SUỐT
+                        <span>📥</span> TẢI PNG
                     </button>
                 </div>
 
@@ -707,7 +706,7 @@ registerTool({
                     <textarea id="custom-font-input" class="w-full md:w-1/2 h-48 bg-white border border-indigo-100 rounded-2xl p-4 outline-none focus:ring-2 ring-indigo-200 text-gray-700 resize-none font-medium placeholder-gray-400" placeholder="Nhập nội dung chữ của bạn vào đây..."></textarea>
 
                     <div class="w-full md:w-1/2 min-h-[12rem] bg-gray-100 rounded-2xl border border-indigo-200 overflow-hidden relative flex p-4" style="background-image: linear-gradient(45deg, #e5e7eb 25%, transparent 25%), linear-gradient(-45deg, #e5e7eb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e7eb 75%), linear-gradient(-45deg, transparent 75%, #e5e7eb 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
-                        <div id="custom-font-preview" class="w-full h-full text-[#4f46e5] break-words" style="font-size: 40px; text-align: left; writing-mode: horizontal-tb;">Chữ sẽ hiện ở đây</div>
+                        <div id="custom-font-preview" class="w-full h-full text-[#4f46e5] break-words" style="text-align: left;">Chữ sẽ hiện ở đây</div>
                     </div>
                 </div>
             </div>
@@ -755,7 +754,9 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // 1. LOGIC STUDIO CHỮ & PNG
+        // ==========================================
+        // 1. LOGIC STUDIO CHỮ & PNG (Viết dọc kiểu thư pháp)
+        // ==========================================
         const fontUpload = document.getElementById('font-upload');
         const fontPreview = document.getElementById('custom-font-preview');
         const fontInput = document.getElementById('custom-font-input');
@@ -769,9 +770,46 @@ registerTool({
         let isVertical = false;
         let loadedFontName = '';
 
-        fontInput.addEventListener('input', () => {
-            fontPreview.innerText = fontInput.value || 'Chữ sẽ hiện ở đây';
-        });
+        const updatePreview = () => {
+            let actualText = fontInput.value;
+            if (!actualText.trim()) actualText = "Tết trong nhà\nLộc trên trời";
+            
+            fontPreview.style.color = fontColor.value;
+            fontPreview.style.fontSize = fontSize.value + 'px';
+            fontPreview.style.fontFamily = loadedFontName || 'sans-serif';
+
+            if (isVertical) {
+                // Tách từng dòng thành cột, tách từng từ xuống hàng
+                const lines = actualText.split('\n');
+                fontPreview.innerHTML = '';
+                fontPreview.style.display = 'flex';
+                fontPreview.style.flexDirection = 'row';
+                
+                if (currentAlign === 'center') fontPreview.style.justifyContent = 'center';
+                else if (currentAlign === 'right') fontPreview.style.justifyContent = 'flex-end';
+                else fontPreview.style.justifyContent = 'flex-start';
+                
+                fontPreview.style.gap = '2rem';
+                fontPreview.style.writingMode = 'horizontal-tb';
+                fontPreview.style.textAlign = 'center'; // Canh giữa các từ trong 1 cột
+                
+                lines.forEach(line => {
+                    const col = document.createElement('div');
+                    const words = line.trim().split(/\s+/).filter(w => w.length > 0);
+                    col.innerHTML = words.join('<br>');
+                    fontPreview.appendChild(col);
+                });
+            } else {
+                fontPreview.style.display = 'block';
+                fontPreview.style.writingMode = 'horizontal-tb';
+                fontPreview.style.textAlign = currentAlign;
+                fontPreview.innerHTML = actualText.replace(/\n/g, '<br>');
+            }
+        };
+
+        fontInput.addEventListener('input', updatePreview);
+        fontColor.addEventListener('input', updatePreview);
+        fontSize.addEventListener('input', updatePreview);
 
         fontUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -783,12 +821,11 @@ registerTool({
                 const newFont = new FontFace(loadedFontName, `url(${fontDataUrl})`);
                 newFont.load().then((loaded) => {
                     document.fonts.add(loaded);
-                    fontPreview.style.fontFamily = loadedFontName;
                     fontInput.placeholder = "✅ Font tải thành công! Gõ chữ vào đây...";
                     if(!fontInput.value) {
-                        fontInput.value = "N.Phụng\nStudio";
-                        fontPreview.innerText = fontInput.value;
+                        fontInput.value = "Tết trong nhà\nLộc trên trời";
                     }
+                    updatePreview();
                 }).catch(err => alert("Lỗi tải font. Hãy đảm bảo file bạn chọn là định dạng .ttf hoặc .otf!"));
             };
             reader.readAsDataURL(file);
@@ -804,7 +841,7 @@ registerTool({
                 btn.classList.remove('bg-transparent');
                 
                 currentAlign = btn.getAttribute('data-align');
-                fontPreview.style.textAlign = currentAlign;
+                updatePreview();
             });
         });
 
@@ -813,23 +850,17 @@ registerTool({
             if(isVertical) {
                 btnVertical.classList.add('bg-indigo-500', 'text-white');
                 btnVertical.classList.remove('bg-white');
-                fontPreview.style.writingMode = 'vertical-rl';
             } else {
                 btnVertical.classList.remove('bg-indigo-500', 'text-white');
                 btnVertical.classList.add('bg-white');
-                fontPreview.style.writingMode = 'horizontal-tb';
             }
+            updatePreview();
         });
 
-        fontColor.addEventListener('input', () => fontPreview.style.color = fontColor.value);
-        fontSize.addEventListener('input', () => fontPreview.style.fontSize = fontSize.value + 'px');
-
+        // XUẤT ẢNH PNG CỰC NÉT
         btnDownload.addEventListener('click', () => {
-            const textStr = fontInput.value || fontPreview.innerText;
-            if (!textStr.trim()) {
-                alert("Bạn chưa nhập chữ để tải ảnh!");
-                return;
-            }
+            let actualText = fontInput.value;
+            if (!actualText.trim()) actualText = "Tết trong nhà\nLộc trên trời";
 
             const scale = 3; 
             const size = parseInt(fontSize.value) * scale; 
@@ -838,36 +869,52 @@ registerTool({
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            const lines = textStr.split('\n'); 
+            const lines = actualText.split('\n'); 
 
             ctx.font = `${size}px "${fontFamily}"`;
 
             if (isVertical) {
-                let totalHeight = 0;
-                let colWidth = size * 1.3;
-                lines.forEach(line => {
-                    let h = line.length * (size * 1.1);
-                    if(h > totalHeight) totalHeight = h;
+                let colWidths = [];
+                let totalWidth = 0;
+                let maxTotalHeight = 0;
+                const gap = size * 1.5; 
+                
+                const cols = lines.map(line => line.trim().split(/\s+/).filter(w => w.length > 0));
+                
+                cols.forEach(words => {
+                    let maxW = 0;
+                    let totalH = 0;
+                    words.forEach(word => {
+                        let w = ctx.measureText(word).width;
+                        if(w > maxW) maxW = w;
+                        totalH += size * 1.3;
+                    });
+                    colWidths.push(maxW);
+                    totalWidth += maxW;
+                    if(totalH > maxTotalHeight) maxTotalHeight = totalH;
                 });
                 
-                canvas.width = (colWidth * lines.length) + (40 * scale);
-                canvas.height = totalHeight + (40 * scale);
+                totalWidth += gap * (Math.max(0, cols.length - 1));
+                
+                canvas.width = totalWidth + (40 * scale);
+                canvas.height = maxTotalHeight + (40 * scale);
 
-                ctx.font = `${size}px "${fontFamily}"`;
+                ctx.font = `${size}px "${fontFamily}"`; 
                 ctx.fillStyle = color;
                 ctx.textBaseline = 'top';
                 ctx.textAlign = 'center';
 
-                let startX = canvas.width - (colWidth / 2) - (20 * scale);
+                let startX = 20 * scale; 
                 let startY = 20 * scale;
 
-                lines.forEach((line, i) => {
+                cols.forEach((words, i) => {
+                    let curX = startX + (colWidths[i] / 2);
                     let curY = startY;
-                    let curX = startX - (i * colWidth);
-                    for(let j=0; j<line.length; j++) {
-                        ctx.fillText(line[j], curX, curY);
-                        curY += size * 1.1;
-                    }
+                    words.forEach(word => {
+                        ctx.fillText(word, curX, curY);
+                        curY += size * 1.3;
+                    });
+                    startX += colWidths[i] + gap;
                 });
             } else {
                 let maxWidth = 0;
@@ -879,7 +926,7 @@ registerTool({
                 canvas.width = maxWidth + (40 * scale);
                 canvas.height = (lines.length * size * 1.3) + (40 * scale);
 
-                ctx.font = `${size}px "${fontFamily}"`;
+                ctx.font = `${size}px "${fontFamily}"`; 
                 ctx.fillStyle = color;
                 ctx.textBaseline = 'top';
 
@@ -909,7 +956,12 @@ registerTool({
             a.click();
         });
 
+        // Initialize preview on first load
+        updatePreview();
+
+        // ==========================================
         // 2. LOGIC TẠO 100 ĐỀ XUẤT TÊN
+        // ==========================================
         const copyToClipboard = (text, toastId) => {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById(toastId);
@@ -996,7 +1048,9 @@ registerTool({
             if(e.key === 'Enter') generate100Names();
         });
 
+        // ==========================================
         // 3. KHO KÍ TỰ TỔNG HỢP
+        // ==========================================
         const symbolsVIP = "࿐ 亗 ツ ✿ -`ღ'- ༉ ༊ Ლ Ღ ౘ ༒ ☻ ☹ ༄ ༆ ༇ ༈ ༊ ҉ 𓅂 ༂ ༃ ⚚ ๖ ؄ ఴ 𐩔 𐩘 𐰒 𐰑 ᚕ ᚖ ᚗ ᚘ ᚙ ፠ ፨ ᴥ ᠁ ꔚ ᪤ ద ⫷ ⫸ ʕ˖͜͡˖ʔ ꧁ ꧂ 𐑧 𐑨 𐑩 𐑪 ‿ ⁀ ⁔ ⁐ ⟅ ⟆ ༼ ༽ ༺ ༻ ઈ ઉ ⟡ ⟢ ⟣ 𐑥 𐑯 ꒰ ꒱ ʚ ɞ ꔻ ꔼ ꕢ ꕣ ꕤ ꕥ ᱦ ᱬ ద ధ ర ಠ ఠ ★ ๛ 𒀱 〠 ֍ ֎ ஜ ෴ 🍾 ✌ ✍ ✎ ♆ ۩ ⬳ 乄 ཉྀ ߹ ꧃ 𐩕 థ • ٭ ⋆ ˖ ﾟ°° ﾟ ⁺ ஃ ༚ ༛ ۵ ༔ ⁒ ‼ ‽ ᚘ ᚕ ᚖ ៚ ٭ ༀ ␥ ␦ ᚌ ᚍ ᚎ ᚏ ఢ 〓 〄 ๑ ⊰ ⊱ ⁋ ⁑ ௵ ᚙ ɷߡ ߥ ߦ ‎ߧ ࿂ ࿃ ࿄ ࿅ ࿆ ࿇ ࿈ ࿉ ࿊ ࿋ ࿌ ᴭ ߷ ཉིཾ ᙛ ᙜ ᙝ ᙞ ༕ ༖ ༗ ణ త Ꙩ ᭄ ఠ ◌ͧ ꙰ ꙲ ༜ ꮸ 𐐝 𐑅 𑁍 🝮 ؄ ㍍ Ƀ ͢Ƀ ㉺ ҂ ✰ 𒅒 ⫷ ⫸ 𒁂 𒈒 𒈞 هز ههههه ஓ ଐ ۝ ۞ ⁂ ⁎ ᱦ ᱬ 𒋨 Ꙭ ꙭ ꙮ ஐ ഋ ൠ ⎛ ⎞ ⎝ ⎠ Ӕ Ǣ Ǽ ℄ ɶ ʣ ʤ ʥ Ԙ Ѥ ǣ ѥ ȸ ȹ ѩ ␡ ␟ ␖ ␙ ␜ ␝ ℠ ℡ ™ ℻ ʬ Ξ 🅏 ᴭ Ԙ 웃 유 ℬ ℰ ℯ ℱ ℊ ℋ ℎ ℐ ℒ ℓ ℳ ℴ ℘ ℛ ℭ ℮ ℌ ℑ ℜ ℨ";
         const hearts = "♥ ❤ ❥ 💖 💕 💞 ❣ 🖤 ღ";
         const bows = "˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆ 🩰˚˖𓍢✨໋🎧✧˚.🎀༘⋆ ♰💗♰N̆ơ♰X̆ĬN̆H̆♰╰(°▽°)╯♰ ☝💗𝙣ơ𝙭𝙞𝙣𝙝╰(°▽°)╯✌ ツ💔╰‿╯иơ╰‿╯⒳ιղн╰‿╯🍻";
@@ -1036,4 +1090,3 @@ registerTool({
         });
     }
 });
-
