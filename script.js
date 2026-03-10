@@ -120,6 +120,13 @@ registerTool({
         // KHO BÀI VIẾT ĐÃ ĐƯỢC CHUẨN HÓA MARKDOWN
         // =========================================================
         const guides = [
+           {
+                title: "ℹ️ Contact me",
+                date: "Nothing",
+                content: `
+- Telegram: [@nothing3272](https://t.me/nothing3272)
+- Facebook: [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr) `
+            },
             {
                 title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet",
                 date: "Nothing",
