@@ -513,38 +513,57 @@ registerTool({
         }
     }
 });
-// --- 4. Tool Game Tuổi Thơ ---
+// --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Đã fix lỗi màn hình trắng) ---
 registerTool({
     id: 'tab-game',
-    name: 'Chơi Game Java',
+    name: 'Game Java',
     icon: '🕹️',
     html: `
-        <div class="text-center mb-4">
-            <h2 class="text-3xl font-bold text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
+        <div class="text-center mb-6">
+            <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Giải trí</span>
+            <h2 class="text-3xl font-bold mt-2 text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
+            <p class="text-sm text-gray-500 mt-2">Tải file .jar của bạn lên và sống lại ký ức tuổi thơ!</p>
         </div>
 
-        <div class="glass-card p-4 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400 shadow-2xl">
-            <div class="relative bg-black rounded-2xl p-1 mb-2 border-4 border-gray-800 mx-auto overflow-hidden shadow-inner" style="width: 320px; height: 260px;">
-                <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 bg-black"></iframe>
+        <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
+            <div class="flex justify-center mb-6">
+                <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
+                    <span>📁 Chọn file Game (.jar)</span>
+                    <input type="file" id="jar-file" accept=".jar" class="hidden">
+                </label>
             </div>
 
-            <div class="bg-white/50 backdrop-blur-md p-3 rounded-[1.5rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden mb-2 border border-gray-100">
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftLeft">L-SOFT</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowUp">↑</button>
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftRight">R-SOFT</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowLeft">←</button>
-                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowRight">→</button>
+            <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
+                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative">
+                    <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black"></iframe>
+                    <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4">
+                        <span class="text-4xl mb-2">👾</span>
+                        <p class="text-gray-400 text-xs font-mono">CHƯA CÓ GAME</p>
+                        <p class="text-indigo-400 text-[10px] font-mono mt-1">Vui lòng tải file .jar lên</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/50 backdrop-blur-md p-4 rounded-[2rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden mb-4 shadow-sm border border-gray-100">
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftLeft">TRÁI</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowUp">↑</button>
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftRight">PHẢI</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowLeft">←</button>
+                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 transition-colors aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowRight">→</button>
                     <div class="bg-gray-50"></div>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowDown">↓</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowDown">↓</button>
                     <div class="bg-gray-50"></div>
                 </div>
 
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden border border-gray-100">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
                     ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
-                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 aspect-[5/3] text-lg flex flex-col items-center justify-center group" data-key="${num}">
+                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 active:text-orange-600 transition-colors aspect-[5/3] text-xl flex flex-col items-center justify-center group" data-key="${num}">
                             <span>${num}</span>
+                            <span class="text-[8px] text-gray-400 group-active:text-orange-400 font-normal tracking-widest leading-none mt-0.5 h-2 block">
+                                ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
+                            </span>
                         </button>
                     `).join('')}
                 </div>
@@ -552,34 +571,41 @@ registerTool({
         </div>
     `,
     logic: function() {
-        const iframe = document.getElementById('game-iframe');
-        const vKeys = document.querySelectorAll('.v-key');
+        const fileInput = document.getElementById('jar-file');
+const iframe = document.getElementById('game-iframe');
+const loadingScreen = document.getElementById('loading-screen');
 
-        const triggerKey = (keyName, isDown) => {
-            if (!iframe.contentWindow) return;
-            let keyCode = 0;
-            switch(keyName) {
-                case 'SoftLeft': keyCode = 112; break; 
-                case 'SoftRight': keyCode = 113; break; 
-                case 'ArrowUp': keyCode = 38; break;
-                case 'ArrowDown': keyCode = 40; break;
-                case 'ArrowLeft': keyCode = 37; break;
-                case 'ArrowRight': keyCode = 39; break;
-                case 'Enter': keyCode = 13; break;
-                default: keyCode = keyName.charCodeAt(0);
-            }
-            const eventType = isDown ? 'keydown' : 'keyup';
-            const event = new KeyboardEvent(eventType, { keyCode: keyCode, which: keyCode, bubbles: true });
-            iframe.contentWindow.dispatchEvent(event);
-            iframe.contentDocument.dispatchEvent(event);
+fileInput.addEventListener('change', function(e){
+
+    const file = e.target.files[0];
+    if(!file) return;
+
+    loadingScreen.innerHTML = "Đang khởi động game...";
+    loadingScreen.classList.remove("hidden");
+
+    iframe.classList.remove("hidden");
+
+    iframe.onload = () => {
+
+        iframe.contentWindow.postMessage(file,"*");
+
+        loadingScreen.classList.add("hidden");
+
+    };
+
+});
         };
 
         vKeys.forEach(btn => {
             const keyName = btn.getAttribute('data-key');
+            btn.style.webkitTapHighlightColor = 'transparent';
+            
+            btn.addEventListener('mousedown', () => triggerKey(keyName, true));
+            btn.addEventListener('mouseup', () => triggerKey(keyName, false));
+            btn.addEventListener('mouseleave', () => triggerKey(keyName, false));
+            
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyName, true); });
             btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
-            btn.addEventListener('mousedown', (e) => { e.preventDefault(); triggerKey(keyName, true); });
-            btn.addEventListener('mouseup', (e) => { e.preventDefault(); triggerKey(keyName, false); });
         });
     }
 });
