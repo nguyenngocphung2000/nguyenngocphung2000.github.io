@@ -1,5 +1,5 @@
 /* ==========================================================
-   PHẦN 1: LÕI HỆ THỐNG (KHÔNG CẦN CHỈNH SỬA)
+   PHẦN 1: LÕI HỆ THỐNG
 ========================================================== */
 const desktopNav = document.getElementById('desktop-nav');
 const mobileNav = document.getElementById('mobile-nav');
@@ -18,12 +18,15 @@ function switchTab(tabId) {
     if(targetPanel) targetPanel.classList.add('active');
     
     document.querySelectorAll(`[data-target="${tabId}"]`).forEach(b => b.classList.add('active'));
-    mobileMenu.classList.add('hidden'); // Tự đóng menu điện thoại
+    mobileMenu.classList.add('hidden');
+
+    // MAGIC 1: Lưu vị trí Tab vào bộ nhớ và thanh địa chỉ
+    localStorage.setItem('hupvoi_active_tab', tabId);
+    window.history.replaceState(null, null, '#' + tabId);
 }
 
-// Hàm Đăng ký Công cụ Mới siêu cấp
+// Hàm Đăng ký Công cụ
 function registerTool(config) {
-    // 1. Tạo nút trên PC
     const dBtn = document.createElement('button');
     dBtn.className = 'nav-btn px-4 py-2 transition hover:text-orange-500';
     dBtn.setAttribute('data-target', config.id);
@@ -31,7 +34,6 @@ function registerTool(config) {
     dBtn.onclick = () => switchTab(config.id);
     desktopNav.appendChild(dBtn);
 
-    // 2. Tạo nút trên Mobile
     const mBtn = document.createElement('button');
     mBtn.className = 'mobile-nav-btn text-left px-6 py-3 text-gray-600 hover:bg-orange-50 w-full';
     mBtn.setAttribute('data-target', config.id);
@@ -39,24 +41,40 @@ function registerTool(config) {
     mBtn.onclick = () => switchTab(config.id);
     mobileNav.appendChild(mBtn);
 
-    // 3. Tạo Giao diện nội dung (HTML)
     const panel = document.createElement('div');
     panel.id = config.id;
     panel.className = 'tab-panel';
     panel.innerHTML = config.html;
     appContainer.appendChild(panel);
 
-    // 4. Chạy logic JS của tool đó (nếu có)
     if (typeof config.logic === 'function') {
         config.logic();
     }
 
-    // 5. Nếu là tab mặc định thì mở luôn
+    // Đánh dấu tab nào là mặc định để xử lý sau
     if (config.isDefault) {
-        switchTab(config.id);
+        appContainer.dataset.defaultTab = config.id;
     }
 }
 
+// MAGIC 2: Tự động khôi phục Tab khi web vừa tải xong
+window.addEventListener('DOMContentLoaded', () => {
+    // Ưu tiên 1: Lấy tab từ link chia sẻ (có dấu #)
+    const urlHash = window.location.hash.replace('#', '');
+    // Ưu tiên 2: Lấy tab từ bộ nhớ F5
+    const memoryTab = localStorage.getItem('hupvoi_active_tab');
+    // Ưu tiên 3: Tab mặc định ban đầu
+    const defaultTab = appContainer.dataset.defaultTab;
+
+    const targetTabId = urlHash || memoryTab || defaultTab;
+
+    // Kiểm tra xem tab đó có tồn tại không rồi mới mở
+    if (targetTabId && document.getElementById(targetTabId)) {
+        switchTab(targetTabId);
+    } else if (defaultTab) {
+        switchTab(defaultTab); // Fallback an toàn
+    }
+});
 
 /* ==========================================================
    PHẦN 2: CÁC CÔNG CỤ CỦA BẠN (THÊM THOẢI MÁI Ở ĐÂY)
