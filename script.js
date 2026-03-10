@@ -513,60 +513,38 @@ registerTool({
         }
     }
 });
-// --- 4. Tool Game Tuổi Thơ (Bản Hoàn Hảo - Ổn định 100% mọi trình duyệt) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Fix Triệt Để) ---
 registerTool({
     id: 'tab-game',
     name: 'Game Tuổi Thơ',
     icon: '🕹️',
     html: `
-        <div class="text-center mb-6">
-            <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Giải trí</span>
-            <h2 class="text-3xl font-bold mt-2 text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
-            <p class="text-sm text-gray-500 mt-2">Tải file .jar của bạn lên và sống lại ký ức tuổi thơ!</p>
+        <div class="text-center mb-4">
+            <h2 class="text-3xl font-bold text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
         </div>
 
-        <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
-            
-            <div class="flex justify-center mb-5">
-                <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
-                    <span>📁 Chọn file Game (.jar)</span>
-                    <input type="file" id="jar-file" accept=".jar" class="hidden">
-                </label>
+        <div class="glass-card p-4 md:p-6 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
+            <div class="relative bg-black rounded-2xl p-1 shadow-2xl mb-4 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
+                <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 bg-black rounded-lg"></iframe>
             </div>
 
-            <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-4 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
-                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative flex items-center justify-center">
-                    
-                    <iframe id="game-iframe" src="./j2me/index.html" class="absolute inset-0 w-full h-full border-0 transition-opacity duration-300 opacity-0 pointer-events-none z-10"></iframe>
-                    
-                    <div id="loading-screen" class="absolute inset-0 flex flex-col items-center justify-center w-full h-full text-center p-4 z-0">
-                        <span class="text-4xl mb-2">👾</span>
-                        <p class="text-gray-400 text-xs font-mono">CHƯA CÓ GAME</p>
-                        <p class="text-indigo-400 text-[10px] font-mono mt-1">Vui lòng tải file .jar lên</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white/50 backdrop-blur-md p-4 rounded-[2rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden mb-4 shadow-sm border border-gray-100">
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftLeft">TRÁI</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowUp">↑</button>
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftRight">PHẢI</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowLeft">←</button>
-                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 transition-colors aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowRight">→</button>
+            <div class="bg-white/50 backdrop-blur-md p-3 rounded-[1.5rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden mb-3 border border-gray-100">
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-xs" data-key="SoftLeft">TRÁI</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowUp">↑</button>
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-xs" data-key="SoftRight">PHẢI</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowLeft">←</button>
+                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 aspect-[4/3] text-lg" data-key="Enter">OK</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowRight">→</button>
                     <div class="bg-gray-50"></div>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowDown">↓</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowDown">↓</button>
                     <div class="bg-gray-50"></div>
                 </div>
 
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden border border-gray-100">
                     ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
-                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 active:text-orange-600 transition-colors aspect-[5/3] text-xl flex flex-col items-center justify-center group" data-key="${num}">
+                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 aspect-[5/3] text-lg flex flex-col items-center justify-center group" data-key="${num}">
                             <span>${num}</span>
-                            <span class="text-[8px] text-gray-400 group-active:text-orange-400 font-normal tracking-widest leading-none mt-0.5 h-2 block">
-                                ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
-                            </span>
                         </button>
                     `).join('')}
                 </div>
@@ -574,106 +552,35 @@ registerTool({
         </div>
     `,
     logic: function() {
-        const fileInput = document.getElementById('jar-file');
         const iframe = document.getElementById('game-iframe');
-        const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        // Hàm bơm file độc quyền không sợ bị Safari chặn
-        const injectFileToCore = (file) => {
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                const targetInput = iframeDoc.querySelector('input[type="file"]');
-                
-                if (targetInput) {
-                    // Dọn dẹp giao diện Lõi: Xóa bàn phím cũ, căn giữa Game
-                    const style = iframeDoc.createElement('style');
-                    style.innerHTML = '#keypad, .keypad, .touch-controls, .controls { display: none !important; } html, body { overflow: hidden !important; background: #111827 !important; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; } canvas { max-width: 100%; max-height: 100%; object-fit: contain; } input[type="file"] { display: none !important; }';
-                    iframeDoc.head.appendChild(style);
-
-                    // Bơm file vào Lõi (Bao cả PC lẫn iPhone)
-                    try {
-                        const dt = new DataTransfer();
-                        dt.items.add(file);
-                        targetInput.files = dt.files;
-                    } catch (err) {
-                        // Kỹ thuật bóng ma cho iOS
-                        Object.defineProperty(targetInput, 'files', {
-                            value: [file],
-                            writable: false
-                        });
-                    }
-                    
-                    // Phát lệnh chạy game
-                    targetInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-                    // Hiện Game, Ẩn Loading
-                    loadingScreen.classList.add('hidden');
-                    iframe.classList.remove('opacity-0', 'pointer-events-none');
-                    iframe.focus();
-                } else {
-                    alert("Lỗi: Không tìm thấy cổng kết nối trong Lõi J2ME.");
-                }
-            } catch (error) {
-                console.error("Lỗi khi bơm file:", error);
-                alert("Đã xảy ra lỗi khi khởi chạy game. Hãy tải lại trang và thử lại.");
-            }
-        };
-
-        // Khi người dùng chọn file xong ở giao diện ngoài
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang nạp file vào Lõi...</p>';
-
-            // Kiểm tra iframe đã tải xong index.html của Lõi chưa
-            if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-                injectFileToCore(file);
-            } else {
-                iframe.onload = () => injectFileToCore(file);
-            }
-        });
-
-        // Ánh xạ phím (đã map chuẩn 100% nút Nokia)
+        // Hàm truyền phím vào Lõi
         const triggerKey = (keyName, isDown) => {
-            if (iframe && !iframe.classList.contains('opacity-0')) {
-                let keyCode = 0;
-                switch(keyName) {
-                    case 'SoftLeft': keyCode = 112; break; // F1
-                    case 'SoftRight': keyCode = 113; break; // F2
-                    case 'ArrowUp': keyCode = 38; break;
-                    case 'ArrowDown': keyCode = 40; break;
-                    case 'ArrowLeft': keyCode = 37; break;
-                    case 'ArrowRight': keyCode = 39; break;
-                    case 'Enter': keyCode = 13; break;
-                    default: 
-                        if (!isNaN(keyName)) keyCode = keyName.charCodeAt(0);
-                        else if (keyName === '*') keyCode = 106;
-                        else if (keyName === '#') keyCode = 111;
-                }
-
-                if (keyCode !== 0) {
-                    const eventType = isDown ? 'keydown' : 'keyup';
-                    const event = new KeyboardEvent(eventType, { 
-                        key: keyName, code: keyName, keyCode: keyCode, which: keyCode, bubbles: true 
-                    });
-                    iframe.contentWindow.dispatchEvent(event);
-                    iframe.contentDocument.dispatchEvent(event);
-                }
+            if (!iframe.contentWindow) return;
+            let keyCode = 0;
+            switch(keyName) {
+                case 'SoftLeft': keyCode = 112; break; 
+                case 'SoftRight': keyCode = 113; break; 
+                case 'ArrowUp': keyCode = 38; break;
+                case 'ArrowDown': keyCode = 40; break;
+                case 'ArrowLeft': keyCode = 37; break;
+                case 'ArrowRight': keyCode = 39; break;
+                case 'Enter': keyCode = 13; break;
+                default: keyCode = keyName.charCodeAt(0);
             }
+            const eventType = isDown ? 'keydown' : 'keyup';
+            const event = new KeyboardEvent(eventType, { keyCode: keyCode, which: keyCode, bubbles: true });
+            iframe.contentWindow.dispatchEvent(event);
+            iframe.contentDocument.dispatchEvent(event);
         };
 
         vKeys.forEach(btn => {
             const keyName = btn.getAttribute('data-key');
-            btn.style.webkitTapHighlightColor = 'transparent';
-            
-            btn.addEventListener('mousedown', () => triggerKey(keyName, true));
-            btn.addEventListener('mouseup', () => triggerKey(keyName, false));
-            btn.addEventListener('mouseleave', () => triggerKey(keyName, false));
-            
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyName, true); });
             btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
+            btn.addEventListener('mousedown', () => triggerKey(keyName, true));
+            btn.addEventListener('mouseup', () => triggerKey(keyName, false));
         });
     }
 });
