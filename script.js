@@ -18,7 +18,7 @@ function switchTab(tabId) {
     document.querySelectorAll(`[data-target="${tabId}"]`).forEach(b => b.classList.add('active'));
     mobileMenu.classList.add('hidden');
 
-    localStorage.setItem('hupvoi_active_tab', tabId);
+    localStorage.setItem('my_active_tab', tabId);
     window.history.replaceState(null, null, '#' + tabId);
 }
 
@@ -54,7 +54,7 @@ function registerTool(config) {
 
 window.addEventListener('DOMContentLoaded', () => {
     const urlHash = window.location.hash.replace('#', '');
-    const memoryTab = localStorage.getItem('hupvoi_active_tab');
+    const memoryTab = localStorage.getItem('my_active_tab');
     const defaultTab = appContainer.dataset.defaultTab;
     const targetTabId = urlHash || memoryTab || defaultTab;
 
@@ -87,7 +87,7 @@ registerTool({
                 <div class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-bold mb-3 shadow-sm">Creator / Developer</div>
                 <h1 class="text-3xl font-bold text-gray-800 mb-2">Xin chào, tôi là <span class="text-orange-500">Nothing (N.Phụng)</span></h1>
                 <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base">
-                    <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Chào mừng mọi người đến với không gian nhỏ của tôi. Nơi đây tôi lưu trữ các công cụ tiện ích do mình tự code(bằng AI😂) và chia sẻ những bài hướng dẫn, thủ thuật hay ho mà tôi sưu tầm hoặc tự nghĩ ra. Cứ thoải mái vọc vạch nhé!
+                    <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Chào mừng mọi người đến với không gian nhỏ của tôi. Nơi đây tôi lưu trữ các công cụ tiện ích do mình tự code và chia sẻ những bài hướng dẫn, thủ thuật hay ho mà tôi sưu tầm hoặc tự nghĩ ra. Cứ thoải mái vọc vạch nhé!
                 </p>
                 <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                     <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-50 transition">#TipsMacOs</span>
@@ -99,17 +99,51 @@ registerTool({
 
         <div class="mb-6 flex items-center gap-3 px-2">
             <span class="text-2xl">📚</span>
-            <h2 class="text-2xl font-bold text-gray-800">Từa Lưa Hột Dưa</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Thủ thuật & Hướng dẫn</h2>
         </div>
         
         <div id="guide-list" class="space-y-4"></div>
     `,
     logic: function() {
         const guides = [
-           { title: "ℹ️ Contact me", date: "Nothing", content: "\n- Telegram: [@nothing3272](https://t.me/nothing3272)\n- Facebook: [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr) " },
-            { title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", content: "\n# Quản lý thu chi tự động qua tin nhắn\nBot Telegram kết hợp Google Sheet là một cách tuyệt vời để bạn ghi chép thu chi mọi lúc mọi nơi mà không cần mở các app rườm rà.\n\n🔗 **[Xem mã nguồn và Hướng dẫn chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**" },
-            { title: "📅 Cài Lịch Âm trên macOS (LunarV)", date: "Thủ thuật Mac", content: "\n# Xem Lịch Âm trên thanh menu\nThay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.\n\n🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**" },
-            { title: "⌨️ Bộ gõ tiếng Việt trên Mac", date: "Thủ thuật Mac", content: "\n# Tạm biệt lỗi gạch chân khó chịu\nNếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:\n\n- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**\n- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**" }
+           {
+                title: "ℹ️ Contact me",
+                date: "Nothing",
+                content: `
+- Telegram: [@nothing3272](https://t.me/nothing3272)
+- Facebook: [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr) `
+            },
+            {
+                title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet",
+                date: "Nothing",
+                content: `
+# Quản lý thu chi tự động qua tin nhắn
+Bot Telegram kết hợp Google Sheet là một cách tuyệt vời để bạn ghi chép thu chi mọi lúc mọi nơi mà không cần mở các app rườm rà.
+
+🔗 **[Xem mã nguồn và Hướng dẫn chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**
+                `
+            },
+            {
+                title: "📅 Cài Lịch Âm trên macOS (LunarV)",
+                date: "Thủ thuật Mac",
+                content: `
+# Xem Lịch Âm trên thanh menu
+Thay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trực tiếp trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.
+
+🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**
+                `
+            },
+            {
+                title: "⌨️ Bộ gõ tiếng Việt trên Mac",
+                date: "Thủ thuật Mac",
+                content: `
+# Tạm biệt lỗi gạch chân khó chịu
+Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị nhảy chữ, mất chữ, hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:
+
+- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
+- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
+                `
+            }
         ];
 
         const guideList = document.getElementById('guide-list');
@@ -124,7 +158,9 @@ registerTool({
                         <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-lg pr-4">${guide.title}</h3>
                         <p class="inline-block mt-2 bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${guide.date}</p>
                     </div>
-                    <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">▼</div>
+                    <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">
+                        ▼
+                    </div>
                 </button>
                 <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
                     <div class="prose-custom p-6 md:p-8" id="md-render-${index}"></div>
@@ -154,6 +190,7 @@ registerTool({
                         let text = guides[index].content;
                         text = text.replace(/^@time\[(.*?)\] (.*)$/gm, '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>');
                         renderDiv.innerHTML = marked.parse(text);
+
                         renderDiv.querySelectorAll('a').forEach(link => {
                             link.setAttribute('target', '_blank');
                             link.className = 'text-orange-500 font-bold hover:underline';
@@ -170,7 +207,7 @@ registerTool({
     }
 });
 
-// --- 2. Tool Tính Phần Trăm & La Mã (Đã cập nhật mới) ---
+// --- 2. Tool Tính Phần Trăm ---
 registerTool({
     id: 'tab-calc',
     name: 'Tính Toán',
@@ -178,8 +215,8 @@ registerTool({
     html: `
         <div class="text-center mb-8">
             <span class="bg-yellow-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase text-yellow-900">Công cụ tính toán</span>
-            <h2 class="text-4xl font-bold mt-3 text-gray-800">Siêu <span class="text-red-500">Máy Tính</span> 🧮</h2>
-            <p class="text-sm text-gray-500 mt-2 italic">Nhập dữ liệu vào ô bất kỳ, ô còn lại sẽ tự động tính!</p>
+            <h2 class="text-4xl font-bold mt-3 text-gray-800">Tính <span class="text-red-500">Phần Trăm</span> 🧮</h2>
+            <p class="text-sm text-gray-500 mt-2 italic">Nhập 2 ô bất kỳ, ô còn lại sẽ tự động tính!</p>
         </div>
 
         <div class="space-y-6">
@@ -213,6 +250,36 @@ registerTool({
 
             <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400">
                 <div class="flex items-start space-x-3 mb-5">
+                    <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">÷</div>
+                    <div><h3 class="font-bold text-gray-800">X là bao nhiêu phần trăm của Y?</h3></div>
+                </div>
+                <div class="flex flex-wrap items-end gap-2 md:gap-4">
+                    <div class="flex-1 min-w-[100px]">
+                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị X</label>
+                        <input type="number" id="c2-x" placeholder="45000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                    </div>
+                    <div class="pb-3 font-bold text-gray-400 text-xs text-center">là % của</div>
+                    <div class="flex-1 min-w-[100px]">
+                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị Y</label>
+                        <input type="number" id="c2-y" placeholder="180000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                    </div>
+                    <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
+                    <div class="flex-[0.8] min-w-[80px] flex items-end">
+                        <div class="w-full">
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phần trăm</label>
+                            <input type="number" id="c2-res" placeholder="25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
+                        </div>
+                        <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
+                    </div>
+                </div>
+                <div class="text-right mt-4 flex justify-end space-x-4">
+                    <button id="c2-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-3 py-1 bg-blue-50 rounded-full">💾 Lưu KQ</button>
+                    <button id="c2-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400">
+                <div class="flex items-start space-x-3 mb-5">
                     <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">↕</div>
                     <div><h3 class="font-bold text-gray-800">Thay đổi phần trăm giữa hai giá trị</h3></div>
                 </div>
@@ -240,13 +307,12 @@ registerTool({
                     <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
                 </div>
             </div>
-
             <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-blue-400">
                 <div class="flex items-start space-x-3 mb-5">
                     <div class="bg-blue-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🏛️</div>
                     <div><h3 class="font-bold text-gray-800">Chuyển đổi Số La Mã (1 - 3999)</h3></div>
                 </div>
-                <div class="flex flex-wrap items-end gap-4">
+                <div class="flex flex-wrap items-end gap-2 md:gap-4">
                     <div class="flex-1 min-w-[140px]">
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số Thường (Ả Rập)</label>
                         <input type="number" id="ro-arabic" placeholder="2026" class="w-full bg-blue-50 border border-blue-100 rounded-xl p-3 outline-none focus:ring-2 ring-blue-300 text-center font-bold text-blue-600">
@@ -268,7 +334,8 @@ registerTool({
                     <h3 class="font-bold text-gray-800 flex items-center gap-2"><span>🕒</span> Lịch sử tính toán</h3>
                     <button id="clear-history" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded-full transition">🗑️ Xoá lịch sử</button>
                 </div>
-                <ul id="history-list" class="space-y-3 text-sm text-gray-600 max-h-60 overflow-y-auto pr-2"></ul>
+                <ul id="history-list" class="space-y-3 text-sm text-gray-600 max-h-60 overflow-y-auto pr-2">
+                    </ul>
             </div>
         </div>
     `,
@@ -291,13 +358,43 @@ registerTool({
             });
         };
 
-        // Lịch sử
+        const c1P = document.getElementById('c1-p'), c1V = document.getElementById('c1-v'), c1Res = document.getElementById('c1-res');
+        const calc1 = () => {
+            const target = getTarget(c1P, c1V, c1Res);
+            const p = parseFloat(c1P.value), v = parseFloat(c1V.value), r = parseFloat(c1Res.value);
+            if (target === c1Res && !isNaN(p) && !isNaN(v)) c1Res.value = clean((p * v) / 100);
+            else if (target === c1V && !isNaN(p) && !isNaN(r) && p !== 0) c1V.value = clean((r * 100) / p);
+            else if (target === c1P && !isNaN(v) && !isNaN(r) && v !== 0) c1P.value = clean((r / v) * 100);
+        };
+        attachLogic([c1P, c1V, c1Res], calc1);
+
+        const c2X = document.getElementById('c2-x'), c2Y = document.getElementById('c2-y'), c2Res = document.getElementById('c2-res');
+        const calc2 = () => {
+            const target = getTarget(c2X, c2Y, c2Res);
+            const x = parseFloat(c2X.value), y = parseFloat(c2Y.value), r = parseFloat(c2Res.value);
+            if (target === c2Res && !isNaN(x) && !isNaN(y) && y !== 0) c2Res.value = clean((x / y) * 100);
+            else if (target === c2X && !isNaN(r) && !isNaN(y)) c2X.value = clean((r * y) / 100);
+            else if (target === c2Y && !isNaN(x) && !isNaN(r) && r !== 0) c2Y.value = clean((x / r) * 100);
+        };
+        attachLogic([c2X, c2Y, c2Res], calc2);
+
+        const c3Old = document.getElementById('c3-old'), c3New = document.getElementById('c3-new'), c3Res = document.getElementById('c3-res');
+        const calc3 = () => {
+            const target = getTarget(c3Old, c3New, c3Res);
+            const o = parseFloat(c3Old.value), n = parseFloat(c3New.value), r = parseFloat(c3Res.value);
+            if (target === c3Res && !isNaN(o) && !isNaN(n) && o !== 0) c3Res.value = clean(((n - o) / o) * 100);
+            else if (target === c3New && !isNaN(o) && !isNaN(r)) c3New.value = clean(o * (1 + r / 100));
+            else if (target === c3Old && !isNaN(n) && !isNaN(r) && r !== -100) c3Old.value = clean(n / (1 + r / 100));
+        };
+        attachLogic([c3Old, c3New, c3Res], calc3);
+
         const historyList = document.getElementById('history-list');
-        const STORAGE_KEY = 'hupvoi_calc_history'; 
+        const STORAGE_KEY = 'my_calc_history'; 
 
         const loadHistory = () => {
             const savedData = localStorage.getItem(STORAGE_KEY);
             let historyArr = savedData ? JSON.parse(savedData) : [];
+            
             historyList.innerHTML = ''; 
             
             if (historyArr.length > 0) {
@@ -315,39 +412,22 @@ registerTool({
         const addHistory = (textHTML) => {
             const savedData = localStorage.getItem(STORAGE_KEY);
             let historyArr = savedData ? JSON.parse(savedData) : [];
+            
             historyArr.unshift(textHTML); 
-            if (historyArr.length > 20) historyArr.pop(); 
+            
+            if (historyArr.length > 20) {
+                historyArr.pop(); 
+            }
+
             localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArr)); 
             loadHistory(); 
         };
-
-        // Logic Tool 1 (%)
-        const c1P = document.getElementById('c1-p'), c1V = document.getElementById('c1-v'), c1Res = document.getElementById('c1-res');
-        const calc1 = () => {
-            const target = getTarget(c1P, c1V, c1Res);
-            const p = parseFloat(c1P.value), v = parseFloat(c1V.value), r = parseFloat(c1Res.value);
-            if (target === c1Res && !isNaN(p) && !isNaN(v)) c1Res.value = clean((p * v) / 100);
-            else if (target === c1V && !isNaN(p) && !isNaN(r) && p !== 0) c1V.value = clean((r * 100) / p);
-            else if (target === c1P && !isNaN(v) && !isNaN(r) && v !== 0) c1P.value = clean((r / v) * 100);
-        };
-        attachLogic([c1P, c1V, c1Res], calc1);
-
         document.getElementById('c1-save').onclick = () => {
             if(c1P.value && c1V.value && c1Res.value) addHistory(`<span class="text-orange-500">${fmt(parseFloat(c1P.value))}%</span> của ${fmt(parseFloat(c1V.value))} = <span class="text-red-500">${fmt(parseFloat(c1Res.value))}</span>`);
         };
-        document.getElementById('c1-clear').onclick = () => { c1P.value = c1V.value = c1Res.value = ""; c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0; };
-
-        // Logic Tool 2 (Tăng/Giảm)
-        const c3Old = document.getElementById('c3-old'), c3New = document.getElementById('c3-new'), c3Res = document.getElementById('c3-res');
-        const calc3 = () => {
-            const target = getTarget(c3Old, c3New, c3Res);
-            const o = parseFloat(c3Old.value), n = parseFloat(c3New.value), r = parseFloat(c3Res.value);
-            if (target === c3Res && !isNaN(o) && !isNaN(n) && o !== 0) c3Res.value = clean(((n - o) / o) * 100);
-            else if (target === c3New && !isNaN(o) && !isNaN(r)) c3New.value = clean(o * (1 + r / 100));
-            else if (target === c3Old && !isNaN(n) && !isNaN(r) && r !== -100) c3Old.value = clean(n / (1 + r / 100));
+        document.getElementById('c2-save').onclick = () => {
+            if(c2X.value && c2Y.value && c2Res.value) addHistory(`${fmt(parseFloat(c2X.value))} là <span class="text-orange-500">${fmt(parseFloat(c2Res.value))}%</span> của ${fmt(parseFloat(c2Y.value))}`);
         };
-        attachLogic([c3Old, c3New, c3Res], calc3);
-
         document.getElementById('c3-save').onclick = () => {
             if(c3Old.value && c3New.value && c3Res.value) {
                 const r = parseFloat(c3Res.value);
@@ -355,9 +435,16 @@ registerTool({
                 addHistory(`Từ ${fmt(parseFloat(c3Old.value))} → ${fmt(parseFloat(c3New.value))} là <span class="text-${r>0?'green':'red'}-500">${txt} ${fmt(Math.abs(r))}%</span>`);
             }
         };
+
+        document.getElementById('c1-clear').onclick = () => { c1P.value = c1V.value = c1Res.value = ""; c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0; };
+        document.getElementById('c2-clear').onclick = () => { c2X.value = c2Y.value = c2Res.value = ""; c2X.dataset.last = c2Y.dataset.last = c2Res.dataset.last = 0; };
         document.getElementById('c3-clear').onclick = () => { c3Old.value = c3New.value = c3Res.value = ""; c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0; };
 
-        // Logic Tool 3 (Số La Mã)
+        document.getElementById('clear-history').onclick = () => {
+            localStorage.removeItem(STORAGE_KEY); 
+            loadHistory(); 
+        };
+        // --- LOGIC TOOL 3: Chuyển đổi Số La Mã ---
         const inArabic = document.getElementById('ro-arabic');
         const inRoman = document.getElementById('ro-roman');
 
@@ -377,7 +464,6 @@ registerTool({
         const toArabic = (str) => {
             str = str.toUpperCase();
             let num = 0;
-            // Validate: Cấm nhập bậy bạ ngoài ký tự La Mã
             if (!/^[IVXLCDM]+$/.test(str)) return NaN; 
             for (let i of Object.keys(romanMap)) {
                 while (str.indexOf(i) === 0) {
@@ -409,14 +495,12 @@ registerTool({
         });
 
         document.getElementById('ro-save').onclick = () => {
-            if(inArabic.value && inRoman.value) {
-                addHistory(`Số <span class="text-blue-500 font-bold">${inArabic.value}</span> = La Mã <span class="text-indigo-500 font-bold">${inRoman.value}</span>`);
+            if(inArabic.value && inRoman.value && inRoman.value !== "LỖI") {
+                addHistory(`Số <span class="text-blue-500 font-bold">\${inArabic.value}</span> = La Mã <span class="text-indigo-500 font-bold">\${inRoman.value}</span>`);
             }
         };
         
         document.getElementById('ro-clear').onclick = () => { inArabic.value = ""; inRoman.value = ""; };
-        document.getElementById('clear-history').onclick = () => { localStorage.removeItem(STORAGE_KEY); loadHistory(); };
-
         loadHistory();
     }
 });
@@ -434,7 +518,7 @@ registerTool({
             
             <div class="flex justify-end mb-4">
                 <label class="cursor-pointer bg-orange-100 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-orange-200 transition shadow-sm">
-                    📁 Mở File(.md)
+                    📁 Chọn File(.md)
                     <input type="file" id="md-file" accept=".md" class="hidden">
                 </label>
             </div>
@@ -469,12 +553,11 @@ registerTool({
         }
     }
 });
-
-// --- 4. Tool Thống kê văn bản (MỚI) ---
+// --- 4. Tool Thống kê văn bản ---
 registerTool({
     id: 'tab-text-stat',
     name: 'Thống Kê Văn Bản',
-    icon: '🔠',
+    icon: '📊',
     html: `
         <div class="text-center mb-6">
             <span class="bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Tiện ích chữ</span>
@@ -486,7 +569,6 @@ registerTool({
             
             <div class="relative w-full">
                 <textarea id="ts-input" class="w-full h-48 bg-emerald-50/30 rounded-2xl p-4 font-sans text-sm border border-emerald-100 focus:outline-none focus:ring-2 ring-emerald-300 resize-y shadow-inner text-gray-700 placeholder-gray-400" placeholder="Hãy gõ hoặc dán nội dung vào đây..."></textarea>
-                
                 <button id="ts-clear" class="absolute top-4 right-4 text-xs font-bold text-gray-400 hover:text-red-500 bg-white px-2 py-1 rounded shadow-sm border border-gray-100 transition">Xóa trắng</button>
             </div>
 
@@ -534,23 +616,16 @@ registerTool({
         const calculateStats = () => {
             const text = input.value;
             
-            // 1. Đếm ký tự (bao gồm dấu cách)
             outChars.innerText = text.length;
-            
-            // 2. Đếm ký tự (không dấu cách)
-            outCharsNoSpace.innerText = text.replace(/\\s/g, '').length;
+            outCharsNoSpace.innerText = text.replace(/\s/g, '').length;
 
-            // 3. Đếm số từ (cắt theo khoảng trắng/xuống dòng, bỏ mảng rỗng)
-            const words = text.trim().split(/\\s+/).filter(w => w.length > 0);
+            const words = text.trim().split(/\s+/).filter(w => w.length > 0);
             outWords.innerText = words.length;
 
-            // 4. Đếm số dòng (nếu rỗng thì 0, nếu có chữ thì đếm dấu \n + 1)
-            outLines.innerText = text.length === 0 ? 0 : text.split('\\n').length;
+            outLines.innerText = text.length === 0 ? 0 : text.split('\n').length;
 
-            // 5. Tính dung lượng Bytes (Dùng Blob để đếm chính xác byte của UTF-8 Tiếng Việt)
             outBytes.innerText = new Blob([text]).size;
 
-            // 6. Tính thời gian đọc trung bình (200 từ / phút)
             const minutes = words.length / 200;
             if (minutes === 0) {
                 outReadTime.innerText = "0 giây";
@@ -559,14 +634,12 @@ registerTool({
             } else {
                 const m = Math.floor(minutes);
                 const s = Math.ceil((minutes - m) * 60);
-                outReadTime.innerText = \`\${m} phút \${s} giây\`;
+                outReadTime.innerText = `${m} phút ${s} giây`;
             }
         };
 
-        // Kích hoạt khi gõ
         input.addEventListener('input', calculateStats);
 
-        // Nút xóa
         btnClear.addEventListener('click', () => {
             input.value = '';
             calculateStats();
