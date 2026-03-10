@@ -80,19 +80,146 @@ window.addEventListener('DOMContentLoaded', () => {
    PHẦN 2: CÁC CÔNG CỤ
 ========================================================== */
 
-// --- 1. Tool Trang Chủ ---
+// --- 1. Tool Trang Chủ (Profile & Cẩm nang Hướng Dẫn) ---
 registerTool({
     id: 'tab-home',
     name: 'Trang Chủ',
     icon: '🏠',
     isDefault: true,
     html: `
-        <div class="text-center py-20">
-            <h1 class="text-3xl font-bold">Khu Vực Dành Cho Anh Em</h1>
-            <p class="text-gray-500 mt-2">Mọi thứ đã sẵn sàng. Chạm vào menu để bắt đầu.</p>
+        <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 mb-10 border-t-4 border-t-orange-400 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-orange-100 border-4 border-white shadow-xl overflow-hidden shrink-0 flex items-center justify-center text-5xl z-10">
+                👨‍💻
+            </div>
+            
+            <div class="text-center md:text-left flex-1 z-10">
+                <div class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-bold mb-3 shadow-sm">Creator / Developer</div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Xin chào, tôi là <span class="text-orange-500">Nothing (N.Phụng)</span></h1>
+                <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base">
+                    <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Chào mừng mọi người đến với không gian nhỏ của tôi. Nơi đây tôi lưu trữ các công cụ tiện ích do mình tự code và chia sẻ những bài hướng dẫn, thủ thuật hay ho mà tôi sưu tầm hoặc tự nghĩ ra. Cứ thoải mái vọc vạch nhé!
+                </p>
+                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                    <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-50 transition">#TipsMacOs</span>
+                    <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-50 transition">#Automation</span>
+                    <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-50 transition">#Nothing</span>
+                </div>
+            </div>
         </div>
-    `
+
+        <div class="mb-6 flex items-center gap-3 px-2">
+            <span class="text-2xl">📚</span>
+            <h2 class="text-2xl font-bold text-gray-800">Thủ thuật & Hướng dẫn</h2>
+        </div>
+        
+        <div id="guide-list" class="space-y-4"></div>
+    `,
+    logic: function() {
+        // =========================================================
+        // KHO BÀI VIẾT ĐÃ ĐƯỢC CHUẨN HÓA MARKDOWN
+        // =========================================================
+        const guides = [
+            {
+                title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet",
+                date: "Nothing",
+                content: `
+# Quản lý thu chi tự động qua tin nhắn
+Bot Telegram kết hợp Google Sheet là một cách tuyệt vời để bạn ghi chép thu chi mọi lúc mọi nơi mà không cần mở các app rườm rà.
+
+🔗 **[Xem mã nguồn và Hướng dẫn chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**
+                `
+            },
+            {
+                title: "📅 Cài Lịch Âm trên macOS (LunarV)",
+                date: "Thủ thuật Mac",
+                content: `
+# Xem Lịch Âm trên thanh menu
+Thay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trực tiếp trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.
+
+🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**
+                `
+            },
+            {
+                title: "⌨️ Bộ gõ tiếng Việt trên Mac",
+                date: "Thủ thuật Mac",
+                content: `
+# Tạm biệt lỗi gạch chân khó chịu
+Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị nhảy chữ, mất chữ, hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:
+
+- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
+- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
+                `
+            }
+        ];
+
+        // =========================================================
+        // LOGIC HIỂN THỊ 
+        // =========================================================
+        const guideList = document.getElementById('guide-list');
+
+        guides.forEach((guide, index) => {
+            const item = document.createElement('div');
+            item.className = 'glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
+            
+            item.innerHTML = `
+                <button class="w-full text-left p-5 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
+                    <div>
+                        <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-lg pr-4">${guide.title}</h3>
+                        <p class="inline-block mt-2 bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${guide.date}</p>
+                    </div>
+                    <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">
+                        ▼
+                    </div>
+                </button>
+                <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
+                    <div class="prose-custom p-6 md:p-8" id="md-render-${index}"></div>
+                </div>
+            `;
+            guideList.appendChild(item);
+        });
+
+        window.toggleGuide = function(index) {
+            const contentDiv = document.getElementById('content-' + index);
+            const iconDiv = document.getElementById('icon-' + index);
+            const renderDiv = document.getElementById('md-render-' + index);
+
+            if (contentDiv.classList.contains('hidden')) {
+                // Đóng các tab khác
+                guides.forEach((_, i) => {
+                    if (i !== index) {
+                        document.getElementById('content-' + i).classList.add('hidden');
+                        document.getElementById('icon-' + i).style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Mở tab hiện tại
+                contentDiv.classList.remove('hidden');
+                iconDiv.style.transform = 'rotate(180deg)';
+                
+                if (renderDiv.innerHTML.trim() === '') {
+                    if (window.marked) {
+                        let text = guides[index].content;
+                        text = text.replace(/^@time\[(.*?)\] (.*)$/gm, '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>');
+                        renderDiv.innerHTML = marked.parse(text);
+
+                        // MAGIC: Làm cho các đường link đẹp hơn và mở sang Tab mới
+                        renderDiv.querySelectorAll('a').forEach(link => {
+                            link.setAttribute('target', '_blank'); // Mở tab mới
+                            link.className = 'text-orange-500 font-bold hover:underline'; // Thêm màu cam cho link
+                        });
+                    } else {
+                        renderDiv.innerHTML = "<p class='text-red-500'>Lỗi: Không tải được thư viện Markdown.</p>";
+                    }
+                }
+            } else {
+                contentDiv.classList.add('hidden');
+                iconDiv.style.transform = 'rotate(0deg)';
+            }
+        };
+    }
 });
+
 
 // --- 2. Tool Tính Phần Trăm ---
 registerTool({
