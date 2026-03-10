@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+<html>
 <head>
 	<title>JS2ME</title>
+	<link rel="stylesheet" type="text/css" href="css/buttons.css">
+	<link rel="stylesheet" type="text/css" href="css/emulator.css">
 	<meta charset="utf-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<script type="text/javascript" src="js/zip/zip.js"></script>
@@ -24,67 +27,72 @@
 	<script type="text/javascript" src="js/utils.js"></script>
 
     <style>
-        /* Ép nền Lõi thành màu đen, giấu đi các bảng báo lỗi/cài đặt gốc */
-        html, body, #frame { background: black !important; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        /* Ép nền Lõi thành màu đen */
+        html, body, #frame { background: black !important; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; border: none !important; }
+        /* Giấu nhẹm mấy cái bảng báo lỗi và giao diện nút bấm cũ */
         #alert, #settings, #top, #settings-button, #keypad, .topbutton { display: none !important; }
-        
-        /* Chỉnh lại màn hình thông báo cho đẹp */
-        #screen { color: #4ADE80; font-family: monospace; font-size: 14px; text-align: center; padding-top: 40%; font-weight: bold; }
-        
-        /* Căn giữa Game */
-        canvas { display: block !important; max-width: 100%; max-height: 100%; margin: auto; }
+        /* Giấu chữ "Select JAR file" */
+        #screen { background: black !important; color: transparent !important; }
+        #file-selector { display: none !important; }
+        /* Căn giữa Canvas Game */
+        canvas { display: block !important; max-width: 100%; max-height: 100%; margin: auto; border-radius: 8px; }
     </style>
 </head>
-
 <body>
 	<div id="frame">
-		<div id="screen"></div>
+		<button class="topbutton" id="show" >&gt;</button>
+		<div id="top">
+			<button class="topbutton" id="hide">&lt;</button><div id="title"></div><button class="topbutton" id="exit">X</button>
+		</div>
+		<button class="topbutton" id="settings-button">i</button>
+		<div id="screen">
+			Select JAR file:<br>
+ 			<img id="file-selector" src="img/arrow_up.png" width="128" height="128">
+		</div>
+		<div id="keypad">
+			<div id="joypad">
+				<button id="up" class="key num">&nbsp;</button><br>
+				<button id="left" class="key num">&nbsp;</button>
+				<button id="ok" class="key num">&nbsp;</button>
+				<button id="right" class="key num">&nbsp;</button><br>
+				<button id="down" class="key num">&nbsp;</button>
+			</div>
+			<button id="choice" class="softkey">&nbsp;</button>
+			<button id="open-joypad" class="key">&nbsp;</button>
+			<button id="back" class="softkey">&nbsp;</button><br>
+			<button id="num1" class="key num">1</button>
+			<button id="num2" class="key num">2</button>
+			<button id="num3" class="key num">3</button><br>
+			<button id="num4" class="key num">4</button>
+			<button id="num5" class="key num">5</button>
+			<button id="num6" class="key num">6</button><br>
+			<button id="num7" class="key num">7</button>
+			<button id="num8" class="key num">8</button>
+			<button id="num9" class="key num">9</button><br>
+			<button id="star" class="key num">*</button>
+			<button id="num0" class="key num">0</button>
+			<button id="pound" class="key num">#</button><br>
+		</div>
 	</div>
-    
-    <div id="alert" style="display:none;"><div class="message"></div></div>
-	<div id="settings" style="display:none;"></div>
-	<div id="keypad" style="display:none;"></div>
-
-    <script>
-        // Khi iframe được gọi lên, đoạn code này sẽ chạy
-        window.addEventListener('load', function() {
-            var params = new URLSearchParams(window.location.search);
-            var gameUrl = params.get('url');
-            var screenDiv = document.getElementById('screen');
-            
-            if (gameUrl) {
-                // In chữ đàng hoàng lên màn hình đen
-                screenDiv.innerHTML = "⏳ ĐANG KÉO GAME TỪ KHO...<br><span style='color:#9CA3AF;font-size:10px;font-weight:normal;'>" + gameUrl + "</span>";
-                
-                fetch(gameUrl)
-                    .then(function(res) {
-                        if (!res.ok) throw new Error("LỖI 404: KHÔNG TÌM THẤY FILE!");
-                        return res.blob();
-                    })
-                    .then(function(blob) {
-                        screenDiv.innerHTML = "✅ TẢI XONG! ĐANG KHỞI ĐỘNG...";
-                        
-                        // Nặn Blob thành File để nhét vào mồm Lõi
-                        var file;
-                        try { file = new File([blob], "game.jar", { type: "application/java-archive" }); } 
-                        catch (e) { file = blob; file.name = "game.jar"; }
-                        
-                        // Canh chừng Lõi tải xong các file JS thì bơm game vào
-                        var waitCore = setInterval(function() {
-                            if (window.js2me && typeof window.js2me.loadJAR === 'function') {
-                                clearInterval(waitCore);
-                                screenDiv.style.display = 'none'; // Giấu đoạn chữ thông báo đi để hiện Game
-                                window.js2me.loadJAR(file);
-                            }
-                        }, 100);
-                    })
-                    .catch(function(err) {
-                        screenDiv.innerHTML = "<span style='color:#F87171'>❌ " + err.message + "</span>";
-                    });
-            } else {
-                screenDiv.innerHTML = "<span style='color:#9CA3AF'>CHƯA CHỌN BĂNG GAME</span>";
-            }
-        });
-    </script>
+	<div id="alert"><div class="message">Error!</div></div>
+	<div id="settings">
+		<div class="dialog">
+			<div class="options">
+				<div class="option">
+					<label>Screen resolution (requires reload):</label>
+					<select class="screen-size">
+						<option value="128,96,128">128x128</option>
+						<option value="176,176,220">176x220</option>
+						<option value="240,266,320">240x320</option>
+					</select>
+				</div>
+				<div class="option">
+					<button class="generate-methods">Generate methods</button>
+					<aside>May take long time</aside>
+				</div>
+			</div>
+			<button class="done">Done</button>
+		</div>
+	</div>
 </body>
 </html>

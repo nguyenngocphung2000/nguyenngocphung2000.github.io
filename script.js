@@ -478,10 +478,10 @@ registerTool({
     }
 });
 
-// --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Phân Quyền Rõ Ràng) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Sửa Lỗi Đường Dẫn Cuối Cùng) ---
 registerTool({
     id: 'tab-game',
-    name: 'Game Tuổi Thơ',
+    name: 'Game Java',
     icon: '🕹️',
     html: `
         <div class="text-center mb-6">
@@ -550,27 +550,69 @@ registerTool({
         const gameSelector = document.getElementById('game-selector');
         const iframe = document.getElementById('game-iframe');
         const loadingScreen = document.getElementById('loading-screen');
+        const loadingText = document.getElementById('loading-text');
         const vKeys = document.querySelectorAll('.v-key');
 
-        gameSelector.addEventListener('change', function() {
+        gameSelector.addEventListener('change', async function() {
             const gameUrl = this.value;
             if (!gameUrl) return;
 
-            // Truyền trực tiếp link vào iframe để Lõi tự xử lý
+            // 1. Hiện màn hình chờ CỦA VỎ
             iframe.classList.add('hidden');
             loadingScreen.classList.remove('hidden');
-            
-            iframe.src = `./j2me/index.html?url=${encodeURIComponent(gameUrl)}&t=${Date.now()}`;
+            loadingText.innerText = "⏳ ĐANG KÉO GAME TỪ KHO...";
+            loadingText.className = "text-yellow-400 text-xs font-mono font-bold mt-2";
 
-            iframe.onload = function() {
-                setTimeout(() => {
-                    loadingScreen.classList.add('hidden');
-                    iframe.classList.remove('hidden');
-                    iframe.focus();
-                }, 300); // Rút ngắn thời gian chờ
-            };
+            try {
+                // 2. VỎ TỰ ĐI KÉO GAME (Đường dẫn ./games/ hoàn toàn chuẩn xác vì Vỏ nằm ở root)
+                const response = await fetch(gameUrl);
+                if (!response.ok) throw new Error("404: KHÔNG TÌM THẤY BĂNG GAME!");
+                const blob = await response.blob();
+                
+                let file;
+                try { file = new File([blob], gameUrl.split('/').pop(), { type: "application/java-archive" }); } 
+                catch (e) { file = blob; file.name = gameUrl.split('/').pop(); }
+
+                loadingText.innerText = "✅ TẢI XONG! ĐANG MỞ LÕI...";
+                loadingText.className = "text-green-400 text-xs font-mono font-bold mt-2";
+
+                // 3. Khởi động Lõi SẠCH
+                iframe.src = `./j2me/index.html?t=${Date.now()}`;
+
+                iframe.onload = function() {
+                    loadingText.innerText = "🔥 ĐANG ÉP XUNG LÕI...";
+                    const win = iframe.contentWindow;
+
+                    let checks = 0;
+                    const waitCore = setInterval(() => {
+                        checks++;
+                        // Rình xem Lõi đã load xong hàm js2me chưa
+                        if (win.js2me && typeof win.js2me.loadJAR === 'function') {
+                            clearInterval(waitCore);
+                            loadingText.innerText = "🚀 KHỞI ĐỘNG!";
+                            
+                            // BƠM FILE VÀO MỒM LÕI!
+                            win.js2me.loadJAR(file);
+                            
+                            setTimeout(() => {
+                                loadingScreen.classList.add('hidden');
+                                iframe.classList.remove('hidden');
+                                iframe.focus();
+                            }, 300);
+                        } else if (checks > 100) { // Timeout 10 giây
+                            clearInterval(waitCore);
+                            loadingText.innerText = "❌ LỖI: LÕI BỊ ĐƠ";
+                            loadingText.className = "text-red-400 text-xs font-mono font-bold mt-2";
+                        }
+                    }, 100);
+                };
+            } catch (error) {
+                loadingText.innerText = "❌ LỖI: " + error.message;
+                loadingText.className = "text-red-400 text-[10px] font-mono font-bold mt-2";
+            }
         });
 
+        // Ánh xạ phím ảo
         const triggerKey = (keyName, isDown) => {
             if (iframe && !iframe.classList.contains('hidden')) {
                 let keyCode = 0;
