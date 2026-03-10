@@ -557,7 +557,7 @@ registerTool({
 // --- 4. Tool Thống kê văn bản ---
 registerTool({
     id: 'tab-text-stat',
-    name: 'Thống Kê Văn Bản',
+    name: 'Thống Kê Chữ',
     icon: '📊',
     html: `
         <div class="text-center mb-6">
@@ -592,7 +592,7 @@ registerTool({
                 <div class="bg-white p-4 rounded-2xl text-center shadow-sm border border-emerald-50">
                     <span class="block text-3xl font-black text-emerald-600 flex justify-center items-end gap-1">
                         <span id="ts-bytes">0</span> 
-                        <span class="text-sm pb-1 text-emerald-400">B</span>
+                        <span class="text-sm pb-1 text-emerald-400">KB</span>
                     </span>
                     <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Dung lượng</span>
                 </div>
@@ -616,7 +616,6 @@ registerTool({
 
         const calculateStats = () => {
             const text = input.value;
-            
             outChars.innerText = text.length;
             outCharsNoSpace.innerText = text.replace(/\s/g, '').length;
 
@@ -625,7 +624,9 @@ registerTool({
 
             outLines.innerText = text.length === 0 ? 0 : text.split('\n').length;
 
-            outBytes.innerText = new Blob([text]).size;
+            // Đã đổi sang KB
+            const byteSize = new Blob([text]).size;
+            outBytes.innerText = (byteSize / 1024).toFixed(2);
 
             const minutes = words.length / 200;
             if (minutes === 0) {
@@ -648,6 +649,7 @@ registerTool({
         });
     }
 });
+
 // --- 5. Tool Kí tự đặc biệt (Bản Siêu Cấp: PNG Photoshop + 100 Tên) ---
 registerTool({
     id: 'tab-special-chars',
@@ -753,9 +755,7 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // ==========================================
         // 1. LOGIC STUDIO CHỮ & PNG
-        // ==========================================
         const fontUpload = document.getElementById('font-upload');
         const fontPreview = document.getElementById('custom-font-preview');
         const fontInput = document.getElementById('custom-font-input');
@@ -786,7 +786,7 @@ registerTool({
                     fontPreview.style.fontFamily = loadedFontName;
                     fontInput.placeholder = "✅ Font tải thành công! Gõ chữ vào đây...";
                     if(!fontInput.value) {
-                        fontInput.value = "KituGenz\\nStudio";
+                        fontInput.value = "N.Phụng\nStudio";
                         fontPreview.innerText = fontInput.value;
                     }
                 }).catch(err => alert("Lỗi tải font. Hãy đảm bảo file bạn chọn là định dạng .ttf hoặc .otf!"));
@@ -824,7 +824,6 @@ registerTool({
         fontColor.addEventListener('input', () => fontPreview.style.color = fontColor.value);
         fontSize.addEventListener('input', () => fontPreview.style.fontSize = fontSize.value + 'px');
 
-        // Xuất PNG cực nét cho Photoshop bằng HTML5 Canvas
         btnDownload.addEventListener('click', () => {
             const textStr = fontInput.value || fontPreview.innerText;
             if (!textStr.trim()) {
@@ -832,14 +831,14 @@ registerTool({
                 return;
             }
 
-            const scale = 3; // Nhân 3 lần độ phân giải để bao nét trên PTS
+            const scale = 3; 
             const size = parseInt(fontSize.value) * scale; 
             const color = fontColor.value;
             const fontFamily = loadedFontName || 'sans-serif';
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            const lines = textStr.split('\\n'); 
+            const lines = textStr.split('\n'); 
 
             ctx.font = `${size}px "${fontFamily}"`;
 
@@ -894,7 +893,7 @@ registerTool({
                     ctx.textAlign = 'right';
                     startX = canvas.width - (20 * scale);
                 } else {
-                    ctx.textAlign = 'left'; // Justify khi xuất ảnh cũng tự dồn về trái
+                    ctx.textAlign = 'left';
                     startX = 20 * scale;
                 }
 
@@ -910,9 +909,7 @@ registerTool({
             a.click();
         });
 
-        // ==========================================
         // 2. LOGIC TẠO 100 ĐỀ XUẤT TÊN
-        // ==========================================
         const copyToClipboard = (text, toastId) => {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById(toastId);
@@ -943,9 +940,8 @@ registerTool({
 
             let results = [];
             
-            // 10 KIỂU TIÊU CHUẨN
             results.push({ label: "Giai điệu", val: convertMap(rawName, mapCircled) });
-            results.push({ label: "Mẫu 127", val: rawName.split('').join('\\u0330') + '\\u0330' });
+            results.push({ label: "Mẫu 127", val: rawName.split('').join('\u0330') + '\u0330' });
             results.push({ label: "Mẫu 150", val: '꧁ ' + rawName + ' ꧂' });
             results.push({ label: "Âm nhạc", val: convertMap(rawName.toLowerCase(), mapThai) });
             results.push({ label: "Thịnh hành", val: convertMap(rawName.toLowerCase(), mapSmallCaps) });
@@ -955,7 +951,6 @@ registerTool({
             results.push({ label: "Thánh giá", val: rawName.toUpperCase().split('').join('✞') });
             results.push({ label: "In đậm", val: convertMap(rawName, mapBold) });
 
-            // THUẬT TOÁN 90 KIỂU MỞ RỘNG
             const fonts = [
                 {n:"Chuẩn", m:null}, {n:"Nghiêng", m:mapItalic}, {n:"Script", m:mapScript},
                 {n:"Double", m:mapDoubleStruck}, {n:"Á Đông", m:mapAsian}
@@ -974,7 +969,7 @@ registerTool({
                 for (let f of fonts) {
                     if (results.length >= 100) break;
                     let txt = f.m ? convertMap(rawName, f.m) : rawName;
-                    results.push({ label: 'Mẫu ' + count++, val: d[0] + txt + d[1] });
+                    results.push({ label: `Mẫu ${count++}`, val: d[0] + txt + d[1] });
                 }
                 if (results.length >= 100) break;
             }
@@ -985,13 +980,13 @@ registerTool({
                 div.className = 'flex items-center justify-between bg-white border border-purple-100 p-2 md:p-3 rounded-xl shadow-sm hover:shadow-md transition group cursor-pointer';
                 div.onclick = () => copyToClipboard(item.val, 'copy-toast-nick');
                 
-                div.innerHTML = \`
+                div.innerHTML = `
                     <div class="flex items-center gap-3 overflow-hidden flex-1">
-                        <span class="text-[10px] md:text-xs text-gray-500 font-medium w-16 md:w-20 shrink-0 truncate">\${item.label}</span>
-                        <span class="font-bold text-gray-800 text-sm md:text-base group-hover:text-purple-600 transition truncate flex-1">\${item.val}</span>
+                        <span class="text-[10px] md:text-xs text-gray-500 font-medium w-16 md:w-20 shrink-0 truncate">${item.label}</span>
+                        <span class="font-bold text-gray-800 text-sm md:text-base group-hover:text-purple-600 transition truncate flex-1">${item.val}</span>
                     </div>
                     <button class="text-[10px] md:text-xs bg-purple-50 text-purple-600 font-bold px-3 py-1.5 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition shrink-0 ml-2">Copy</button>
-                \`;
+                `;
                 resultsDiv.appendChild(div);
             });
         };
@@ -1001,9 +996,7 @@ registerTool({
             if(e.key === 'Enter') generate100Names();
         });
 
-        // ==========================================
         // 3. KHO KÍ TỰ TỔNG HỢP
-        // ==========================================
         const symbolsVIP = "࿐ 亗 ツ ✿ -`ღ'- ༉ ༊ Ლ Ღ ౘ ༒ ☻ ☹ ༄ ༆ ༇ ༈ ༊ ҉ 𓅂 ༂ ༃ ⚚ ๖ ؄ ఴ 𐩔 𐩘 𐰒 𐰑 ᚕ ᚖ ᚗ ᚘ ᚙ ፠ ፨ ᴥ ᠁ ꔚ ᪤ ద ⫷ ⫸ ʕ˖͜͡˖ʔ ꧁ ꧂ 𐑧 𐑨 𐑩 𐑪 ‿ ⁀ ⁔ ⁐ ⟅ ⟆ ༼ ༽ ༺ ༻ ઈ ઉ ⟡ ⟢ ⟣ 𐑥 𐑯 ꒰ ꒱ ʚ ɞ ꔻ ꔼ ꕢ ꕣ ꕤ ꕥ ᱦ ᱬ ద ధ ర ಠ ఠ ★ ๛ 𒀱 〠 ֍ ֎ ஜ ෴ 🍾 ✌ ✍ ✎ ♆ ۩ ⬳ 乄 ཉྀ ߹ ꧃ 𐩕 థ • ٭ ⋆ ˖ ﾟ°° ﾟ ⁺ ஃ ༚ ༛ ۵ ༔ ⁒ ‼ ‽ ᚘ ᚕ ᚖ ៚ ٭ ༀ ␥ ␦ ᚌ ᚍ ᚎ ᚏ ఢ 〓 〄 ๑ ⊰ ⊱ ⁋ ⁑ ௵ ᚙ ɷߡ ߥ ߦ ‎ߧ ࿂ ࿃ ࿄ ࿅ ࿆ ࿇ ࿈ ࿉ ࿊ ࿋ ࿌ ᴭ ߷ ཉིཾ ᙛ ᙜ ᙝ ᙞ ༕ ༖ ༗ ణ త Ꙩ ᭄ ఠ ◌ͧ ꙰ ꙲ ༜ ꮸ 𐐝 𐑅 𑁍 🝮 ؄ ㍍ Ƀ ͢Ƀ ㉺ ҂ ✰ 𒅒 ⫷ ⫸ 𒁂 𒈒 𒈞 هز ههههه ஓ ଐ ۝ ۞ ⁂ ⁎ ᱦ ᱬ 𒋨 Ꙭ ꙭ ꙮ ஐ ഋ ൠ ⎛ ⎞ ⎝ ⎠ Ӕ Ǣ Ǽ ℄ ɶ ʣ ʤ ʥ Ԙ Ѥ ǣ ѥ ȸ ȹ ѩ ␡ ␟ ␖ ␙ ␜ ␝ ℠ ℡ ™ ℻ ʬ Ξ 🅏 ᴭ Ԙ 웃 유 ℬ ℰ ℯ ℱ ℊ ℋ ℎ ℐ ℒ ℓ ℳ ℴ ℘ ℛ ℭ ℮ ℌ ℑ ℜ ℨ";
         const hearts = "♥ ❤ ❥ 💖 💕 💞 ❣ 🖤 ღ";
         const bows = "˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆ 🩰˚˖𓍢✨໋🎧✧˚.🎀༘⋆ ♰💗♰N̆ơ♰X̆ĬN̆H̆♰╰(°▽°)╯♰ ☝💗𝙣ơ𝙭𝙞𝙣𝙝╰(°▽°)╯✌ ツ💔╰‿╯иơ╰‿╯⒳ιղн╰‿╯🍻";
@@ -1043,3 +1036,4 @@ registerTool({
         });
     }
 });
+
