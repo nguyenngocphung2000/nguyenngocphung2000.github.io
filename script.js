@@ -33,3 +33,45 @@ function calculate() {
 // Lắng nghe sự kiện gõ phím để tính ngay lập tức
 inputPercent.addEventListener('input', calculate);
 inputValue.addEventListener('input', calculate);
+const mdInput = document.getElementById('md-input');
+const mdRender = document.getElementById('md-render');
+const mdFileInput = document.getElementById('md-file-input');
+
+// Hàm Render chung
+function updatePreview(content) {
+    if (typeof marked !== 'undefined') {
+        mdRender.innerHTML = marked.parse(content);
+    }
+}
+
+// 1. Xử lý gõ tay
+if (mdInput) {
+    mdInput.addEventListener('input', () => {
+        updatePreview(mdInput.value);
+    });
+}
+
+// 2. Xử lý đọc file .md
+if (mdFileInput) {
+    mdFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const content = e.target.result;
+            mdInput.value = content; // Đổ nội dung vào textarea
+            updatePreview(content);  // Render ra bên dưới
+        };
+        reader.readAsText(file);
+    });
+}
+
+// Nội dung mẫu ban đầu
+window.onload = () => {
+    const demo = "# 📝 Hướng dẫn\n1. Bạn có thể **gõ trực tiếp** vào ô trên.\n2. Hoặc bấm nút **Mở file .md** để tải file từ máy tính.\n\n> Nội dung sẽ được hiển thị ngay lập tức ở dưới này!";
+    if(mdInput) mdInput.value = demo;
+    updatePreview(demo);
+};
+
+
