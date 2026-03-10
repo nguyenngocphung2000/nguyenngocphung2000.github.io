@@ -572,44 +572,47 @@ registerTool({
             </div>
         </div>
     `,
-    logic: function() {
+        logic: function() {
         const fileInput = document.getElementById('jar-file');
         const iframe = document.getElementById('game-iframe');
         const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        // 1. PHÉP THUẬT ÉP FILE TỪ NGOÀI VÀO LÕI BÊN TRONG IFRAME
+        // 1. PHÉP THUẬT ĐỌC FILE VÀ BƠM TRỰC TIẾP (VƯỢT RÀO SAFARI/APPLE)
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
 
-            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang mồi Engine...</p>';
+            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang băm nhỏ file và khởi động Engine...</p>';
 
             const tryLoadGame = () => {
-                try {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    const innerInput = iframeDoc.querySelector('input[type="file"]');
-                    
-                    if (innerInput) {
-                        // Kỹ thuật DataTransfer: Bê file từ nút upload của bạn nhét sang nút ẩn của Engine
-                        const dt = new DataTransfer();
-                        dt.items.add(file);
-                        innerInput.files = dt.files;
-                        innerInput.dispatchEvent(new Event('change', { bubbles: true }));
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        // Chuyển file .jar thành dữ liệu nhị phân (ArrayBuffer -> Uint8Array)
+                        const data = new Uint8Array(event.target.result);
                         
-                        loadingScreen.classList.add('hidden');
-                        iframe.classList.remove('hidden');
-                        iframe.focus();
-                    } else {
-                        throw new Error("Mất kết nối Lõi");
+                        // Kiểm tra xem Lõi J2ME đã sống dậy chưa
+                        if (iframe.contentWindow && iframe.contentWindow.js2me) {
+                            // Ẩn màn hình chờ, hiện khung Game
+                            loadingScreen.classList.add('hidden');
+                            iframe.classList.remove('hidden');
+                            
+                            // Bơm trực tiếp dữ liệu nhị phân vào não của Engine
+                            iframe.contentWindow.js2me.loadJAR(data);
+                            iframe.focus();
+                        } else {
+                            throw new Error("Không tìm thấy biến js2me. Khả năng cao do sai đường dẫn j2me/index.html");
+                        }
+                    } catch (err) {
+                        loadingScreen.innerHTML = '<span class="text-3xl mb-2 block">⚠️</span><p class="text-orange-400 text-xs font-bold">Lỗi khởi chạy Engine</p><p class="text-gray-400 text-[10px] mt-2">Đảm bảo cấu trúc GitHub là: j2me/index.html (Không bị lồng thư mục)</p>';
+                        console.error(err);
                     }
-                } catch (err) {
-                    loadingScreen.innerHTML = '<span class="text-3xl mb-2 block">⚠️</span><p class="text-orange-400 text-xs font-bold">Lỗi kết nối Lõi J2ME</p><p class="text-gray-400 text-[10px] mt-2">Bạn đã upload thư mục j2me lên GitHub chưa?</p>';
-                    console.error(err);
-                }
+                };
+                reader.readAsArrayBuffer(file);
             };
 
-            // Kiểm tra Lõi đã sẵn sàng chưa
+            // Canh me Lõi load xong mới bơm data
             if (iframe.contentWindow && iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
                 tryLoadGame();
             } else {
@@ -617,12 +620,11 @@ registerTool({
             }
         });
 
-        // 2. PHÉP THUẬT TRUYỀN PHÍM XUYÊN KHÔNG GIAN
+        // 2. PHÉP THUẬT TRUYỀN TÍN HIỆU PHÍM (GIỮ NGUYÊN)
         const triggerKey = (keyName, isDown) => {
             if (iframe && !iframe.classList.contains('hidden')) {
                 const eventType = isDown ? 'keydown' : 'keyup';
                 const event = new KeyboardEvent(eventType, { key: keyName, code: keyName, bubbles: true });
-                // Bắn xung điện bàn phím thẳng vào bộ não của Lõi
                 iframe.contentWindow.dispatchEvent(event);
                 iframe.contentDocument.dispatchEvent(event);
             }
@@ -640,5 +642,3 @@ registerTool({
             btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
         });
     }
-});
-
