@@ -519,58 +519,70 @@ registerTool({
     id: 'tab-game',
     name: 'Chơi Game Java(.jar)',
 =======
-// --- 4. Tool Game Tuổi Thơ (Bản Cực Hạn - Vượt Rào Apple) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Kho Game Đám Mây Chuyên Nghiệp) ---
 registerTool({
     id: 'tab-game',
-    name: 'Game Jav',
->>>>>>> origin/main
+    name: 'Game Tuổi Thơ',
     icon: '🕹️',
     html: `
         <div class="text-center mb-6">
             <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Giải trí</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
-            <p class="text-sm text-gray-500 mt-2">Tải file .jar của bạn lên và sống lại ký ức tuổi thơ!</p>
         </div>
 
-        <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
-            <div class="flex justify-center mb-6">
-                <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
-                    <span>📁 Chọn file Game (.jar)</span>
-                    <input type="file" id="jar-file" accept=".jar" class="hidden">
-                </label>
-            </div>
-
-            <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
-                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative">
-                    <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black"></iframe>
-                    <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4">
-                        <span class="text-4xl mb-2">👾</span>
-                        <p class="text-gray-400 text-xs font-mono">CHƯA CÓ GAME</p>
-                        <p class="text-indigo-400 text-[10px] font-mono mt-1">Vui lòng tải file .jar lên</p>
+        <div class="glass-card p-4 md:p-6 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400 shadow-xl">
+            
+            <div class="flex justify-center mb-5 w-full">
+                <div class="relative w-full max-w-[280px]">
+                    <select id="game-selector" class="w-full appearance-none bg-indigo-50 text-indigo-700 px-4 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-center cursor-pointer outline-none truncate">
+                        <option value="" disabled selected>🎮 Bấm để chọn Siêu Phẩm...</option>
+                        <option value="../games/HauTayDuKy_multiscreen.jar">🐒 Hậu Tây Du Ký</option>
+                        <option value="../games/Hiep_Si_Bong_toi_tv_240x320.jar">🗡️ Hiệp Sĩ Bóng Tối</option>
+                        <option value="../games/Contra_2012_240x320.jar">🔫 Contra 2012</option>
+                        <option value="../games/Contra_2013_Amazon_320x240.jar">🔫 Contra 2013</option>
+                        <option value="../games/Doraemon_phieu_luu_xu_quy.jar">🐱 Doraemon: Xứ Quỷ</option>
+                        <option value="../games/Doreamon_Cuoc_chien_bao_boi.jar">🐱 Doraemon: Bảo Bối</option>
+                        <option value="../games/Giang_ho_tieu_tu_Phan1.jar">⚔️ Giang Hồ Tiểu Tử 1</option>
+                        <option value="../games/TroChoiVui_Giang_ho_tieu_tu_Phan2.jar">⚔️ Giang Hồ Tiểu Tử 2</option>
+                        <option value="../games/Hien_vien_linh_thu_multiscreen.jar">🐉 Hiên Viên Linh Thú</option>
+                        <option value="../games/Hoa_Van_Cuong_Dao_multiscreen.jar">🔪 Hỏa Vân Cuồng Đao</option>
+                        <option value="../games/TankWar_II_multiscreen.jar">🛡️ Tank War II</option>
+                        <option value="../games/Spy_Mouse_240x320.jar">🐭 Spy Mouse</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-indigo-500">
+                        ▼
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white/50 backdrop-blur-md p-4 rounded-[2rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden mb-4 shadow-sm border border-gray-100">
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftLeft">TRÁI</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowUp">↑</button>
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftRight">PHẢI</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowLeft">←</button>
-                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 transition-colors aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowRight">→</button>
+            <div class="relative bg-black rounded-2xl p-1 mb-4 border-4 border-gray-800 mx-auto overflow-hidden shadow-inner" style="width: 320px; height: 260px;">
+                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative">
+                    <iframe id="game-iframe" src="" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black z-10"></iframe>
+                    
+                    <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4 z-0">
+                        <span class="text-4xl mb-2 animate-bounce">👾</span>
+                        <p class="text-gray-400 text-xs font-mono" id="loading-text">CHỜ LỆNH KHỞI ĐỘNG</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/50 backdrop-blur-md p-3 rounded-[1.5rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden mb-2 border border-gray-100">
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftLeft">L-SOFT</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowUp">↑</button>
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftRight">R-SOFT</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowLeft">←</button>
+                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowRight">→</button>
                     <div class="bg-gray-50"></div>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowDown">↓</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowDown">↓</button>
                     <div class="bg-gray-50"></div>
                 </div>
 
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden border border-gray-100">
                     ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
-                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 active:text-orange-600 transition-colors aspect-[5/3] text-xl flex flex-col items-center justify-center group" data-key="${num}">
+                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 aspect-[5/3] text-lg flex flex-col items-center justify-center group" data-key="${num}">
                             <span>${num}</span>
-                            <span class="text-[8px] text-gray-400 group-active:text-orange-400 font-normal tracking-widest leading-none mt-0.5 h-2 block">
-                                ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
-                            </span>
                         </button>
                     `).join('')}
                 </div>
@@ -578,104 +590,30 @@ registerTool({
         </div>
     `,
     logic: function() {
-        const fileInput = document.getElementById('jar-file');
+        const gameSelector = document.getElementById('game-selector');
         const iframe = document.getElementById('game-iframe');
         const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        gameSelector.addEventListener('change', function() {
+            const gameUrl = this.value;
+            if (!gameUrl) return;
 
-<<<<<<< main
-            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang ép xung Engine...</p>';
-=======
-            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang ép xung Lõi...</p>';
->>>>>>> origin/main
+            // Hiện loading
+            iframe.classList.add('hidden');
+            loadingScreen.classList.remove('hidden');
+            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-400 font-mono font-bold mt-2">ĐANG NẠP BĂNG GAME...</p>';
 
-            const tryLoadGame = () => {
-                try {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-<<<<<<< main
-                    const innerInput = iframeDoc.getElementById('file');
-                    
-                    if (innerInput) {
-                        const dt = new DataTransfer();
-                        dt.items.add(file);
-                        innerInput.files = dt.files;
-                        
-                        innerInput.dispatchEvent(new Event('change', { bubbles: true }));
-                        
-                        loadingScreen.classList.add('hidden');
-                        iframe.classList.remove('hidden');
-                        
-                        iframeDoc.body.style.margin = "0";
-                        iframeDoc.body.style.overflow = "hidden";
-                        iframe.focus();
-                    } else {
-                        throw new Error("Không tìm thấy input#file trong Lõi j2me/index.html");
-                    }
-                } catch (err) {
-                    loadingScreen.innerHTML = `
-                        <span class="text-3xl mb-2 block">⚠️</span>
-                        <p class="text-orange-400 text-xs font-bold">Lỗi kết nối Lõi J2ME</p>
-                        <p class="text-gray-400 text-[10px] mt-2 leading-relaxed">
-                            Hãy bấm vào link dưới đây để kiểm tra:<br>
-                            <a href="./j2me/index.html" target="_blank" class="text-blue-400 underline font-bold text-xs mt-1 block">MỞ THỬ LÕI J2ME</a>
-                            Nếu báo 404, nghĩa là GitHub chưa up xong!
-                        </p>`;
-                    console.error("Chi tiết lỗi:", err);
-=======
-                    
-                    // LUÔN LUÔN HIỂN THỊ LÕI
+            // Load iframe
+            iframe.src = `./j2me/index.html?url=${encodeURIComponent(gameUrl)}&t=${Date.now()}`;
+
+            iframe.onload = function() {
+                setTimeout(() => {
                     loadingScreen.classList.add('hidden');
                     iframe.classList.remove('hidden');
-                    
-                    // Xóa sổ cái bàn phím xấu xí của Lõi
-                    try {
-                        const style = iframeDoc.createElement('style');
-                        style.innerHTML = '#keypad, .keypad, .controls, .touch-controls { display: none !important; } html, body { overflow: hidden !important; background: white; margin: 0; }';
-                        iframeDoc.head.appendChild(style);
-                    } catch(e) {}
-
-                    let injected = false;
-
-                    // TUYỆT KỸ 1: Đánh lừa Input của Lõi
-                    const fileInputs = iframeDoc.querySelectorAll('input[type="file"]');
-                    if (fileInputs.length > 0) {
-                        fileInputs.forEach(input => {
-                            try {
-                                Object.defineProperty(input, 'files', { get: () => [file] });
-                                input.dispatchEvent(new Event('change', { bubbles: true }));
-                                injected = true;
-                            } catch(err) {}
-                        });
-                    }
-
-                    // TUYỆT KỸ 2: Giả lập Drop file vào màn hình
-                    if (!injected) {
-                        try {
-                            const dropTarget = iframeDoc.querySelector('canvas') || iframeDoc.body;
-                            const dt = new DataTransfer();
-                            try { dt.items.add(file); } catch(e) {}
-                            Object.defineProperty(dt, 'files', { get: () => [file] });
-                            const dropEvent = new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: dt });
-                            dropTarget.dispatchEvent(dropEvent);
-                        } catch(err) {}
-                    }
-                    
                     iframe.focus();
-                } catch (err) {
-                    console.error("Lỗi:", err);
->>>>>>> origin/main
-                }
+                }, 800);
             };
-
-            if (iframe.contentWindow && iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-                tryLoadGame();
-            } else {
-                iframe.onload = tryLoadGame;
-            }
         });
 
         const triggerKey = (keyName, isDown) => {
@@ -700,8 +638,8 @@ registerTool({
                     const event = new KeyboardEvent(eventType, { 
                         key: keyName, code: keyName, keyCode: keyCode, which: keyCode, bubbles: true 
                     });
-                    iframe.contentWindow.dispatchEvent(event);
-                    iframe.contentDocument.dispatchEvent(event);
+                    if (iframe.contentWindow) iframe.contentWindow.dispatchEvent(event);
+                    if (iframe.contentDocument) iframe.contentDocument.dispatchEvent(event);
                 }
             }
         };
@@ -719,8 +657,3 @@ registerTool({
         });
     }
 });
-<<<<<<< main
-
-
-=======
->>>>>>> origin/main
