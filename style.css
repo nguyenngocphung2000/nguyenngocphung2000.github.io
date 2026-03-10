@@ -1,136 +1,17 @@
-body {
-    font-family: 'Lexend', sans-serif;
-    background: radial-gradient(circle at top right, #fff4e6, #ffffff 60%);
-    min-height: 100vh;
-}
+body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at top right, #fff4e6, #ffffff 70%); min-height: 100vh; }
+.glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 30px rgba(251, 146, 60, 0.1); }
 
-/* Custom UI Components */
-.logo-box {
-    background-color: #f97316;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: bold;
-}
+/* Animation ẩn hiện nội dung */
+.tab-panel { display: none; animation: fadeIn 0.3s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.nav-item {
-    padding: 8px 16px;
-    transition: all 0.3s ease;
-    border-radius: 999px;
-}
+/* Trạng thái nút Menu đang chọn */
+.nav-btn.active { color: #ef4444 !important; background: #fee2e2; font-weight: 700; border-radius: 999px; }
+.mobile-nav-btn.active { color: #ef4444 !important; background: #fee2e2; border-left: 4px solid #ef4444; font-weight: 700; }
 
-.nav-item:hover {
-    color: #f97316;
-}
-
-.tab-active {
-    color: #ef4444 !important;
-    background: #fee2e2;
-    font-weight: 600;
-}
-
-.btn-join {
-    background-color: #ea580c;
-    color: white;
-    padding: 10px 24px;
-    border-radius: 999px;
-    font-weight: 600;
-    box-shadow: 0 10px 15px -3px rgba(251, 146, 60, 0.3);
-    transition: transform 0.2s;
-}
-
-.btn-join:hover {
-    transform: translateY(-2px);
-}
-
-.badge {
-    background-color: #facc15;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 4px 12px;
-    border-radius: 999px;
-    text-transform: uppercase;
-}
-
-/* Card & Inputs */
-.glass-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 20px 25px -5px rgba(251, 146, 60, 0.05);
-}
-
-.icon-sq {
-    background-color: #f97316;
-    color: white;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    font-size: 0.75rem;
-}
-
-.grid-inputs {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr auto 1fr;
-    align-items: center;
-    gap: 16px;
-}
-
-.input-field {
-    width: 100%;
-    background: #fffaf5;
-    border: 1px solid #ffedd5;
-    padding: 12px;
-    border-radius: 12px;
-    outline: none;
-    transition: border 0.3s;
-}
-
-.input-field:focus {
-    border-color: #f97316;
-}
-
-.result-field {
-    background: #fef2f2;
-    border-color: #fee2e2;
-    color: #dc2626;
-    font-weight: bold;
-}
-
-.label-min {
-    display: block;
-    font-size: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #9ca3af;
-    margin-bottom: 4px;
-}
-
-/* Ẩn hiện tab */
-.hidden {
-    display: none;
-}
-/* Style cho vùng Preview Markdown */
-.preview-box {
-    line-height: 1.8;
-    color: #374151;
-}
-
-.preview-box h1 { font-size: 2.25rem; font-weight: 800; color: #111; margin-top: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #f3f4f6; padding-bottom: 0.5rem; }
-.preview-box h2 { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-top: 2rem; margin-bottom: 0.75rem; }
-.preview-box h3 { font-size: 1.25rem; font-weight: 600; color: #374151; margin-top: 1.5rem; }
-.preview-box p { margin-bottom: 1.25rem; }
-.preview-box ul, .preview-box ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
-.preview-box ul { list-style-type: disc; }
-.preview-box ol { list-style-type: decimal; }
-.preview-box li { margin-bottom: 0.5rem; }
-.preview-box code { background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 6px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; }
-.preview-box pre { background: #1f2937; color: #f9fafb; padding: 1.5rem; border-radius: 12px; overflow-x: auto; margin-bottom: 1.25rem; }
-.preview-box pre code { background: transparent; color: inherit; padding: 0; }
-.preview-box blockquote { border-left: 5px solid #f97316; background: #fff7ed; padding: 1rem 1.5rem; border-radius: 0 12px 12px 0; font-style: italic; margin-bottom: 1.25rem; }
-.preview-box img { border-radius: 1rem; max-width: 100%; height: auto; margin: 1.5rem auto; display: block; }
-
-
+/* Markdown Custom Style */
+.prose-custom h1 { font-size: 1.8rem; font-weight: 800; color: #111; margin: 1rem 0; border-bottom: 2px solid #f97316; padding-bottom: 5px; }
+.prose-custom p { margin-bottom: 1rem; line-height: 1.7; }
+.prose-custom code { background: #fee2e2; color: #991b1b; padding: 2px 5px; border-radius: 4px; font-size: 0.9em; }
+.prose-custom blockquote { border-left: 4px solid #f97316; padding-left: 1rem; font-style: italic; color: #555; }
