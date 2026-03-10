@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JS2ME</title>
+    <title>JS2ME Lõi Debug</title>
     <meta charset="utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    
     <script type="text/javascript" src="js/zip/zip.js"></script>
+    <script>if (window.zip) { zip.useWebWorkers = false; }</script>
+    
     <script type="text/javascript" src="js/zip/inflate.js"></script>
     <script type="text/javascript" src="js/zip/zip-ext.js"></script>
     <script type="text/javascript" src="js/js2me.js"></script>
@@ -25,51 +27,65 @@
     <script type="text/javascript" src="js/utils.js"></script>
 
     <style>
-        /* 1. Nền đen nguyên khối, tràn viền */
-        html, body, #frame { background: black !important; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; border: none; }
+        body { background: #000; color: #fff; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100vh; overflow: hidden; }
         
-        /* 2. Dọn sạch rác giao diện gốc của JS2ME */
-        #top, #settings-button, #keypad, .topbutton, #file-selector { display: none !important; }
-        #screen { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; color: transparent; }
+        /* Bảng điện tâm đồ báo lỗi */
+        #monitor { width: 100%; height: 110px; background: rgba(20,20,20,1); font-family: monospace; font-size: 10px; overflow-y: auto; padding: 8px; box-sizing: border-box; border-bottom: 2px solid #4F46E5; z-index: 100; }
         
-        /* 3. Canh giữa màn hình Game */
-        canvas { display: block !important; max-width: 100%; max-height: 100%; margin: auto; border-radius: 8px; }
-
-        /* 4. CHÌA KHÓA THÀNH CÔNG: Tân trang lại Bảng Cài Đặt thay vì giấu nó đi */
-        #settings { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        #settings .dialog { background: #1f2937; padding: 25px; border-radius: 16px; border: 2px solid #4F46E5; text-align: center; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 80%; max-width: 250px; }
-        #settings label { display: block; margin-bottom: 12px; font-size: 14px; font-weight: bold; color: #a5b4fc; text-transform: uppercase; }
-        #settings select { background: #374151; color: white; border: 1px solid #4b5563; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 15px; outline: none; font-weight: bold; text-align: center; }
-        #settings .done { background: #4F46E5; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; font-size: 16px; transition: 0.2s; }
-        #settings .done:active { background: #4338ca; transform: scale(0.95); }
-        #settings aside, #settings .generate-methods { display: none !important; }
+        #frame { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; position: relative; }
         
-        /* Bảng hiển thị lỗi (đề phòng file game hỏng) */
-        #alert { position: absolute; top: 10px; left: 10px; right: 10px; background: #ef4444; color: white; padding: 10px; border-radius: 8px; text-align: center; font-family: sans-serif; font-size: 12px; font-weight: bold; z-index: 10000; }
+        /* Khung hiển thị Game */
+        #screen { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: transparent; }
+        canvas { border: 2px dashed #4F46E5; max-width: 100%; max-height: 100%; background: #000; display: block !important; }
+        
+        /* Dọn sạch rác cũ */
+        #alert, #settings, #top, .topbutton, #keypad, #file-selector { display: none !important; }
     </style>
 </head>
 <body>
-    <div id="frame"><div id="screen"></div></div>
-    <div id="alert" style="display:none;"><div class="message"></div></div>
-    
-    <div id="settings" style="display:none;">
-        <div class="dialog">
-            <div class="options">
-                <div class="option">
-                    <label>Độ phân giải Game</label>
-                    <select class="screen-size">
-                        <option value="240,266,320" selected>240 x 320</option>
-                        <option value="176,176,220">176 x 220</option>
-                        <option value="128,96,128">128 x 128</option>
-                    </select>
-                </div>
-                <div class="option">
-                    <button class="generate-methods">Generate methods</button>
-                    <aside>May take long time</aside>
-                </div>
-            </div>
-            <button class="done">VÀO GAME 🚀</button>
-        </div>
+    <div id="monitor">
+        <span style="color:#4ADE80">HỆ THỐNG KIỂM SOÁT LÕI ĐÃ KÍCH HOẠT...</span><br>
     </div>
+    
+    <div id="frame">
+        <div id="screen">Select JAR file:<br><img id="file-selector" src="img/arrow_up.png"></div>
+    </div>
+
+    <script>
+        var monitor = document.getElementById('monitor');
+        function logMsg(msg, color) {
+            monitor.innerHTML += '<span style="color:' + (color || '#D1D5DB') + '">' + msg + '</span><br>';
+            monitor.scrollTop = monitor.scrollHeight;
+        }
+
+        // Bắt trọn mọi suy nghĩ và lỗi của Lõi in lên màn hình
+        var originalConsoleLog = console.log;
+        var originalConsoleError = console.error;
+        
+        console.log = function(msg) { 
+            logMsg("LÕI: " + msg, '#9CA3AF'); 
+            originalConsoleLog && originalConsoleLog.apply(console, arguments); 
+        };
+        console.error = function(msg) { 
+            logMsg("LỖI JAVA: " + msg, '#EF4444'); 
+            originalConsoleError && originalConsoleError.apply(console, arguments); 
+        };
+        window.onerror = function(msg) { 
+            logMsg("LỖI HỆ THỐNG: " + msg, '#EF4444'); 
+        };
+
+        // Báo cáo khi bắt đầu bung nén
+        if (window.js2me) {
+            var originalLoadJAR = js2me.loadJAR;
+            js2me.loadJAR = function(file) {
+                logMsg("Đã nhận lệnh bung nén băng game: " + (file.name || "game.jar"), "#FCD34D");
+                if (originalLoadJAR) {
+                    originalLoadJAR.apply(this, arguments);
+                }
+            };
+        } else {
+            logMsg("LỖI NGHIÊM TRỌNG: Thư viện js2me không tồn tại!", "#EF4444");
+        }
+    </script>
 </body>
 </html>
