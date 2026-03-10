@@ -1,4 +1,4 @@
-// --- 8. Tool Luyện Đánh Máy ---
+// --- 8. Tool Luyện Đánh Máy (Bản Cực Chuẩn - Sửa lỗi đếm ngược & Telex Mobile) ---
 registerTool({
     id: 'tab-typing',
     name: 'Gõ Phím',
@@ -41,7 +41,6 @@ registerTool({
                 line-height: 1.8;
                 position: relative;
                 color: var(--text-normal);
-                /* Bắt buộc phải có dòng này để không bị mất dấu cách */
                 white-space: pre-wrap; 
                 word-wrap: break-word;
             }
@@ -81,12 +80,15 @@ registerTool({
 
             #countdown-overlay { backdrop-filter: blur(8px); }
             .count-num {
-                animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+                /* Bỏ animation phức tạp ở CSS, dùng JS điều khiển class để tránh lỗi kẹt */
+                transition: all 0.3s ease;
+                transform: scale(1);
+                opacity: 1;
             }
-            @keyframes popIn {
-                0% { transform: scale(0.5); opacity: 0; }
-                50% { transform: scale(1.2); opacity: 1; text-shadow: var(--text-glow); color: var(--text-correct); }
-                100% { transform: scale(1); opacity: 0; }
+            .count-num.pop {
+                transform: scale(1.3);
+                color: var(--text-correct);
+                text-shadow: var(--text-glow);
             }
 
             .flash-effect { animation: flash-screen 0.3s ease; }
@@ -136,7 +138,7 @@ registerTool({
                     <div id="words-container" class="pointer-events-none select-none"></div>
                 </div>
 
-                <input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                <textarea id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                 
                 <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Chạm vào vùng chữ nếu chưa thấy bàn phím (trên điện thoại) *</div>
             </div>
@@ -167,6 +169,7 @@ registerTool({
         </div>
     `,
     logic: function() {
+        // --- 1. THEME SWITCHER ---
         const btnLight = document.getElementById('tp-btn-light');
         const btnDark = document.getElementById('tp-btn-dark');
         const typeContainer = document.getElementById('typing-container');
@@ -190,6 +193,7 @@ registerTool({
             countOverlay.classList.add('bg-gray-900/80');
         };
 
+        // --- 2. HỆ THỐNG BIẾN & CHIA ĐOẠN ---
         const sourceText = document.getElementById('tp-source-text');
         const setupScreen = document.getElementById('tp-setup-screen');
         const gameScreen = document.getElementById('tp-game-screen');
@@ -216,9 +220,9 @@ registerTool({
         const liveTime = document.getElementById('live-time');
         const liveProgress = document.getElementById('live-progress');
 
+        // Hàm chia đoạn văn bản (mỗi đoạn khoảng 20 từ)
         const chunkText = (text) => {
-            // Tách chữ an toàn, tự động loại bỏ khoảng trắng dư thừa
-            const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+            const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
             const chunks = [];
             const WORDS_PER_SCREEN = 20; 
 
@@ -237,21 +241,23 @@ registerTool({
             
             for (let i = 0; i < targetText.length; i++) {
                 const span = document.createElement('span');
-                // Thay vì innerText, phải dùng textContent để giữ nguyên dấu cách
-                span.textContent = targetText[i];
+                span.textContent = targetText[i]; // Dùng textContent để giữ nguyên dấu cách
                 span.className = 'char';
                 wordsContainer.appendChild(span);
                 charElements.push(span);
             }
 
             hiddenInput.value = '';
+            // Đặt maxLength bằng độ dài đoạn text
             hiddenInput.maxLength = targetText.length;
             liveProgress.innerText = (index + 1) + '/' + textChunks.length;
             
             updateCaret();
+            hiddenInput.focus();
 
+            // Hiệu ứng chớp màn hình
             typeContainer.classList.remove('flash-effect');
-            void typeContainer.offsetWidth; 
+            void typeContainer.offsetWidth; // trigger reflow
             typeContainer.classList.add('flash-effect');
         };
 
@@ -316,7 +322,6 @@ registerTool({
 
         hiddenInput.addEventListener('input', () => {
             if(!isPlaying) {
-                // Chặn người dùng gõ ăn gian lúc đang đếm ngược 3 2 1
                 hiddenInput.value = '';
                 return;
             }
@@ -337,14 +342,16 @@ registerTool({
             for(let i=0; i < targetText.length; i++) {
                 charElements[i].classList.remove('correct', 'incorrect');
                 if(i < typedText.length) {
-                    if(typedText[i] === targetText[i]) charElements[i].classList.add('correct');
-                    else charElements[i].classList.add('incorrect');
+                    if(typedText[i] === targetText[i]) {
+                        charElements[i].classList.add('correct');
+                    } else {
+                        charElements[i].classList.add('incorrect');
+                    }
                 }
             }
             updateCaret();
         });
 
-        // Đảm bảo nhấn vào đâu trong khung cũng gọi được bàn phím
         typeContainer.addEventListener('click', () => {
             if (isPlaying) {
                 hiddenInput.focus();
@@ -353,6 +360,39 @@ registerTool({
 
         const startBtn = document.getElementById('tp-btn-start');
         const countText = document.getElementById('countdown-text');
+        
+        // --- XỬ LÝ LỖI NHẢY SỐ 3 (Viết lại logic Countdown) ---
+        let countIntervalObj = null;
+
+        const startCountdown = () => {
+            let count = 3;
+            countText.innerText = count;
+            countText.classList.add('pop');
+            
+            // Xóa interval cũ nếu có
+            if(countIntervalObj) clearInterval(countIntervalObj);
+            
+            countIntervalObj = setInterval(() => {
+                countText.classList.remove('pop');
+                
+                setTimeout(() => {
+                    count--;
+                    if(count > 0) {
+                        countText.innerText = count;
+                        countText.classList.add('pop');
+                    } else if(count === 0) {
+                        countText.innerText = "GÕ!";
+                        countText.classList.add('pop');
+                    } else {
+                        clearInterval(countIntervalObj);
+                        countOverlay.classList.add('hidden');
+                        isPlaying = true;
+                        hiddenInput.focus();
+                    }
+                }, 50); // Timeout nhỏ để CSS nhận diện thay đổi class
+                
+            }, 1000);
+        };
 
         startBtn.onclick = () => {
             const text = sourceText.value.trim();
@@ -363,32 +403,11 @@ registerTool({
             gameScreen.classList.remove('hidden');
             countOverlay.classList.remove('hidden');
             
-            // TRICK: Focus ngay lập tức để iOS mở bàn phím
             hiddenInput.value = '';
             hiddenInput.focus();
 
             initGame(text);
-            
-            let count = 3;
-            countText.innerText = count;
-            
-            const countInterval = setInterval(() => {
-                count--;
-                if(count > 0) {
-                    countText.innerText = count;
-                    countText.style.animation = 'none';
-                    void countText.offsetWidth; 
-                    countText.style.animation = null; 
-                } else if(count === 0) {
-                    countText.innerText = "GÕ!";
-                } else {
-                    clearInterval(countInterval);
-                    countOverlay.classList.add('hidden');
-                    isPlaying = true;
-                    // Focus lại lần nữa cho chắc
-                    hiddenInput.focus();
-                }
-            }, 1000);
+            startCountdown();
         };
 
         const finishGame = () => {
@@ -411,22 +430,12 @@ registerTool({
             resultScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
             countOverlay.classList.remove('hidden');
+            
             hiddenInput.value = '';
-            hiddenInput.focus(); // Bật bàn phím
+            hiddenInput.focus(); 
             
-            let count = 3; countText.innerText = count;
             initGame(sourceText.value);
-            
-            const countInterval = setInterval(() => {
-                count--;
-                if(count > 0) countText.innerText = count;
-                else { 
-                    clearInterval(countInterval); 
-                    countOverlay.classList.add('hidden'); 
-                    isPlaying = true; 
-                    hiddenInput.focus();
-                }
-            }, 1000);
+            startCountdown();
         };
 
         document.getElementById('tp-btn-new').onclick = () => {
