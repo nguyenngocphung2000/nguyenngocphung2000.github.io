@@ -130,7 +130,11 @@ registerTool({
         const guides = [
            { title: "ℹ️ Contact me", date: "Nothing", content: "\n- Telegram: [@nothing3272](https://t.me/nothing3272)\n- Facebook: [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr) " },
             { title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", content: "\n# Quản lý thu chi tự động qua tin nhắn\nBot Telegram kết hợp Google Sheet là một cách tuyệt vời để bạn ghi chép thu chi mọi lúc mọi nơi mà không cần mở các app rườm rà.\n\n🔗 **[Xem mã nguồn và Hướng dẫn chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**" },
-            { title: "⛑️ Chặn quản cáo Web, App, Zalo bằng NextDNS", date: "Thủ thuật IOS", content: "\n# Hướng dẫn cấu hình nhanh NextDNS để chặn quảng cáo
+                        { 
+                title: "⛑️ Chặn quảng cáo Web, App, Zalo bằng NextDNS", 
+                date: "Thủ thuật IOS", 
+                content: `
+# Hướng dẫn cấu hình nhanh NextDNS để chặn quảng cáo
 
 NextDNS là một dịch vụ DNS thông minh giúp chặn quảng cáo, mã độc và các trang lừa đảo. Dưới đây là hướng dẫn cấu hình nhanh NextDNS để bạn có thể sử dụng dịch vụ này một cách hiệu quả.
 
@@ -172,6 +176,7 @@ NextDNS là một dịch vụ DNS thông minh giúp chặn quảng cáo, mã đ�
 1. Trở về tab **Setup**.
 2. Cài đặt theo hướng dẫn ở **Setup Guide**.
 3. Nếu iphone thì nhấn vào [Đây](https://apple.nextdns.io/) để tạo cấu hình cài đặt.
+
 ## Thông tin thêm
 - **Hướng dẫn đầy đủ**: [https://github.com/bigdargon/hostsVN/wiki/NextDNS](https://github.com/bigdargon/hostsVN/wiki/NextDNS)
 - **Tài khoản miễn phí**: 300k truy vấn/tháng, đủ sử dụng cho cá nhân 1-2 thiết bị.
@@ -193,7 +198,7 @@ Chúc mọi người thành công! #NextDNS #hostsVN
 ### Bước 3: Thêm các domain vào Denylist
 Thêm lần lượt các domain sau vào danh sách từ chối để chặn quảng cáo trên Zalo:
 
-```
+\`\`\`text
 social.zalopay.vn
 opentracking.zalopay.vn
 video.zalo.me
@@ -217,15 +222,16 @@ channel-zinstant.api.zaloapp.com
 zsp.zaloapp.com
 universal-zinstant.api.zaloapp.com
 stc-oa.zdn.vn
-
-```
+\`\`\`
 
 ## Lưu ý
 - Việc thêm các domain này vào denylist sẽ giúp chặn các quảng cáo xuất hiện trong phần "Khám phá" và "Nhật ký" trên Zalo.
 - Đồng thời chặn tính năng chuyển khoản nhanh khá khó chịu, cân nhắc nhé
 - Bạn có thể tùy chỉnh thêm các domain khác nếu cần thiết.
 
-Chúc bạn thành công trong việc loại bỏ quảng cáo khỏi Zalo!" },
+Chúc bạn thành công trong việc loại bỏ quảng cáo khỏi Zalo!
+` 
+            },
             { title: "📅 Cài Lịch Âm trên macOS (LunarV)", date: "Thủ thuật Mac", content: "\n# Xem Lịch Âm trên thanh menu\nThay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.\n\n🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**" },
             { title: "⌨️ Bộ gõ tiếng Việt trên Mac", date: "Thủ thuật Mac", content: "\n# Tạm biệt lỗi gạch chân khó chịu\nNếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:\n\n- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**\n- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**" }
         ];
