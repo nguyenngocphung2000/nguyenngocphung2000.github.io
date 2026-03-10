@@ -478,7 +478,7 @@ registerTool({
     }
 });
 
-// --- 4. Tool Game Tuổi Thơ (Bản Kho Game Đám Mây Chuyên Nghiệp) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Phân Quyền Rõ Ràng) ---
 registerTool({
     id: 'tab-game',
     name: 'Game Tuổi Thơ',
@@ -495,32 +495,30 @@ registerTool({
                 <div class="relative w-full max-w-[280px]">
                     <select id="game-selector" class="w-full appearance-none bg-indigo-50 text-indigo-700 px-4 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-center cursor-pointer outline-none truncate">
                         <option value="" disabled selected>🎮 Bấm để chọn Siêu Phẩm...</option>
-                        <option value="../games/HauTayDuKy_multiscreen.jar">🐒 Hậu Tây Du Ký</option>
-                        <option value="../games/Hiep_Si_Bong_toi_tv_240x320.jar">🗡️ Hiệp Sĩ Bóng Tối</option>
-                        <option value="../games/Contra_2012_240x320.jar">🔫 Contra 2012</option>
-                        <option value="../games/Contra_2013_Amazon_320x240.jar">🔫 Contra 2013</option>
-                        <option value="../games/Doraemon_phieu_luu_xu_quy.jar">🐱 Doraemon: Xứ Quỷ</option>
-                        <option value="../games/Doreamon_Cuoc_chien_bao_boi.jar">🐱 Doraemon: Bảo Bối</option>
-                        <option value="../games/Giang_ho_tieu_tu_Phan1.jar">⚔️ Giang Hồ Tiểu Tử 1</option>
-                        <option value="../games/TroChoiVui_Giang_ho_tieu_tu_Phan2.jar">⚔️ Giang Hồ Tiểu Tử 2</option>
-                        <option value="../games/Hien_vien_linh_thu_multiscreen.jar">🐉 Hiên Viên Linh Thú</option>
-                        <option value="../games/Hoa_Van_Cuong_Dao_multiscreen.jar">🔪 Hỏa Vân Cuồng Đao</option>
-                        <option value="../games/TankWar_II_multiscreen.jar">🛡️ Tank War II</option>
-                        <option value="../games/Spy_Mouse_240x320.jar">🐭 Spy Mouse</option>
+                        <option value="./games/HauTayDuKy_multiscreen.jar">🐒 Hậu Tây Du Ký</option>
+                        <option value="./games/Hiep_Si_Bong_toi_tv_240x320.jar">🗡️ Hiệp Sĩ Bóng Tối</option>
+                        <option value="./games/Contra_2012_240x320.jar">🔫 Contra 2012</option>
+                        <option value="./games/Contra_2013_Amazon_320x240.jar">🔫 Contra 2013</option>
+                        <option value="./games/Doraemon_phieu_luu_xu_quy.jar">🐱 Doraemon: Xứ Quỷ</option>
+                        <option value="./games/Doreamon_Cuoc_chien_bao_boi.jar">🐱 Doraemon: Bảo Bối</option>
+                        <option value="./games/Giang_ho_tieu_tu_Phan1.jar">⚔️ Giang Hồ Tiểu Tử 1</option>
+                        <option value="./games/TroChoiVui_Giang_ho_tieu_tu_Phan2.jar">⚔️ Giang Hồ Tiểu Tử 2</option>
+                        <option value="./games/Hien_vien_linh_thu_multiscreen.jar">🐉 Hiên Viên Linh Thú</option>
+                        <option value="./games/Hoa_Van_Cuong_Dao_multiscreen.jar">🔪 Hỏa Vân Cuồng Đao</option>
+                        <option value="./games/TankWar_II_multiscreen.jar">🛡️ Tank War II</option>
+                        <option value="./games/Spy_Mouse_240x320.jar">🐭 Spy Mouse</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-indigo-500">
-                        ▼
-                    </div>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-indigo-500">▼</div>
                 </div>
             </div>
 
             <div class="relative bg-black rounded-2xl p-1 mb-4 border-4 border-gray-800 mx-auto overflow-hidden shadow-inner" style="width: 320px; height: 260px;">
-                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative">
+                <div id="game-display" class="w-full h-full bg-black rounded-xl overflow-hidden relative">
                     <iframe id="game-iframe" src="" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black z-10"></iframe>
                     
                     <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4 z-0">
                         <span class="text-4xl mb-2 animate-bounce">👾</span>
-                        <p class="text-gray-400 text-xs font-mono" id="loading-text">CHỜ LỆNH KHỞI ĐỘNG</p>
+                        <p class="text-green-400 text-xs font-mono font-bold" id="loading-text">CHỜ LỆNH KHỞI ĐỘNG</p>
                     </div>
                 </div>
             </div>
@@ -542,9 +540,6 @@ registerTool({
                     ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
                         <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 aspect-[5/3] text-lg flex flex-col items-center justify-center group" data-key="${num}">
                             <span>${num}</span>
-                            <span class="text-[8px] text-gray-400 group-active:text-orange-400 font-normal tracking-widest leading-none mt-0.5 h-2 block">
-                                ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
-                            </span>
                         </button>
                     `).join('')}
                 </div>
@@ -561,10 +556,10 @@ registerTool({
             const gameUrl = this.value;
             if (!gameUrl) return;
 
+            // Truyền trực tiếp link vào iframe để Lõi tự xử lý
             iframe.classList.add('hidden');
             loadingScreen.classList.remove('hidden');
-            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-400 font-mono font-bold mt-2">ĐANG NẠP BĂNG GAME...</p>';
-
+            
             iframe.src = `./j2me/index.html?url=${encodeURIComponent(gameUrl)}&t=${Date.now()}`;
 
             iframe.onload = function() {
@@ -572,7 +567,7 @@ registerTool({
                     loadingScreen.classList.add('hidden');
                     iframe.classList.remove('hidden');
                     iframe.focus();
-                }, 800);
+                }, 300); // Rút ngắn thời gian chờ
             };
         });
 
@@ -607,11 +602,9 @@ registerTool({
         vKeys.forEach(btn => {
             const keyName = btn.getAttribute('data-key');
             btn.style.webkitTapHighlightColor = 'transparent';
-            
             btn.addEventListener('mousedown', () => triggerKey(keyName, true));
             btn.addEventListener('mouseup', () => triggerKey(keyName, false));
             btn.addEventListener('mouseleave', () => triggerKey(keyName, false));
-            
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyName, true); });
             btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
         });
