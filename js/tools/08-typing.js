@@ -1,11 +1,10 @@
-// --- 8. Tool Luyện Đánh Máy (Bản Hoàn Hảo - Hỗ trợ Telex Mobile & Chia Đoạn) ---
+// --- 8. Tool Luyện Đánh Máy ---
 registerTool({
     id: 'tab-typing',
     name: 'Gõ Phím',
     icon: '⌨️',
     html: `
         <style>
-            /* Dùng Font Roboto Mono hỗ trợ Tiếng Việt cực chuẩn và cực đẹp */
             @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 
             .type-theme-light {
@@ -38,10 +37,13 @@ registerTool({
             }
 
             .typing-text-area {
-                font-size: 1.25rem;
+                font-size: 1.3rem;
                 line-height: 1.8;
                 position: relative;
                 color: var(--text-normal);
+                /* Bắt buộc phải có dòng này để không bị mất dấu cách */
+                white-space: pre-wrap; 
+                word-wrap: break-word;
             }
             @media (min-width: 768px) { .typing-text-area { font-size: 1.6rem; } }
 
@@ -59,22 +61,22 @@ registerTool({
                 animation: blink 1s infinite;
                 top: 0; left: 0;
                 border-radius: 2px;
+                z-index: 10;
             }
             @keyframes blink { 50% { opacity: 0; } }
 
-            /* BÍ QUYẾT ĐỂ GÕ TELEX TRÊN ĐIỆN THOẠI KHÔNG LỖI */
+            /* Lớp phủ input để gõ Telex mượt mà trên iPhone/Android */
             #hidden-input { 
                 position: absolute; 
                 top: 0; left: 0; 
                 width: 100%; height: 100%; 
-                opacity: 1; /* Phải để 1 để mobile nhận diện */
-                z-index: 50; 
+                opacity: 0; 
+                z-index: 20; 
                 cursor: text;
-                color: transparent; /* Làm chữ vô hình */
+                color: transparent; 
                 background: transparent; 
-                caret-color: transparent; /* Giấu con trỏ thật */
                 border: none; outline: none; resize: none;
-                font-size: 16px; /* Bắt buộc 16px để iPhone không auto-zoom */
+                font-size: 16px; /* Chống iPhone tự động Zoom */
             }
 
             #countdown-overlay { backdrop-filter: blur(8px); }
@@ -87,18 +89,17 @@ registerTool({
                 100% { transform: scale(1); opacity: 0; }
             }
 
-            /* Hiệu ứng nháy khi chuyển đoạn */
+            .flash-effect { animation: flash-screen 0.3s ease; }
             @keyframes flash-screen {
                 0% { opacity: 1; }
                 50% { opacity: 0.3; }
                 100% { opacity: 1; }
             }
-            .flash-effect { animation: flash-screen 0.3s ease; }
         </style>
 
         <div class="text-center mb-6">
             <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Phím thủ</span>
-            <h2 class="text-3xl font-bold mt-2 text-gray-800">Luyện Đánh Máy <span class="text-pink-500">Pro</span> ⌨️</h2>
+            <h2 class="text-3xl font-bold mt-2 text-gray-800">Phím Thủ <span class="text-pink-500">Pro Max</span> ⌨️</h2>
         </div>
 
         <div id="tp-setup-screen" class="glass-card p-6 md:p-8 rounded-[2rem] max-w-4xl mx-auto border-t-4 border-t-pink-400 shadow-xl space-y-6 block">
@@ -113,7 +114,7 @@ registerTool({
             <textarea id="tp-source-text" class="w-full h-40 bg-white/50 rounded-2xl p-4 font-sans text-sm border border-pink-100 focus:outline-none focus:ring-2 ring-pink-300 resize-none shadow-inner" placeholder="Hãy dán văn bản Tiếng Việt dài vào đây. Hệ thống sẽ tự động chia nhỏ ra từng màn hình để bạn dễ gõ..."></textarea>
 
             <button id="tp-btn-start" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl transition shadow-lg text-lg flex justify-center items-center gap-2">
-                🚀 BẮT ĐẦU LUYỆN TẬP
+                🚀 BẮT ĐẦU
             </button>
         </div>
 
@@ -132,10 +133,10 @@ registerTool({
 
                 <div class="typing-text-area flex-1 relative" id="text-display-area">
                     <div id="caret"></div>
-                    <div id="words-container" class="flex flex-wrap gap-x-2 gap-y-2 pointer-events-none select-none z-10"></div>
+                    <div id="words-container" class="pointer-events-none select-none"></div>
                 </div>
 
-                <textarea id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                <input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                 
                 <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Chạm vào vùng chữ nếu chưa thấy bàn phím (trên điện thoại) *</div>
             </div>
@@ -216,7 +217,8 @@ registerTool({
         const liveProgress = document.getElementById('live-progress');
 
         const chunkText = (text) => {
-            const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
+            // Tách chữ an toàn, tự động loại bỏ khoảng trắng dư thừa
+            const words = text.trim().split(/\s+/).filter(w => w.length > 0);
             const chunks = [];
             const WORDS_PER_SCREEN = 20; 
 
@@ -235,7 +237,8 @@ registerTool({
             
             for (let i = 0; i < targetText.length; i++) {
                 const span = document.createElement('span');
-                span.innerText = targetText[i];
+                // Thay vì innerText, phải dùng textContent để giữ nguyên dấu cách
+                span.textContent = targetText[i];
                 span.className = 'char';
                 wordsContainer.appendChild(span);
                 charElements.push(span);
@@ -246,7 +249,6 @@ registerTool({
             liveProgress.innerText = (index + 1) + '/' + textChunks.length;
             
             updateCaret();
-            hiddenInput.focus();
 
             typeContainer.classList.remove('flash-effect');
             void typeContainer.offsetWidth; 
@@ -292,7 +294,7 @@ registerTool({
             if(targetChar) {
                 caret.style.left = targetChar.offsetLeft + 'px';
                 caret.style.top = targetChar.offsetTop + 'px';
-                caret.style.height = targetChar.offsetHeight > 0 ? (targetChar.offsetHeight * 0.8) + 'px' : '1.5rem';
+                caret.style.height = targetChar.offsetHeight > 0 ? targetChar.offsetHeight + 'px' : '1.5rem';
             }
         };
 
@@ -313,7 +315,11 @@ registerTool({
         };
 
         hiddenInput.addEventListener('input', () => {
-            if(!isPlaying) return;
+            if(!isPlaying) {
+                // Chặn người dùng gõ ăn gian lúc đang đếm ngược 3 2 1
+                hiddenInput.value = '';
+                return;
+            }
 
             const typedText = hiddenInput.value;
             
@@ -338,20 +344,30 @@ registerTool({
             updateCaret();
         });
 
+        // Đảm bảo nhấn vào đâu trong khung cũng gọi được bàn phím
         typeContainer.addEventListener('click', () => {
-            if (isPlaying) hiddenInput.focus();
+            if (isPlaying) {
+                hiddenInput.focus();
+            }
         });
 
         const startBtn = document.getElementById('tp-btn-start');
         const countText = document.getElementById('countdown-text');
 
         startBtn.onclick = () => {
-            if(!sourceText.value.trim()) { alert("Vui lòng dán văn bản vào nhé!"); return; }
+            const text = sourceText.value.trim();
+            if(!text) { alert("Vui lòng dán văn bản vào nhé!"); return; }
             
             setupScreen.classList.add('hidden');
             resultScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
             countOverlay.classList.remove('hidden');
+            
+            // TRICK: Focus ngay lập tức để iOS mở bàn phím
+            hiddenInput.value = '';
+            hiddenInput.focus();
+
+            initGame(text);
             
             let count = 3;
             countText.innerText = count;
@@ -361,7 +377,7 @@ registerTool({
                 if(count > 0) {
                     countText.innerText = count;
                     countText.style.animation = 'none';
-                    countText.offsetHeight; 
+                    void countText.offsetWidth; 
                     countText.style.animation = null; 
                 } else if(count === 0) {
                     countText.innerText = "GÕ!";
@@ -369,7 +385,8 @@ registerTool({
                     clearInterval(countInterval);
                     countOverlay.classList.add('hidden');
                     isPlaying = true;
-                    initGame(sourceText.value);
+                    // Focus lại lần nữa cho chắc
+                    hiddenInput.focus();
                 }
             }, 1000);
         };
@@ -394,11 +411,21 @@ registerTool({
             resultScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
             countOverlay.classList.remove('hidden');
+            hiddenInput.value = '';
+            hiddenInput.focus(); // Bật bàn phím
+            
             let count = 3; countText.innerText = count;
+            initGame(sourceText.value);
+            
             const countInterval = setInterval(() => {
                 count--;
                 if(count > 0) countText.innerText = count;
-                else { clearInterval(countInterval); countOverlay.classList.add('hidden'); isPlaying = true; initGame(sourceText.value); }
+                else { 
+                    clearInterval(countInterval); 
+                    countOverlay.classList.add('hidden'); 
+                    isPlaying = true; 
+                    hiddenInput.focus();
+                }
             }, 1000);
         };
 
