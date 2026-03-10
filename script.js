@@ -478,7 +478,7 @@ registerTool({
     }
 });
 
-// --- 4. Tool Game Tuổi Thơ (Bản Sửa Lỗi Đường Dẫn Cuối Cùng) ---
+// --- 4. Tool Game Tuổi Thơ---
 registerTool({
     id: 'tab-game',
     name: 'Game Java',
@@ -557,14 +557,12 @@ registerTool({
             const gameUrl = this.value;
             if (!gameUrl) return;
 
-            // 1. Hiện màn hình chờ CỦA VỎ
             iframe.classList.add('hidden');
             loadingScreen.classList.remove('hidden');
             loadingText.innerText = "⏳ ĐANG KÉO GAME TỪ KHO...";
             loadingText.className = "text-yellow-400 text-xs font-mono font-bold mt-2";
 
             try {
-                // 2. VỎ TỰ ĐI KÉO GAME (Đường dẫn ./games/ hoàn toàn chuẩn xác vì Vỏ nằm ở root)
                 const response = await fetch(gameUrl);
                 if (!response.ok) throw new Error("404: KHÔNG TÌM THẤY BĂNG GAME!");
                 const blob = await response.blob();
@@ -576,7 +574,6 @@ registerTool({
                 loadingText.innerText = "✅ TẢI XONG! ĐANG MỞ LÕI...";
                 loadingText.className = "text-green-400 text-xs font-mono font-bold mt-2";
 
-                // 3. Khởi động Lõi SẠCH
                 iframe.src = `./j2me/index.html?t=${Date.now()}`;
 
                 iframe.onload = function() {
@@ -586,20 +583,21 @@ registerTool({
                     let checks = 0;
                     const waitCore = setInterval(() => {
                         checks++;
-                        // Rình xem Lõi đã load xong hàm js2me chưa
                         if (win.js2me && typeof win.js2me.loadJAR === 'function') {
                             clearInterval(waitCore);
                             loadingText.innerText = "🚀 KHỞI ĐỘNG!";
                             
-                            // BƠM FILE VÀO MỒM LÕI!
-                            win.js2me.loadJAR(file);
+                            // CHÌA KHÓA VÀNG Ở ĐÂY: Gắn thêm function() {} để Lõi không bị lỗi TypeError
+                            win.js2me.loadJAR(file, function() {
+                                console.log("Game đã nạp thành công 100%");
+                            });
                             
                             setTimeout(() => {
                                 loadingScreen.classList.add('hidden');
                                 iframe.classList.remove('hidden');
                                 iframe.focus();
                             }, 300);
-                        } else if (checks > 100) { // Timeout 10 giây
+                        } else if (checks > 100) {
                             clearInterval(waitCore);
                             loadingText.innerText = "❌ LỖI: LÕI BỊ ĐƠ";
                             loadingText.className = "text-red-400 text-xs font-mono font-bold mt-2";
@@ -612,7 +610,6 @@ registerTool({
             }
         });
 
-        // Ánh xạ phím ảo
         const triggerKey = (keyName, isDown) => {
             if (iframe && !iframe.classList.contains('hidden')) {
                 let keyCode = 0;
