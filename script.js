@@ -648,7 +648,7 @@ registerTool({
         });
     }
 });
-// --- 5. Tool Kí tự đặc biệt ---
+// --- 5. Tool Kí tự đặc biệt (Bản Chuẩn 100% - Không Lỗi Cú Pháp) ---
 registerTool({
     id: 'tab-special-chars',
     name: 'Kí Tự Đặc Biệt',
@@ -723,9 +723,7 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // ==========================================
         // 1. LOGIC TEST FONT CHỮ TÙY CHỈNH
-        // ==========================================
         const fontUpload = document.getElementById('font-upload');
         const fontPreview = document.getElementById('custom-font-preview');
 
@@ -738,12 +736,12 @@ registerTool({
                 const fontDataUrl = evt.target.result;
                 const fontName = 'CustomUserFont_' + Date.now();
                 
-                const newFont = new FontFace(fontName, \`url(\${fontDataUrl})\`);
+                const newFont = new FontFace(fontName, `url(${fontDataUrl})`);
                 newFont.load().then((loadedFont) => {
                     document.fonts.add(loadedFont);
                     fontPreview.style.fontFamily = fontName;
                     fontPreview.placeholder = "✅ Font đã tải thành công! Hãy gõ chữ vào đây để test...";
-                    fontPreview.value = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\\nabcdefghijklmnopqrstuvwxyz\\n0123456789";
+                    fontPreview.value = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789";
                 }).catch(err => {
                     alert("Lỗi tải font: Không hỗ trợ định dạng này hoặc file bị hỏng.");
                 });
@@ -751,9 +749,7 @@ registerTool({
             reader.readAsDataURL(file);
         });
 
-        // ==========================================
         // 2. LOGIC TẠO 100 ĐỀ XUẤT TÊN & KHO KÍ TỰ
-        // ==========================================
         const copyToClipboard = (text, toastId) => {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById(toastId);
@@ -762,7 +758,7 @@ registerTool({
             });
         };
 
-        // BẢNG MÃ CHUẨN (Không bao giờ lỗi font)
+        // BẢNG MÃ CHUẨN
         const mapCircled = {'a':'ⓐ','b':'ⓑ','c':'ⓒ','d':'ⓓ','e':'ⓔ','f':'ⓕ','g':'ⓖ','h':'ⓗ','i':'ⓘ','j':'ⓙ','k':'ⓚ','l':'ⓛ','m':'ⓜ','n':'ⓝ','o':'ⓞ','p':'ⓟ','q':'ⓠ','r':'ⓡ','s':'ⓢ','t':'ⓣ','u':'ⓤ','v':'ⓥ','w':'ⓦ','x':'ⓧ','y':'ⓨ','z':'ⓩ','A':'Ⓐ','B':'Ⓑ','C':'Ⓒ','D':'Ⓓ','E':'Ⓔ','F':'Ⓕ','G':'Ⓖ','H':'Ⓗ','I':'Ⓘ','J':'Ⓙ','K':'Ⓚ','L':'Ⓛ','M':'Ⓜ','N':'Ⓝ','O':'Ⓞ','P':'Ⓟ','Q':'Ⓠ','R':'Ⓡ','S':'Ⓢ','T':'Ⓣ','U':'Ⓤ','V':'Ⓥ','W':'Ⓦ','X':'Ⓧ','Y':'Ⓨ','Z':'Ⓩ'};
         const mapSmallCaps = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
         const mapThai = {'a':'ค','b':'๒','c':'८','d':'๔','e':'є','f':'Ŧ','g':'g','h':'ђ','i':'เ','j':'ן','k':'к','l':'ɭ','m':'๓','n':'ภ','o':'๏','p':'ק','q':'ף','r':'г','s':'ร','t':'т','u':'ย','v':'ש','w':'ฬ','x':'א','y':'ץ','z':'z'};
@@ -785,20 +781,17 @@ registerTool({
 
             let results = [];
             
-            // 10 KIỂU CHUẨN YÊU CẦU LÊN ĐẦU
             results.push({ label: "Giai điệu", val: convertMap(rawName, mapCircled) });
-            results.push({ label: "Mẫu 127", val: rawName.split('').join('\\u0330') + '\\u0330' });
+            results.push({ label: "Mẫu 127", val: rawName.split('').join('\u0330') + '\u0330' });
             results.push({ label: "Mẫu 150", val: '꧁ ' + rawName + ' ꧂' });
             results.push({ label: "Âm nhạc", val: convertMap(rawName.toLowerCase(), mapThai) });
             results.push({ label: "Thịnh hành", val: convertMap(rawName.toLowerCase(), mapSmallCaps) });
             results.push({ label: "Khoảng trống", val: rawName.toUpperCase().split('').join(' ') });
             results.push({ label: "Sao + Hoa", val: rawName.split('').join('✿') });
             results.push({ label: "Tia sét", val: rawName.split('').join('ϟ') });
-            // Thánh giá: thay khoảng trắng bằng dấu thánh giá để không bị tách
             results.push({ label: "Thánh giá", val: rawName.toUpperCase().split('').join('✞') });
             results.push({ label: "In đậm", val: convertMap(rawName, mapBold) });
 
-            // THUẬT TOÁN SINH THÊM 90 KIỂU MỚI (Tổ hợp Font x Icon)
             const fonts = [
                 {n:"Chuẩn", m:null}, {n:"Nghiêng", m:mapItalic}, {n:"Script", m:mapScript},
                 {n:"Double", m:mapDoubleStruck}, {n:"Phong cách Á", m:mapAsian}
@@ -818,25 +811,24 @@ registerTool({
                 for (let f of fonts) {
                     if (results.length >= 100) break;
                     let txt = f.m ? convertMap(rawName, f.m) : rawName;
-                    results.push({ label: \`Mẫu \${count++}\`, val: d[0] + txt + d[1] });
+                    results.push({ label: `Mẫu ${count++}`, val: d[0] + txt + d[1] });
                 }
                 if (results.length >= 100) break;
             }
 
-            // RENDER RA HTML
             resultsDiv.innerHTML = '';
             results.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'flex items-center justify-between bg-white border border-purple-100 p-2 md:p-3 rounded-xl shadow-sm hover:shadow-md transition group cursor-pointer';
                 div.onclick = () => copyToClipboard(item.val, 'copy-toast-nick');
                 
-                div.innerHTML = \`
+                div.innerHTML = `
                     <div class="flex items-center gap-3 overflow-hidden flex-1">
-                        <span class="text-[10px] md:text-xs text-gray-500 font-medium w-16 md:w-20 shrink-0 truncate">\${item.label}</span>
-                        <span class="font-bold text-gray-800 text-sm md:text-base group-hover:text-purple-600 transition truncate flex-1">\${item.val}</span>
+                        <span class="text-[10px] md:text-xs text-gray-500 font-medium w-16 md:w-20 shrink-0 truncate">${item.label}</span>
+                        <span class="font-bold text-gray-800 text-sm md:text-base group-hover:text-purple-600 transition truncate flex-1">${item.val}</span>
                     </div>
                     <button class="text-[10px] md:text-xs bg-purple-50 text-purple-600 font-bold px-3 py-1.5 md:py-1.5 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition shrink-0 ml-2">Copy</button>
-                \`;
+                `;
                 resultsDiv.appendChild(div);
             });
         };
@@ -846,9 +838,7 @@ registerTool({
             if(e.key === 'Enter') generate100Names();
         });
 
-        // ==========================================
         // 3. DATA KHO KÍ TỰ TỔNG HỢP
-        // ==========================================
         const symbolsVIP = "࿐ 亗 ツ ✿ -`ღ'- ༉ ༊ Ლ Ღ ౘ ༒ ☻ ☹ ༄ ༆ ༇ ༈ ༊ ҉ 𓅂 ༂ ༃ ⚚ ๖ ؄ ఴ 𐩔 𐩘 𐰒 𐰑 ᚕ ᚖ ᚗ ᚘ ᚙ ፠ ፨ ᴥ ᠁ ꔚ ᪤ ద ⫷ ⫸ ʕ˖͜͡˖ʔ ꧁ ꧂ 𐑧 𐑨 𐑩 𐑪 ‿ ⁀ ⁔ ⁐ ⟅ ⟆ ༼ ༽ ༺ ༻ ઈ ઉ ⟡ ⟢ ⟣ 𐑥 𐑯 ꒰ ꒱ ʚ ɞ ꔻ ꔼ ꕢ ꕣ ꕤ ꕥ ᱦ ᱬ ద ధ ర ಠ ఠ ★ ๛ 𒀱 〠 ֍ ֎ ஜ ෴ 🍾 ✌ ✍ ✎ ♆ ۩ ⬳ 乄 ཉྀ ߹ ꧃ 𐩕 థ • ٭ ⋆ ˖ ﾟ°° ﾟ ⁺ ஃ ༚ ༛ ۵ ༔ ⁒ ‼ ‽ ᚘ ᚕ ᚖ ៚ ٭ ༀ ␥ ␦ ᚌ ᚍ ᚎ ᚏ ఢ 〓 〄 ๑ ⊰ ⊱ ⁋ ⁑ ௵ ᚙ ɷߡ ߥ ߦ ‎ߧ ࿂ ࿃ ࿄ ࿅ ࿆ ࿇ ࿈ ࿉ ࿊ ࿋ ࿌ ᴭ ߷ ཉིཾ ᙛ ᙜ ᙝ ᙞ ༕ ༖ ༗ ణ త Ꙩ ᭄ ఠ ◌ͧ ꙰ ꙲ ༜ ꮸ 𐐝 𐑅 𑁍 🝮 ؄ ㍍ Ƀ ͢Ƀ ㉺ ҂ ✰ 𒅒 ⫷ ⫸ 𒁂 𒈒 𒈞 هز ههههه ஓ ଐ ۝ ۞ ⁂ ⁎ ᱦ ᱬ 𒋨 Ꙭ ꙭ ꙮ ஐ ഋ ൠ ⎛ ⎞ ⎝ ⎠ Ӕ Ǣ Ǽ ℄ ɶ ʣ ʤ ʥ Ԙ Ѥ ǣ ѥ ȸ ȹ ѩ ␡ ␟ ␖ ␙ ␜ ␝ ℠ ℡ ™ ℻ ʬ Ξ 🅏 ᴭ Ԙ 웃 유 ℬ ℰ ℯ ℱ ℊ ℋ ℎ ℐ ℒ ℓ ℳ ℴ ℘ ℛ ℭ ℮ ℌ ℑ ℜ ℨ";
         const hearts = "♥ ❤ ❥ 💖 💕 💞 ❣ 🖤 ღ";
         const bows = "˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆ 🩰˚˖𓍢✨໋🎧✧˚.🎀༘⋆ ♰💗♰N̆ơ♰X̆ĬN̆H̆♰╰(°▽°)╯♰ ☝💗𝙣ơ𝙭𝙞𝙣𝙝╰(°▽°)╯✌ ツ💔╰‿╯иơ╰‿╯⒳ιղн╰‿╯🍻";
