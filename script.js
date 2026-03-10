@@ -1432,14 +1432,14 @@ registerTool({
 
                 for(let i=1; i<=months; i++) {
                     remaining -= monthlyPrincipal;
-                    scheduleHTML += \`
+                    scheduleHTML += `
                         <tr class="hover:bg-red-50 transition">
-                            <td class="px-4 py-2 font-bold">\${i}</td>
-                            <td class="px-4 py-2 text-gray-600">\${fmt(monthlyPrincipal)}</td>
-                            <td class="px-4 py-2 text-red-500">\${fmt(monthlyInterest)}</td>
-                            <td class="px-4 py-2 font-bold text-gray-800">\${fmt(maxMonthly)}</td>
-                            <td class="px-4 py-2 text-gray-500">\${fmt(Math.max(0, remaining))}</td>
-                        </tr>\`;
+                            <td class="px-4 py-2 font-bold">${i}</td>
+                            <td class="px-4 py-2 text-gray-600">${fmt(monthlyPrincipal)}</td>
+                            <td class="px-4 py-2 text-red-500">${fmt(monthlyInterest)}</td>
+                            <td class="px-4 py-2 font-bold text-gray-800">${fmt(maxMonthly)}</td>
+                            <td class="px-4 py-2 text-gray-500">${fmt(Math.max(0, remaining))}</td>
+                        </tr>`;
                 }
 
             } else if (type === 'declining') {
@@ -1453,14 +1453,14 @@ registerTool({
                     if(payment > maxMonthly) maxMonthly = payment;
                     remaining -= monthlyPrincipal;
 
-                    scheduleHTML += \`
+                    scheduleHTML += `
                         <tr class="hover:bg-red-50 transition">
-                            <td class="px-4 py-2 font-bold">\${i}</td>
-                            <td class="px-4 py-2 text-gray-600">\${fmt(monthlyPrincipal)}</td>
-                            <td class="px-4 py-2 text-red-500">\${fmt(interest)}</td>
-                            <td class="px-4 py-2 font-bold text-gray-800">\${fmt(payment)}</td>
-                            <td class="px-4 py-2 text-gray-500">\${fmt(Math.max(0, remaining))}</td>
-                        </tr>\`;
+                            <td class="px-4 py-2 font-bold">${i}</td>
+                            <td class="px-4 py-2 text-gray-600">${fmt(monthlyPrincipal)}</td>
+                            <td class="px-4 py-2 text-red-500">${fmt(interest)}</td>
+                            <td class="px-4 py-2 font-bold text-gray-800">${fmt(payment)}</td>
+                            <td class="px-4 py-2 text-gray-500">${fmt(Math.max(0, remaining))}</td>
+                        </tr>`;
                 }
 
             } else if (type === 'annuity') {
@@ -1474,14 +1474,14 @@ registerTool({
                     totalInterest += interest;
                     remaining -= principal;
 
-                    scheduleHTML += \`
+                    scheduleHTML += `
                         <tr class="hover:bg-red-50 transition">
-                            <td class="px-4 py-2 font-bold">\${i}</td>
-                            <td class="px-4 py-2 text-gray-600">\${fmt(principal)}</td>
-                            <td class="px-4 py-2 text-red-500">\${fmt(interest)}</td>
-                            <td class="px-4 py-2 font-bold text-gray-800">\${fmt(pmt)}</td>
-                            <td class="px-4 py-2 text-gray-500">\${fmt(Math.max(0, remaining))}</td>
-                        </tr>\`;
+                            <td class="px-4 py-2 font-bold">${i}</td>
+                            <td class="px-4 py-2 text-gray-600">${fmt(principal)}</td>
+                            <td class="px-4 py-2 text-red-500">${fmt(interest)}</td>
+                            <td class="px-4 py-2 font-bold text-gray-800">${fmt(pmt)}</td>
+                            <td class="px-4 py-2 text-gray-500">${fmt(Math.max(0, remaining))}</td>
+                        </tr>`;
                 }
             }
 
