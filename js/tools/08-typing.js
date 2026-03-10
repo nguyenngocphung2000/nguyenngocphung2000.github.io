@@ -1,11 +1,12 @@
-// --- 8. Tool Luyện Đánh Máy (Bản Hoàn Hảo - Chữ mờ hóa đậm & Tiến trình 50 từ) ---
+// --- 8. Tool Luyện Đánh Máy ---
 registerTool({
     id: 'tab-typing',
     name: 'Gõ Phím',
     icon: '⌨️',
     html: `
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+            /* Nhúng Font lập trình siêu đẹp JetBrains Mono */
+            @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
             .type-theme-light {
                 --bg-color: #ffffff;
@@ -21,7 +22,7 @@ registerTool({
             .type-theme-dark {
                 --bg-color: #0f172a;
                 --border-glow: 0 0 25px rgba(56, 189, 248, 0.4);
-                --text-normal: #64748b; /* Sáng hơn chút để nhìn lớp mờ dễ hơn */
+                --text-normal: #64748b; 
                 --text-correct: #38bdf8;
                 --text-glow: 0 0 10px rgba(56, 189, 248, 0.8);
                 --caret-color: #38bdf8;
@@ -33,10 +34,10 @@ registerTool({
                 background-color: var(--bg-color);
                 box-shadow: var(--border-glow);
                 transition: background-color 0.5s ease, box-shadow 0.5s ease;
-                font-family: 'Roboto Mono', monospace;
             }
 
             .typing-text-area {
+                font-family: 'JetBrains Mono', monospace; /* Ép font lập trình xịn */
                 font-size: 1.3rem;
                 line-height: 1.8;
                 position: relative;
@@ -46,18 +47,17 @@ registerTool({
             }
             @media (min-width: 768px) { .typing-text-area { font-size: 1.6rem; } }
 
-            /* HIỆU ỨNG MỜ -> ĐẬM NHƯ Ý BẠN YÊU CẦU */
             .char { 
-                opacity: 0.4; /* Lớp phủ mờ ban đầu */
+                opacity: 0.4; 
                 font-weight: 400;
                 transition: all 0.15s ease; 
                 border-radius: 4px; 
             }
             .char.correct { 
-                opacity: 1; /* Gõ đúng thì sáng rõ lên */
+                opacity: 1; 
                 color: var(--text-correct); 
                 text-shadow: var(--text-glow); 
-                font-weight: 700; /* In đậm lên cho dễ nhìn */
+                font-weight: 700; 
             }
             .char.incorrect { 
                 opacity: 1;
@@ -80,20 +80,15 @@ registerTool({
             }
             @keyframes blink { 50% { opacity: 0; } }
 
+            /* BÍ THUẬT CHỐNG GIẬT MÀN HÌNH ĐIỆN THOẠI */
             #hidden-input { 
                 position: absolute; 
-                top: 0; left: 0; 
-                width: 100%; height: 100%; 
-                opacity: 1; 
-                z-index: 50; 
-                cursor: text;
-                color: transparent; 
-                background: transparent; 
-                caret-color: transparent; 
+                width: 10px; height: 10px; 
+                opacity: 0; /* Tàng hình 100% */
+                z-index: -1; 
                 border: none; outline: none; resize: none;
-                font-size: 16px; 
                 padding: 0; margin: 0;
-                overflow: hidden;
+                pointer-events: none; 
             }
 
             #countdown-overlay { backdrop-filter: blur(8px); }
@@ -114,7 +109,7 @@ registerTool({
         </style>
 
         <div class="text-center mb-6">
-            <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Phím thủ</span>
+            <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Hãy trở thành</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Phím Thủ <span class="text-pink-500">Pro Max</span> ⌨️</h2>
         </div>
 
@@ -237,7 +232,6 @@ registerTool({
         const chunkText = (text) => {
             const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
             const chunks = [];
-            // Đã đổi thành 50 từ mỗi tiến trình theo yêu cầu
             const WORDS_PER_SCREEN = 50; 
 
             for (let i = 0; i < words.length; i += WORDS_PER_SCREEN) {
@@ -309,10 +303,15 @@ registerTool({
 
             const targetChar = charElements[currentLen];
             if(targetChar) {
+                // Di chuyển con trỏ nhấp nháy
                 caret.style.left = targetChar.offsetLeft + 'px';
                 caret.style.top = targetChar.offsetTop + 'px';
                 const h = targetChar.offsetHeight;
                 caret.style.height = h > 0 ? h + 'px' : '1.5rem';
+
+                // BÍ THUẬT: Di chuyển vùng nhập ẩn bám sát theo chữ để mobile không cuộn lên đầu!
+                hiddenInput.style.left = targetChar.offsetLeft + 'px';
+                hiddenInput.style.top = targetChar.offsetTop + 'px';
             }
         };
 
