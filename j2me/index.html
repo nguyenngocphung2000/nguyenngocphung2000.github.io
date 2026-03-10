@@ -24,25 +24,112 @@
 	<script type="text/javascript" src="js/threads.js"></script>
 	<script type="text/javascript" src="js/workers.js"></script>
 	<script type="text/javascript" src="js/utils.js"></script>
-</head>
+
+    <style>
+        /* 1. KHÓA CHẶT MỌI THÔNG BÁO LỖI VÀ MENU CÀI ĐẶT ĂN VẠ CỦA LÕI */
+        #alert, #settings, #top, #settings-button, #keypad, .topbutton { 
+            display: none !important; 
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        
+        /* 2. Ép toàn bộ nền thành màu đen để hòa làm một với web của bạn */
+        html, body { 
+            background: black !important; 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; 
+        }
+        
+        #frame { 
+            background: black !important; 
+            border: none !important; 
+            width: 100% !important; 
+            height: 100% !important; 
+        }
+        
+        /* 3. Khung hiển thị Game */
+        #screen { 
+            background: black !important; 
+            color: #4ADE80; /* Màu chữ xanh lá cây */
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            width: 100%; 
+            height: 100%; 
+            font-family: monospace;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        canvas { 
+            display: block !important; 
+            max-width: 100%; 
+            max-height: 100%; 
+            margin: auto;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('load', function() {
+            var params = new URLSearchParams(window.location.search);
+            var gameUrl = params.get('url');
+            var screenDiv = document.getElementById('screen');
+            
+            if (gameUrl) {
+                // Xóa ảnh nút tải file mặc định, thay bằng chữ tải game
+                screenDiv.innerHTML = "⏳ Đang kéo game từ kho...<br><br><span style='font-size:10px;color:#9CA3AF;'>" + gameUrl + "</span>";
+                
+                fetch(gameUrl)
+                    .then(function(res) {
+                        if (!res.ok) throw new Error("404: Không tìm thấy file game!");
+                        return res.blob();
+                    })
+                    .then(function(blob) {
+                        screenDiv.innerHTML = "✅ Tải xong! Đang ép xung Lõi...";
+                        
+                        var file;
+                        try {
+                            file = new File([blob], "game.jar", { type: "application/java-archive" });
+                        } catch (e) {
+                            file = blob;
+                            file.name = "game.jar";
+                        }
+                        
+                        // Rình lúc Lõi JS2ME sẵn sàng thì bơm file vào
+                        var waitCore = setInterval(function() {
+                            if (window.js2me && typeof window.js2me.loadJAR === 'function') {
+                                clearInterval(waitCore);
+                                screenDiv.innerHTML = ""; // Xóa chữ để nhường chỗ cho Game
+                                window.js2me.loadJAR(file); // Bơm Game
+                            }
+                        }, 100);
+                    })
+                    .catch(function(err) {
+                        screenDiv.innerHTML = "<span style='color:#F87171'>❌ LỖI: " + err.message + "</span>";
+                    });
+            } else {
+                screenDiv.innerHTML = "<span style='color:#9CA3AF'>Chưa có lệnh tải game.</span>";
+            }
+        });
+    </script>
+    </head>
 <body>
 	<div id="frame">
-		<button class="topbutton" id="show" >
-				&gt;
-		</button>
+		<button class="topbutton" id="show" >&gt;</button>
 		<div id="top">
-			<button class="topbutton" id="hide">
-				&lt;
-			</button><div id="title">
-			</div><button class="topbutton" id="exit">
-				X
-			</button>
+			<button class="topbutton" id="hide">&lt;</button><div id="title"></div><button class="topbutton" id="exit">X</button>
 		</div>
 		<button class="topbutton" id="settings-button">i</button>
+        
 		<div id="screen">
-			Select JAR file:<br>
+            Select JAR file:<br>
  			<img id="file-selector" src="img/arrow_up.png" width="128" height="128">
 		</div>
+        
 		<div id="keypad">
 			<div id="joypad">
 				<button id="up" class="key num">&nbsp;</button><br>
@@ -51,7 +138,6 @@
 				<button id="right" class="key num">&nbsp;</button><br>
 				<button id="down" class="key num">&nbsp;</button>
 			</div>
-			
 			
 			<button id="choice" class="softkey">&nbsp;</button>
 			<button id="open-joypad" class="key">&nbsp;</button>
@@ -71,7 +157,8 @@
 			<button id="pound" class="key num">#</button><br>
 		</div>
 	</div>
-	<div id="alert">
+    
+    <div id="alert">
 		<div class="message">Error!</div>
 	</div>
 	<div id="settings">
@@ -93,67 +180,4 @@
 			<button class="done">Done</button>
 		</div>
 	</div>
-<style>
-    /* 1. KHÔNG CHE GIẤU NỮA: Trả lại nền trắng, chữ đen để đọc được mọi thông báo */
-    body { background-color: #ffffff !important; color: #000000 !important; text-align: center; padding: 10px; font-family: sans-serif; overflow-y: auto; }
-    
-    /* 2. Chỉ ẩn duy nhất cái bàn phím ảo mặc định của Lõi vì mình đã có bàn phím riêng */
-    #keypad, .keypad { display: none !important; }
-    
-    /* 3. Làm nổi bật khung Game và các ô nhập liệu/nút bấm của Lõi */
-    canvas { border: 2px dashed #ff0000; margin-top: 10px; max-width: 100%; }
-    input, button { padding: 8px; margin: 5px; border: 1px solid #333; background: #eee; color: black; }
-    
-    /* 4. Khung Debug hiển thị trạng thái */
-    #debug-log { margin-bottom: 15px; font-family: monospace; font-size: 12px; text-align: left; background: #f8f9fa; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-</style>
-
-<div id="debug-log">
-    <strong>🛠️ BẢNG THEO DÕI HỆ THỐNG:</strong><br>
-    <span id="log-text">Đang chờ lệnh...</span>
-</div>
-
-<script>
-    function log(msg, color) {
-        document.getElementById('log-text').innerHTML += `<br><span style="color:${color}">➔ ${msg}</span>`;
-    }
-
-    window.addEventListener('load', function() {
-        var params = new URLSearchParams(window.location.search);
-        var gameUrl = params.get('url');
-        
-        if (gameUrl) {
-            log(`Đã nhận lệnh tải game: ${gameUrl}`, 'blue');
-            
-            // Bắt đầu kéo file từ GitHub
-            fetch(gameUrl)
-                .then(function(res) { 
-                    log(`Phản hồi từ máy chủ: HTTP ${res.status}`, res.ok ? 'green' : 'red');
-                    if (!res.ok) throw new Error("Không tìm thấy file trên GitHub (Lỗi " + res.status + ")");
-                    return res.blob(); 
-                })
-                .then(function(blob) {
-                    log(`Tải file thành công! Dung lượng: ${blob.size} bytes`, 'green');
-                    blob.name = gameUrl.split('/').pop() || "game.jar";
-                    
-                    log(`Đang chờ Lõi JS2ME khởi động...`, 'orange');
-                    
-                    // Rình Lõi khởi động để bơm file
-                    setTimeout(function() {
-                        if (window.js2me && window.js2me.loadJAR) {
-                            log(`Đã chèn file vào Lõi! Hãy xem Lõi báo gì ở bên dưới 👇`, 'purple');
-                            window.js2me.loadJAR(blob);
-                        } else {
-                            log(`LỖI: Lõi JS2ME không tồn tại hoặc bị hỏng file js!`, 'red');
-                        }
-                    }, 1000);
-                })
-                .catch(function(err) {
-                    log(`LỖI NGHIÊM TRỌNG: ${err.message}`, 'red');
-                });
-        } else {
-            log(`Chưa có link game nào được truyền vào.`, 'gray');
-        }
-    });
-</script>
 </body>
