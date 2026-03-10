@@ -24,14 +24,30 @@
 	<script type="text/javascript" src="js/threads.js"></script>
 	<script type="text/javascript" src="js/workers.js"></script>
 	<script type="text/javascript" src="js/utils.js"></script>
-	<style>
-    /* Làm đẹp giao diện gốc của Lõi để nó khớp với Web của bạn */
-    body { background: black !important; color: white !important; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin: 0; padding: 0; overflow: hidden; }
-    #keypad, .keypad { display: none !important; } /* Ẩn bàn phím xấu của Lõi */
-    canvas { max-width: 100%; height: auto !important; border: 2px solid #333; border-radius: 8px; }
-    input[type="file"] { background: #333; color: white; padding: 10px; border-radius: 8px; width: 90%; margin-top: 10px; }
-</style>
+<style>
+    /* Ẩn cái bàn phím xấu xí gốc của Lõi */
+    #keypad, .keypad, .controls { display: none !important; }
+    
+    /* Chỉnh màn hình đen và đưa nút chọn file lên dễ thấy */
+    body { 
+        background: black !important; 
+        color: white !important; 
+        margin: 0; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+    }
 
+    /* Làm cho cái nút chọn file dễ bấm trên điện thoại */
+    input[type="file"] {
+        margin-top: 20px;
+        padding: 10px;
+        background: #333;
+        color: white;
+        border-radius: 10px;
+        width: 80%;
+    }
+</style>
 </head>
 <body>
 	<div id="frame">
