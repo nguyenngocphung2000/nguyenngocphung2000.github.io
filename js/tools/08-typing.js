@@ -1,4 +1,4 @@
-// --- 8. Tool Luyện Đánh Máy (Bản Cực Chuẩn - Sửa lỗi đếm ngược & Telex Mobile) ---
+// --- 8. Tool Luyện Đánh Máy (Bản Hoàn Hảo - Sửa dứt điểm Đếm ngược & Telex Mobile) ---
 registerTool({
     id: 'tab-typing',
     name: 'Gõ Phím',
@@ -32,7 +32,7 @@ registerTool({
             #typing-container {
                 background-color: var(--bg-color);
                 box-shadow: var(--border-glow);
-                transition: all 0.5s ease;
+                transition: background-color 0.5s ease, box-shadow 0.5s ease;
                 font-family: 'Roboto Mono', monospace;
             }
 
@@ -41,6 +41,7 @@ registerTool({
                 line-height: 1.8;
                 position: relative;
                 color: var(--text-normal);
+                /* Bắt buộc phải có dòng này để trình duyệt không nuốt mất dấu cách */
                 white-space: pre-wrap; 
                 word-wrap: break-word;
             }
@@ -56,7 +57,7 @@ registerTool({
                 height: 1.5rem;
                 background-color: var(--caret-color);
                 box-shadow: var(--text-glow);
-                transition: all 0.1s ease;
+                transition: left 0.1s ease, top 0.1s ease; /* Mượt mà bám sát chữ */
                 animation: blink 1s infinite;
                 top: 0; left: 0;
                 border-radius: 2px;
@@ -64,31 +65,33 @@ registerTool({
             }
             @keyframes blink { 50% { opacity: 0; } }
 
-            /* Lớp phủ input để gõ Telex mượt mà trên iPhone/Android */
+            /* BÍ THUẬT: Ép điện thoại bật bàn phím ảo và gõ Telex không lỗi */
             #hidden-input { 
                 position: absolute; 
                 top: 0; left: 0; 
                 width: 100%; height: 100%; 
-                opacity: 0; 
-                z-index: 20; 
+                opacity: 1; /* Bắt buộc bằng 1 */
+                z-index: 50; 
                 cursor: text;
-                color: transparent; 
+                color: transparent; /* Giấu chữ thật đi */
                 background: transparent; 
+                caret-color: transparent; /* Giấu luôn con trỏ mặc định */
                 border: none; outline: none; resize: none;
-                font-size: 16px; /* Chống iPhone tự động Zoom */
+                font-size: 16px; /* Bắt buộc 16px để Safari không tự Zoom màn hình */
+                padding: 0; margin: 0;
+                overflow: hidden;
             }
 
             #countdown-overlay { backdrop-filter: blur(8px); }
+            
+            /* Giải pháp đếm ngược thuần CSS, 100% không bao giờ kẹt */
             .count-num {
-                /* Bỏ animation phức tạp ở CSS, dùng JS điều khiển class để tránh lỗi kẹt */
-                transition: all 0.3s ease;
-                transform: scale(1);
-                opacity: 1;
+                animation: popIn 1s infinite;
             }
-            .count-num.pop {
-                transform: scale(1.3);
-                color: var(--text-correct);
-                text-shadow: var(--text-glow);
+            @keyframes popIn {
+                0% { transform: scale(0.5); opacity: 0; }
+                50% { transform: scale(1.2); opacity: 1; text-shadow: var(--text-glow); color: var(--text-correct); }
+                100% { transform: scale(1); opacity: 0; }
             }
 
             .flash-effect { animation: flash-screen 0.3s ease; }
@@ -135,7 +138,7 @@ registerTool({
 
                 <div class="typing-text-area flex-1 relative" id="text-display-area">
                     <div id="caret"></div>
-                    <div id="words-container" class="pointer-events-none select-none"></div>
+                    <div id="words-container" class="pointer-events-none select-none z-10"></div>
                 </div>
 
                 <textarea id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
@@ -169,7 +172,6 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // --- 1. THEME SWITCHER ---
         const btnLight = document.getElementById('tp-btn-light');
         const btnDark = document.getElementById('tp-btn-dark');
         const typeContainer = document.getElementById('typing-container');
@@ -193,7 +195,6 @@ registerTool({
             countOverlay.classList.add('bg-gray-900/80');
         };
 
-        // --- 2. HỆ THỐNG BIẾN & CHIA ĐOẠN ---
         const sourceText = document.getElementById('tp-source-text');
         const setupScreen = document.getElementById('tp-setup-screen');
         const gameScreen = document.getElementById('tp-game-screen');
@@ -210,6 +211,7 @@ registerTool({
         
         let startTime = null;
         let timerInterval = null;
+        let countIntervalObj = null;
         let isPlaying = false;
         
         let previousCorrectChars = 0; 
@@ -220,7 +222,6 @@ registerTool({
         const liveTime = document.getElementById('live-time');
         const liveProgress = document.getElementById('live-progress');
 
-        // Hàm chia đoạn văn bản (mỗi đoạn khoảng 20 từ)
         const chunkText = (text) => {
             const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
             const chunks = [];
@@ -241,23 +242,20 @@ registerTool({
             
             for (let i = 0; i < targetText.length; i++) {
                 const span = document.createElement('span');
-                span.textContent = targetText[i]; // Dùng textContent để giữ nguyên dấu cách
+                span.textContent = targetText[i]; 
                 span.className = 'char';
                 wordsContainer.appendChild(span);
                 charElements.push(span);
             }
 
             hiddenInput.value = '';
-            // Đặt maxLength bằng độ dài đoạn text
             hiddenInput.maxLength = targetText.length;
             liveProgress.innerText = (index + 1) + '/' + textChunks.length;
             
             updateCaret();
-            hiddenInput.focus();
 
-            // Hiệu ứng chớp màn hình
             typeContainer.classList.remove('flash-effect');
-            void typeContainer.offsetWidth; // trigger reflow
+            void typeContainer.offsetWidth; 
             typeContainer.classList.add('flash-effect');
         };
 
@@ -300,7 +298,8 @@ registerTool({
             if(targetChar) {
                 caret.style.left = targetChar.offsetLeft + 'px';
                 caret.style.top = targetChar.offsetTop + 'px';
-                caret.style.height = targetChar.offsetHeight > 0 ? targetChar.offsetHeight + 'px' : '1.5rem';
+                const h = targetChar.offsetHeight;
+                caret.style.height = h > 0 ? h + 'px' : '1.5rem';
             }
         };
 
@@ -360,38 +359,28 @@ registerTool({
 
         const startBtn = document.getElementById('tp-btn-start');
         const countText = document.getElementById('countdown-text');
-        
-        // --- XỬ LÝ LỖI NHẢY SỐ 3 (Viết lại logic Countdown) ---
-        let countIntervalObj = null;
 
+        // Hàm đếm ngược siêu chuẩn
         const startCountdown = () => {
-            let count = 3;
-            countText.innerText = count;
-            countText.classList.add('pop');
-            
-            // Xóa interval cũ nếu có
             if(countIntervalObj) clearInterval(countIntervalObj);
             
+            let count = 3;
+            countText.innerText = count;
+            countOverlay.classList.remove('hidden');
+            
             countIntervalObj = setInterval(() => {
-                countText.classList.remove('pop');
-                
-                setTimeout(() => {
-                    count--;
-                    if(count > 0) {
-                        countText.innerText = count;
-                        countText.classList.add('pop');
-                    } else if(count === 0) {
-                        countText.innerText = "GÕ!";
-                        countText.classList.add('pop');
-                    } else {
-                        clearInterval(countIntervalObj);
-                        countOverlay.classList.add('hidden');
-                        isPlaying = true;
-                        hiddenInput.focus();
-                    }
-                }, 50); // Timeout nhỏ để CSS nhận diện thay đổi class
-                
-            }, 1000);
+                count--;
+                if(count > 0) {
+                    countText.innerText = count;
+                } else if(count === 0) {
+                    countText.innerText = "GÕ!";
+                } else {
+                    clearInterval(countIntervalObj);
+                    countOverlay.classList.add('hidden');
+                    isPlaying = true;
+                    hiddenInput.focus();
+                }
+            }, 1000); // Mỗi 1 giây cập nhật số 1 lần, khớp 100% với CSS Animation
         };
 
         startBtn.onclick = () => {
@@ -401,13 +390,14 @@ registerTool({
             setupScreen.classList.add('hidden');
             resultScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
-            countOverlay.classList.remove('hidden');
             
             hiddenInput.value = '';
-            hiddenInput.focus();
-
+            
             initGame(text);
             startCountdown();
+            
+            // Trượt màn hình xuống cho Điện thoại để không bị che khuất
+            gameScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
 
         const finishGame = () => {
@@ -429,11 +419,8 @@ registerTool({
         document.getElementById('tp-btn-retry').onclick = () => {
             resultScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
-            countOverlay.classList.remove('hidden');
             
             hiddenInput.value = '';
-            hiddenInput.focus(); 
-            
             initGame(sourceText.value);
             startCountdown();
         };
