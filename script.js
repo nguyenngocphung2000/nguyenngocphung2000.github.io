@@ -513,10 +513,10 @@ registerTool({
         }
     }
 });
-// --- 4. Tool Game Tuổi Thơ (Giả lập J2ME với Bàn phím Hiện đại) ---
+// --- 4. Tool Game Tuổi Thơ (Bản Chuẩn - Đã fix lỗi màn hình trắng) ---
 registerTool({
     id: 'tab-game',
-    name: 'Game Tuổi Thơ',
+    name: 'Chơi Game Java(.jar)',
     icon: '🕹️',
     html: `
         <div class="text-center mb-6">
@@ -525,8 +525,7 @@ registerTool({
             <p class="text-sm text-gray-500 mt-2">Tải file .jar của bạn lên và sống lại ký ức tuổi thơ!</p>
         </div>
 
-        <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-sm mx-auto border-t-4 border-t-indigo-400">
-            
+        <div class="glass-card p-6 md:p-8 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400">
             <div class="flex justify-center mb-6">
                 <label class="cursor-pointer bg-indigo-50 text-indigo-600 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm flex items-center gap-2 border border-indigo-100 active:scale-95">
                     <span>📁 Chọn file Game (.jar)</span>
@@ -534,35 +533,35 @@ registerTool({
                 </label>
             </div>
 
-            <div class="relative bg-black rounded-[2rem] p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 overflow-hidden mx-auto" style="width: 256px; height: 336px;">
-                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl flex flex-col items-center justify-center text-center p-4">
-                    <span class="text-4xl mb-2">👾</span>
-                    <p class="text-gray-400 text-xs font-mono">NO SIGNAL</p>
-                    <p class="text-indigo-400 text-[10px] font-mono mt-1 animate-pulse">Waiting for .jar file...</p>
+            <div class="relative bg-black rounded-2xl p-2 shadow-2xl shadow-indigo-200/50 mb-8 border-4 border-gray-800 mx-auto" style="width: 320px; height: 260px;">
+                <div id="game-display" class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative">
+                    <iframe id="game-iframe" src="./j2me/index.html" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black"></iframe>
+                    <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4">
+                        <span class="text-4xl mb-2">👾</span>
+                        <p class="text-gray-400 text-xs font-mono">CHƯA CÓ GAME</p>
+                        <p class="text-indigo-400 text-[10px] font-mono mt-1">Vui lòng tải file .jar lên</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white/40 backdrop-blur-md p-5 rounded-[2rem] shadow-inner border border-white/60 select-none">
-                
-                <div class="grid grid-cols-3 gap-3 mb-4 max-w-[220px] mx-auto">
-                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-lg" data-key="SoftLeft">L</button>
-                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowUp">↑</button>
-                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-lg" data-key="SoftRight">R</button>
-                    
-                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowLeft">←</button>
-                    <button class="v-key bg-indigo-500 text-white font-bold rounded-full shadow-[0_4px_15px_rgba(99,102,241,0.4)] active:shadow-inner active:bg-indigo-600 active:scale-95 transition-all w-full aspect-square text-sm border-2 border-indigo-300" data-key="Enter">OK</button>
-                    <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowRight">→</button>
-                    
-                    <div></div> <button class="v-key bg-white text-gray-600 font-bold rounded-2xl shadow-[0_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner active:bg-indigo-50 active:text-indigo-600 active:scale-95 transition-all w-full aspect-square text-2xl" data-key="ArrowDown">↓</button>
-                    <div></div> </div>
+            <div class="bg-white/50 backdrop-blur-md p-4 rounded-[2rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden mb-4 shadow-sm border border-gray-100">
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftLeft">TRÁI</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowUp">↑</button>
+                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-sm" data-key="SoftRight">PHẢI</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowLeft">←</button>
+                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 transition-colors aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowRight">→</button>
+                    <div class="bg-gray-50"></div>
+                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 active:text-indigo-600 transition-colors aspect-[4/3] text-2xl" data-key="ArrowDown">↓</button>
+                    <div class="bg-gray-50"></div>
+                </div>
 
-                <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent my-4"></div>
-
-                <div class="grid grid-cols-3 gap-3 max-w-[220px] mx-auto">
+                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
                     ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
-                        <button class="v-key bg-white/80 backdrop-blur text-gray-700 font-bold rounded-xl shadow-sm border border-gray-50 active:shadow-inner active:bg-orange-100 active:text-orange-600 active:scale-95 transition-all w-full aspect-[4/3] text-xl flex items-center justify-center relative overflow-hidden group" data-key="${num}">
-                            ${num}
-                            <span class="absolute text-[8px] text-gray-300 bottom-0.5 group-active:text-orange-300 font-normal tracking-widest">
+                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 active:text-orange-600 transition-colors aspect-[5/3] text-xl flex flex-col items-center justify-center group" data-key="${num}">
+                            <span>${num}</span>
+                            <span class="text-[8px] text-gray-400 group-active:text-orange-400 font-normal tracking-widest leading-none mt-0.5 h-2 block">
                                 ${num==='2'?'ABC':num==='3'?'DEF':num==='4'?'GHI':num==='5'?'JKL':num==='6'?'MNO':num==='7'?'PQRS':num==='8'?'TUV':num==='9'?'WXYZ':num==='0'?'_':''}
                             </span>
                         </button>
@@ -573,64 +572,97 @@ registerTool({
     `,
     logic: function() {
         const fileInput = document.getElementById('jar-file');
-        const gameDisplay = document.getElementById('game-display');
+        const iframe = document.getElementById('game-iframe');
+        const loadingScreen = document.getElementById('loading-screen');
         const vKeys = document.querySelectorAll('.v-key');
 
-        // 1. LOGIC XỬ LÝ TẢI FILE GAME
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
 
-            // Hiệu ứng khởi động (Booting)
-            gameDisplay.innerHTML = `
-                <div class="flex flex-col items-center justify-center w-full h-full bg-black text-white p-4">
-                    <div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p class="text-xs font-mono text-indigo-300">Đang nạp file: ${file.name}</p>
-                    <p class="text-[10px] font-mono text-gray-500 mt-2">Khởi tạo Java Micro Edition...</p>
-                </div>
-            `;
+            loadingScreen.innerHTML = '<div class="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div><p class="text-xs text-indigo-300 font-mono">Đang ép xung Engine...</p>';
 
-            // Lưu ý: Để game THỰC SỰ CHẠY ĐƯỢC trên web, chúng ta cần một thư viện lõi (Core Engine) 
-            // như JS2ME (https://github.com/Zaynyatyi/js2me). 
-            // Ở đây tôi đã dựng sẵn UI hoàn hảo và cổng kết nối, bạn chỉ cần nhúng thư viện đó vào là game sẽ lên hình!
-            setTimeout(() => {
-                gameDisplay.innerHTML = `
-                    <div class="text-center p-4 bg-gray-900 w-full h-full flex flex-col justify-center items-center rounded-xl">
-                        <span class="text-3xl mb-2">⚠️</span>
-                        <p class="text-orange-400 text-xs font-bold uppercase">Cần kết nối Engine</p>
-                        <p class="text-gray-400 text-[10px] mt-2 leading-relaxed">Giao diện và phím bấm đã sẵn sàng. Để đọc được file .jar, bạn cần tích hợp thư viện lõi JS2ME vào mã nguồn.</p>
-                    </div>
-                `;
-            }, 2500);
+            const tryLoadGame = () => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const innerInput = iframeDoc.getElementById('file');
+                    
+                    if (innerInput) {
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        innerInput.files = dt.files;
+                        
+                        innerInput.dispatchEvent(new Event('change', { bubbles: true }));
+                        
+                        loadingScreen.classList.add('hidden');
+                        iframe.classList.remove('hidden');
+                        
+                        iframeDoc.body.style.margin = "0";
+                        iframeDoc.body.style.overflow = "hidden";
+                        iframe.focus();
+                    } else {
+                        throw new Error("Không tìm thấy input#file trong Lõi j2me/index.html");
+                    }
+                } catch (err) {
+                    loadingScreen.innerHTML = `
+                        <span class="text-3xl mb-2 block">⚠️</span>
+                        <p class="text-orange-400 text-xs font-bold">Lỗi kết nối Lõi J2ME</p>
+                        <p class="text-gray-400 text-[10px] mt-2 leading-relaxed">
+                            Hãy bấm vào link dưới đây để kiểm tra:<br>
+                            <a href="./j2me/index.html" target="_blank" class="text-blue-400 underline font-bold text-xs mt-1 block">MỞ THỬ LÕI J2ME</a>
+                            Nếu báo 404, nghĩa là GitHub chưa up xong!
+                        </p>`;
+                    console.error("Chi tiết lỗi:", err);
+                }
+            };
+
+            if (iframe.contentWindow && iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+                tryLoadGame();
+            } else {
+                iframe.onload = tryLoadGame;
+            }
         });
 
-        // 2. LOGIC BÀN PHÍM ẢO (Mô phỏng phím thật)
-        // Khi người dùng chạm vào phím ảo, nó sẽ phát ra sự kiện "keydown" để thư viện giả lập game nhận diện được
         const triggerKey = (keyName, isDown) => {
-            const eventType = isDown ? 'keydown' : 'keyup';
-            const event = new KeyboardEvent(eventType, {
-                key: keyName,
-                code: keyName,
-                bubbles: true
-            });
-            document.dispatchEvent(event);
-            
-            // Log ra console để bạn thấy nó hoạt động
-            if(isDown) console.log('Đã bấm phím:', keyName);
+            if (iframe && !iframe.classList.contains('hidden')) {
+                let keyCode = 0;
+                switch(keyName) {
+                    case 'SoftLeft': keyCode = 112; break;
+                    case 'SoftRight': keyCode = 113; break;
+                    case 'ArrowUp': keyCode = 38; break;
+                    case 'ArrowDown': keyCode = 40; break;
+                    case 'ArrowLeft': keyCode = 37; break;
+                    case 'ArrowRight': keyCode = 39; break;
+                    case 'Enter': keyCode = 13; break;
+                    default: 
+                        if (!isNaN(keyName)) keyCode = keyName.charCodeAt(0);
+                        else if (keyName === '*') keyCode = 106;
+                        else if (keyName === '#') keyCode = 111;
+                }
+
+                if (keyCode !== 0) {
+                    const eventType = isDown ? 'keydown' : 'keyup';
+                    const event = new KeyboardEvent(eventType, { 
+                        key: keyName, code: keyName, keyCode: keyCode, which: keyCode, bubbles: true 
+                    });
+                    iframe.contentWindow.dispatchEvent(event);
+                    iframe.contentDocument.dispatchEvent(event);
+                }
+            }
         };
 
         vKeys.forEach(btn => {
             const keyName = btn.getAttribute('data-key');
+            btn.style.webkitTapHighlightColor = 'transparent';
             
-            // Xử lý chuột (PC)
             btn.addEventListener('mousedown', () => triggerKey(keyName, true));
             btn.addEventListener('mouseup', () => triggerKey(keyName, false));
             btn.addEventListener('mouseleave', () => triggerKey(keyName, false));
-
-            // Xử lý cảm ứng (Điện thoại)
+            
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyName, true); });
             btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
         });
     }
 });
+
 
