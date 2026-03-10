@@ -1506,7 +1506,7 @@ registerTool({
             .ft-tab-btn.active { background: #fffaf5; color: #f97316; box-shadow: 0 1px 3px rgba(249, 115, 22, 0.1); border: 1px solid #ffedd5; }
             
             /* CSS Sơ đồ cây (CSS Tree Classic) */
-            .css-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 10px; padding-left: 0; }
+            .css-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 15px; padding-left: 0; }
             .css-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
             .css-tree li::before, .css-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #fdba74; width: 50%; height: 20px; }
             .css-tree li::after { right: auto; left: 50%; border-left: 2px solid #fdba74; }
@@ -1574,8 +1574,7 @@ registerTool({
         <div id="ft-view-events" class="hidden space-y-4">
             <div class="glass-card p-6 md:p-8 rounded-[2rem] border-t-4 border-t-red-400">
                 <h3 class="font-bold text-gray-800 text-xl mb-4 flex items-center gap-2"><span>🎂</span> Sự kiện sắp tới (30 ngày)</h3>
-                <div id="ft-event-list" class="space-y-3">
-                    </div>
+                <div id="ft-event-list" class="space-y-3"></div>
             </div>
         </div>
 
@@ -1590,9 +1589,7 @@ registerTool({
                     <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-xl text-sm shadow-md transition" onclick="ftOpenModal()">+ Thêm</button>
                 </div>
             </div>
-            
-            <div id="ft-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2">
-                </div>
+            <div id="ft-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2"></div>
         </div>
 
         <div id="ft-view-tree" class="hidden">
@@ -1622,8 +1619,7 @@ registerTool({
                 <button onclick="ftCalculateRelation()" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 rounded-xl shadow-md transition hover:scale-[1.01] mb-6">✨ TÍNH TOÁN QUAN HỆ</button>
 
                 <div id="ft-lu-result" class="hidden space-y-4">
-                    <div class="bg-yellow-50 border border-yellow-100 p-4 rounded-xl text-center text-sm font-medium text-yellow-800" id="ft-lu-common">
-                    </div>
+                    <div class="bg-yellow-50 border border-yellow-100 p-4 rounded-xl text-center text-sm font-medium text-yellow-800" id="ft-lu-common"></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-white border border-orange-100 p-4 rounded-xl text-center shadow-sm">
                             <div class="text-xs text-gray-400 font-bold uppercase mb-2">Người A gọi Người B là</div>
@@ -1671,8 +1667,8 @@ registerTool({
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Ngày sinh (DD/MM/YYYY)</label>
-                            <input type="text" id="ft-m-birth" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200" placeholder="VD: 15/08/1990">
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Năm / Ngày sinh</label>
+                            <input type="text" id="ft-m-birth" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200" placeholder="VD: 1990">
                         </div>
                         <div>
                             <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Ngày mất (Tùy chọn)</label>
@@ -1713,12 +1709,10 @@ registerTool({
         const STORAGE_KEY = 'my_family_tree_pro';
         let data = []; 
 
-        // Utils
         const genId = () => 'id_' + Math.random().toString(36).substr(2, 9);
         const load = () => { try { data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e){ data = []; } };
         const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         
-        // --- 1. ĐIỀU HƯỚNG TAB ---
         window.ftSwitch = (tab) => {
             ['stats', 'events', 'list', 'tree', 'lookup'].forEach(t => {
                 document.getElementById('ft-view-' + t).classList.add('hidden');
@@ -1734,21 +1728,22 @@ registerTool({
             if(tab === 'lookup') renderLookupOptions();
         };
 
-        // Thuật toán lấy Đời (Generation) có chống loop
         const getGen = (id, visited = new Set()) => {
             if(visited.has(id)) return 1; 
             visited.add(id);
-
             const node = data.find(n => n.id === id);
             if(!node) return 0;
-            if(node.spouseId && !node.parentId) {
-                return getGen(node.spouseId, visited);
-            }
+            if(node.spouseId && !node.parentId) return getGen(node.spouseId, visited);
             if(!node.parentId) return 1;
             return getGen(node.parentId, visited) + 1;
         };
 
-        // --- 2. THỐNG KÊ (Stats) ---
+        const getYear = (str) => {
+            if(!str) return 9999;
+            const match = str.match(/\d{4}/);
+            return match ? parseInt(match[0]) : 9999;
+        };
+
         const renderStats = () => {
             const tot = data.length;
             document.getElementById('ft-s-total').innerText = tot;
@@ -1767,17 +1762,14 @@ registerTool({
             document.getElementById('ft-s-gen').innerText = maxGen;
         };
 
-        // --- 3. DANH SÁCH ---
         const renderList = (filter = '') => {
             const container = document.getElementById('ft-list-container');
             container.innerHTML = '';
             const filtered = data.filter(n => n.name.toLowerCase().includes(filter.toLowerCase()));
 
             filtered.forEach(node => {
-                const isMale = node.gender === 'male';
                 const gen = getGen(node.id);
                 const isInlaw = node.spouseId && !node.parentId;
-                
                 let badges = '';
                 if(node.status === 'deceased') badges += '<span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đã mất</span> ';
                 if(isInlaw) badges += '<span class="bg-pink-50 text-pink-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Dâu/Rể</span> ';
@@ -1785,22 +1777,17 @@ registerTool({
                 if(gen > 0) badges += `<span class="bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đời ${gen}</span>`;
 
                 container.innerHTML += `
-                    <div class="glass-card rounded-2xl p-4 flex items-center gap-4 hover:shadow-md hover:border-orange-300 transition cursor-pointer" onclick="ftOpenModal('${node.id}')">
-                        <div class="w-12 h-12 rounded-full ${isMale ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex justify-center items-center font-bold text-xl shrink-0 border-2 border-white shadow-sm">
-                            ${node.name.charAt(0).toUpperCase()}
-                        </div>
-                        <div class="flex-1 overflow-hidden">
-                            <div class="font-bold text-gray-800 text-sm truncate">${node.name}</div>
-                            <div class="text-xs text-gray-400 mt-0.5">${node.birth || '?'} ${node.death ? '→ ' + node.death : ''}</div>
-                            <div class="mt-2 flex flex-wrap gap-1">${badges}</div>
-                        </div>
+                    <div class="glass-card rounded-2xl p-4 flex flex-col hover:shadow-md hover:border-orange-300 transition cursor-pointer" onclick="ftOpenModal('${node.id}')">
+                        <div class="font-bold text-gray-800 text-base truncate ${node.gender==='male'?'text-blue-600':'text-pink-600'}">${node.name}</div>
+                        <div class="text-xs text-gray-400 mt-1">${node.birth || '?'} ${node.death ? '→ ' + node.death : ''}</div>
+                        <div class="mt-2 flex flex-wrap gap-1">${badges}</div>
                     </div>
                 `;
             });
         };
+
         document.getElementById('ft-search').addEventListener('input', e => renderList(e.target.value));
 
-        // --- 4. SỰ KIỆN ---
         const parseDate = (str) => {
             if(!str) return null;
             const parts = str.split('/');
@@ -1832,7 +1819,6 @@ registerTool({
                     if(days <= 30) events.push({ node: n, type: 'Ngày giỗ', days, dateStr: n.death });
                 }
             });
-
             events.sort((a,b) => a.days - b.days);
 
             if(events.length === 0) {
@@ -1843,7 +1829,6 @@ registerTool({
             events.forEach(ev => {
                 let badge = ev.days === 0 ? '<span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs font-bold animate-pulse">Hôm nay!</span>' 
                           : `<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full text-xs font-bold">${ev.days} ngày nữa</span>`;
-                
                 list.innerHTML += `
                     <div class="bg-white border border-orange-50 p-3 rounded-xl shadow-sm flex justify-between items-center">
                         <div class="flex items-center gap-3">
@@ -1861,7 +1846,7 @@ registerTool({
             });
         };
 
-        // --- 5. TRA CỨU DANH XƯNG (NÂNG CẤP DÂU / RỂ) ---
+        // --- 5. TRA CỨU DANH XƯNG (THUẬT TOÁN ĐÚNG VĂN HÓA VIỆT) ---
         const renderLookupOptions = () => {
             const selA = document.getElementById('ft-lu-a');
             const selB = document.getElementById('ft-lu-b');
@@ -1878,7 +1863,7 @@ registerTool({
             const nodeA = data.find(n => n.id === idA);
             const nodeB = data.find(n => n.id === idB);
             
-            // Xử lý cứng: Nếu là vợ chồng trực tiếp
+            // Xử lý cứng: Vợ chồng
             if (nodeA.spouseId === nodeB.id || nodeB.spouseId === nodeA.id) {
                 document.getElementById('ft-lu-result').classList.remove('hidden');
                 document.getElementById('ft-lu-common').innerHTML = "✨ <b>Quan hệ trực tiếp:</b> Vợ chồng";
@@ -1887,29 +1872,31 @@ registerTool({
                 return;
             }
 
-            // Hàm tìm ngược lên cụ tổ (LCA Algorithm Cải Tiến)
-            const getAncestors = (id) => {
-                let path = [];
+            const getBloodPath = (id) => {
+                let p = [];
                 let curr = data.find(n => n.id === id);
                 let visited = new Set();
+                let isLaw = false;
                 
-                // BƯỚC QUAN TRỌNG: Nhảy sang Vợ/Chồng nếu là Dâu/Rể ngoại tộc để lấy chung dòng máu
+                // Nút bắt đầu là dâu/rể thì phải đổi sang máu mủ để dò tổ tiên
                 if (curr && !curr.parentId && curr.spouseId) {
+                    isLaw = true;
                     curr = data.find(n => n.id === curr.spouseId);
                 }
-
+                
                 while(curr && !visited.has(curr.id)) {
                     visited.add(curr.id);
-                    path.push(curr); 
+                    p.push(curr);
                     curr = data.find(n => n.id === curr.parentId);
                 }
-                return path.reverse(); 
+                return { path: p.reverse(), isLaw }; 
             };
 
-            const pathA = getAncestors(idA);
-            const pathB = getAncestors(idB);
+            const traceA = getBloodPath(idA);
+            const traceB = getBloodPath(idB);
+            const pathA = traceA.path;
+            const pathB = traceB.path;
 
-            // Tìm Tổ tiên chung gần nhất (LCA)
             let lcaNode = null;
             let i = 0;
             while(i < pathA.length && i < pathB.length && pathA[i].id === pathB[i].id) {
@@ -1927,114 +1914,121 @@ registerTool({
                 return;
             }
 
-            // Đánh dấu người này là Dâu/Rể nếu không có cha mẹ nhưng có khai báo vợ chồng
-            const isLawA = !nodeA.parentId && nodeA.spouseId;
-            const isLawB = !nodeB.parentId && nodeB.spouseId;
+            const dA = pathA.length - i; 
+            const dB = pathB.length - i; 
 
-            document.getElementById('ft-lu-common').innerHTML = `✨ <b>Tổ tiên chung gần nhất:</b> ${lcaNode.name} (Cách A ${pathA.length - i} đời huyết thống, cách B ${pathB.length - i} đời huyết thống)`;
+            // Phân tích Nội/Ngoại dựa vào giới tính của người nối dòng máu cho A
+            let sideA = 'noi';
+            if (dA > 0 && pathA[i] && pathA[i].gender === 'female') sideA = 'ngoai';
+            
+            let sideB = 'noi';
+            if (dB > 0 && pathB[i] && pathB[i].gender === 'female') sideB = 'ngoai';
 
-            // Hàm phiên dịch danh xưng siêu việt
-            const getTitle = (dA, dB, gA, gB, lawA, lawB) => {
-                // dA, dB: Khoảng cách thế hệ đến Cụ Tổ chung
-                // lawA, lawB: Là dâu rể ngoại tộc hay ruột thịt
-                // gA, gB: Giới tính
-                // Nghĩa là: "A gọi B là gì?"
+            // So sánh tuổi để phân biệt Bác/Chú/Cô/Dì
+            let isOlderB = false;
+            let isOlderA = false;
+            if (dA >= 1 && dB >= 1) {
+                const bloodNodeA = pathA[i]; // Gốc sinh ra nhánh A
+                const bloodNodeB = pathB[i]; // Gốc sinh ra nhánh B
                 
-                // B cùng thế hệ với A
-                if (dA === dB) {
-                    if (dA === 1) { 
-                        if (lawB) return gB === 'male' ? "Anh / Em rể" : "Chị / Em dâu";
-                        if (lawA) return "Anh / Chị / Em (Bên vợ/chồng)";
-                        return "Anh / Chị / Em ruột";
-                    }
-                    if (lawB) return gB === 'male' ? "Anh / Em rể họ" : "Chị / Em dâu họ";
-                    return "Anh / Chị / Em họ";
+                let yA = getYear(bloodNodeA.birth);
+                let yB = getYear(bloodNodeB.birth);
+                
+                if (yA === 9999 || yB === 9999) {
+                    // Nếu không nhập năm, lấy thứ tự mảng làm tuổi (Nhập trước là lớn hơn)
+                    const indexA = data.findIndex(n => n.id === bloodNodeA.id);
+                    const indexB = data.findIndex(n => n.id === bloodNodeB.id);
+                    isOlderB = indexB < indexA;
+                    isOlderA = indexA < indexB;
+                } else {
+                    isOlderB = yB < yA;
+                    isOlderA = yA < yB;
+                }
+            }
+
+            document.getElementById('ft-lu-common').innerHTML = `✨ <b>Tổ tiên chung:</b> ${lcaNode.name} (Cách A ${dA} đời, cách B ${dB} đời)`;
+
+            const getTitle = (distA, distB, gA, gB, lawB, side, isOlder) => {
+                if (distA > 0 && distB === 0) {
+                    if (distA === 1) return lawB ? (gB === 'male' ? "Cha dượng" : "Mẹ kế") : (gB === 'male' ? "Ba / Cha" : "Mẹ / Má");
+                    if (distA === 2) return gB === 'male' ? `Ông ${side==='noi'?'nội':'ngoại'}` : `Bà ${side==='noi'?'nội':'ngoại'}`;
+                    if (distA === 3) return gB === 'male' ? "Cụ / Cố ông" : "Cụ / Cố bà";
+                    if (distA >= 4) return gB === 'male' ? "Kị / Sơ ông" : "Kị / Sơ bà";
                 }
                 
-                // B ở thế hệ trước (Bề trên của A)
-                if (dA > dB) {
-                    const diff = dA - dB;
-                    if (diff === 1) { // Ngang hàng cha mẹ
-                        if (dB === 0) { // B sinh ra nhánh này
-                            if (lawB) return gB === 'male' ? "Cha dượng" : "Mẹ kế";
-                            if (lawA) return gB === 'male' ? "Cha (Bên chồng/vợ)" : "Mẹ (Bên chồng/vợ)";
-                            return gB === 'male' ? "Cha" : "Mẹ";
-                        }
-                        // B ngang hàng anh chị em của cha mẹ A
-                        if (lawB) return gB === 'male' ? "Dượng / Bác trai" : "Thím / Mợ / Bác gái";
-                        return gB === 'male' ? "Chú / Bác / Cậu" : "Cô / Dì / Bác gái";
-                    }
-                    if (diff === 2) {
-                        if (lawB) return gB === 'male' ? "Ông nội/ngoại (kế)" : "Bà nội/ngoại (kế)";
-                        return gB === 'male' ? "Ông nội / ngoại" : "Bà nội / ngoại";
-                    }
-                    if (diff === 3) return "Cụ";
-                    return "Kỵ / Tổ tiên";
+                if (distA === 0 && distB > 0) {
+                    if (distB === 1) return lawB ? (gB === 'male' ? "Con rể" : "Con dâu") : "Con";
+                    if (distB === 2) return lawB ? (gB === 'male' ? "Cháu rể" : "Cháu dâu") : "Cháu (Nội/ngoại)";
+                    if (distB === 3) return lawB ? (gB === 'male' ? "Chắt rể" : "Chắt dâu") : "Chắt";
+                    if (distB >= 4) return "Chút / Chít";
                 }
-                
-                // B ở thế hệ sau (Bề dưới của A)
-                if (dA < dB) {
-                    const diff = dB - dA;
-                    if (diff === 1) { // Ngang hàng con cái
-                        if (dA === 0) { // B là con
-                            if (lawB) return gB === 'male' ? "Con rể" : "Con dâu";
-                            return "Con";
-                        }
-                        if (lawB) return gB === 'male' ? "Cháu rể" : "Cháu dâu";
-                        return "Cháu (Gọi A bằng Chú/Bác/Cô/Dì...)";
-                    }
-                    if (diff === 2) { // Ngang hàng cháu nội/ngoại
-                        if (dA === 0) { 
-                            if (lawB) return gB === 'male' ? "Cháu rể" : "Cháu dâu";
-                            return "Cháu nội / ngoại";
-                        }
-                        if (lawB) return gB === 'male' ? "Chắt rể" : "Chắt dâu";
-                        return "Chắt (Đời cháu họ)";
-                    }
-                    if (diff === 3) {
-                        if (dA === 0) {
-                            if (lawB) return gB === 'male' ? "Chắt rể" : "Chắt dâu";
-                            return "Chắt nội / ngoại";
-                        }
-                        return "Chắt / Chút";
-                    }
-                    return "Chút / Chít";
+
+                if (distA === 1 && distB === 1) {
+                    if (lawB) return gB === 'male' ? "Anh / Em rể" : "Chị / Em dâu";
+                    if (isOlder) return gB === 'male' ? "Anh ruột" : "Chị ruột";
+                    return gB === 'male' ? "Em trai ruột" : "Em gái ruột";
                 }
-                return "Người dưng";
+
+                if (distA === 2 && distB === 1) {
+                    if (side === 'noi') {
+                        if (!lawB) {
+                            if (gB === 'male') return isOlder ? "Bác trai" : "Chú";
+                            return isOlder ? "Bác gái / Cô" : "Cô";
+                        } else {
+                            if (gB === 'female') return isOlder ? "Bác dâu" : "Thím";
+                            return "Dượng (Chồng của cô)";
+                        }
+                    } else {
+                        if (!lawB) {
+                            return gB === 'male' ? "Cậu" : "Dì";
+                        } else {
+                            return gB === 'male' ? "Dượng" : "Mợ";
+                        }
+                    }
+                }
+
+                if (distA === 1 && distB === 2) {
+                    if (lawB) return gB === 'male' ? "Cháu rể" : "Cháu dâu";
+                    return "Cháu"; 
+                }
+
+                if (distA === distB && distA >= 2) return "Anh / Chị / Em họ";
+                if (distA > distB) return "Bề trên họ hàng";
+                return "Con cháu họ hàng";
             };
 
-            const distA = pathA.length - i;
-            const distB = pathB.length - i;
-
-            document.getElementById('ft-lu-res-b').innerText = getTitle(distA, distB, nodeA.gender, nodeB.gender, isLawA, isLawB); 
-            document.getElementById('ft-lu-res-a').innerText = getTitle(distB, distA, nodeB.gender, nodeA.gender, isLawB, isLawA); 
+            document.getElementById('ft-lu-res-b').innerText = getTitle(dA, dB, nodeA.gender, nodeB.gender, traceB.isLaw, sideA, isOlderB); 
+            document.getElementById('ft-lu-res-a').innerText = getTitle(dB, dA, nodeB.gender, nodeA.gender, traceA.isLaw, sideB, isOlderA); 
         };
 
-        // --- 6. SƠ ĐỒ CÂY ---
+        // --- 6. SƠ ĐỒ CÂY (GIAO DIỆN KHUNG TÊN CHUẨN) ---
         const buildTreeHTML = (nodeId) => {
             const node = data.find(n => n.id === nodeId);
             if(!node) return '';
             const children = data.filter(n => n.parentId === nodeId);
-            // Lọc vợ chồng (Thêm điều kiện n.id !== nodeId để tránh tự nhận mình làm vợ/chồng)
             const spouses = data.filter(n => (n.spouseId === nodeId || node.spouseId === n.id) && n.id !== nodeId);
 
             let html = '<li>';
             
-            html += `<div class="inline-flex items-center gap-2 bg-white border border-orange-100 p-2 rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer z-10 relative" onclick="ftOpenModal('${node.id}')">`;
+            // Box bao bọc
+            html += `<div class="inline-flex items-stretch bg-white border border-orange-200 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer z-10 relative" onclick="ftOpenModal('${node.id}')">`;
+            
+            // Khung tên người chính
             html += `
-                <div class="flex flex-col items-center min-w-[80px] px-2">
-                    <div class="w-8 h-8 rounded-full ${node.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">${node.name.charAt(0).toUpperCase()}</div>
-                    <div class="text-[10px] font-bold text-gray-800 ${node.status==='deceased'?'line-through text-gray-400':''}">${node.name}</div>
+                <div class="flex items-center justify-center px-4 py-3 min-w-[80px]">
+                    <div class="text-sm font-bold ${node.gender==='male'?'text-blue-700':'text-pink-700'} ${node.status==='deceased'?'line-through text-gray-400':''}">${node.name}</div>
                 </div>
             `;
             
+            // Khung Vợ - Chồng
             spouses.forEach(sp => {
                 if(sp.id !== node.parentId) { 
-                    html += `<div class="text-orange-300 font-bold px-1">💍</div>`;
+                    html += `<div class="flex items-center justify-center px-2 bg-orange-50 border-x border-orange-100">
+                                <span class="text-[9px] uppercase font-bold text-orange-500 whitespace-nowrap tracking-wider">Vợ - Chồng</span>
+                             </div>`;
                     html += `
-                        <div class="flex flex-col items-center min-w-[80px] px-2 bg-gray-50 rounded-xl py-1">
-                            <div class="w-8 h-8 rounded-full ${sp.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">${sp.name.charAt(0).toUpperCase()}</div>
-                            <div class="text-[10px] font-bold text-gray-800 ${sp.status==='deceased'?'line-through text-gray-400':''}">${sp.name}</div>
+                        <div class="flex items-center justify-center px-4 py-3 min-w-[80px] bg-gray-50 rounded-r-xl">
+                            <div class="text-sm font-bold ${sp.gender==='male'?'text-blue-700':'text-pink-700'} ${sp.status==='deceased'?'line-through text-gray-400':''}">${sp.name}</div>
                         </div>
                     `;
                 }
@@ -2050,18 +2044,12 @@ registerTool({
 
         const renderTree = () => {
             const container = document.getElementById('ft-tree-container');
-            
-            // LỌC VÀ CHỐNG LỖI NHÂN BẢN CÂY
-            // Chỉ lấy người làm gốc (không có cha mẹ). Nếu cả 2 vợ chồng đều làm gốc, chỉ lấy 1 người vẽ thôi.
             const roots = data.filter(n => {
-                if (n.parentId) return false; // Có cha mẹ thì không phải gốc
-                if (!n.spouseId) return true; // Độc thân thì làm gốc
-                
+                if (n.parentId) return false; 
+                if (!n.spouseId) return true; 
                 const spouse = data.find(s => s.id === n.spouseId);
                 if (!spouse) return true; 
-                if (spouse.parentId) return false; // Vợ/chồng có cha mẹ thì nhường vợ/chồng làm nhánh chính
-                
-                // Nếu cả 2 đều không có cha mẹ (Cụ Tổ & Cụ Bà), so sánh ID để chỉ hiển thị 1 cây tránh vẽ đè 2 lần
+                if (spouse.parentId) return false; 
                 return n.id > spouse.id;
             });
             
@@ -2140,10 +2128,7 @@ registerTool({
             if(data.some(n => n.parentId === id)) return alert("Không thể xóa người đang có dữ liệu con cái!");
             if(confirm("Xóa vĩnh viễn thành viên này?")) {
                 data = data.filter(n => n.id !== id);
-                
-                // CỰC KỲ QUAN TRỌNG: Gỡ bỏ liên kết vợ/chồng rác khi xóa người kia
                 data.forEach(n => { if (n.spouseId === id) n.spouseId = null; });
-                
                 save(); renderList(); renderTree(); renderStats(); ftCloseModal();
             }
         };
