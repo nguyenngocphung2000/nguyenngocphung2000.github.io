@@ -1495,7 +1495,7 @@ registerTool({
         });
     }
 });
-// --- 7. Tool Hệ Sinh Thái Gia Phả (Bản Hoàn Hảo - Hỗ trợ Con riêng & Xuất Ảnh) ---
+// --- 7. Tool Hệ Sinh Thái Gia Phả ---
 registerTool({
     id: 'tab-family-pro',
     name: 'Gia Phả',
@@ -1505,8 +1505,8 @@ registerTool({
             .ft-tab-btn { padding: 0.5rem 1rem; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; color: #6b7280; transition: all 0.2s; background: transparent; }
             .ft-tab-btn.active { background: #fffaf5; color: #f97316; box-shadow: 0 1px 3px rgba(249, 115, 22, 0.1); border: 1px solid #ffedd5; }
             
-            /* CSS Sơ đồ cây - Ô TÊN TỰ ĐỘNG XUỐNG DÒNG, HIỂN THỊ TRỌN VẸN */
-            .css-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 15px; padding-left: 0; }
+            /* CSS Sơ đồ cây - Khoảng cách anh chị em rộng hơn (20px) */
+            .css-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 20px; padding-left: 0; }
             .css-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
             .css-tree li::before, .css-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #fdba74; width: 50%; height: 20px; }
             .css-tree li::after { right: auto; left: 50%; border-left: 2px solid #fdba74; }
@@ -1517,18 +1517,16 @@ registerTool({
             .css-tree li:first-child::after { border-radius: 5px 0 0 0; }
             .css-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #fdba74; width: 0; height: 20px; }
 
-            /* Ô tên hiển thị */
-            .ft-node-box { min-width: 100px; max-width: 140px; min-height: 46px; height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; border: 1px solid #fed7aa; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; transition: all 0.2s; padding: 6px 8px; z-index: 10; position: relative; }
+            /* Ô tên hiển thị: Cố định kích thước, tự động xuống dòng trọn vẹn tên */
+            .ft-node-box { width: 110px; height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; border: 1px solid #fed7aa; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; transition: all 0.2s; padding: 4px; z-index: 10; position: relative; overflow: hidden; }
             .ft-node-box:hover { box-shadow: 0 4px 8px rgba(249,115,22,0.15); border-color: #f97316; transform: translateY(-2px); }
-            .ft-node-text { font-size: 0.8rem; font-weight: 700; text-align: center; white-space: normal; word-wrap: break-word; line-height: 1.3; }
+            .ft-node-text { font-size: 0.75rem; font-weight: 700; text-align: center; white-space: normal; line-height: 1.2; word-wrap: break-word; }
             .ft-node-male { color: #1d4ed8; }
             .ft-node-female { color: #be185d; }
             .ft-node-dead { text-decoration: line-through; color: #9ca3af; }
             
-            /* Thanh nối Vợ - Chồng siêu gọn */
-            .ft-bridge { display: flex; align-items: center; justify-content: center; width: 40px; height: 46px; position: relative; }
-            .ft-bridge::before { content: ''; position: absolute; width: 100%; height: 2px; background: #fed7aa; z-index: 0; }
-            .ft-bridge-text { font-size: 0.45rem; font-weight: 800; color: #f97316; background: #fffaf5; padding: 1px 3px; border-radius: 4px; border: 1px solid #ffedd5; position: relative; z-index: 1; text-transform: uppercase; white-space: nowrap; letter-spacing: 0.5px; }
+            /* Nét đứt/liền nối Vợ chồng (Rất ngắn để 2 vợ chồng sát nhau) */
+            .ft-bridge { width: 16px; height: 2px; background: #fdba74; align-self: center; position: relative; z-index: 0; }
         </style>
 
         <div class="text-center mb-6">
@@ -1607,8 +1605,8 @@ registerTool({
 
         <div id="ft-view-tree" class="hidden space-y-4">
             <div class="flex justify-end">
-                <button id="ft-btn-export-img" onclick="ftExportImage()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl text-sm shadow-md transition flex items-center gap-2">
-                    📸 Xuất Ảnh Sơ Đồ (Để in ấn)
+                <button id="ft-btn-export-pdf" onclick="ftExportPDF()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-xl text-sm shadow-md transition flex items-center gap-2">
+                    📄 Xuất PDF (Bản in)
                 </button>
             </div>
             <div class="glass-card rounded-[2rem] p-8 overflow-auto min-h-[500px] flex justify-center items-start custom-scrollbar bg-white" id="ft-tree-print-area">
@@ -1876,7 +1874,7 @@ registerTool({
             });
         };
 
-        // --- 5. TRA CỨU DANH XƯNG SIÊU CHUẨN VIỆT NAM ---
+        // --- 5. TRA CỨU DANH XƯNG ---
         const renderLookupOptions = () => {
             const selA = document.getElementById('ft-lu-a');
             const selB = document.getElementById('ft-lu-b');
@@ -1895,7 +1893,7 @@ registerTool({
             
             if (nodeA.spouseId === nodeB.id || nodeB.spouseId === nodeA.id) {
                 document.getElementById('ft-lu-result').classList.remove('hidden');
-                document.getElementById('ft-lu-common').innerHTML = "✨ <b>Quan hệ:</b> Vợ Chồng";
+                document.getElementById('ft-lu-common').innerHTML = "✨ <b>Quan hệ:</b> Hôn nhân";
                 document.getElementById('ft-lu-res-a').innerText = nodeB.gender === 'male' ? "Chồng" : "Vợ";
                 document.getElementById('ft-lu-res-b').innerText = nodeA.gender === 'male' ? "Chồng" : "Vợ";
                 return;
@@ -1973,13 +1971,9 @@ registerTool({
 
             document.getElementById('ft-lu-common').innerHTML = `✨ <b>Tổ tiên chung:</b> ${lcaNode.name} (Cách A ${dA} đời, cách B ${dB} đời)`;
 
-            // THUẬT TOÁN XÓA "NGƯỜI DƯNG/MẸ KẾ" -> GỌI ĐÚNG VĂN HÓA
             const getTitle = (distA, distB, gA, gB, lawB, side, isOlder, nodeMe, nodeThem) => {
-                
-                // B là bề trên trực hệ của A
                 if (distA > 0 && distB === 0) {
                     if (distA === 1) {
-                        // Kiểm tra nếu B là dượng/kế của A (B không phải cha/mẹ ruột mà là vợ/chồng của cha/mẹ)
                         const isStep = nodeMe.childType === 'rieng' && nodeMe.parentId !== nodeThem.id;
                         if (isStep) return gB === 'male' ? "Cha dượng" : "Mẹ kế";
                         return gB === 'male' ? "Cha / Ba" : "Mẹ / Má";
@@ -1989,7 +1983,6 @@ registerTool({
                     if (distA >= 4) return gB === 'male' ? "Kị / Sơ ông" : "Kị / Sơ bà";
                 }
                 
-                // B là bề dưới trực hệ của A
                 if (distA === 0 && distB > 0) {
                     if (distB === 1) {
                         const isStep = nodeThem.childType === 'rieng' && nodeThem.parentId !== nodeMe.id;
@@ -2001,14 +1994,12 @@ registerTool({
                     if (distB >= 4) return "Chút / Chít";
                 }
 
-                // A và B ngang hàng
                 if (distA === 1 && distB === 1) {
                     if (lawB) return gB === 'male' ? "Anh rể / Em rể" : "Chị dâu / Em dâu";
                     if (isOlder) return gB === 'male' ? "Anh ruột" : "Chị ruột";
                     return gB === 'male' ? "Em trai ruột" : "Em gái ruột";
                 }
 
-                // B ngang hàng cha mẹ A
                 if (distA === 2 && distB === 1) {
                     if (side === 'noi') {
                         if (isOlder) return lawB ? (gB === 'male' ? "Bác trai" : "Bác dâu") : (gB === 'male' ? "Bác trai" : "Bác gái");
@@ -2019,7 +2010,6 @@ registerTool({
                     }
                 }
 
-                // B là cháu họ của A
                 if (distA === 1 && distB === 2) {
                     return lawB ? (gB === 'male' ? "Cháu rể" : "Cháu dâu") : "Cháu"; 
                 }
@@ -2033,7 +2023,7 @@ registerTool({
             document.getElementById('ft-lu-res-a').innerText = getTitle(dB, dA, nodeB.gender, nodeA.gender, traceA.isLaw, sideB, isOlderA, nodeB, nodeA); 
         };
 
-        // --- 6. SƠ ĐỒ CÂY (FIX KÍCH THƯỚC Ô TÊN TRỌN VẸN, CHỮ VỢ CHỒNG SIÊU NHỎ) ---
+        // --- 6. SƠ ĐỒ CÂY ---
         const buildTreeHTML = (nodeId) => {
             const node = data.find(n => n.id === nodeId);
             if(!node) return '';
@@ -2043,9 +2033,8 @@ registerTool({
             let html = '<li>';
             html += `<div class="inline-flex items-center z-10 relative">`;
             
-            // Khung tên người chính
             let sClassA = node.status === 'deceased' ? 'ft-node-dead' : (node.gender === 'male' ? 'ft-node-male' : 'ft-node-female');
-            let childBadgeA = node.childType === 'rieng' ? `<div class="text-[9px] text-red-500 font-bold mt-1">(Con riêng)</div>` : '';
+            let childBadgeA = node.childType === 'rieng' ? `<div class="text-[9px] text-red-500 font-bold mt-1 leading-none">(Con riêng)</div>` : '';
             html += `
                 <div class="ft-node-box" onclick="ftOpenModal('${node.id}')">
                     <span class="ft-node-text ${sClassA}">${node.name}</span>
@@ -2053,13 +2042,13 @@ registerTool({
                 </div>
             `;
             
-            // Khung tên Vợ/Chồng kèm thanh nối
+            // Vẽ Vợ/Chồng nối liền, sát nhau hơn
             spouses.forEach(sp => {
                 if(sp.id !== node.parentId) { 
                     let sClassB = sp.status === 'deceased' ? 'ft-node-dead' : (sp.gender === 'male' ? 'ft-node-male' : 'ft-node-female');
-                    html += `<div class="ft-bridge"><span class="ft-bridge-text">Vợ - Chồng</span></div>`;
+                    html += `<div class="ft-bridge"></div>`;
                     html += `
-                        <div class="ft-node-box bg-orange-50/30" onclick="ftOpenModal('${sp.id}')">
+                        <div class="ft-node-box bg-orange-50/30 border-dashed border-orange-300" onclick="ftOpenModal('${sp.id}')">
                             <span class="ft-node-text ${sClassB}">${sp.name}</span>
                         </div>
                     `;
@@ -2092,39 +2081,38 @@ registerTool({
             container.innerHTML = '<ul>' + roots.map(r => buildTreeHTML(r.id)).join('') + '</ul>';
         };
 
-        // --- TÍNH NĂNG XUẤT ẢNH PDF (Dùng thư viện tạm thời html2canvas) ---
-        window.ftExportImage = () => {
-            const btn = document.getElementById('ft-btn-export-img');
+        // --- XUẤT PDF ---
+        window.ftExportPDF = () => {
+            const btn = document.getElementById('ft-btn-export-pdf');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '⏳ Đang tạo ảnh...';
+            btn.innerHTML = '⏳ Đang tạo PDF...';
             
-            // Hàm xử lý xuất
             const doExport = () => {
                 const el = document.getElementById('ft-tree-print-area');
                 
-                // Giải phóng cuộn trang để chụp nét toàn cảnh
                 const oldW = el.style.width; const oldH = el.style.height; const oldOverflow = el.style.overflow;
                 el.style.width = 'max-content'; el.style.height = 'max-content'; el.style.overflow = 'visible';
                 
-                html2canvas(el, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = 'So-Do-Gia-Pha-' + Date.now() + '.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    
-                    // Trả lại định dạng
+                const opt = {
+                  margin:       10,
+                  filename:     'So-Do-Gia-Pha-' + Date.now() + '.pdf',
+                  image:        { type: 'jpeg', quality: 1 },
+                  html2canvas:  { scale: 2, useCORS: true },
+                  jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                };
+                
+                html2pdf().set(opt).from(el).save().then(() => {
                     el.style.width = oldW; el.style.height = oldH; el.style.overflow = oldOverflow;
                     btn.innerHTML = originalText;
                 }).catch(err => {
-                    alert("Lỗi khi tạo ảnh!");
+                    alert("Lỗi khi tạo PDF!");
                     btn.innerHTML = originalText;
                 });
             };
 
-            // Gọi script động nếu chưa có
-            if (typeof html2canvas === 'undefined') {
+            if (typeof html2pdf === 'undefined') {
                 const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
                 script.onload = () => doExport();
                 document.head.appendChild(script);
             } else {
