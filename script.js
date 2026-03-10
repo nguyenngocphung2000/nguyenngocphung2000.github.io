@@ -307,20 +307,20 @@ registerTool({
                     <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
                 </div>
             </div>
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-blue-400">
+            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 mt-6">
                 <div class="flex items-start space-x-3 mb-5">
-                    <div class="bg-blue-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🏛️</div>
+                    <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🏛️</div>
                     <div><h3 class="font-bold text-gray-800">Chuyển đổi Số La Mã (1 - 3999)</h3></div>
                 </div>
                 <div class="flex flex-wrap items-end gap-2 md:gap-4">
                     <div class="flex-1 min-w-[140px]">
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số Thường (Ả Rập)</label>
-                        <input type="number" id="ro-arabic" placeholder="2026" class="w-full bg-blue-50 border border-blue-100 rounded-xl p-3 outline-none focus:ring-2 ring-blue-300 text-center font-bold text-blue-600">
+                        <input type="number" id="ro-arabic" placeholder="2026" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
                     </div>
                     <div class="pb-3 font-bold text-gray-400 text-xl text-center flex items-center">↔</div>
                     <div class="flex-1 min-w-[140px]">
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số La Mã</label>
-                        <input type="text" id="ro-roman" placeholder="MMXXVI" class="w-full bg-indigo-50 border border-indigo-100 rounded-xl p-3 outline-none focus:ring-2 ring-indigo-300 text-center font-bold text-indigo-600 uppercase">
+                        <input type="text" id="ro-roman" placeholder="MMXXVI" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500 uppercase">
                     </div>
                 </div>
                 <div class="text-right mt-4 flex justify-end space-x-4">
@@ -496,11 +496,12 @@ registerTool({
 
         document.getElementById('ro-save').onclick = () => {
             if(inArabic.value && inRoman.value && inRoman.value !== "LỖI") {
-                addHistory(`Số <span class="text-blue-500 font-bold">\${inArabic.value}</span> = La Mã <span class="text-indigo-500 font-bold">\${inRoman.value}</span>`);
+                addHistory(`Số <span class="text-orange-500 font-bold">${inArabic.value}</span> = La Mã <span class="text-red-500 font-bold">${inRoman.value}</span>`);
             }
         };
         
         document.getElementById('ro-clear').onclick = () => { inArabic.value = ""; inRoman.value = ""; };
+
         loadHistory();
     }
 });
