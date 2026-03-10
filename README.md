@@ -12,7 +12,7 @@
 
 <div class="text-center md:text-left flex-1 z-10">
 
-<span style="background:#fff3e0;color:#ea580c;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:bold;">Creator / Developer</span>
+<span style="background:#fff3e0;color:#ea580c;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:bold;">Nothinger</span>
 
 # Xin chào, tôi là **Nothing (N.Phụng)**
 
