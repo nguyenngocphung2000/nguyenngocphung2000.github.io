@@ -6,10 +6,8 @@ const mobileNav = document.getElementById('mobile-nav');
 const appContainer = document.getElementById('app-container');
 const mobileMenu = document.getElementById('mobile-menu');
 
-// Bật/tắt menu mobile
 document.getElementById('mobile-menu-btn').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-// Hàm chuyển Tab
 function switchTab(tabId) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(b => b.classList.remove('active'));
@@ -20,12 +18,10 @@ function switchTab(tabId) {
     document.querySelectorAll(`[data-target="${tabId}"]`).forEach(b => b.classList.add('active'));
     mobileMenu.classList.add('hidden');
 
-    // MAGIC 1: Lưu vị trí Tab vào bộ nhớ và thanh địa chỉ
     localStorage.setItem('hupvoi_active_tab', tabId);
     window.history.replaceState(null, null, '#' + tabId);
 }
 
-// Hàm Đăng ký Công cụ
 function registerTool(config) {
     const dBtn = document.createElement('button');
     dBtn.className = 'nav-btn px-4 py-2 transition hover:text-orange-500';
@@ -51,28 +47,21 @@ function registerTool(config) {
         config.logic();
     }
 
-    // Đánh dấu tab nào là mặc định để xử lý sau
     if (config.isDefault) {
         appContainer.dataset.defaultTab = config.id;
     }
 }
 
-// MAGIC 2: Tự động khôi phục Tab khi web vừa tải xong
 window.addEventListener('DOMContentLoaded', () => {
-    // Ưu tiên 1: Lấy tab từ link chia sẻ (có dấu #)
     const urlHash = window.location.hash.replace('#', '');
-    // Ưu tiên 2: Lấy tab từ bộ nhớ F5
     const memoryTab = localStorage.getItem('hupvoi_active_tab');
-    // Ưu tiên 3: Tab mặc định ban đầu
     const defaultTab = appContainer.dataset.defaultTab;
-
     const targetTabId = urlHash || memoryTab || defaultTab;
 
-    // Kiểm tra xem tab đó có tồn tại không rồi mới mở
     if (targetTabId && document.getElementById(targetTabId)) {
         switchTab(targetTabId);
     } else if (defaultTab) {
-        switchTab(defaultTab); // Fallback an toàn
+        switchTab(defaultTab);
     }
 });
 
@@ -80,7 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
    PHẦN 2: CÁC CÔNG CỤ
 ========================================================== */
 
-// --- 1. Tool Trang Chủ (Profile & Cẩm nang Hướng Dẫn) ---
+// --- 1. Tool Trang Chủ ---
 registerTool({
     id: 'tab-home',
     name: 'Trang Chủ',
@@ -116,9 +105,6 @@ registerTool({
         <div id="guide-list" class="space-y-4"></div>
     `,
     logic: function() {
-        // =========================================================
-        // KHO BÀI VIẾT ĐÃ ĐƯỢC CHUẨN HÓA MARKDOWN
-        // =========================================================
         const guides = [
            {
                 title: "ℹ️ Contact me",
@@ -160,9 +146,6 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
             }
         ];
 
-        // =========================================================
-        // LOGIC HIỂN THỊ 
-        // =========================================================
         const guideList = document.getElementById('guide-list');
 
         guides.forEach((guide, index) => {
@@ -192,7 +175,6 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
             const renderDiv = document.getElementById('md-render-' + index);
 
             if (contentDiv.classList.contains('hidden')) {
-                // Đóng các tab khác
                 guides.forEach((_, i) => {
                     if (i !== index) {
                         document.getElementById('content-' + i).classList.add('hidden');
@@ -200,7 +182,6 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
                     }
                 });
 
-                // Mở tab hiện tại
                 contentDiv.classList.remove('hidden');
                 iconDiv.style.transform = 'rotate(180deg)';
                 
@@ -210,10 +191,9 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
                         text = text.replace(/^@time\[(.*?)\] (.*)$/gm, '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>');
                         renderDiv.innerHTML = marked.parse(text);
 
-                        // MAGIC: Làm cho các đường link đẹp hơn và mở sang Tab mới
                         renderDiv.querySelectorAll('a').forEach(link => {
-                            link.setAttribute('target', '_blank'); // Mở tab mới
-                            link.className = 'text-orange-500 font-bold hover:underline'; // Thêm màu cam cho link
+                            link.setAttribute('target', '_blank');
+                            link.className = 'text-orange-500 font-bold hover:underline';
                         });
                     } else {
                         renderDiv.innerHTML = "<p class='text-red-500'>Lỗi: Không tải được thư viện Markdown.</p>";
@@ -226,7 +206,6 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
         };
     }
 });
-
 
 // --- 2. Tool Tính Phần Trăm ---
 registerTool({
@@ -340,7 +319,6 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // --- CÁC HÀM TIỆN ÍCH ---
         const fmt = (num) => Number.isInteger(num) ? num.toLocaleString('vi-VN') : Number(num.toFixed(2)).toLocaleString('vi-VN');
         const clean = (num) => parseFloat(num.toFixed(2));
 
@@ -359,7 +337,6 @@ registerTool({
             });
         };
 
-        // --- LOGIC TÍNH TOÁN 2 CHIỀU ---
         const c1P = document.getElementById('c1-p'), c1V = document.getElementById('c1-v'), c1Res = document.getElementById('c1-res');
         const calc1 = () => {
             const target = getTarget(c1P, c1V, c1Res);
@@ -390,53 +367,41 @@ registerTool({
         };
         attachLogic([c3Old, c3New, c3Res], calc3);
 
-        // --- LOGIC NÚT XOÁ Ô ---
-        document.getElementById('c1-clear').onclick = () => { c1P.value = c1V.value = c1Res.value = ""; c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0; };
-        document.getElementById('c2-clear').onclick = () => { c2X.value = c2Y.value = c2Res.value = ""; c2X.dataset.last = c2Y.dataset.last = c2Res.dataset.last = 0; };
-        document.getElementById('c3-clear').onclick = () => { c3Old.value = c3New.value = c3Res.value = ""; c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0; };
-
-        // ==========================================================
-        //  MAGIC: LƯU TRỮ LỊCH SỬ VĨNH VIỄN
-        // ==========================================================
         const historyList = document.getElementById('history-list');
-        const STORAGE_KEY = 'hupvoi_calc_history'; // Tên ổ khóa lưu trữ
+        const STORAGE_KEY = 'hupvoi_calc_history'; 
 
-        // 1. Hàm hiển thị lịch sử từ ổ cứng ra màn hình
         const loadHistory = () => {
             const savedData = localStorage.getItem(STORAGE_KEY);
             let historyArr = savedData ? JSON.parse(savedData) : [];
             
-            historyList.innerHTML = ''; // Xóa sạch để vẽ lại
+            historyList.innerHTML = ''; 
             
             if (historyArr.length > 0) {
                 historyArr.forEach(item => {
                     const li = document.createElement('li');
                     li.className = 'bg-white p-3 rounded-xl border border-orange-50 shadow-sm flex items-center before:content-["✓"] before:text-green-500 before:mr-2 before:font-bold text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
                     li.innerHTML = item;
-                    historyList.appendChild(li); // Thêm vào danh sách hiển thị
+                    historyList.appendChild(li); 
                 });
             } else {
                 historyList.innerHTML = '<li class="italic text-gray-400 text-center py-4 empty-msg">Chưa có lịch sử nào. Hãy bấm "Lưu KQ" ở các bảng tính!</li>';
             }
         };
 
-        // 2. Hàm thêm mới một mẩu lịch sử vào ổ cứng
         const addHistory = (textHTML) => {
             const savedData = localStorage.getItem(STORAGE_KEY);
             let historyArr = savedData ? JSON.parse(savedData) : [];
             
-            historyArr.unshift(textHTML); // Đẩy cái mới nhất lên đầu mảng
+            historyArr.unshift(textHTML); 
             
-            // Giới hạn chỉ lưu 20 cái cho nhẹ web
             if (historyArr.length > 20) {
-                historyArr.pop(); // Xóa cái cũ nhất ở cuối đuôi
+                historyArr.pop(); 
             }
 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArr)); // Lưu đè lại vào ổ cứng
-            loadHistory(); // Bắt màn hình vẽ lại ngay lập tức
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArr)); 
+            loadHistory(); 
         };
 
-        // 3. Gắn sự kiện cho các nút "Lưu KQ"
         document.getElementById('c1-save').onclick = () => {
             if(c1P.value && c1V.value && c1Res.value) addHistory(`<span class="text-orange-500">${fmt(parseFloat(c1P.value))}%</span> của ${fmt(parseFloat(c1V.value))} = <span class="text-red-500">${fmt(parseFloat(c1Res.value))}</span>`);
         };
@@ -451,18 +416,20 @@ registerTool({
             }
         };
 
-        // 4. Gắn sự kiện Xóa sạch lịch sử
+        document.getElementById('c1-clear').onclick = () => { c1P.value = c1V.value = c1Res.value = ""; c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0; };
+        document.getElementById('c2-clear').onclick = () => { c2X.value = c2Y.value = c2Res.value = ""; c2X.dataset.last = c2Y.dataset.last = c2Res.dataset.last = 0; };
+        document.getElementById('c3-clear').onclick = () => { c3Old.value = c3New.value = c3Res.value = ""; c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0; };
+
         document.getElementById('clear-history').onclick = () => {
-            localStorage.removeItem(STORAGE_KEY); // Phá ổ khóa, xóa sạch dữ liệu
-            loadHistory(); // Vẽ lại màn hình trống
+            localStorage.removeItem(STORAGE_KEY); 
+            loadHistory(); 
         };
 
-        // 5. Tự động gọi hàm Load khi vừa mở Tab này lên
         loadHistory();
     }
 });
 
-// --- 3. Tool Markdown (Đã thêm nút Mở File) ---
+// --- 3. Tool Markdown ---
 registerTool({
     id: 'tab-md',
     name: 'Đọc MD',
@@ -490,29 +457,27 @@ registerTool({
         const mdPre = document.getElementById('md-preview');
         const mdFile = document.getElementById('md-file');
 
-        // Hàm xử lý hiển thị
         const renderMD = () => {
             if(window.marked) mdPre.innerHTML = marked.parse(mdIn.value);
         };
 
-        // 1. Gõ tay đến đâu hiện đến đó
         mdIn.addEventListener('input', renderMD);
 
-        // 2. Logic đọc file từ máy tính
         if (mdFile) {
             mdFile.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    mdIn.value = e.target.result; // Bơm chữ vào textarea
-                    renderMD();                   // Render ra HTML
+                    mdIn.value = e.target.result; 
+                    renderMD();                   
                 };
                 reader.readAsText(file);
             });
         }
     }
 });
+
 // --- 4. Tool Game Tuổi Thơ (Bản Kho Game Đám Mây Chuyên Nghiệp) ---
 registerTool({
     id: 'tab-game',
