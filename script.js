@@ -432,7 +432,7 @@ registerTool({
 // --- 3. Tool Markdown ---
 registerTool({
     id: 'tab-md',
-    name: 'Đọc MD',
+    name: 'Đọc Markdown(MD)',
     icon: '📝',
     html: `
         <div class="text-center mb-6">
@@ -442,7 +442,7 @@ registerTool({
             
             <div class="flex justify-end mb-4">
                 <label class="cursor-pointer bg-orange-100 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-orange-200 transition shadow-sm">
-                    📁 Mở File .md
+                    📁 Chọn File(.md)
                     <input type="file" id="md-file" accept=".md" class="hidden">
                 </label>
             </div>
@@ -475,177 +475,5 @@ registerTool({
                 reader.readAsText(file);
             });
         }
-    }
-});
-
-// --- 4. Tool Game Tuổi Thơ---
-registerTool({
-    id: 'tab-game',
-    name: 'Game Java',
-    icon: '🕹️',
-    html: `
-        <div class="text-center mb-6">
-            <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Giải trí</span>
-            <h2 class="text-3xl font-bold mt-2 text-gray-800">Cỗ Máy <span class="text-indigo-500">Thời Gian</span> 🕹️</h2>
-        </div>
-
-        <div class="glass-card p-4 md:p-6 rounded-[2rem] max-w-md mx-auto border-t-4 border-t-indigo-400 shadow-xl">
-            
-            <div class="flex justify-center mb-5 w-full">
-                <div class="relative w-full max-w-[280px]">
-                    <select id="game-selector" class="w-full appearance-none bg-indigo-50 text-indigo-700 px-4 py-3 rounded-2xl text-sm font-bold hover:bg-indigo-100 transition shadow-sm border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-center cursor-pointer outline-none truncate">
-                        <option value="" disabled selected>🎮 Bấm để chọn Siêu Phẩm...</option>
-                        <option value="./games/HauTayDuKy_multiscreen.jar">🐒 Hậu Tây Du Ký</option>
-                        <option value="./games/Hiep_Si_Bong_toi_tv_240x320.jar">🗡️ Hiệp Sĩ Bóng Tối</option>
-                        <option value="./games/Contra_2012_240x320.jar">🔫 Contra 2012</option>
-                        <option value="./games/Contra_2013_Amazon_320x240.jar">🔫 Contra 2013</option>
-                        <option value="./games/Doraemon_phieu_luu_xu_quy.jar">🐱 Doraemon: Xứ Quỷ</option>
-                        <option value="./games/Doreamon_Cuoc_chien_bao_boi.jar">🐱 Doraemon: Bảo Bối</option>
-                        <option value="./games/Giang_ho_tieu_tu_Phan1.jar">⚔️ Giang Hồ Tiểu Tử 1</option>
-                        <option value="./games/TroChoiVui_Giang_ho_tieu_tu_Phan2.jar">⚔️ Giang Hồ Tiểu Tử 2</option>
-                        <option value="./games/Hien_vien_linh_thu_multiscreen.jar">🐉 Hiên Viên Linh Thú</option>
-                        <option value="./games/Hoa_Van_Cuong_Dao_multiscreen.jar">🔪 Hỏa Vân Cuồng Đao</option>
-                        <option value="./games/TankWar_II_multiscreen.jar">🛡️ Tank War II</option>
-                        <option value="./games/Spy_Mouse_240x320.jar">🐭 Spy Mouse</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-indigo-500">▼</div>
-                </div>
-            </div>
-
-            <div class="relative bg-black rounded-2xl p-1 mb-4 border-4 border-gray-800 mx-auto overflow-hidden shadow-inner" style="width: 320px; height: 260px;">
-                <div id="game-display" class="w-full h-full bg-black rounded-xl overflow-hidden relative">
-                    <iframe id="game-iframe" src="" class="w-full h-full border-0 absolute top-0 left-0 hidden bg-black z-10"></iframe>
-                    
-                    <div id="loading-screen" class="flex flex-col items-center justify-center w-full h-full text-center p-4 z-0">
-                        <span class="text-4xl mb-2 animate-bounce">👾</span>
-                        <p class="text-green-400 text-xs font-mono font-bold" id="loading-text">CHỜ LỆNH KHỞI ĐỘNG</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white/50 backdrop-blur-md p-3 rounded-[1.5rem] shadow-inner border border-white/60 select-none max-w-[320px] mx-auto">
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden mb-2 border border-gray-100">
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftLeft">L-SOFT</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowUp">↑</button>
-                    <button class="v-key bg-white text-gray-500 font-bold active:bg-indigo-100 aspect-[4/3] text-[10px]" data-key="SoftRight">R-SOFT</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowLeft">←</button>
-                    <button class="v-key bg-indigo-50 text-indigo-600 font-black active:bg-indigo-200 aspect-[4/3] text-lg shadow-inner" data-key="Enter">OK</button>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowRight">→</button>
-                    <div class="bg-gray-50"></div>
-                    <button class="v-key bg-white text-gray-600 font-bold active:bg-indigo-100 aspect-[4/3] text-xl" data-key="ArrowDown">↓</button>
-                    <div class="bg-gray-50"></div>
-                </div>
-
-                <div class="bg-gray-200 grid grid-cols-3 gap-[1px] rounded-[1rem] overflow-hidden border border-gray-100">
-                    ${['1','2','3','4','5','6','7','8','9','*','0','#'].map(num => `
-                        <button class="v-key bg-white text-gray-700 font-bold active:bg-orange-100 aspect-[5/3] text-lg flex flex-col items-center justify-center group" data-key="${num}">
-                            <span>${num}</span>
-                        </button>
-                    `).join('')}
-                </div>
-            </div>
-        </div>
-    `,
-    logic: function() {
-        const gameSelector = document.getElementById('game-selector');
-        const iframe = document.getElementById('game-iframe');
-        const loadingScreen = document.getElementById('loading-screen');
-        const loadingText = document.getElementById('loading-text');
-        const vKeys = document.querySelectorAll('.v-key');
-
-        gameSelector.addEventListener('change', async function() {
-            const gameUrl = this.value;
-            if (!gameUrl) return;
-
-            iframe.classList.add('hidden');
-            loadingScreen.classList.remove('hidden');
-            loadingText.innerText = "⏳ ĐANG KÉO GAME TỪ KHO...";
-            loadingText.className = "text-yellow-400 text-xs font-mono font-bold mt-2";
-
-            try {
-                const response = await fetch(gameUrl);
-                if (!response.ok) throw new Error("404: KHÔNG TÌM THẤY BĂNG GAME!");
-                const blob = await response.blob();
-                
-                let file;
-                try { file = new File([blob], gameUrl.split('/').pop(), { type: "application/java-archive" }); } 
-                catch (e) { file = blob; file.name = gameUrl.split('/').pop(); }
-
-                loadingText.innerText = "✅ TẢI XONG! ĐANG MỞ LÕI...";
-                loadingText.className = "text-green-400 text-xs font-mono font-bold mt-2";
-
-                iframe.src = `./j2me/index.html?t=${Date.now()}`;
-
-                iframe.onload = function() {
-                    loadingText.innerText = "🔥 ĐANG ÉP XUNG LÕI...";
-                    const win = iframe.contentWindow;
-
-                    let checks = 0;
-                    const waitCore = setInterval(() => {
-                        checks++;
-                        if (win.js2me && typeof win.js2me.loadJAR === 'function') {
-                            clearInterval(waitCore);
-                            loadingText.innerText = "🚀 KHỞI ĐỘNG!";
-                            
-                            // CHÌA KHÓA VÀNG Ở ĐÂY: Gắn thêm function() {} để Lõi không bị lỗi TypeError
-                            win.js2me.loadJAR(file, function() {
-                                console.log("Game đã nạp thành công 100%");
-                            });
-                            
-                            setTimeout(() => {
-                                loadingScreen.classList.add('hidden');
-                                iframe.classList.remove('hidden');
-                                iframe.focus();
-                            }, 300);
-                        } else if (checks > 100) {
-                            clearInterval(waitCore);
-                            loadingText.innerText = "❌ LỖI: LÕI BỊ ĐƠ";
-                            loadingText.className = "text-red-400 text-xs font-mono font-bold mt-2";
-                        }
-                    }, 100);
-                };
-            } catch (error) {
-                loadingText.innerText = "❌ LỖI: " + error.message;
-                loadingText.className = "text-red-400 text-[10px] font-mono font-bold mt-2";
-            }
-        });
-
-        const triggerKey = (keyName, isDown) => {
-            if (iframe && !iframe.classList.contains('hidden')) {
-                let keyCode = 0;
-                switch(keyName) {
-                    case 'SoftLeft': keyCode = 112; break;
-                    case 'SoftRight': keyCode = 113; break;
-                    case 'ArrowUp': keyCode = 38; break;
-                    case 'ArrowDown': keyCode = 40; break;
-                    case 'ArrowLeft': keyCode = 37; break;
-                    case 'ArrowRight': keyCode = 39; break;
-                    case 'Enter': keyCode = 13; break;
-                    default: 
-                        if (!isNaN(keyName)) keyCode = keyName.charCodeAt(0);
-                        else if (keyName === '*') keyCode = 106;
-                        else if (keyName === '#') keyCode = 111;
-                }
-
-                if (keyCode !== 0) {
-                    const eventType = isDown ? 'keydown' : 'keyup';
-                    const event = new KeyboardEvent(eventType, { 
-                        key: keyName, code: keyName, keyCode: keyCode, which: keyCode, bubbles: true 
-                    });
-                    if (iframe.contentWindow) iframe.contentWindow.dispatchEvent(event);
-                    if (iframe.contentDocument) iframe.contentDocument.dispatchEvent(event);
-                }
-            }
-        };
-
-        vKeys.forEach(btn => {
-            const keyName = btn.getAttribute('data-key');
-            btn.style.webkitTapHighlightColor = 'transparent';
-            btn.addEventListener('mousedown', () => triggerKey(keyName, true));
-            btn.addEventListener('mouseup', () => triggerKey(keyName, false));
-            btn.addEventListener('mouseleave', () => triggerKey(keyName, false));
-            btn.addEventListener('touchstart', (e) => { e.preventDefault(); triggerKey(keyName, true); });
-            btn.addEventListener('touchend', (e) => { e.preventDefault(); triggerKey(keyName, false); });
-        });
     }
 });

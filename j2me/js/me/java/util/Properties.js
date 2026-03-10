@@ -1,4 +1,0 @@
-js2me.createClass({
-	
-});
-
