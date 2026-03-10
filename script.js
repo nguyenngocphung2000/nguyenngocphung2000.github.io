@@ -1495,3 +1495,598 @@ registerTool({
         });
     }
 });
+// --- 7. Tool Hệ Sinh Thái Gia Phả ---
+registerTool({
+    id: 'tab-family-pro',
+    name: 'Gia Phả',
+    icon: '🌳',
+    html: `
+        <style>
+            .ft-tab-btn { padding: 0.5rem 1rem; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; color: #6b7280; transition: all 0.2s; background: transparent; }
+            .ft-tab-btn.active { background: #fffaf5; color: #f97316; box-shadow: 0 1px 3px rgba(249, 115, 22, 0.1); border: 1px solid #ffedd5; }
+            
+            /* CSS Sơ đồ cây (CSS Tree Classic) */
+            .css-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 10px; padding-left: 0; }
+            .css-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
+            .css-tree li::before, .css-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #fdba74; width: 50%; height: 20px; }
+            .css-tree li::after { right: auto; left: 50%; border-left: 2px solid #fdba74; }
+            .css-tree li:only-child::after, .css-tree li:only-child::before { display: none; }
+            .css-tree li:only-child { padding-top: 0; }
+            .css-tree li:first-child::before, .css-tree li:last-child::after { border: 0 none; }
+            .css-tree li:last-child::before { border-right: 2px solid #fdba74; border-radius: 0 5px 0 0; }
+            .css-tree li:first-child::after { border-radius: 5px 0 0 0; }
+            .css-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #fdba74; width: 0; height: 20px; }
+        </style>
+
+        <div class="text-center mb-6">
+            <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Hệ thống gia tộc</span>
+            <h2 class="text-3xl font-bold mt-2 text-gray-800">Quản Lý <span class="text-orange-500">Gia Phả</span> 🌳</h2>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2 mb-6 bg-white/60 p-2 rounded-2xl border border-orange-50 shadow-sm backdrop-blur-md">
+            <button onclick="ftSwitch('stats')" id="ft-nav-stats" class="ft-tab-btn active">📊 Thống Kê</button>
+            <button onclick="ftSwitch('events')" id="ft-nav-events" class="ft-tab-btn">📅 Sự Kiện</button>
+            <button onclick="ftSwitch('list')" id="ft-nav-list" class="ft-tab-btn">📇 Danh Sách</button>
+            <button onclick="ftSwitch('tree')" id="ft-nav-tree" class="ft-tab-btn">🕸️ Sơ Đồ</button>
+            <button onclick="ftSwitch('lookup')" id="ft-nav-lookup" class="ft-tab-btn">🔍 Danh Xưng</button>
+        </div>
+
+        <div id="ft-view-stats" class="space-y-6 block">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-5 rounded-2xl text-center border-b-4 border-b-orange-400">
+                    <div class="text-gray-400 text-xs font-bold uppercase mb-1">Tổng thành viên</div>
+                    <div class="text-3xl font-black text-gray-800" id="ft-s-total">0</div>
+                </div>
+                <div class="glass-card p-5 rounded-2xl text-center border-b-4 border-b-blue-400">
+                    <div class="text-gray-400 text-xs font-bold uppercase mb-1">Nam</div>
+                    <div class="text-3xl font-black text-blue-600" id="ft-s-male">0</div>
+                </div>
+                <div class="glass-card p-5 rounded-2xl text-center border-b-4 border-b-pink-400">
+                    <div class="text-gray-400 text-xs font-bold uppercase mb-1">Nữ</div>
+                    <div class="text-3xl font-black text-pink-600" id="ft-s-female">0</div>
+                </div>
+                <div class="glass-card p-5 rounded-2xl text-center border-b-4 border-b-gray-400">
+                    <div class="text-gray-400 text-xs font-bold uppercase mb-1">Đã mất</div>
+                    <div class="text-3xl font-black text-gray-600" id="ft-s-dead">0</div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center">
+                    <span class="text-sm font-bold text-gray-600">Con trưởng 👑</span>
+                    <span class="text-xl font-black text-yellow-500" id="ft-s-firstborn">0</span>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center">
+                    <span class="text-sm font-bold text-gray-600">Đã kết hôn 💍</span>
+                    <span class="text-xl font-black text-red-400" id="ft-s-married">0</span>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center">
+                    <span class="text-sm font-bold text-gray-600">Dâu / Rể 🌸</span>
+                    <span class="text-xl font-black text-emerald-500" id="ft-s-inlaw">0</span>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex justify-between items-center">
+                    <span class="text-sm font-bold text-gray-600">Số đời 🌿</span>
+                    <span class="text-xl font-black text-orange-500" id="ft-s-gen">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="ft-view-events" class="hidden space-y-4">
+            <div class="glass-card p-6 md:p-8 rounded-[2rem] border-t-4 border-t-red-400">
+                <h3 class="font-bold text-gray-800 text-xl mb-4 flex items-center gap-2"><span>🎂</span> Sự kiện sắp tới (30 ngày)</h3>
+                <div id="ft-event-list" class="space-y-3">
+                    </div>
+            </div>
+        </div>
+
+        <div id="ft-view-list" class="hidden space-y-4">
+            <div class="flex flex-wrap gap-2 justify-between">
+                <input type="text" id="ft-search" class="bg-white/80 backdrop-blur-sm border border-orange-100 rounded-xl px-4 py-2 outline-none focus:ring-2 ring-orange-200 text-sm w-full md:w-64" placeholder="🔍 Tìm tên...">
+                <div class="flex gap-2">
+                    <button class="bg-blue-50 text-blue-600 font-bold px-4 py-2 rounded-xl text-sm" onclick="ftExport()">📥 Xuất JSON</button>
+                    <label class="bg-purple-50 text-purple-600 font-bold px-4 py-2 rounded-xl text-sm cursor-pointer">
+                        📂 Nhập <input type="file" id="ft-import" accept=".json" class="hidden">
+                    </label>
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-xl text-sm shadow-md transition" onclick="ftOpenModal()">+ Thêm</button>
+                </div>
+            </div>
+            
+            <div id="ft-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2">
+                </div>
+        </div>
+
+        <div id="ft-view-tree" class="hidden">
+            <div class="glass-card rounded-[2rem] p-8 overflow-auto min-h-[500px] flex justify-center items-start custom-scrollbar">
+                <div id="ft-tree-container" class="css-tree">
+                    <div class="text-gray-400 italic text-sm text-center mt-10">Cây gia phả đang trống.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ft-view-lookup" class="hidden space-y-6">
+            <div class="glass-card p-6 md:p-8 rounded-[2rem] border-t-4 border-t-yellow-400">
+                <h3 class="font-bold text-gray-800 text-xl mb-4">Tra cứu quan hệ & Danh xưng</h3>
+                
+                <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                    <div class="flex-1 w-full">
+                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Người A</label>
+                        <select id="ft-lu-a" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 font-bold text-gray-700"></select>
+                    </div>
+                    <div class="bg-yellow-100 text-yellow-600 w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0 shadow-sm">↔</div>
+                    <div class="flex-1 w-full">
+                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Người B</label>
+                        <select id="ft-lu-b" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 font-bold text-gray-700"></select>
+                    </div>
+                </div>
+
+                <button onclick="ftCalculateRelation()" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 rounded-xl shadow-md transition hover:scale-[1.01] mb-6">✨ TÍNH TOÁN QUAN HỆ</button>
+
+                <div id="ft-lu-result" class="hidden space-y-4">
+                    <div class="bg-yellow-50 border border-yellow-100 p-4 rounded-xl text-center text-sm font-medium text-yellow-800" id="ft-lu-common">
+                        </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white border border-orange-100 p-4 rounded-xl text-center shadow-sm">
+                            <div class="text-xs text-gray-400 font-bold uppercase mb-2">Người A gọi Người B là</div>
+                            <div class="text-2xl font-black text-orange-600" id="ft-lu-res-a">...</div>
+                        </div>
+                        <div class="bg-white border border-orange-100 p-4 rounded-xl text-center shadow-sm">
+                            <div class="text-xs text-gray-400 font-bold uppercase mb-2">Người B gọi Người A là</div>
+                            <div class="text-2xl font-black text-orange-600" id="ft-lu-res-b">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ft-modal" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+            <div class="bg-white rounded-[2rem] shadow-2xl w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-300 relative border border-orange-100">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-orange-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
+                <div class="p-6 border-b border-orange-50 flex justify-between items-center relative z-10">
+                    <h3 id="ft-modal-title" class="font-bold text-xl text-gray-800">Thông tin thành viên</h3>
+                    <button onclick="ftCloseModal()" class="text-gray-400 hover:text-red-500 font-bold text-xl w-8 h-8 rounded-full bg-gray-50 flex justify-center items-center transition">&times;</button>
+                </div>
+                
+                <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar relative z-10">
+                    <input type="hidden" id="ft-m-id">
+                    
+                    <div>
+                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Họ và Tên</label>
+                        <input type="text" id="ft-m-name" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 font-bold text-gray-700">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giới tính</label>
+                            <select id="ft-m-gender" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 font-medium">
+                                <option value="male">Nam 👨</option><option value="female">Nữ 👩</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Trạng thái</label>
+                            <select id="ft-m-status" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 font-medium">
+                                <option value="alive">Còn sống</option><option value="deceased">Đã mất</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Ngày sinh (DD/MM/YYYY)</label>
+                            <input type="text" id="ft-m-birth" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200" placeholder="VD: 15/08/1990">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Ngày mất (Tùy chọn)</label>
+                            <input type="text" id="ft-m-death" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200" placeholder="VD: 10/03/2020">
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-4">
+                        <div>
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Mối quan hệ huyết thống (Cha/Mẹ)</label>
+                            <select id="ft-m-parent" class="w-full bg-white border border-gray-200 rounded-xl p-2 outline-none focus:border-orange-300 text-sm">
+                                <option value="">-- Cụ Tổ (Không có) --</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2 px-2">
+                            <input type="checkbox" id="ft-m-firstborn" class="w-4 h-4 text-orange-500 rounded focus:ring-orange-400">
+                            <label class="text-sm font-bold text-gray-700">Là con trưởng</label>
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Vợ / Chồng của</label>
+                            <select id="ft-m-spouse" class="w-full bg-white border border-gray-200 rounded-xl p-2 outline-none focus:border-orange-300 text-sm">
+                                <option value="">-- Độc thân / Chưa rõ --</option>
+                            </select>
+                            <p class="text-[10px] text-gray-400 mt-1 ml-2 italic">* Chọn mục này nếu là Dâu/Rể ngoại tộc</p>
+                        </div>
+                    </div>
+
+                    <button id="ft-btn-save" class="w-full mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition shadow-md">LƯU THÀNH VIÊN</button>
+                    
+                    <div id="ft-edit-actions" class="hidden mt-2 text-center pt-2">
+                        <button class="text-red-400 hover:text-red-600 text-xs font-bold" onclick="ftDelete()">🗑️ Xóa thành viên</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `,
+    logic: function() {
+        const STORAGE_KEY = 'my_family_tree_pro';
+        let data = []; 
+        /* Cấu trúc: { id, name, gender, status, birth, death, parentId, spouseId, isFirstBorn } */
+
+        // Utils
+        const genId = () => 'id_' + Math.random().toString(36).substr(2, 9);
+        const load = () => { try { data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch{ data = []; } };
+        const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        
+        // --- 1. ĐIỀU HƯỚNG TAB ---
+        window.ftSwitch = (tab) => {
+            ['stats', 'events', 'list', 'tree', 'lookup'].forEach(t => {
+                document.getElementById('ft-view-' + t).classList.add('hidden');
+                document.getElementById('ft-nav-' + t).classList.remove('active');
+            });
+            document.getElementById('ft-view-' + tab).classList.remove('hidden');
+            document.getElementById('ft-nav-' + tab).classList.add('active');
+            
+            if(tab === 'stats') renderStats();
+            if(tab === 'list') renderList();
+            if(tab === 'tree') renderTree();
+            if(tab === 'events') renderEvents();
+            if(tab === 'lookup') renderLookupOptions();
+        };
+
+        // Thuật toán lấy Đời (Generation)
+        const getGen = (id) => {
+            const node = data.find(n => n.id === id);
+            if(!node) return 0;
+            if(node.spouseId && !node.parentId) {
+                // Dâu rể lấy theo đời của vợ/chồng
+                return getGen(node.spouseId);
+            }
+            if(!node.parentId) return 1;
+            return getGen(node.parentId) + 1;
+        };
+
+        // --- 2. THỐNG KÊ (Stats) ---
+        const renderStats = () => {
+            const tot = data.length;
+            document.getElementById('ft-s-total').innerText = tot;
+            document.getElementById('ft-s-male').innerText = data.filter(n => n.gender === 'male').length;
+            document.getElementById('ft-s-female').innerText = data.filter(n => n.gender === 'female').length;
+            document.getElementById('ft-s-dead').innerText = data.filter(n => n.status === 'deceased').length;
+            document.getElementById('ft-s-firstborn').innerText = data.filter(n => n.isFirstBorn).length;
+            document.getElementById('ft-s-inlaw').innerText = data.filter(n => n.spouseId && !n.parentId).length;
+            
+            let married = new Set();
+            data.forEach(n => { if(n.spouseId) { married.add(n.id); married.add(n.spouseId); } });
+            document.getElementById('ft-s-married').innerText = married.size;
+
+            let maxGen = 0;
+            data.forEach(n => { const g = getGen(n.id); if(g > maxGen) maxGen = g; });
+            document.getElementById('ft-s-gen').innerText = maxGen;
+        };
+
+        // --- 3. DANH SÁCH (List view style thẻ) ---
+        const renderList = (filter = '') => {
+            const container = document.getElementById('ft-list-container');
+            container.innerHTML = '';
+            const filtered = data.filter(n => n.name.toLowerCase().includes(filter.toLowerCase()));
+
+            filtered.forEach(node => {
+                const isMale = node.gender === 'male';
+                const gen = getGen(node.id);
+                const isInlaw = node.spouseId && !node.parentId;
+                
+                let badges = '';
+                if(node.status === 'deceased') badges += '<span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đã mất</span> ';
+                if(isInlaw) badges += '<span class="bg-pink-50 text-pink-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Dâu/Rể</span> ';
+                if(node.isFirstBorn) badges += '<span class="bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Con trưởng</span> ';
+                if(gen > 0) badges += \`<span class="bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đời \${gen}</span>\`;
+
+                container.innerHTML += \`
+                    <div class="glass-card rounded-2xl p-4 flex items-center gap-4 hover:shadow-md hover:border-orange-300 transition cursor-pointer" onclick="ftOpenModal('\${node.id}')">
+                        <div class="w-12 h-12 rounded-full \${isMale ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex justify-center items-center font-bold text-xl shrink-0 border-2 border-white shadow-sm">
+                            \${node.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="flex-1 overflow-hidden">
+                            <div class="font-bold text-gray-800 text-sm truncate">\${node.name}</div>
+                            <div class="text-xs text-gray-400 mt-0.5">\${node.birth || '?'} \${node.death ? '→ ' + node.death : ''}</div>
+                            <div class="mt-2 flex flex-wrap gap-1">\${badges}</div>
+                        </div>
+                    </div>
+                \`;
+            });
+        };
+        document.getElementById('ft-search').addEventListener('input', e => renderList(e.target.value));
+
+        // --- 4. SỰ KIỆN (Tính toán ngày sinh/giỗ) ---
+        const parseDate = (str) => {
+            if(!str) return null;
+            const parts = str.split('/');
+            if(parts.length >= 2) return { d: parseInt(parts[0]), m: parseInt(parts[1]) };
+            return null;
+        };
+        const getDaysLeft = (dateObj) => {
+            if(!dateObj) return Infinity;
+            const today = new Date(); // Dùng ngày giả lập logic (thực tế JS Date lấy system time)
+            let target = new Date(today.getFullYear(), dateObj.m - 1, dateObj.d);
+            if(today > target) target.setFullYear(target.getFullYear() + 1);
+            return Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+        };
+
+        const renderEvents = () => {
+            const list = document.getElementById('ft-event-list');
+            list.innerHTML = '';
+            let events = [];
+
+            data.forEach(n => {
+                if(n.status === 'alive' && n.birth) {
+                    const parsed = parseDate(n.birth);
+                    const days = getDaysLeft(parsed);
+                    if(days <= 30) events.push({ node: n, type: 'Sinh nhật', days, dateStr: n.birth });
+                }
+                if(n.status === 'deceased' && n.death) {
+                    const parsed = parseDate(n.death);
+                    const days = getDaysLeft(parsed);
+                    if(days <= 30) events.push({ node: n, type: 'Ngày giỗ', days, dateStr: n.death });
+                }
+            });
+
+            events.sort((a,b) => a.days - b.days);
+
+            if(events.length === 0) {
+                list.innerHTML = '<div class="text-center text-gray-400 italic text-sm">Không có sự kiện nào trong 30 ngày tới.</div>';
+                return;
+            }
+
+            events.forEach(ev => {
+                let badge = ev.days === 0 ? '<span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs font-bold animate-pulse">Hôm nay!</span>' 
+                          : \`<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full text-xs font-bold">\${ev.days} ngày nữa</span>\`;
+                
+                list.innerHTML += \`
+                    <div class="bg-white border border-orange-50 p-3 rounded-xl shadow-sm flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full \${ev.type === 'Sinh nhật' ? 'bg-pink-50' : 'bg-gray-100'} flex items-center justify-center text-lg">
+                                \${ev.type === 'Sinh nhật' ? '🎂' : '🕯️'}
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800 text-sm">\${ev.node.name}</div>
+                                <div class="text-xs text-gray-400">\${ev.type} - \${ev.dateStr}</div>
+                            </div>
+                        </div>
+                        \${badge}
+                    </div>
+                \`;
+            });
+        };
+
+        // --- 5. TRA CỨU DANH XƯNG (Thuật toán cây LCA cơ bản) ---
+        const renderLookupOptions = () => {
+            const selA = document.getElementById('ft-lu-a');
+            const selB = document.getElementById('ft-lu-b');
+            let opts = '<option value="">-- Chọn thành viên --</option>';
+            data.forEach(n => opts += \`<option value="\${n.id}">\${n.name} (Đời \${getGen(n.id)})</option>\`);
+            selA.innerHTML = selB.innerHTML = opts;
+        };
+
+        const getAncestors = (id) => {
+            let path = [];
+            let curr = data.find(n => n.id === id);
+            // Nếu là dâu rể, trace theo vợ/chồng
+            if(curr && curr.spouseId && !curr.parentId) curr = data.find(n => n.id === curr.spouseId);
+            
+            while(curr) {
+                path.push(curr.id);
+                curr = data.find(n => n.id === curr.parentId);
+            }
+            return path.reverse(); // Gốc lên trước
+        };
+
+        window.ftCalculateRelation = () => {
+            const idA = document.getElementById('ft-lu-a').value;
+            const idB = document.getElementById('ft-lu-b').value;
+            if(!idA || !idB || idA === idB) return alert("Vui lòng chọn 2 người khác nhau!");
+
+            const nodeA = data.find(n => n.id === idA);
+            const nodeB = data.find(n => n.id === idB);
+            const pathA = getAncestors(idA);
+            const pathB = getAncestors(idB);
+
+            // Tìm Lowest Common Ancestor (Tổ tiên chung gần nhất)
+            let lcaId = null;
+            let i = 0;
+            while(i < pathA.length && i < pathB.length && pathA[i] === pathB[i]) {
+                lcaId = pathA[i]; i++;
+            }
+
+            const resDiv = document.getElementById('ft-lu-result');
+            resDiv.classList.remove('hidden');
+
+            if(!lcaId) {
+                document.getElementById('ft-lu-common').innerHTML = "Hai người không có chung huyết thống trực tiếp trong dữ liệu.";
+                document.getElementById('ft-lu-res-a').innerText = "Người dưng";
+                document.getElementById('ft-lu-res-b').innerText = "Người dưng";
+                return;
+            }
+
+            const lcaNode = data.find(n => n.id === lcaId);
+            document.getElementById('ft-lu-common').innerHTML = \`✨ <b>Tổ tiên chung gần nhất:</b> \${lcaNode.name} (Cách A \${pathA.length - i} đời, cách B \${pathB.length - i} đời)\`;
+
+            // Thuật toán xác định danh xưng đơn giản (Trực hệ & Anh em họ)
+            const getTitle = (distA, distB, genderA, genderB) => {
+                if(distA === 0 && distB > 0) {
+                    if(distB === 1) return genderB === 'male' ? "Cha" : "Mẹ";
+                    if(distB === 2) return genderB === 'male' ? "Ông nội/ngoại" : "Bà nội/ngoại";
+                    if(distB === 3) return "Cụ";
+                    return "Tổ tiên";
+                }
+                if(distA > 0 && distB === 0) {
+                    if(distA === 1) return "Con";
+                    if(distA === 2) return "Cháu";
+                    if(distA === 3) return "Chắt";
+                    return "Chút/Chít";
+                }
+                // Quan hệ bàng hệ (Họ hàng)
+                if(distA === distB) {
+                    if(distA === 1) return "Anh / Chị / Em ruột";
+                    return "Anh / Chị / Em họ";
+                }
+                if(distA < distB) {
+                    return genderB === 'male' ? "Chú / Bác / Cậu" : "Cô / Dì / Thím / Mợ";
+                }
+                return "Cháu";
+            };
+
+            const distA = pathA.length - i;
+            const distB = pathB.length - i;
+
+            document.getElementById('ft-lu-res-b').innerText = getTitle(distA, distB, nodeA.gender, nodeB.gender); // B gọi A
+            document.getElementById('ft-lu-res-a').innerText = getTitle(distB, distA, nodeB.gender, nodeA.gender); // A gọi B
+        };
+
+        // --- 6. SƠ ĐỒ CÂY (CSS đệ quy, có vợ/chồng) ---
+        const buildTreeHTML = (nodeId) => {
+            const node = data.find(n => n.id === nodeId);
+            if(!node) return '';
+            const children = data.filter(n => n.parentId === nodeId);
+            const spouses = data.filter(n => n.spouseId === nodeId || node.spouseId === n.id);
+
+            let html = '<li>';
+            
+            // Box chính
+            html += \`<div class="inline-flex items-center gap-2 bg-white border border-orange-100 p-2 rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer z-10 relative" onclick="ftOpenModal('\${node.id}')">\`;
+            html += \`
+                <div class="flex flex-col items-center min-w-[80px] px-2">
+                    <div class="w-8 h-8 rounded-full \${node.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">\${node.name.charAt(0).toUpperCase()}</div>
+                    <div class="text-[10px] font-bold text-gray-800 \${node.status==='deceased'?'line-through text-gray-400':''}">\${node.name}</div>
+                </div>
+            \`;
+            
+            // Vẽ vợ/chồng dính kèm
+            spouses.forEach(sp => {
+                if(sp.id !== node.parentId) { // Tránh vẽ lại nếu db bị ngược
+                    html += \`<div class="text-orange-300 font-bold px-1">💍</div>\`;
+                    html += \`
+                        <div class="flex flex-col items-center min-w-[80px] px-2 bg-gray-50 rounded-xl py-1">
+                            <div class="w-8 h-8 rounded-full \${sp.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">\${sp.name.charAt(0).toUpperCase()}</div>
+                            <div class="text-[10px] font-bold text-gray-800 \${sp.status==='deceased'?'line-through text-gray-400':''}">\${sp.name}</div>
+                        </div>
+                    \`;
+                }
+            });
+            html += \`</div>\`;
+
+            if(children.length > 0) {
+                html += '<ul>' + children.map(c => buildTreeHTML(c.id)).join('') + '</ul>';
+            }
+            html += '</li>';
+            return html;
+        };
+
+        const renderTree = () => {
+            const container = document.getElementById('ft-tree-container');
+            // Root: ko có parent, ko phải là con dâu/rể (tức ko có spouseId hoặc có spouseId nhưng người spouse đó có parent)
+            const roots = data.filter(n => !n.parentId && (!n.spouseId || data.find(s => s.id === n.spouseId && !s.parentId)));
+            
+            if(roots.length === 0) {
+                container.innerHTML = '<div class="text-gray-400 italic text-sm text-center mt-10">Sơ đồ trống. Chuyển sang Danh Sách để thêm người.</div>';
+                return;
+            }
+            container.innerHTML = '<ul>' + roots.map(r => buildTreeHTML(r.id)).join('') + '</ul>';
+        };
+
+        // --- 7. MODAL QUẢN LÝ THÀNH VIÊN ---
+        const modal = document.getElementById('ft-modal');
+        window.ftOpenModal = (id = null) => {
+            // Update dropdowns
+            let opts = '<option value="">-- Cụ Tổ / Không có --</option>';
+            data.forEach(n => { if(n.id !== id) opts += \`<option value="\${n.id}">\${n.name}</option>\`; });
+            document.getElementById('ft-m-parent').innerHTML = opts;
+            
+            let spouseOpts = '<option value="">-- Độc thân / Chưa rõ --</option>';
+            data.forEach(n => { if(n.id !== id) spouseOpts += \`<option value="\${n.id}">\${n.name}</option>\`; });
+            document.getElementById('ft-m-spouse').innerHTML = spouseOpts;
+
+            if(id) {
+                const node = data.find(n => n.id === id);
+                document.getElementById('ft-m-id').value = node.id;
+                document.getElementById('ft-m-name').value = node.name;
+                document.getElementById('ft-m-gender').value = node.gender;
+                document.getElementById('ft-m-status').value = node.status;
+                document.getElementById('ft-m-birth').value = node.birth || '';
+                document.getElementById('ft-m-death').value = node.death || '';
+                document.getElementById('ft-m-parent').value = node.parentId || '';
+                document.getElementById('ft-m-spouse').value = node.spouseId || '';
+                document.getElementById('ft-m-firstborn').checked = node.isFirstBorn || false;
+                
+                document.getElementById('ft-modal-title').innerText = "Chỉnh sửa thành viên";
+                document.getElementById('ft-edit-actions').classList.remove('hidden');
+            } else {
+                ['ft-m-id','ft-m-name','ft-m-birth','ft-m-death','ft-m-parent','ft-m-spouse'].forEach(i => document.getElementById(i).value = '');
+                document.getElementById('ft-m-status').value = 'alive';
+                document.getElementById('ft-m-firstborn').checked = false;
+                document.getElementById('ft-modal-title').innerText = "Thêm thành viên mới";
+                document.getElementById('ft-edit-actions').classList.add('hidden');
+            }
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); modal.firstElementChild.classList.remove('scale-95'); }, 10);
+        };
+
+        window.ftCloseModal = () => {
+            modal.classList.add('opacity-0'); modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
+        document.getElementById('ft-btn-save').onclick = () => {
+            const name = document.getElementById('ft-m-name').value.trim();
+            if(!name) return alert("Vui lòng nhập tên!");
+            const id = document.getElementById('ft-m-id').value || genId();
+            
+            const node = {
+                id, name,
+                gender: document.getElementById('ft-m-gender').value,
+                status: document.getElementById('ft-m-status').value,
+                birth: document.getElementById('ft-m-birth').value.trim(),
+                death: document.getElementById('ft-m-death').value.trim(),
+                parentId: document.getElementById('ft-m-parent').value || null,
+                spouseId: document.getElementById('ft-m-spouse').value || null,
+                isFirstBorn: document.getElementById('ft-m-firstborn').checked
+            };
+
+            const idx = data.findIndex(n => n.id === id);
+            if(idx > -1) data[idx] = node; else data.push(node);
+
+            save(); renderList(); renderTree(); renderStats(); ftCloseModal();
+        };
+
+        window.ftDelete = () => {
+            const id = document.getElementById('ft-m-id').value;
+            if(data.some(n => n.parentId === id)) return alert("Không thể xóa người đang có dữ liệu con cái!");
+            if(confirm("Xóa vĩnh viễn thành viên này?")) {
+                data = data.filter(n => n.id !== id);
+                save(); renderList(); renderTree(); renderStats(); ftCloseModal();
+            }
+        };
+
+        // Nhập xuất JSON
+        window.ftExport = () => {
+            const a = document.createElement('a');
+            a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            a.download = "Gia_Pha_Sync_" + Date.now() + ".json";
+            a.click();
+        };
+        document.getElementById('ft-import').addEventListener('change', e => {
+            const f = e.target.files[0]; if(!f) return;
+            const r = new FileReader();
+            r.onload = ev => {
+                try { data = JSON.parse(ev.target.result); save(); ftSwitch('list'); alert("Nhập thành công!"); } 
+                catch(err) { alert("Lỗi file JSON!"); }
+            };
+            r.readAsText(f);
+        });
+
+        // Init
+        load();
+        ftSwitch('stats');
+    }
+});
