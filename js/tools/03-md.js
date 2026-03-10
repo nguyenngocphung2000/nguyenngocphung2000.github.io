@@ -5,13 +5,13 @@ registerTool({
     icon: '📝',
     html: `
         <div class="text-center mb-6">
-           <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Trình đọc</span>
+           <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Giải mã</span>
             <h2 class="text-3xl font-bold mt-2">Trình đọc <span class="text-orange-500">Markdown 📝</span></h2>
              <p class="text-sm text-gray-500 mt-2 italic">Nhập ngôn ngữ markdown hoặc chọn file .md.</p>
         </div>
         <div class="glass-card p-6 md:p-8 rounded-[2rem]">
             
-            <div class="flex justify-end mb-4">
+            <div class="flex justify-center mb-4">
                 <label class="cursor-pointer bg-orange-100 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-orange-200 transition shadow-sm">
                     📁 Chọn File(.md)
                     <input type="file" id="md-file" accept=".md" class="hidden">
