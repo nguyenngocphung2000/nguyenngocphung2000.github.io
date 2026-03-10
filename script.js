@@ -648,3 +648,192 @@ registerTool({
         });
     }
 });
+// --- 5. Tool Kí tự đặc biệt ---
+registerTool({
+    id: 'tab-special-chars',
+    name: 'Kí Tự Đặc Biệt',
+    icon: '✨',
+    html: `
+        <div class="text-center mb-6">
+            <span class="bg-purple-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Sáng tạo</span>
+            <h2 class="text-3xl font-bold mt-2 text-gray-800">Tạo Tên <span class="text-purple-500">Đặc Biệt</span> ✨</h2>
+            <p class="text-sm text-gray-500 mt-2 italic">Tạo nickname cực ngầu và khám phá kho 998+ kí tự!</p>
+        </div>
+
+        <div class="space-y-6 max-w-4xl mx-auto">
+            
+            <div class="glass-card p-4 md:p-6 rounded-[2rem] border-t-4 border-t-purple-400 shadow-xl">
+                <div class="flex items-start space-x-3 mb-4">
+                    <div class="bg-purple-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🎲</div>
+                    <div><h3 class="font-bold text-gray-800">Máy Tạo Nickname Ngẫu Nhiên</h3></div>
+                </div>
+                
+                <div class="relative w-full mb-6">
+                    <input type="text" id="nick-input" class="w-full bg-purple-50/50 border-2 border-purple-100 rounded-2xl p-4 outline-none focus:border-purple-400 focus:ring-4 ring-purple-100 text-center font-bold text-lg text-purple-700 placeholder-purple-300 transition" placeholder="Nhập tên của bạn vào đây (VD: Phung)...">
+                    <button id="btn-gen-nick" class="absolute right-2 top-2 bottom-2 bg-purple-500 hover:bg-purple-600 text-white font-bold px-6 rounded-xl transition shadow-md active:scale-95">TẠO NGAY</button>
+                </div>
+
+                <div class="bg-white/50 rounded-2xl p-4 border border-purple-50">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 ml-1">Danh sách tên siêu ngầu (Click để Copy)</p>
+                    <div id="nick-results" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="text-center p-4 text-sm text-gray-400 italic w-full col-span-full">Hãy nhập tên và bấm Tạo Ngay nhé!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 md:p-6 rounded-[2rem] border-t-4 border-t-pink-400 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-pink-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">💎</div>
+                        <div><h3 class="font-bold text-gray-800">Kho Kí Tự Tổng Hợp</h3>
+                        <p class="text-xs text-gray-500">Chạm vào bất kỳ kí tự nào để Copy nhanh!</p></div>
+                    </div>
+                    <span id="copy-toast" class="opacity-0 transition-opacity bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">Đã Copy! ✔</span>
+                </div>
+                
+                <div id="char-library" class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                    </div>
+            </div>
+
+        </div>
+    `,
+    logic: function() {
+        // === DỮ LIỆU TỪ BẠN CUNG CẤP ===
+        const symbolsVIP = "࿐ 亗 ツ ✿ -`ღ'- ༉ ༊ Ლ Ღ ౘ ༒ ☻ ☹ ༄ ༆ ༇ ༈ ༊ ҉ 𓅂 ༂ ༃ ⚚ ๖ ؄ ఴ 𐩔 𐩘 𐰒 𐰑 ᚕ ᚖ ᚗ ᚘ ᚙ ፠ ፨ ᴥ ᠁ ꔚ ᪤ ద ⫷ ⫸ ʕ˖͜͡˖ʔ ꧁ ꧂ 𐑧 𐑨 𐑩 𐑪 ‿ ⁀ ⁔ ⁐ ⟅ ⟆ ༼ ༽ ༺ ༻ ઈ ઉ ⟡ ⟢ ⟣ 𐑥 𐑯 ꒰ ꒱ ʚ ɞ ꔻ ꔼ ꕢ ꕣ ꕤ ꕥ ᱦ ᱬ ద ధ ర ಠ ఠ ★ ๛ 𒀱 〠 ֍ ֎ ஜ ෴ 🍾 ✌ ✍ ✎  ♆ ۩ ⬳ 乄 ཉྀ ߹ ꧃ 𐩕 థ • ٭ ⋆ ˖ ﾟ°° ﾟ ⁺ ஃ ༚ ༛ ۵ ༔ ⁒ ‼ ‽ ᚘ ᚕ ᚖ ៚ ٭ ༀ ␥ ␦ ᚌ ᚍ ᚎ ᚏ ఢ 〓 〄 ๑ ⊰ ⊱ ⁋ ⁑ ௵ ᚙ ɷߡ ߥ ߦ ‎ߧ ࿂ ࿃ ࿄ ࿅ ࿆ ࿇ ࿈ ࿉ ࿊ ࿋ ࿌ ᴭ ߷ ཉིཾ ᙛ ᙜ ᙝ ᙞ ༕ ༖ ༗ ణ త Ꙩ ᭄ ఠ ◌ͧ ꙰ ꙲ ༜ ꮸ 𐐝 𐑅 𑁍 🝮 ؄ ㍍ Ƀ ͢Ƀ ㉺ ҂ ✰ 𒅒 ⫷ ⫸ 𒁂 𒈒 𒈞 هز ههههه ஓ ଐ ۝ ۞ ⁂ ⁎ ᱦ ᱬ 𒋨 Ꙭ ꙭ ꙮ ஐ ഋ ൠ ⎛ ⎞ ⎝ ⎠ Ӕ Ǣ Ǽ ℄ ɶ ʣ ʤ ʥ Ԙ Ѥ ǣ ѥ ȸ ȹ ѩ ␡ ␟ ␖ ␙ ␜ ␝ ℠ ℡ ™ ℻ ʬ Ξ 🅏 ᴭ Ԙ 웃 유 ℬ ℰ ℯ ℱ ℊ ℋ ℎ ℐ ℒ ℓ ℳ ℴ ℘ ℛ ℭ ℮ ℌ ℑ ℜ ℨ";
+        const hearts = "♥ ❤ ❥ 💖 💕 💞 ❣ 🖤 ღ";
+        const bows = "˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆ 🩰˚˖𓍢✨໋🎧✧˚.🎀༘⋆ ♰💗♰N̆ơ♰X̆ĬN̆H̆♰╰(°▽°)╯♰ ☝💗𝙣ơ𝙭𝙞𝙣𝙝╰(°▽°)╯✌ ツ💔╰‿╯иơ╰‿╯⒳ιղн╰‿╯🍻";
+        
+        const mapSmallTop = {'a':'ᵃ','b':'ᵇ','c':'ᶜ','d':'ᵈ','e':'ᵉ','f':'ᶠ','g':'ᵍ','h':'ʰ','i':'ᶦ','j':'ʲ','k':'ᵏ','l':'ˡ','m':'ᵐ','n':'ⁿ','o':'ᵒ','p':'ᵖ','q':'ᑫ','r':'ʳ','s':'ˢ','t':'ᵗ','u':'ᵘ','v':'ᵛ','w':'ʷ','x':'ˣ','y':'ʸ','z':'ᶻ'};
+        const mapSmallBot = {'a':'ₐ','b':'ᵦ','c':'𝒸','d':'𝒹','e':'ₑ','f':'𝒻','g':'𝓰','h':'ₕ','i':'ᵢ','j':'ⱼ','k':'ₖ','l':'ₗ','m':'ₘ','n':'ₙ','o':'ₒ','p':'ₚ','q':'ᵩ','r':'ᵣ','s':'ₛ','t':'ₜ','u':'ᵤ','v':'ᵥ','w':'𝓌','x':'ₓ','y':'ᵧ','z':'𝓏'};
+        const mapFullWidth = {'a':'ａ','b':'ｂ','c':'ｃ','d':'ｄ','e':'ｅ','f':'ｆ','g':'ｇ','h':'ｈ','i':'ｉ','j':'ｊ','k':'ｋ','l':'ｌ','m':'ｍ','n':'ｎ','o':'ｏ','p':'ｐ','q':'ｑ','r':'ｒ','s':'ｓ','t':'ｔ','u':'ｕ','v':'ｖ','w':'ｗ','x':'ｘ','y':'ｙ','z':'ｚ'};
+        
+        // Data for Library UI
+        const libraryData = [
+            { title: "Kí Tự VIP & Biểu Tượng Ngầu", data: symbolsVIP.split(' ') },
+            { title: "Trái Tim Đủ Kiểu", data: hearts.split(' ') },
+            { title: "Chiếc Nơ Cute", data: bows.split(' ') },
+            { title: "Bảng Chữ Cái Đặc Biệt (A-Z)", data: [
+                "A a ɑ α ά ã ą ʌ ค À Â Ã Λ ᐰ Δ λ ﾑ ⓐ Ⓐ Ａ ａ 𝒜 ᵃ ₐ",
+                "B b ъ ь ɓ в ɓ ƅ ๒ ҍ ɮ ฿ ᗽ β ß Ɓ 乃 ⓑ Ⓑ Ｂ ｂ 𝒝 ᵇ ᵦ",
+                "C c ċ ĉ ƈ ç © ¢ ς Ć Ĉ Č Ƈ ᑖ ⓒ Ⓒ Ｃ ｃ 𝒞 ᶜ 𝒸",
+                "D d ɗ ∂ ժ ძ ƌ ɖ ₫ δ ᶑ đ ð ď Ð Ď Ɗ ⓓ Ⓓ Ｄ ｄ 𝒟 ᵈ 𝒹",
+                "E e ê ҽ ℯ ɛ ε є ĕ ɘ Σ Ǝ Ɛ ℰ ᙓ Є ع ⓔ Ⓔ Ｅ ｅ 𝒺 ᵉ ₑ",
+                "F f ғ ʄ բ ⨎ ƒ ∱ Ғ ℉ ℱ ∱ ⓕ Ⓕ Ｆ ｆ 𝒻 ᶠ",
+                "G g ɠ ĝ ɢ ʛ ց ʚ ğ ġ ģ ĝ ₲ Ĝ Ɠ Ģ Ǥ ⓖ Ⓖ Ｇ ｇ 𝒢 ᵍ 𝓰",
+                "H h ĥ ħ н ɦ ԋ հ ɧ ɥ ん ⴙ ђ Ћ ⴼ Ĥ Ħ Ή ⓗ Ⓗ Ｈ ｈ 𝒽 ʰ ₕ",
+                "I i ﻨ ι เ ĭ ï ì ¡ ĩ ϊ ἶ ɨ ɪ | ! Ⴠ İ Ϊ أ ﾉ ⓘ Ⓘ Ｉ ｉ 𝒾 ᶦ ᵢ",
+                "J j ʝ ʲ ڑ ژ נ ƾ ⴋ į ĵ Ĵ ſ ¿ ᒛ ﾌ ⓙ Ⓙ Ｊ ｊ 𝒿 ʲ ⱼ",
+                "K k ƙ к қ ќ ĸ ҡ ҟ Ќ Ҡ ₭ Ҟ Қ Ҝ ⓚ Ⓚ Ｋ ｋ 𝒦 ᵏ ₖ",
+                "L l ĺ ľ ŀ 1 ł ℓ ʅ ɭ ʟ Ł ⎳ Ŀ Ĺ Ļ Ł し ⓛ Ⓛ Ｌ ｌ 𝓁 ˡ ₗ",
+                "M m ო რ м ɱ ₥ ʍ м ๓ ♏ ᗰ ﾶ ⓜ Ⓜ Ｍ ｍ 𝓂 ᵐ ₘ",
+                "N n ñ ŋ ղ ռ ɲ ή ภ ɴ и й ה ה И Й ₦ Ɲ ⓝ Ⓝ Ｎ ｎ 𝒩 ⁿ ₙ",
+                "O o ō ø ǿ õ σ ơ օ ๏ ๑ ő ღ ¤ ♡ Ø Ŏ Ơ Ờ ℺ Ѻ ⓞ Ⓞ Ｏ ｏ 𝒪 ᵒ ₒ",
+                "P p ρ ῥ þ Ƥ ƥ թ ք ր Չ Þ ᚹ ṗ Ṗ ƿ Ƿ Ƥ ㄕ ⓟ Ⓟ Ｐ ｐ 𝒫 ᵖ ₚ",
+                "Q q ҩ ợ Գ ƍ φ ʠ ϙ ǫ ǭ զ գ Զ ٩ Ω Ǫ ⵕ Ⱒ Ǭ Ҩ ⓠ Ⓠ Ｑ ｑ 𝒬 ᑫ ᵩ",
+                "R r ŗ ѓ ŕ ř ṝ ʀ я ɾ г Ґ ℜ ℝ ℞ Ŕ Ȓ Ŗ Ʀ Ր Я Г 尺 ☈ ⓡ Ⓡ Ｒ ｒ 𝒭 ʳ ᵣ",
+                "S s ś š ṩ § $ ŝ ş ѕ ֆ ʂ ร ƨ Ƨ Ś Ṩ Ş ٸ ら ⓢ Ⓢ Ｓ ｓ 𝓈 ˢ ₛ",
+                "T t ţ τ ƭ ť ŧ т ʈ է ȶ ƚ Ţ Ƭ Ť Ŧ † ｲ ⓣ Ⓣ Ｔ ｔ ᵗ ₜ",
+                "U u ũ ü υ ʉ ข น µ ย ʊ ų ϋ մ Ʊ Ũ Ū ᱢ ป Ц Ų ⓤ Ⓤ Ｕ ｕ 𝓊 ᵘ ᵤ",
+                "V v ν ѵ ʋ ౮ v ΰ ύ ย Ʋ Ѵ Ɣ ɣ ɤ ۷ ⋎ √ ∀ ⓥ Ⓥ Ｖ ｖ ᵛ ᵥ",
+                "W w ŵ ш щ ฬ ￦ ẘ ὼ ω ᗯ Ш Щ Ŵ ⓦ Ⓦ Ｗ ｗ 𝒲 ʷ 𝓌",
+                "X x х х × ҳ × ჯ ૪ χ Ӿ Ж χ Ӽ 〤 ﾒ ⓧ Ⓧ Ｘ ｘ ˣ ₓ",
+                "Y y ŷ ʏ ყ ý ɥ ỹ ÿ Ƴ ¥ ɣ ၦ ⴁ ⴣ ⴤ у Ⴤ ÿ ץ γ ψ ￥ ㄚ ⓨ Ⓨ Ｙ ｙ ʸ ᵧ",
+                "Z z ẓ ƶ ȥ ʐ ʑ ʒ ʓ ẕ ž Ƶ Ẑ Ẕ Ź 乙 ⓩ Ⓩ Ｚ ｚ 𝒵 ᶻ 𝓏"
+            ] }
+        ];
+
+        // === RENDER KHO KÍ TỰ ===
+        const libContainer = document.getElementById('char-library');
+        const copyToast = document.getElementById('copy-toast');
+
+        const copyToClipboard = (text) => {
+            navigator.clipboard.writeText(text).then(() => {
+                copyToast.classList.remove('opacity-0');
+                setTimeout(() => copyToast.classList.add('opacity-0'), 1500);
+            });
+        };
+
+        libraryData.forEach(section => {
+            const secDiv = document.createElement('div');
+            secDiv.className = 'mb-4';
+            
+            const title = document.createElement('h4');
+            title.className = 'text-sm font-bold text-pink-600 mb-2 border-b border-pink-100 pb-1';
+            title.innerText = section.title;
+            secDiv.appendChild(title);
+
+            const grid = document.createElement('div');
+            grid.className = 'flex flex-wrap gap-2';
+
+            section.data.forEach(char => {
+                if(!char.trim()) return;
+                const span = document.createElement('span');
+                span.className = 'bg-white border border-pink-50 text-gray-700 px-3 py-1.5 rounded-lg shadow-sm cursor-pointer hover:bg-pink-500 hover:text-white hover:-translate-y-0.5 transition active:scale-95 flex items-center justify-center font-medium';
+                if(char.length > 5) span.classList.add('text-xs'); // Chữ dài (như Nơ) thì cho nhỏ lại
+                span.innerText = char;
+                span.onclick = () => copyToClipboard(char);
+                grid.appendChild(span);
+            });
+
+            secDiv.appendChild(grid);
+            libContainer.appendChild(secDiv);
+        });
+
+        // === LOGIC TẠO NICKNAME ===
+        const btnGen = document.getElementById('btn-gen-nick');
+        const nickInput = document.getElementById('nick-input');
+        const nickResults = document.getElementById('nick-results');
+
+        const convertText = (text, mapObj) => {
+            return text.toLowerCase().split('').map(c => mapObj[c] || c).join('');
+        };
+
+        const generateNames = (baseName) => {
+            if(!baseName.trim()) {
+                nickResults.innerHTML = '<div class="text-center p-4 text-sm text-red-400 italic w-full col-span-full">Vui lòng nhập tên trước nhé!</div>';
+                return;
+            }
+
+            const name = baseName.trim();
+            const smallTop = convertText(name, mapSmallTop);
+            const smallBot = convertText(name, mapSmallBot);
+            const fullWidth = convertText(name, mapFullWidth);
+
+            const styles = [
+                \`༺ \${name} ༻\`,
+                \`꧁ \${name} ꧂\`,
+                \`✿ \${name} ツ\`,
+                \`【 \${name} 】\`,
+                \`⫷ \${name} ⫸\`,
+                \`-`ღ'- \${name} -`ღ'-\`,
+                \`\${smallTop}\`,
+                \`\${smallBot}\`,
+                \`\${fullWidth}\`,
+                \`♡ \${name} ♡\`,
+                \`乂 \${name} 乂\`,
+                \`\${name} ࿐\`,
+                \`˚˖𓍢ִ໋🌷͙֒✧ \${name} 🎀༘⋆\`,
+                \`ツ \${name} 🍻\`
+            ];
+
+            nickResults.innerHTML = '';
+            styles.forEach(style => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between bg-white border border-purple-100 p-3 rounded-xl shadow-sm hover:shadow-md transition group cursor-pointer';
+                item.onclick = () => copyToClipboard(style);
+                
+                item.innerHTML = \`
+                    <span class="font-bold text-gray-700 group-hover:text-purple-600 transition truncate pr-2">\${style}</span>
+                    <button class="text-xs bg-purple-50 text-purple-600 font-bold px-2 py-1 rounded-md group-hover:bg-purple-500 group-hover:text-white transition shrink-0">Copy</button>
+                \`;
+                nickResults.appendChild(item);
+            });
+        };
+
+        btnGen.addEventListener('click', () => generateNames(nickInput.value));
+        nickInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') generateNames(nickInput.value);
+        });
+    }
+});
+
