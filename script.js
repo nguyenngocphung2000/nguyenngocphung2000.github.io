@@ -97,7 +97,7 @@ registerTool({
                 <div class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-bold mb-3 shadow-sm">Creator / Developer</div>
                 <h1 class="text-3xl font-bold text-gray-800 mb-2">Xin chào, tôi là <span class="text-orange-500">Nothing (N.Phụng)</span></h1>
                 <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base">
-                    <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Chào mừng mọi người đến với không gian nhỏ của tôi. Nơi đây tôi lưu trữ các công cụ tiện ích do mình tự code và chia sẻ những bài hướng dẫn, thủ thuật hay ho mà tôi sưu tầm hoặc tự nghĩ ra. Cứ thoải mái vọc vạch nhé!
+                    <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Chào mừng mọi người đến với không gian nhỏ của tôi. Nơi đây tôi lưu trữ các công cụ tiện ích do mình tự code(bằng AI😂) và chia sẻ những bài hướng dẫn, thủ thuật hay ho mà tôi sưu tầm hoặc tự nghĩ ra. Cứ thoải mái vọc vạch nhé!
                 </p>
                 <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                     <span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-50 transition">#TipsMacOs</span>
@@ -107,60 +107,41 @@ registerTool({
             </div>
         </div>
 
-        <div class="mb-6 flex items-center gap-3 px-2">
+        <div class="mb-4 flex items-center gap-3 px-2">
             <span class="text-2xl">📚</span>
-            <h2 class="text-2xl font-bold text-gray-800">Thủ thuật & Hướng dẫn</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Tìm thử biết đâu có thứ cần</h2>
+        </div>
+
+        <div class="relative mb-6">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="text-gray-400">🔍</span>
+            </div>
+            <input type="text" id="guide-search" class="w-full bg-white/80 backdrop-blur-sm border border-orange-100 rounded-2xl py-3 pl-11 pr-4 text-sm text-gray-700 focus:outline-none focus:border-orange-300 focus:ring-4 ring-orange-50 shadow-sm transition placeholder-gray-400 font-medium" placeholder="Tìm kiếm bài viết, thủ thuật...">
         </div>
         
         <div id="guide-list" class="space-y-4"></div>
+
+        <div id="guide-no-result" class="hidden text-center p-8 text-gray-400 italic bg-white/50 rounded-2xl border border-gray-100 mt-4">
+            <div class="text-3xl mb-2">🥲</div>
+            Không tìm thấy bài viết nào phù hợp...
+        </div>
     `,
     logic: function() {
         const guides = [
-           {
-                title: "ℹ️ Contact me",
-                date: "Nothing",
-                content: `
-- Telegram: [@nothing3272](https://t.me/nothing3272)
-- Facebook: [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr) `
-            },
-            {
-                title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet",
-                date: "Nothing",
-                content: `
-# Quản lý thu chi tự động qua tin nhắn
-Bot Telegram kết hợp Google Sheet là một cách tuyệt vời để bạn ghi chép thu chi mọi lúc mọi nơi mà không cần mở các app rườm rà.
-
-🔗 **[Xem mã nguồn và Hướng dẫn chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**
-                `
-            },
-            {
-                title: "📅 Cài Lịch Âm trên macOS (LunarV)",
-                date: "Thủ thuật Mac",
-                content: `
-# Xem Lịch Âm trên thanh menu
-Thay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trực tiếp trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.
-
-🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**
-                `
-            },
-            {
-                title: "⌨️ Bộ gõ tiếng Việt trên Mac",
-                date: "Thủ thuật Mac",
-                content: `
-# Tạm biệt lỗi gạch chân khó chịu
-Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị nhảy chữ, mất chữ, hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:
-
-- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
-- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
-                `
-            }
+           { title: "ℹ️ Contact me", date: "Nothing", content: "\n- Telegram: [@nothing3272](https://t.me/nothing3272)\n- Facebook: [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr) " },
+            { title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", content: "\n# Quản lý thu chi tự động qua tin nhắn\nBot Telegram kết hợp Google Sheet là một cách tuyệt vời để bạn ghi chép thu chi mọi lúc mọi nơi mà không cần mở các app rườm rà.\n\n🔗 **[Xem mã nguồn và Hướng dẫn chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**" },
+            { title: "📅 Cài Lịch Âm trên macOS (LunarV)", date: "Thủ thuật Mac", content: "\n# Xem Lịch Âm trên thanh menu\nThay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.\n\n🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**" },
+            { title: "⌨️ Bộ gõ tiếng Việt trên Mac", date: "Thủ thuật Mac", content: "\n# Tạm biệt lỗi gạch chân khó chịu\nNếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:\n\n- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**\n- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**" }
         ];
 
         const guideList = document.getElementById('guide-list');
+        const searchInput = document.getElementById('guide-search');
+        const noResult = document.getElementById('guide-no-result');
 
+        // Khởi tạo danh sách bài viết
         guides.forEach((guide, index) => {
             const item = document.createElement('div');
-            item.className = 'glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
+            item.className = 'guide-item glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
             
             item.innerHTML = `
                 <button class="w-full text-left p-5 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
@@ -168,9 +149,7 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
                         <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-lg pr-4">${guide.title}</h3>
                         <p class="inline-block mt-2 bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${guide.date}</p>
                     </div>
-                    <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">
-                        ▼
-                    </div>
+                    <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">▼</div>
                 </button>
                 <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
                     <div class="prose-custom p-6 md:p-8" id="md-render-${index}"></div>
@@ -179,6 +158,32 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
             guideList.appendChild(item);
         });
 
+        // BỘ LỌC TÌM KIẾM THÔNG MINH
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const items = document.querySelectorAll('.guide-item');
+            let hasVisible = false;
+
+            guides.forEach((guide, index) => {
+                // Quét qua cả Tiêu đề và Nội dung
+                const match = guide.title.toLowerCase().includes(term) || guide.content.toLowerCase().includes(term);
+                if (match) {
+                    items[index].style.display = 'block';
+                    hasVisible = true;
+                } else {
+                    items[index].style.display = 'none';
+                }
+            });
+
+            // Hiện thông báo nếu không có kết quả
+            if (!hasVisible) {
+                noResult.classList.remove('hidden');
+            } else {
+                noResult.classList.add('hidden');
+            }
+        });
+
+        // Đóng mở bài viết
         window.toggleGuide = function(index) {
             const contentDiv = document.getElementById('content-' + index);
             const iconDiv = document.getElementById('icon-' + index);
@@ -200,7 +205,6 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
                         let text = guides[index].content;
                         text = text.replace(/^@time\[(.*?)\] (.*)$/gm, '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>');
                         renderDiv.innerHTML = marked.parse(text);
-
                         renderDiv.querySelectorAll('a').forEach(link => {
                             link.setAttribute('target', '_blank');
                             link.className = 'text-orange-500 font-bold hover:underline';
@@ -216,6 +220,7 @@ Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hay bị 
         };
     }
 });
+
 
 // --- 2. Tool Tính Phần Trăm ---
 registerTool({
