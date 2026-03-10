@@ -5,7 +5,17 @@ const desktopNav = document.getElementById('desktop-nav');
 const mobileNav = document.getElementById('mobile-nav');
 const appContainer = document.getElementById('app-container');
 const mobileMenu = document.getElementById('mobile-menu');
-
+// --- CẢM BIẾN HIỆU ỨNG CUỘN TRANG ---
+const mainHeader = document.getElementById('main-header');
+window.addEventListener('scroll', () => {
+    // Nếu vuốt xuống quá 50px thì kích hoạt hiệu ứng bay logo
+    if (window.scrollY > 50) {
+        mainHeader.classList.add('header-scrolled');
+    } else {
+        // Vuốt lên đỉnh lại thì trả logo về chỗ cũ
+        mainHeader.classList.remove('header-scrolled');
+    }
+});
 document.getElementById('mobile-menu-btn').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
 function switchTab(tabId) {

@@ -15,3 +15,47 @@ body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at 
 .prose-custom p { margin-bottom: 1rem; line-height: 1.7; }
 .prose-custom code { background: #fee2e2; color: #991b1b; padding: 2px 5px; border-radius: 4px; font-size: 0.9em; }
 .prose-custom blockquote { border-left: 4px solid #f97316; padding-left: 1rem; font-style: italic; color: #555; }
+/* =========================================
+   HIỆU ỨNG CUỘN TRANG (APPLE UX STYLE)
+========================================= */
+#main-header {
+    transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+/* Biến mất viền và màu nền khi cuộn */
+.header-scrolled {
+    background-color: transparent !important;
+    border-bottom-color: transparent !important;
+    backdrop-filter: blur(0px) !important;
+}
+
+/* Động cơ chuyển động cho Logo */
+.logo-wrapper {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    transform-origin: right center;
+}
+
+/* Khi cuộn: Logo bay sang phải, thu nhỏ và hút vào nút 3 gạch */
+.header-scrolled .logo-wrapper {
+    transform: translateX(calc(100vw - 90px)) scale(0.1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Ẩn Menu Desktop nhẹ nhàng khi cuộn */
+#desktop-nav {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.header-scrolled #desktop-nav {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+/* Thuật toán bay riêng cho màn hình máy tính lớn */
+@media (min-width: 768px) {
+    .header-scrolled .logo-wrapper {
+        transform: translateX(40vw) scale(0.1);
+    }
+}
+
