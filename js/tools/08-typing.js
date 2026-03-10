@@ -34,7 +34,7 @@ registerTool({
                 background-color: var(--bg-color);
                 box-shadow: var(--border-glow);
                 transition: all 0.5s ease;
-                font-family: 'Roboto Mono', monospace; /* Áp dụng font mới */
+                font-family: 'Roboto Mono', monospace;
             }
 
             .typing-text-area {
@@ -166,7 +166,6 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // --- 1. THEME SWITCHER ---
         const btnLight = document.getElementById('tp-btn-light');
         const btnDark = document.getElementById('tp-btn-dark');
         const typeContainer = document.getElementById('typing-container');
@@ -190,7 +189,6 @@ registerTool({
             countOverlay.classList.add('bg-gray-900/80');
         };
 
-        // --- 2. HỆ THỐNG BIẾN & CHIA ĐOẠN ---
         const sourceText = document.getElementById('tp-source-text');
         const setupScreen = document.getElementById('tp-setup-screen');
         const gameScreen = document.getElementById('tp-game-screen');
@@ -200,16 +198,15 @@ registerTool({
         const hiddenInput = document.getElementById('hidden-input');
         const caret = document.getElementById('caret');
         
-        let textChunks = [];       // Mảng chứa các đoạn chữ
-        let currentChunkIdx = 0;   // Đang ở đoạn nào
-        let targetText = "";       // Chữ của đoạn hiện tại
+        let textChunks = [];       
+        let currentChunkIdx = 0;   
+        let targetText = "";       
         let charElements = []; 
         
         let startTime = null;
         let timerInterval = null;
         let isPlaying = false;
         
-        // Lưu trữ để tính WPM tổng
         let previousCorrectChars = 0; 
         let previousTotalTyped = 0;
 
@@ -218,14 +215,12 @@ registerTool({
         const liveTime = document.getElementById('live-time');
         const liveProgress = document.getElementById('live-progress');
 
-        // Hàm chia đoạn văn bản (mỗi đoạn khoảng 20 từ)
         const chunkText = (text) => {
             const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
             const chunks = [];
             const WORDS_PER_SCREEN = 20; 
 
             for (let i = 0; i < words.length; i += WORDS_PER_SCREEN) {
-                // Thêm dấu cách ở cuối mỗi đoạn (trừ đoạn cuối cùng) để nối mượt
                 let chunkStr = words.slice(i, i + WORDS_PER_SCREEN).join(' ');
                 if (i + WORDS_PER_SCREEN < words.length) chunkStr += ' ';
                 chunks.push(chunkStr);
@@ -248,14 +243,13 @@ registerTool({
 
             hiddenInput.value = '';
             hiddenInput.maxLength = targetText.length;
-            liveProgress.innerText = \`\${index + 1}/\${textChunks.length}\`;
+            liveProgress.innerText = (index + 1) + '/' + textChunks.length;
             
             updateCaret();
             hiddenInput.focus();
 
-            // Hiệu ứng chớp màn hình khi chuyển cảnh
             typeContainer.classList.remove('flash-effect');
-            void typeContainer.offsetWidth; // trigger reflow
+            void typeContainer.offsetWidth; 
             typeContainer.classList.add('flash-effect');
         };
 
@@ -279,14 +273,12 @@ registerTool({
             const currentLen = hiddenInput.value.length;
             
             if(currentLen >= targetText.length) {
-                // Xử lý lưu kết quả đoạn hiện tại
                 const typedText = hiddenInput.value;
                 for(let i=0; i<typedText.length; i++) {
                     if(typedText[i] === targetText[i]) previousCorrectChars++;
                 }
                 previousTotalTyped += typedText.length;
 
-                // Chuyển sang đoạn tiếp theo hoặc kết thúc
                 if (currentChunkIdx < textChunks.length - 1) {
                     currentChunkIdx++;
                     loadChunk(currentChunkIdx);
@@ -346,7 +338,6 @@ registerTool({
             updateCaret();
         });
 
-        // Bắt focus trên mọi thiết bị
         typeContainer.addEventListener('click', () => {
             if (isPlaying) hiddenInput.focus();
         });
