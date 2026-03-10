@@ -94,26 +94,35 @@
 		</div>
 	</div>
 <style>
-    /* Bùa tàng hình: Xóa sạch chữ, nút bấm và nền trắng của Lõi */
-    body { background: black !important; color: transparent !important; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
-    #menu, .menu, button, .box-header, input, .keypad, form { display: none !important; }
-    #screen-resolution, div { color: transparent !important; }
-    /* Chỉ cho phép hình ảnh Game (Canvas) hiện hình */
-    #screen, canvas { display: block !important; max-width: 100%; height: auto !important; border-radius: 8px; }
+    /* Bùa tàng hình: Giấu toàn bộ giao diện rác, chữ báo lỗi của Lõi */
+    body { background: black !important; color: transparent !important; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+    #menu, .menu, button, .box-header, input, .keypad, form, #screen-resolution { display: none !important; }
+    
+    /* Chỉ giữ lại duy nhất khung Game (canvas) để hiển thị */
+    canvas { max-width: 100%; height: auto !important; border-radius: 8px; display: block !important; }
 </style>
+
 <script>
-    // Bùa gọi hồn: Dùng addEventListener để không giết chết lệnh gốc của Lõi
+    // Bùa gọi hồn: Dùng Fetch tải file biến thành Nhị Phân (Uint8Array)
     window.addEventListener('load', function() {
-        // Đợi 0.5 giây cho não của Lõi khởi động xong hoàn toàn
+        // Đợi nửa giây cho não Lõi khởi động xong
         setTimeout(function() {
             const params = new URLSearchParams(window.location.search);
             const gameUrl = params.get('url');
             
-            // Nếu có link game truyền vào thì ép Lõi nhai ngay lập tức
             if (gameUrl && window.js2me && window.js2me.loadJAR) {
-                window.js2me.loadJAR(gameUrl);
+                // Tải file .jar từ kho games của bạn về
+                fetch(gameUrl)
+                    .then(function(response) { return response.arrayBuffer(); })
+                    .then(function(buffer) {
+                        // Băm nhỏ thành dữ liệu nhị phân
+                        const data = new Uint8Array(buffer);
+                        // Bơm trực tiếp vào não Lõi
+                        window.js2me.loadJAR(data);
+                    })
+                    .catch(function(err) { console.error("Lỗi nạp game:", err); });
             }
-        }, 500);
+        }, 500); 
     });
 </script>
 </body>
