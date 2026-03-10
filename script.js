@@ -1716,7 +1716,7 @@ registerTool({
 
         // Utils
         const genId = () => 'id_' + Math.random().toString(36).substr(2, 9);
-        const load = () => { try { data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch{ data = []; } };
+        const load = () => { try { data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e){ data = []; } };
         const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         
         // --- 1. ĐIỀU HƯỚNG TAB ---
@@ -1735,16 +1735,18 @@ registerTool({
             if(tab === 'lookup') renderLookupOptions();
         };
 
-        // Thuật toán lấy Đời (Generation)
-        const getGen = (id) => {
+        // Thuật toán lấy Đời (Generation) có chống loop
+        const getGen = (id, visited = new Set()) => {
+            if(visited.has(id)) return 1; // Prevent infinite loop
+            visited.add(id);
+
             const node = data.find(n => n.id === id);
             if(!node) return 0;
             if(node.spouseId && !node.parentId) {
-                // Dâu rể lấy theo đời của vợ/chồng
-                return getGen(node.spouseId);
+                return getGen(node.spouseId, visited);
             }
             if(!node.parentId) return 1;
-            return getGen(node.parentId) + 1;
+            return getGen(node.parentId, visited) + 1;
         };
 
         // --- 2. THỐNG KÊ (Stats) ---
@@ -1781,20 +1783,20 @@ registerTool({
                 if(node.status === 'deceased') badges += '<span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đã mất</span> ';
                 if(isInlaw) badges += '<span class="bg-pink-50 text-pink-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Dâu/Rể</span> ';
                 if(node.isFirstBorn) badges += '<span class="bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Con trưởng</span> ';
-                if(gen > 0) badges += \`<span class="bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đời \${gen}</span>\`;
+                if(gen > 0) badges += `<span class="bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Đời ${gen}</span>`;
 
-                container.innerHTML += \`
-                    <div class="glass-card rounded-2xl p-4 flex items-center gap-4 hover:shadow-md hover:border-orange-300 transition cursor-pointer" onclick="ftOpenModal('\${node.id}')">
-                        <div class="w-12 h-12 rounded-full \${isMale ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex justify-center items-center font-bold text-xl shrink-0 border-2 border-white shadow-sm">
-                            \${node.name.charAt(0).toUpperCase()}
+                container.innerHTML += `
+                    <div class="glass-card rounded-2xl p-4 flex items-center gap-4 hover:shadow-md hover:border-orange-300 transition cursor-pointer" onclick="ftOpenModal('${node.id}')">
+                        <div class="w-12 h-12 rounded-full ${isMale ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex justify-center items-center font-bold text-xl shrink-0 border-2 border-white shadow-sm">
+                            ${node.name.charAt(0).toUpperCase()}
                         </div>
                         <div class="flex-1 overflow-hidden">
-                            <div class="font-bold text-gray-800 text-sm truncate">\${node.name}</div>
-                            <div class="text-xs text-gray-400 mt-0.5">\${node.birth || '?'} \${node.death ? '→ ' + node.death : ''}</div>
-                            <div class="mt-2 flex flex-wrap gap-1">\${badges}</div>
+                            <div class="font-bold text-gray-800 text-sm truncate">${node.name}</div>
+                            <div class="text-xs text-gray-400 mt-0.5">${node.birth || '?'} ${node.death ? '→ ' + node.death : ''}</div>
+                            <div class="mt-2 flex flex-wrap gap-1">${badges}</div>
                         </div>
                     </div>
-                \`;
+                `;
             });
         };
         document.getElementById('ft-search').addEventListener('input', e => renderList(e.target.value));
@@ -1808,7 +1810,7 @@ registerTool({
         };
         const getDaysLeft = (dateObj) => {
             if(!dateObj) return Infinity;
-            const today = new Date(); // Dùng ngày giả lập logic (thực tế JS Date lấy system time)
+            const today = new Date(); 
             let target = new Date(today.getFullYear(), dateObj.m - 1, dateObj.d);
             if(today > target) target.setFullYear(target.getFullYear() + 1);
             return Math.ceil((target - today) / (1000 * 60 * 60 * 24));
@@ -1841,22 +1843,22 @@ registerTool({
 
             events.forEach(ev => {
                 let badge = ev.days === 0 ? '<span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs font-bold animate-pulse">Hôm nay!</span>' 
-                          : \`<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full text-xs font-bold">\${ev.days} ngày nữa</span>\`;
+                          : `<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full text-xs font-bold">${ev.days} ngày nữa</span>`;
                 
-                list.innerHTML += \`
+                list.innerHTML += `
                     <div class="bg-white border border-orange-50 p-3 rounded-xl shadow-sm flex justify-between items-center">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full \${ev.type === 'Sinh nhật' ? 'bg-pink-50' : 'bg-gray-100'} flex items-center justify-center text-lg">
-                                \${ev.type === 'Sinh nhật' ? '🎂' : '🕯️'}
+                            <div class="w-10 h-10 rounded-full ${ev.type === 'Sinh nhật' ? 'bg-pink-50' : 'bg-gray-100'} flex items-center justify-center text-lg">
+                                ${ev.type === 'Sinh nhật' ? '🎂' : '🕯️'}
                             </div>
                             <div>
-                                <div class="font-bold text-gray-800 text-sm">\${ev.node.name}</div>
-                                <div class="text-xs text-gray-400">\${ev.type} - \${ev.dateStr}</div>
+                                <div class="font-bold text-gray-800 text-sm">${ev.node.name}</div>
+                                <div class="text-xs text-gray-400">${ev.type} - ${ev.dateStr}</div>
                             </div>
                         </div>
-                        \${badge}
+                        ${badge}
                     </div>
-                \`;
+                `;
             });
         };
 
@@ -1865,17 +1867,22 @@ registerTool({
             const selA = document.getElementById('ft-lu-a');
             const selB = document.getElementById('ft-lu-b');
             let opts = '<option value="">-- Chọn thành viên --</option>';
-            data.forEach(n => opts += \`<option value="\${n.id}">\${n.name} (Đời \${getGen(n.id)})</option>\`);
+            data.forEach(n => opts += `<option value="${n.id}">${n.name} (Đời ${getGen(n.id)})</option>`);
             selA.innerHTML = selB.innerHTML = opts;
         };
 
         const getAncestors = (id) => {
             let path = [];
             let curr = data.find(n => n.id === id);
-            // Nếu là dâu rể, trace theo vợ/chồng
-            if(curr && curr.spouseId && !curr.parentId) curr = data.find(n => n.id === curr.spouseId);
+            let visited = new Set();
             
-            while(curr) {
+            while(curr && !visited.has(curr.id)) {
+                visited.add(curr.id);
+                // Nếu là dâu rể, trace theo vợ/chồng để về cội
+                if(curr.spouseId && !curr.parentId) {
+                    curr = data.find(n => n.id === curr.spouseId);
+                    continue;
+                }
                 path.push(curr.id);
                 curr = data.find(n => n.id === curr.parentId);
             }
@@ -1892,7 +1899,7 @@ registerTool({
             const pathA = getAncestors(idA);
             const pathB = getAncestors(idB);
 
-            // Tìm Lowest Common Ancestor (Tổ tiên chung gần nhất)
+            // Tìm Lowest Common Ancestor
             let lcaId = null;
             let i = 0;
             while(i < pathA.length && i < pathB.length && pathA[i] === pathB[i]) {
@@ -1910,9 +1917,8 @@ registerTool({
             }
 
             const lcaNode = data.find(n => n.id === lcaId);
-            document.getElementById('ft-lu-common').innerHTML = \`✨ <b>Tổ tiên chung gần nhất:</b> \${lcaNode.name} (Cách A \${pathA.length - i} đời, cách B \${pathB.length - i} đời)\`;
+            document.getElementById('ft-lu-common').innerHTML = `✨ <b>Tổ tiên chung gần nhất:</b> ${lcaNode.name} (Cách A ${pathA.length - i} đời, cách B ${pathB.length - i} đời)`;
 
-            // Thuật toán xác định danh xưng đơn giản (Trực hệ & Anh em họ)
             const getTitle = (distA, distB, genderA, genderB) => {
                 if(distA === 0 && distB > 0) {
                     if(distB === 1) return genderB === 'male' ? "Cha" : "Mẹ";
@@ -1926,13 +1932,12 @@ registerTool({
                     if(distA === 3) return "Chắt";
                     return "Chút/Chít";
                 }
-                // Quan hệ bàng hệ (Họ hàng)
                 if(distA === distB) {
-                    if(distA === 1) return "Anh / Chị / Em ruột";
-                    return "Anh / Chị / Em họ";
+                    if(distA === 1) return "Anh/Chị/Em ruột";
+                    return "Anh/Chị/Em họ";
                 }
                 if(distA < distB) {
-                    return genderB === 'male' ? "Chú / Bác / Cậu" : "Cô / Dì / Thím / Mợ";
+                    return genderB === 'male' ? "Chú/Bác/Cậu" : "Cô/Dì/Thím/Mợ";
                 }
                 return "Cháu";
             };
@@ -1940,8 +1945,8 @@ registerTool({
             const distA = pathA.length - i;
             const distB = pathB.length - i;
 
-            document.getElementById('ft-lu-res-b').innerText = getTitle(distA, distB, nodeA.gender, nodeB.gender); // B gọi A
-            document.getElementById('ft-lu-res-a').innerText = getTitle(distB, distA, nodeB.gender, nodeA.gender); // A gọi B
+            document.getElementById('ft-lu-res-b').innerText = getTitle(distA, distB, nodeA.gender, nodeB.gender); 
+            document.getElementById('ft-lu-res-a').innerText = getTitle(distB, distA, nodeB.gender, nodeA.gender); 
         };
 
         // --- 6. SƠ ĐỒ CÂY (CSS đệ quy, có vợ/chồng) ---
@@ -1954,27 +1959,27 @@ registerTool({
             let html = '<li>';
             
             // Box chính
-            html += \`<div class="inline-flex items-center gap-2 bg-white border border-orange-100 p-2 rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer z-10 relative" onclick="ftOpenModal('\${node.id}')">\`;
-            html += \`
+            html += `<div class="inline-flex items-center gap-2 bg-white border border-orange-100 p-2 rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer z-10 relative" onclick="ftOpenModal('${node.id}')">`;
+            html += `
                 <div class="flex flex-col items-center min-w-[80px] px-2">
-                    <div class="w-8 h-8 rounded-full \${node.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">\${node.name.charAt(0).toUpperCase()}</div>
-                    <div class="text-[10px] font-bold text-gray-800 \${node.status==='deceased'?'line-through text-gray-400':''}">\${node.name}</div>
+                    <div class="w-8 h-8 rounded-full ${node.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">${node.name.charAt(0).toUpperCase()}</div>
+                    <div class="text-[10px] font-bold text-gray-800 ${node.status==='deceased'?'line-through text-gray-400':''}">${node.name}</div>
                 </div>
-            \`;
+            `;
             
             // Vẽ vợ/chồng dính kèm
             spouses.forEach(sp => {
-                if(sp.id !== node.parentId) { // Tránh vẽ lại nếu db bị ngược
-                    html += \`<div class="text-orange-300 font-bold px-1">💍</div>\`;
-                    html += \`
+                if(sp.id !== node.parentId) { 
+                    html += `<div class="text-orange-300 font-bold px-1">💍</div>`;
+                    html += `
                         <div class="flex flex-col items-center min-w-[80px] px-2 bg-gray-50 rounded-xl py-1">
-                            <div class="w-8 h-8 rounded-full \${sp.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">\${sp.name.charAt(0).toUpperCase()}</div>
-                            <div class="text-[10px] font-bold text-gray-800 \${sp.status==='deceased'?'line-through text-gray-400':''}">\${sp.name}</div>
+                            <div class="w-8 h-8 rounded-full ${sp.gender === 'male' ? 'bg-blue-100 text-blue-500' : 'bg-pink-100 text-pink-500'} flex items-center justify-center text-sm font-bold mb-1">${sp.name.charAt(0).toUpperCase()}</div>
+                            <div class="text-[10px] font-bold text-gray-800 ${sp.status==='deceased'?'line-through text-gray-400':''}">${sp.name}</div>
                         </div>
-                    \`;
+                    `;
                 }
             });
-            html += \`</div>\`;
+            html += `</div>`;
 
             if(children.length > 0) {
                 html += '<ul>' + children.map(c => buildTreeHTML(c.id)).join('') + '</ul>';
@@ -1985,7 +1990,6 @@ registerTool({
 
         const renderTree = () => {
             const container = document.getElementById('ft-tree-container');
-            // Root: ko có parent, ko phải là con dâu/rể (tức ko có spouseId hoặc có spouseId nhưng người spouse đó có parent)
             const roots = data.filter(n => !n.parentId && (!n.spouseId || data.find(s => s.id === n.spouseId && !s.parentId)));
             
             if(roots.length === 0) {
@@ -2000,11 +2004,11 @@ registerTool({
         window.ftOpenModal = (id = null) => {
             // Update dropdowns
             let opts = '<option value="">-- Cụ Tổ / Không có --</option>';
-            data.forEach(n => { if(n.id !== id) opts += \`<option value="\${n.id}">\${n.name}</option>\`; });
+            data.forEach(n => { if(n.id !== id) opts += `<option value="${n.id}">${n.name}</option>`; });
             document.getElementById('ft-m-parent').innerHTML = opts;
             
             let spouseOpts = '<option value="">-- Độc thân / Chưa rõ --</option>';
-            data.forEach(n => { if(n.id !== id) spouseOpts += \`<option value="\${n.id}">\${n.name}</option>\`; });
+            data.forEach(n => { if(n.id !== id) spouseOpts += `<option value="${n.id}">${n.name}</option>`; });
             document.getElementById('ft-m-spouse').innerHTML = spouseOpts;
 
             if(id) {
