@@ -11,8 +11,7 @@ registerTool({
           '<div class="text-center mb-6">' +
           '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Nhìn Lại Thời Gian</span>' +
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
-          '<p class="text-sm text-gray-500
-mt-2 italic">Tính toán ngày 30 ngày/tháng hoặc theo lịch thực tế</p>' +
+          '<p class="text-sm text-gray-500 mt-2 italic">Tính toán ngày 30 ngày/tháng hoặc theo lịch thực tế</p>' +
           '</div>' +
           '<div class="max-w-md mx-auto space-y-5 pb-10">' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
