@@ -136,42 +136,64 @@ body.dark-mode #dark-mode-btn { background-color: #334155 !important; color: #f8
 body.dark-mode #dark-mode-btn:hover { background-color: #475569 !important; color: #f97316 !important; }
 body.dark-mode #moon-shadow { background-color: #0f172a !important; }
 /* =========================================
-   HIỆU ỨNG HEADER & LOGO KHI CUỘN (CHUẨN APPLE)
+   HIỆU ỨNG HEADER TÀNG HÌNH (CHỈ LOGO BAY)
 ========================================= */
 #main-header {
-    transition: all 0.4s ease;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
 }
 
-/* Khi cuộn: Hiện nền kính mờ + Viền cam phát sáng */
+/* Khi cuộn xuống: Cho phép bấm xuyên qua khoảng trống của Header */
 .header-scrolled {
-    background-color: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
-    border-bottom: 1px solid rgba(249, 115, 22, 0.3) !important;
-    box-shadow: 0 10px 20px -5px rgba(249, 115, 22, 0.1) !important;
+    background-color: transparent !important;
+    pointer-events: none; 
 }
 
-/* Chế độ Dark Mode cho thanh Header */
-body.dark-mode .header-scrolled {
-    background-color: rgba(15, 23, 42, 0.85) !important;
-    border-bottom: 1px solid rgba(45, 212, 191, 0.3) !important;
-    box-shadow: 0 10px 20px -5px rgba(45, 212, 191, 0.1) !important;
+/* Đảm bảo Logo và Nút bấm vẫn bấm được bình thường */
+.header-scrolled #main-logo-wrapper,
+.header-scrolled button {
+    pointer-events: auto;
 }
 
-/* Động cơ thu Logo vào nút 3 gạch */
+/* Động cơ thu Logo vào nút 3 gạch (Giữ nguyên hiệu ứng bay lượn) */
 .logo-wrapper {
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
     transform-origin: right center;
 }
-
 .header-scrolled .logo-wrapper {
     transform: translateX(calc(100vw - 100px)) scale(0.1);
     opacity: 0;
-    pointer-events: none;
 }
-
 @media (min-width: 768px) {
-    .header-scrolled .logo-wrapper {
-        transform: translateX(40vw) scale(0.1);
-    }
+    .header-scrolled .logo-wrapper { transform: translateX(40vw) scale(0.1); }
 }
 
+/* =========================================
+   MENU SỔ XUỐNG - HIỂN THỊ TỐI ĐA 9 TAB
+========================================= */
+#mobile-nav {
+    /* Cắt đúng chiều cao của 9 tab (Tab thứ 10 sẽ bị che 1 nửa để báo hiệu có thể cuộn) */
+    max-height: 410px; 
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* Làm đẹp thanh cuộn nhỏ xíu bên trong Menu */
+#mobile-nav::-webkit-scrollbar {
+    width: 4px;
+}
+#mobile-nav::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px 0;
+}
+#mobile-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(249, 115, 22, 0.3); /* Thanh cuộn màu cam nhạt */
+    border-radius: 10px;
+}
+
+/* Thanh cuộn cho chế độ Dark Mode */
+body.dark-mode #mobile-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(45, 212, 191, 0.3); /* Thanh cuộn màu xanh ngọc */
+}
