@@ -1,4 +1,4 @@
-// --- 9. Tool Lịch Vạn Niên ---
+// --- 9. Tool Lịch Vạn Niên (Bản Hoàn Hảo - Sửa dứt điểm lỗi mất Tab) ---
 registerTool({
     id: 'tab-calendar',
     name: 'Lịch Vạn Niên',
@@ -26,22 +26,22 @@ registerTool({
                 <div class="flex justify-center items-center gap-2 w-full">
                     <div class="flex flex-col items-center">
                         <span class="text-[9px] font-bold text-slate-400 uppercase mb-1">Ngày</span>
-                        <select id="sel-d" class="w-16 h-10 bg-slate-50 border border-slate-200 rounded-lg text-center font-bold text-slate-700 outline-none focus:ring-2 ring-orange-200 appearance-none"></select>
+                        <select id="sel-d" class="w-16 h-10 bg-slate-50 border border-slate-200 rounded-lg text-center font-bold text-slate-700 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
                     </div>
                     <span class="text-slate-300 font-black mt-4">/</span>
                     <div class="flex flex-col items-center">
                         <span class="text-[9px] font-bold text-slate-400 uppercase mb-1">Tháng</span>
-                        <select id="sel-m" class="w-16 h-10 bg-slate-50 border border-slate-200 rounded-lg text-center font-bold text-slate-700 outline-none focus:ring-2 ring-orange-200 appearance-none"></select>
+                        <select id="sel-m" class="w-16 h-10 bg-slate-50 border border-slate-200 rounded-lg text-center font-bold text-slate-700 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
                     </div>
                     <span class="text-slate-300 font-black mt-4">/</span>
                     <div class="flex flex-col items-center">
                         <span class="text-[9px] font-bold text-slate-400 uppercase mb-1">Năm</span>
-                        <select id="sel-y" class="w-20 h-10 bg-slate-50 border border-slate-200 rounded-lg text-center font-bold text-slate-700 outline-none focus:ring-2 ring-orange-200 appearance-none"></select>
+                        <select id="sel-y" class="w-20 h-10 bg-slate-50 border border-slate-200 rounded-lg text-center font-bold text-slate-700 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
                     </div>
                 </div>
 
-                <button id="btn-lookup" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm">
-                    🔍 TRA CỨU NGAY
+                <button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm">
+                    🔍 TRA CỨU
                 </button>
             </div>
 
@@ -51,7 +51,7 @@ registerTool({
 
             <div id="cal-widget" class="hidden space-y-4">
                 
-                <div class="bg-[#e3eaf1] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative">
+                <div class="bg-[#e3eaf1] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative overflow-hidden">
                     <div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>
                     
                     <div class="flex justify-between items-start">
@@ -65,7 +65,7 @@ registerTool({
                             </div>
                         </div>
 
-                        <div class="text-center pt-2">
+                        <div class="text-center pt-2 relative z-10">
                             <div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">
                                 <div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>
                             </div>
@@ -96,8 +96,8 @@ registerTool({
         
         setInterval(() => {
             const now = new Date();
-            clockEl.innerText = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-            dateEl.innerText = `${wdNames[now.getDay()]}, ${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
+            clockEl.innerText = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+            dateEl.innerText = wdNames[now.getDay()] + ', ' + now.getDate().toString().padStart(2, '0') + '/' + (now.getMonth() + 1).toString().padStart(2, '0') + '/' + now.getFullYear();
         }, 1000);
 
         // --- CƠ SỞ DỮ LIỆU SỰ KIỆN (CHUẨN XÁC) ---
@@ -171,13 +171,20 @@ registerTool({
                 if(currentD > maxD) currentD = maxD;
 
                 let dOpts = ''; 
-                for(let i=1; i<=maxD; i++) dOpts += \`<option value="\${i}" \${i===currentD ? 'selected':''}>\${i}</option>\`;
+                for(let i=1; i<=maxD; i++) {
+                    dOpts += '<option value="' + i + '" ' + (i===currentD ? 'selected':'') + '>' + i + '</option>';
+                }
                 selD.innerHTML = dOpts;
             };
 
-            let mOpts = ''; for(let i=1; i<=12; i++) mOpts += \`<option value="\${i}">\${i}</option>\`; selM.innerHTML = mOpts;
-            let yOpts = ''; const curY = new Date().getFullYear();
-            for(let i=curY-100; i<=curY+50; i++) yOpts += \`<option value="\${i}">\${i}</option>\`; selY.innerHTML = yOpts;
+            let mOpts = ''; 
+            for(let i=1; i<=12; i++) mOpts += '<option value="' + i + '">' + i + '</option>'; 
+            selM.innerHTML = mOpts;
+            
+            let yOpts = ''; 
+            const curY = new Date().getFullYear();
+            for(let i=curY-100; i<=curY+50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
+            selY.innerHTML = yOpts;
 
             selM.addEventListener('change', updateDays);
             selY.addEventListener('change', updateDays);
@@ -202,8 +209,8 @@ registerTool({
                     selD.value = lunar.getDay();
                 } catch(e) {}
                 
-                btnL.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-white text-orange-500 shadow-sm transition';
-                btnS.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-orange-500 transition';
+                btnL.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition';
+                btnS.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition';
                 document.getElementById('btn-lookup').click();
             };
 
@@ -220,8 +227,8 @@ registerTool({
                     selD.value = solar.getDay();
                 } catch(e) {}
                 
-                btnS.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-white text-orange-500 shadow-sm transition';
-                btnL.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-orange-500 transition';
+                btnS.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition';
+                btnL.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition';
                 document.getElementById('btn-lookup').click();
             };
 
@@ -239,30 +246,30 @@ registerTool({
                 let lYearText = CAN[lunar.getYearGanIndex()] + ' ' + CHI[lunar.getYearZhiIndex()];
                 if (lunar.getMonth() < 0) lYearText += " (Nhuận)";
 
-                // XUẤT RA UI: Dương Lịch to ở trên, Âm Lịch nhỏ ở dưới
+                // XUẤT RA UI: Giao diện chuẩn, số Dương to, Âm nhỏ
                 document.getElementById('res-weekday').innerText = wdNames[solar.getWeek()];
                 document.getElementById('res-main-d').innerText = sDay;
-                document.getElementById('res-main-my').innerText = \`Tháng \${sMonth}, \${sYear}\`;
-                document.getElementById('res-sub-date').innerText = \`Ngày \${lDay} tháng \${lMonthAbs} năm \${lYearText}\`;
+                document.getElementById('res-main-my').innerText = "Tháng " + sMonth + ", " + sYear;
+                document.getElementById('res-sub-date').innerText = "Ngày " + lDay + " tháng " + lMonthAbs + " năm " + lYearText;
 
                 // Hiệu ứng Mặt Trăng (Bóng che khuất)
                 let phaseText = 'Trăng khuyết';
                 let shadowTranslate = '100%'; // Sáng 100%
 
                 if (lunar.getDay() === 1 || lunar.getDay() >= 29) { phaseText = 'Trăng non'; shadowTranslate = '0%'; } // Đen thui
-                else if (lunar.getDay() > 1 && lunar.getDay() < 15) { phaseText = 'Trăng thượng huyền'; shadowTranslate = \`\${(lunar.getDay()/15)*100}%\`; }
+                else if (lunar.getDay() > 1 && lunar.getDay() < 15) { phaseText = 'Trăng thượng huyền'; shadowTranslate = ((lunar.getDay()/15)*100) + '%'; }
                 else if (lunar.getDay() === 15 || lunar.getDay() === 16) { phaseText = 'Trăng tròn'; shadowTranslate = '100%'; } 
-                else if (lunar.getDay() > 16 && lunar.getDay() < 29) { phaseText = 'Trăng hạ huyền'; shadowTranslate = \`-\${((lunar.getDay()-15)/15)*100}%\`; }
+                else if (lunar.getDay() > 16 && lunar.getDay() < 29) { phaseText = 'Trăng hạ huyền'; shadowTranslate = '-' + (((lunar.getDay()-15)/15)*100) + '%'; }
 
                 document.getElementById('res-moon-text').innerText = phaseText;
-                document.getElementById('moon-shadow').style.transform = \`translateX(\${shadowTranslate})\`;
+                document.getElementById('moon-shadow').style.transform = 'translateX(' + shadowTranslate + ')';
 
                 // Xuất Sự Kiện
                 const evContainer = document.getElementById('res-events');
                 evContainer.innerHTML = '';
                 
-                let sKey = \`\${sDay}/\${sMonth}\`;
-                let lKey = \`\${lDay}/\${lMonthAbs.toString().padStart(2, '0')}\`;
+                let sKey = sDay + '/' + sMonth;
+                let lKey = lDay + '/' + lMonthAbs.toString().padStart(2, '0');
                 
                 let todaysEvents = [];
                 if(evSolar[sKey]) todaysEvents = todaysEvents.concat(evSolar[sKey]);
@@ -272,12 +279,7 @@ registerTool({
                     evContainer.innerHTML = '<div class="text-xs text-slate-400 italic">Không có dấu ấn lịch sử nào vào ngày này.</div>';
                 } else {
                     todaysEvents.forEach(e => {
-                        evContainer.innerHTML += \`
-                            <div class="bg-white p-3 rounded-xl flex gap-3 items-start border border-orange-100 shadow-sm">
-                                <span class="text-orange-500 mt-0.5">📌</span>
-                                <span class="font-bold text-slate-700 text-xs leading-relaxed">\${e}</span>
-                            </div>
-                        \`;
+                        evContainer.innerHTML += '<div class="bg-slate-50 p-3 rounded-xl flex gap-3 items-start border border-slate-100 shadow-sm"><span class="text-orange-500 mt-0.5">📌</span><span class="font-bold text-slate-700 text-xs leading-relaxed">' + e + '</span></div>';
                     });
                 }
             };
@@ -309,12 +311,12 @@ registerTool({
             setTimeout(() => document.getElementById('btn-lookup').click(), 200);
         };
 
-        // LOAD THƯ VIỆN LUNAR (Đổi link Unpkg cho chắc chắn 100% không bị lỗi mạng)
+        // LOAD THƯ VIỆN LUNAR (Dùng unpkg CDN)
         if (typeof Solar !== 'undefined' && typeof Lunar !== 'undefined') {
             initTool();
         } else {
             const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js';
+            script.src = 'https://unpkg.com/lunar-javascript/lunar.js';
             script.onload = () => initTool();
             script.onerror = () => {
                 loading.innerHTML = '<span class="text-red-500">Lỗi mạng! Không tải được thư viện tính lịch.</span>';
