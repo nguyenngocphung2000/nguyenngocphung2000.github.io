@@ -144,3 +144,8 @@ body.dark-mode .header-scrolled #mobile-menu-btn {
     color: rgba(45, 212, 191, 1) !important;
     background-color: rgba(30, 41, 59, 0.9) !important;
 }
+
+.header-scrolled #mobile-menu {
+    pointer-events: auto !important;
+}
+
