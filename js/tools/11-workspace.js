@@ -57,10 +57,8 @@ registerTool({
             </div>
 
             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 text-white">
-                
                 <div id="ws-pomo-view" class="flex flex-col items-center transition-opacity duration-500 pointer-events-auto">
                     <div id="ws-pomo-time" class="text-[8rem] md:text-[11rem] font-bold drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] tracking-wider leading-none clock-font-1 cursor-pointer hover:opacity-80 transition hover:scale-105" title="Nhấp để đổi số phút">25:00</div>
-                    
                     <div class="flex items-center gap-3 mt-2">
                         <button id="ws-pomo-reset" class="w-8 h-8 flex items-center justify-center bg-black/40 text-white rounded-full hover:bg-black/60 transition backdrop-blur-md border border-white/10" title="Đặt lại">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -87,9 +85,6 @@ registerTool({
                 </button>
                 <button title="Thêm Ghi chú" id="btn-add-note" class="p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                </button>
-                <button title="Âm thanh Môi trường" id="btn-toggle-mixer" class="p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
                 </button>
             </div>
 
@@ -134,23 +129,6 @@ registerTool({
                 </div>
             </div>
 
-            <div id="widget-mixer" class="hidden absolute top-20 left-[100px] w-[260px] bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl z-40 text-white">
-                <div id="drag-mixer" class="bg-white/5 p-3 flex justify-between items-center cursor-move border-b border-white/10">
-                    <span class="text-white/90 text-sm font-bold">🎧 Sound Mixer</span>
-                    <button class="close-widget text-white/50 hover:text-white text-xs">✕</button>
-                </div>
-                <div class="p-4 space-y-4">
-                    <div>
-                        <div class="flex justify-between text-[11px] mb-1.5"><span class="flex items-center gap-2">🌧️ Tiếng mưa</span><span class="text-white/50">50%</span></div>
-                        <input type="range" class="w-full player-slider" value="50">
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[11px] mb-1.5"><span class="flex items-center gap-2">⌨️ Bàn phím cơ</span><span class="text-white/50">0%</span></div>
-                        <input type="range" class="w-full player-slider" value="0">
-                    </div>
-                </div>
-            </div>
-
             <div id="notes-container"></div>
 
             <div class="absolute bottom-6 left-6 z-30 flex items-center gap-3 max-w-[250px] md:max-w-[300px]">
@@ -179,7 +157,7 @@ registerTool({
                 
                 <input type="range" id="ws-player-progress" value="0" max="100" class="player-slider w-24 md:w-36">
                 
-                <span id="ws-player-time" class="text-[11px] font-medium text-white/80 tracking-wide w-[70px] text-right">0:00 / 0:00</span>
+                <span id="ws-player-time" class="text-[11px] font-medium text-white/80 tracking-wide min-w-[70px] shrink-0 text-right whitespace-nowrap">0:00 / 0:00</span>
             </div>
         </div>
     `,
@@ -276,7 +254,6 @@ registerTool({
         };
         toggleWidget('btn-toggle-themes', 'widget-themes');
         toggleWidget('btn-toggle-yt', 'widget-yt');
-        toggleWidget('btn-toggle-mixer', 'widget-mixer');
 
         function dragElement(elmnt, headerId) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -297,7 +274,6 @@ registerTool({
         }
         dragElement(document.getElementById("widget-themes"), "drag-themes");
         dragElement(document.getElementById("widget-yt"), "drag-yt");
-        dragElement(document.getElementById("widget-mixer"), "drag-mixer");
 
         // --- 4. GHI CHÚ ---
         const notesContainer = document.getElementById('notes-container');
@@ -400,7 +376,7 @@ registerTool({
         });
 
         function formatTime(sec) {
-            if (!sec || isNaN(sec)) return "0:00";
+            if (!sec || isNaN(sec) || sec === Infinity) return "0:00";
             const h = Math.floor(sec / 3600);
             const m = Math.floor((sec % 3600) / 60).toString().padStart(h > 0 ? 2 : 1, '0');
             const s = Math.floor(sec % 60).toString().padStart(2, '0');
@@ -412,7 +388,18 @@ registerTool({
                 const dur = ytPlayer.getDuration();
                 const curr = ytPlayer.getCurrentTime();
                 
-                if (!dur || dur <= 0) {
+                let isLive = false;
+                
+                if (ytPlayer.getVideoData) {
+                    const vData = ytPlayer.getVideoData();
+                    if (vData && vData.isLive) isLive = true;
+                }
+                
+                if (!dur || dur <= 0 || dur > 43200 || curr > 43200) {
+                    isLive = true;
+                }
+                
+                if (isLive) {
                     timeDisplay.innerText = "🔴 LIVE";
                     timeDisplay.classList.add('text-red-400');
                     progressSlider.value = 100;
