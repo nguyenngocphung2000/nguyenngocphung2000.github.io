@@ -1,4 +1,4 @@
-// --- 10. Tool Tính Số Ngày (Giao diện Dropdown nguyên bản + Tính năng Đa chiều) ---
+// --- 10. Tool Tính Số Ngày (Thời Gian Đa Chiều V10. Pro Max) ---
 registerTool({
     id: 'tab-time-calc',
     name: 'Tính Số Ngày',
@@ -13,6 +13,78 @@ registerTool({
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
           '</div>' +
           '<div class="max-w-md mx-auto space-y-6 pb-10">' +
+
+          '' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-orange-100 space-y-5">' +
+          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-700 text-sm uppercase">Tính thời gian đa chiều</h3></div>' +
+          '<p class="text-[10px] text-slate-500 italic mt-0">Mẹo: Nhập dữ liệu đã biết, BỎ TRỐNG các ô cần tìm bằng cách xóa số hoặc bấm nút (#). Tính theo công thức quy ước 1 tháng 30 ngày.</p>' +
+          
+          '' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">1. Ngày Bắt Đầu (Bắt buộc)</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="m2-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
+          '</div></div>' +
+
+          '' +
+          '<div>' +
+          '<div class="flex justify-between items-end mb-2">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">2. Ngày Đích Đến</label>' +
+          '<button id="m2-btn-clear-end" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-2 py-1 rounded font-bold transition shadow-sm border border-slate-200">XÓA TRỐNG (#)</button>' +
+          '</div>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="m2-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-end-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
+          '</div></div>' +
+
+          '' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">3. Tổng Thời Gian</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-y" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Năm</span></div>' +
+          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-m" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Tháng</span></div>' +
+          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-d" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Ngày</span></div>' +
+          '</div></div>' +
+
+          '' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">4. Tỷ Lệ</label>' +
+          '<div class="flex flex-wrap justify-center gap-1.5 mb-3 px-1">' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="5">1/5</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="4">1/4</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="3">1/3</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="2">1/2</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="2" data-den="3">2/3</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="3" data-den="4">3/4</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="2" data-den="5">2/5</button>' +
+          '</div>' +
+          '<div class="flex justify-center items-center gap-3 w-full px-16">' +
+          '<input id="m2-ratio-num" type="number" placeholder="Tử" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
+          '<span class="text-xl font-black text-slate-300">/</span>' +
+          '<input id="m2-ratio-den" type="number" placeholder="Mẫu" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
+          '</div></div>' +
+
+          '<div class="flex gap-2 w-full mt-2">' +
+          '<button id="mod2-btn-reset" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 text-[11px] uppercase">' +
+          '🔄 Làm Mới' +
+          '</button>' +
+          '<button id="mod2-btn-calc" class="w-2/3 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm">' +
+          '🚀 TÍNH TOÁN' +
+          '</button>' +
+          '</div>' +
+
+          '' +
+          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
+          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
+          '<div id="mod2-dynamic-res" class="w-full"></div>' +
+          '</div></div>' +
 
           '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
@@ -65,69 +137,6 @@ registerTool({
           '<span class="text-[9px] text-teal-100 font-bold uppercase tracking-wider mb-1">Tổng Ngày Tuyệt Đối</span>' +
           '<span class="text-2xl font-black text-white" id="tc-res-4">--</span></div>' +
           '</div></div></div>' +
-
-          '' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
-          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-600 text-sm uppercase">Tính thời gian đa chiều</h3></div>' +
-          '<p class="text-[10px] text-slate-500 italic mt-0">Mẹo: Nhập dữ liệu đã biết, BỎ TRỐNG các ô cần tìm bằng cách xóa số hoặc bấm nút (#).</p>' +
-          
-          '' +
-          '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">1. Ngày Bắt Đầu (Bắt buộc)</label>' +
-          '<div class="flex justify-center items-center gap-2 w-full">' +
-          '<select id="m2-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
-          '</div></div>' +
-
-          '' +
-          '<div>' +
-          '<div class="flex justify-between items-end mb-2">' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">2. Ngày Đích Đến</label>' +
-          '<button id="m2-btn-clear-end" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-2 py-1 rounded font-bold transition shadow-sm border border-slate-200">XÓA TRỐNG (#)</button>' +
-          '</div>' +
-          '<div class="flex justify-center items-center gap-2 w-full">' +
-          '<select id="m2-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-end-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
-          '</div></div>' +
-
-          '' +
-          '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">3. Tổng Thời Gian</label>' +
-          '<div class="flex justify-center items-center gap-2 w-full">' +
-          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-y" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Năm</span></div>' +
-          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-m" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Tháng</span></div>' +
-          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-d" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Ngày</span></div>' +
-          '</div></div>' +
-
-          '' +
-          '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">4. Tỷ Lệ</label>' +
-          '<div class="flex justify-center items-center gap-3 w-full px-8">' +
-          '<input id="m2-ratio-num" type="number" placeholder="#" class="w-20 bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-lg py-2 outline-none focus:ring-2 ring-orange-200">' +
-          '<span class="text-2xl font-black text-slate-300">/</span>' +
-          '<input id="m2-ratio-den" type="number" placeholder="#" class="w-20 bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-lg py-2 outline-none focus:ring-2 ring-orange-200">' +
-          '</div></div>' +
-
-          '<div class="flex gap-2 w-full mt-2">' +
-          '<button id="mod2-btn-reset" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 text-[11px] uppercase">' +
-          '🔄 Làm Mới' +
-          '</button>' +
-          '<button id="mod2-btn-calc" class="w-2/3 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm">' +
-          '🚀 TÍNH TOÁN' +
-          '</button>' +
-          '</div>' +
-
-          '' +
-          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
-          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
-          '<div id="mod2-dynamic-res" class="w-full"></div>' +
-          '</div></div>' +
 
           '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-[2rem] shadow-sm border border-slate-100">' +
@@ -215,33 +224,36 @@ registerTool({
         updateEndDays();
         m2eM.addEventListener('change', updateEndDays); m2eY.addEventListener('change', updateEndDays);
 
-        // -- Yêu cầu mới: Gán mặc định Ngày đích đến là hôm nay --
+        // Mặc định Ngày đích đến là hôm nay
         m2eM.value = today.getMonth() + 1;
         m2eY.value = today.getFullYear();
         updateEndDays();
         m2eD.value = today.getDate();
 
-        // -- NÚT XÓA TRỐNG NGÀY ĐÍCH ĐẾN --
+        // Nút Xóa trống Ngày đích đến
         document.getElementById('m2-btn-clear-end').onclick = function() {
-            m2eD.value = "";
-            m2eM.value = "";
-            m2eY.value = "";
+            m2eD.value = ""; m2eM.value = ""; m2eY.value = "";
             updateEndDays();
         };
 
-        // -- NÚT LÀM MỚI (RESET TOÀN BỘ) --
+        // Nút Làm mới (Reset toàn bộ Module 2)
         document.getElementById('mod2-btn-reset').onclick = function() {
             var td = new Date();
-            // Đưa ngày bắt đầu về hôm nay
             m2sM.value = td.getMonth() + 1; m2sY.value = td.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = td.getDate();
-            // Đưa ngày đích về hôm nay
             m2eM.value = td.getMonth() + 1; m2eY.value = td.getFullYear(); updateEndDays(); m2eD.value = td.getDate();
-            // Xóa sạch ô nhập số
             m2wY.value = ""; m2wM.value = ""; m2wD.value = "";
             m2rNum.value = ""; m2rDen.value = "";
-            // Giấu bảng kết quả
             resDiv2.classList.add('hidden');
         };
+
+        // Nút Nhập Nhanh Tỷ Lệ
+        var ratioBtns = document.querySelectorAll('.m2-quick-ratio');
+        for(var k = 0; k < ratioBtns.length; k++) {
+            ratioBtns[k].onclick = function() {
+                m2rNum.value = this.getAttribute('data-num');
+                m2rDen.value = this.getAttribute('data-den');
+            };
+        }
 
         // ================= XỬ LÝ MODULE 1 =================
         var processCalcModule1 = function(isReal) {
@@ -310,7 +322,6 @@ registerTool({
             var sD = parseInt(m2sD.value), sM = parseInt(m2sM.value), sY = parseInt(m2sY.value);
             var eD = m2eD.value, eM = m2eM.value, eY = m2eY.value;
             
-            // Xử lý logic an toàn cho number field trống
             var wYv = parseInt(m2wY.value)||0, wMv = parseInt(m2wM.value)||0, wDv = parseInt(m2wD.value)||0;
             var rNv = parseInt(m2rNum.value)||0, rDv = parseInt(m2rDen.value)||0;
 
@@ -321,7 +332,18 @@ registerTool({
             var waitDays = (wYv * 360) + (wMv * 30) + wDv;
             var resPassed = "", historyMain = "", historySub = "", dynamicHtml = "";
 
-            if (hasWait && hasRatio && !hasEnd) {
+            if (hasEnd && !hasWait && !hasRatio) {
+                // NGOẠI LỆ MỚI: Chỉ nhập Bắt đầu & Kết thúc -> Tính thẳng ra Tổng thời gian
+                var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
+                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
+                
+                var p = daysToYMD(passDays);
+                resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+                dynamicHtml = makeRow("Tổng thời gian quy đổi", resPassed, true);
+                historyMain = "Tổng: " + resPassed; historySub = "Đã tính khoảng cách";
+            }
+            else if (hasWait && hasRatio && !hasEnd) {
                 // TÌM NGÀY ĐÍCH ĐẾN
                 var passDays = Math.floor((waitDays * rNv) / rDv);
                 var p = daysToYMD(passDays);
@@ -329,13 +351,13 @@ registerTool({
                 var resEnd = ('0'+temp.getDate()).slice(-2) + "/" + ('0'+(temp.getMonth()+1)).slice(-2) + "/" + temp.getFullYear();
                 resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
 
-                dynamicHtml = makeRow("Ngày Đích Đến (Chạm mốc)", resEnd, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
-                historyMain = "Đích: " + resEnd; historySub = "Đã qua: " + resPassed;
+                dynamicHtml = makeRow("Ngày Đích Đến (Chạm mốc)", resEnd, true) + makeRow("Thời gian quy đổi (Cộng thêm)", resPassed, false);
+                historyMain = "Đích: " + resEnd; historySub = "Cộng thêm: " + resPassed;
             } 
             else if (hasEnd && hasRatio && !hasWait) {
                 // TÌM TỔNG THỜI GIAN
                 var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích phải sau ngày bắt đầu!"); return; }
+                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
                 
                 var calcWaitDays = Math.floor((passDays * rDv) / rNv);
                 var w = daysToYMD(calcWaitDays);
@@ -349,7 +371,7 @@ registerTool({
             else if (hasEnd && hasWait && !hasRatio) {
                 // TÌM TỶ LỆ
                 var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích phải sau ngày bắt đầu!"); return; }
+                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
                 
                 var divisor = gcd(passDays, waitDays);
                 var simpNum = passDays / divisor;
@@ -362,9 +384,9 @@ registerTool({
                 historyMain = "Tỷ lệ: " + resRatio; historySub = "Đã qua: " + resPassed;
             }
             else if (hasEnd && hasWait && hasRatio) {
-                // ĐẦY ĐỦ THÔNG TIN -> Chỉ show duy nhất kết quả thực tế
+                // ĐẦY ĐỦ THÔNG TIN
                 var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích phải sau ngày bắt đầu!"); return; }
+                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
                 var p = daysToYMD(passDays);
                 resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
 
@@ -372,7 +394,7 @@ registerTool({
                 historyMain = "Đã qua: " + resPassed; historySub = "Số liệu đầy đủ";
             }
             else {
-                alert("Bạn cần cung cấp ít nhất 2 trong 3 khối dữ liệu: 'Ngày Đích', 'Tổng Thời Gian' hoặc 'Tỷ Lệ' nhé!");
+                alert("Bạn cần cung cấp các dữ liệu phù hợp (VD: Chỉ cần Ngày Bắt Đầu + Đích, HOẶC cung cấp ít nhất 2 trong 3 khối dữ liệu để tìm ẩn số còn lại).");
                 return;
             }
 
