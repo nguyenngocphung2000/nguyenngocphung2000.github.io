@@ -62,17 +62,16 @@ function registerTool(config) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    const urlHash = window.location.hash.replace('#', '');
-    const memoryTab = localStorage.getItem('my_active_tab');
-    const defaultTab = appContainer.dataset.defaultTab;
-    const targetTabId = urlHash || memoryTab || defaultTab;
 
+    const urlHash = window.location.hash.replace('#', '');
+    const targetTabId = urlHash || 'tab-home';
     if (targetTabId && document.getElementById(targetTabId)) {
         switchTab(targetTabId);
-    } else if (defaultTab) {
-        switchTab(defaultTab);
+    } else {
+        switchTab('tab-home');
     }
 });
+
 // --- 1. CHỐNG ZOOM MÀN HÌNH BẰNG 2 NGÓN TAY TRÊN IOS ---
 document.addEventListener('touchmove', function (event) {
     if (event.scale !== 1 && event.scale !== undefined) {
