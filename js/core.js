@@ -83,15 +83,6 @@ document.addEventListener('gesturestart', function (event) {
     event.preventDefault();
 });
 
-// --- 2. HIỆU ỨNG VIỀN HEADER KHI CUỘN ---
-window.addEventListener('scroll', function() {
-    var header = document.getElementById('main-header');
-    if (window.scrollY > 20) {
-        header.classList.add('header-scrolled');
-    } else {
-        header.classList.remove('header-scrolled');
-    }
-});
 // --- KÍCH HOẠT DARK MODE ---
 const toggleDarkMode = () => {
     document.body.classList.toggle('dark-mode');
@@ -116,3 +107,4 @@ if(localStorage.getItem('nothing_dark_mode') === 'true') {
             iconMoon.classList.add('hidden');
         }
     });
+}
