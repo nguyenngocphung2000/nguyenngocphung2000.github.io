@@ -129,10 +129,12 @@ registerTool({
             "27/02": ["Ngày Thầy thuốc Việt Nam (1955)"],
             "01/03": ["Ngày sinh Thủ tướng Phạm Văn Đồng (1906)"],
             "08/03": ["Ngày Quốc tế Phụ nữ"],
+            "24/03": ["Ngày truyền thống Bộ đội Biên phòng (1959)"],
             "26/03": ["Thành lập Đoàn TNCS Hồ Chí Minh (1931)"],
             "30/03": ["Ngày mất Chủ tịch Tôn Đức Thắng (1980)"],
             "07/04": ["Ngày sinh Tổng Bí thư Lê Duẩn (1907)"],
             "14/04": ["Ngày sinh Tổng Bí thư Nguyễn Phú Trọng (1944)"],
+            "21/04": ["Ngày Sách và Văn hóa đọc Việt Nam (2014)"],
             "27/04": ["Ngày mất Tổng Bí thư Nguyễn Văn Linh (1998)"],
             "29/04": ["Ngày mất Thủ tướng Phạm Văn Đồng (2000)"],
             "30/04": ["Ngày Giải phóng Miền Nam (1975)"],
@@ -142,25 +144,35 @@ registerTool({
             "19/05": ["Ngày sinh Chủ tịch Hồ Chí Minh (1890)"],
             "01/06": ["Quốc tế Thiếu nhi"],
             "11/06": ["Ngày mất Thủ tướng Võ Văn Kiệt (2008)"],
+            "14/06": ["Ngày Thế giới tôn vinh người hiến máu"],
             "21/06": ["Ngày Báo chí Cách mạng Việt Nam (1925)"],
             "28/06": ["Ngày Gia đình Việt Nam"],
             "01/07": ["Ngày sinh Tổng Bí thư Nguyễn Văn Linh (1915)"],
             "10/07": ["Ngày mất Tổng Bí thư Lê Duẩn (1986)"],
             "19/07": ["Ngày mất Tổng Bí thư Nguyễn Phú Trọng (2024)"],
             "27/07": ["Ngày Thương binh - Liệt sĩ (1947)"],
+            "28/07": ["Ngày thành lập Công đoàn Việt Nam (1929)"],
             "19/08": ["Cách mạng tháng Tám (1945)", "Thành lập Công an Nhân dân (1945)"],
             "20/08": ["Ngày sinh Chủ tịch Tôn Đức Thắng (1888)"],
             "25/08": ["Ngày sinh Đại tướng Võ Nguyên Giáp (1911)"],
             "02/09": ["Quốc khánh Việt Nam (1945)", "Ngày mất Chủ tịch Hồ Chí Minh (1969)"],
-            "06/09": ["Ngày sinh TBT Lê Hồng Phong", "Ngày mất TBT Trần Phú"],
+            "06/09": ["Ngày sinh TBT Lê Hồng Phong (1902)", "Ngày mất TBT Trần Phú (1931)"],
             "30/09": ["Ngày mất Tổng Bí thư Trường Chinh (1988)"],
+            "01/10": ["Ngày Quốc tế Người cao tuổi"],
             "04/10": ["Ngày mất Đại tướng Võ Nguyên Giáp (2013)"],
             "10/10": ["Ngày Giải phóng Thủ đô (1954)"],
+            "13/10": ["Ngày Doanh nhân Việt Nam (2004)"],
+            "14/10": ["Ngày thành lập Hội Nông dân Việt Nam (1930)"],
+            "15/10": ["Ngày truyền thống Hội Liên hiệp Thanh niên Việt Nam (1956)"],
             "20/10": ["Thành lập Hội LHPN Việt Nam (1930)"],
+            "09/11": ["Ngày Pháp luật Việt Nam (2013)"],
+            "18/11": ["Ngày truyền thống Mặt trận Tổ quốc Việt Nam (1930)", "Ngày Đại đoàn kết toàn dân tộc"],
             "20/11": ["Ngày Nhà giáo Việt Nam (1982)"],
             "23/11": ["Ngày sinh TT Võ Văn Kiệt (1922)", "Ngày Khởi nghĩa Nam Kỳ (1940)"],
+            "19/12": ["Ngày Toàn quốc kháng chiến (1946)"],
             "22/12": ["Thành lập Quân đội Nhân dân Việt Nam (1944)"]
         };
+        
         var evLunar = {
             "01/01": ["Tết Nguyên Đán (Mùng 1)"], "02/01": ["Mùng 2 Tết"], "03/01": ["Mùng 3 Tết"],
             "15/01": ["Tết Nguyên Tiêu"], "10/03": ["Giỗ Tổ Hùng Vương"],
@@ -168,7 +180,6 @@ registerTool({
             "15/07": ["Lễ Vu Lan"], "15/08": ["Tết Trung Thu"],
             "23/12": ["Đưa Ông Táo về trời"], "30/12": ["Lễ Giao Thừa"], "29/12": ["Lễ Giao Thừa (Tháng thiếu)"]
         };
-
         var initTool = function() {
             loading.classList.add('hidden');
             widget.classList.remove('hidden');
