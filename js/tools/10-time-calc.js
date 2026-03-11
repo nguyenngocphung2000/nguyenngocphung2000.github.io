@@ -1,4 +1,4 @@
-// --- 10. Tool Tính Số Ngày (Chống Spam Lịch Sử & Cuộn mượt) ---
+// --- 10. Tool Tính Số Ngày (Bao gồm Module Tính Mốc Tỷ Lệ) ---
 registerTool({
     id: 'tab-time-calc',
     name: 'Tính Số Ngày',
@@ -9,12 +9,15 @@ registerTool({
           'body.dark-mode .tc-history-item { background-color: rgba(30, 41, 59, 0.8) !important; border-color: rgba(255, 255, 255, 0.05) !important; }' +
           '</style>' +
           '<div class="text-center mb-6">' +
-          '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Nhìn Lại Thời Gian</span>' +
-          '<h2 class="text-3xl font-bold mt-2 text-slate-800">Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
-          '<p class="text-sm text-gray-500 mt-2 italic">Tính toán ngày 30 ngày/tháng hoặc theo lịch thực tế</p>' +
+          '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Công thức & Thực tế</span>' +
+          '<h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
           '</div>' +
-          '<div class="max-w-md mx-auto space-y-5 pb-10">' +
+          '<div class="max-w-md mx-auto space-y-6 pb-10">' +
+
+          '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
+          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-teal-500 text-lg">📏</span><h3 class="font-bold text-slate-600 text-sm uppercase">Khoảng cách 2 mốc ngày</h3></div>' +
+          
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Từ ngày</label>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
@@ -24,6 +27,7 @@ registerTool({
           '<span class="text-slate-300 font-black">/</span>' +
           '<select id="tc-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
           '</div></div>' +
+          
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Đến ngày</label>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
@@ -33,16 +37,18 @@ registerTool({
           '<span class="text-slate-300 font-black">/</span>' +
           '<select id="tc-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
           '</div></div>' +
+          
           '<div class="flex gap-2 w-full mt-2">' +
           '<button id="tc-btn-conv" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
-          '<span class="text-sm">🧮 CÔNG THỨC</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30day)</span></button>' +
+          '<span class="text-sm">🧮 CÔNG THỨC</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30 day)</span></button>' +
           '<button id="tc-btn-real" class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
-          '<span class="text-sm">📅 THEO LỊCH</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Lịch thực tế)</span></button>' +
+          '<span class="text-sm">📅 THEO LỊCH</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Thực tế)</span></button>' +
           '</div></div>' +
+
           '<div id="tc-result" class="hidden space-y-4">' +
           '<div class="tc-card bg-[#e0f2fe] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative overflow-hidden">' +
           '<div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-4">' +
-          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ</div>' +
+          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ MODULE 1</div>' +
           '<div id="tc-res-type" class="text-[10px] font-bold text-teal-700/60 uppercase bg-teal-50/50 px-2 py-0.5 rounded border border-teal-100">--</div>' +
           '</div>' +
           '<div class="space-y-3">' +
@@ -59,6 +65,58 @@ registerTool({
           '<span class="text-[9px] text-teal-100 font-bold uppercase tracking-wider mb-1">Tổng Ngày Tuyệt Đối</span>' +
           '<span class="text-2xl font-black text-white" id="tc-res-4">--</span></div>' +
           '</div></div></div>' +
+
+          '' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
+          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-600 text-sm uppercase">Tính Mốc Tỷ Lệ</h3></div>' +
+          
+          '' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Ngày Bắt Đầu</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="mod2-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="mod2-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="mod2-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>' +
+          '</div></div>' +
+
+          '' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Tổng Thời Gian</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<div class="flex-1 flex flex-col items-center"><input id="mod2-wait-y" type="number" min="0" value="6" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Năm</span></div>' +
+          '<div class="flex-1 flex flex-col items-center"><input id="mod2-wait-m" type="number" min="0" value="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Tháng</span></div>' +
+          '<div class="flex-1 flex flex-col items-center"><input id="mod2-wait-d" type="number" min="0" value="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Ngày</span></div>' +
+          '</div></div>' +
+
+          '' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Tỷ lệ mốc cần tính</label>' +
+          '<div class="flex justify-center items-center gap-3 w-full px-8">' +
+          '<input id="mod2-ratio-num" type="number" value="2" class="w-20 bg-orange-50 border border-orange-200 rounded-xl text-center font-black text-orange-600 text-lg py-2 outline-none focus:ring-2 ring-orange-300">' +
+          '<span class="text-2xl font-black text-slate-300">/</span>' +
+          '<input id="mod2-ratio-den" type="number" value="3" class="w-20 bg-orange-50 border border-orange-200 rounded-xl text-center font-black text-orange-600 text-lg py-2 outline-none focus:ring-2 ring-orange-300">' +
+          '</div></div>' +
+
+          '<button id="mod2-btn-calc" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-2">' +
+          '🚀 TÍNH MỐC NGÀY' +
+          '</button>' +
+
+          '' +
+          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-6 shadow-sm border border-orange-100 mt-4">' +
+          '<div class="text-orange-600 font-bold text-xs tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-4">KẾT QUẢ MỐC TỶ LỆ</div>' +
+          '<div class="space-y-3">' +
+          '<div class="bg-white/70 p-4 rounded-xl border border-orange-200 shadow-sm flex flex-col">' +
+          '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Thời gian quy đổi (Cộng thêm)</span>' +
+          '<span class="text-lg font-black text-slate-800" id="mod2-res-time">--</span></div>' +
+          '<div class="bg-orange-500 p-4 rounded-xl border border-orange-600 shadow-md flex flex-col">' +
+          '<span class="text-[9px] text-orange-100 font-bold uppercase tracking-wider mb-1">Ngày chạm mốc (Đích đến)</span>' +
+          '<span class="text-2xl font-black text-white" id="mod2-res-date">--</span></div>' +
+          '</div></div>' +
+          '</div>' +
+
+          '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-[2rem] shadow-sm border border-slate-100">' +
           '<div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">' +
           '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><span>📚</span> Lịch sử tính toán</h3>' +
@@ -67,6 +125,7 @@ registerTool({
           '<div id="tc-history-list" class="space-y-2 max-h-[650px] overflow-y-auto custom-scrollbar pr-1"></div>' +
           '</div></div>',
     logic: function() {
+        // --- KHỞI TẠO CÁC BIẾN DOM MODULE 1 ---
         var sD = document.getElementById('tc-start-d');
         var sM = document.getElementById('tc-start-m');
         var sY = document.getElementById('tc-start-y');
@@ -76,8 +135,25 @@ registerTool({
 
         var btnConv = document.getElementById('tc-btn-conv');
         var btnReal = document.getElementById('tc-btn-real');
+        var resDiv1 = document.getElementById('tc-result');
+
+        // --- KHỞI TẠO CÁC BIẾN DOM MODULE 2 ---
+        var m2sD = document.getElementById('mod2-start-d');
+        var m2sM = document.getElementById('mod2-start-m');
+        var m2sY = document.getElementById('mod2-start-y');
+        
+        var m2wY = document.getElementById('mod2-wait-y');
+        var m2wM = document.getElementById('mod2-wait-m');
+        var m2wD = document.getElementById('mod2-wait-d');
+
+        var m2rNum = document.getElementById('mod2-ratio-num');
+        var m2rDen = document.getElementById('mod2-ratio-den');
+        
+        var btnMod2 = document.getElementById('mod2-btn-calc');
+        var resDiv2 = document.getElementById('mod2-result');
+
+        // Lịch sử
         var btnClear = document.getElementById('tc-btn-clear');
-        var resDiv = document.getElementById('tc-result');
         var historyList = document.getElementById('tc-history-list');
 
         var tcHistory = [];
@@ -98,7 +174,10 @@ registerTool({
             }
             for(var i = 0; i < tcHistory.length; i++) {
                 var h = tcHistory[i];
-                var colorType = h.isReal ? 'text-indigo-600' : 'text-teal-600';
+                // Phân loại màu sắc theo Module
+                var colorType = 'text-teal-600';
+                if(h.typeLabel === "Thực tế (Theo Lịch)") colorType = 'text-indigo-600';
+                if(h.typeLabel === "Mốc Tỷ Lệ") colorType = 'text-orange-600';
                 
                 var itemHtml = '<div class="tc-history-item bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-1 shadow-sm">';
                 itemHtml += '<div class="flex justify-between items-center">';
@@ -120,6 +199,7 @@ registerTool({
             }
         };
 
+        // Hàm điền dữ liệu Ngày/Tháng/Năm chung cho cả 2 Module
         var updateDays = function(dElem, mElem, yElem) {
             var currentD = parseInt(dElem.value) || new Date().getDate();
             var m = parseInt(mElem.value) || (new Date().getMonth() + 1);
@@ -135,26 +215,35 @@ registerTool({
 
         var mOpts = ''; 
         for(var i = 1; i <= 12; i++) mOpts += '<option value="' + i + '">' + i + '</option>'; 
-        sM.innerHTML = mOpts; eM.innerHTML = mOpts;
+        sM.innerHTML = mOpts; eM.innerHTML = mOpts; m2sM.innerHTML = mOpts;
         
         var yOpts = ''; 
         var curY = new Date().getFullYear();
         for(var i = curY - 50; i <= curY + 50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
-        sY.innerHTML = yOpts; eY.innerHTML = yOpts;
+        sY.innerHTML = yOpts; eY.innerHTML = yOpts; m2sY.innerHTML = yOpts;
 
-        sM.addEventListener('change', function() { updateDays(sD, sM, sY); });
-        sY.addEventListener('change', function() { updateDays(sD, sM, sY); });
-        eM.addEventListener('change', function() { updateDays(eD, eM, eY); });
-        eY.addEventListener('change', function() { updateDays(eD, eM, eY); });
+        var setupDateListeners = function(d, m, y) {
+            m.addEventListener('change', function() { updateDays(d, m, y); });
+            y.addEventListener('change', function() { updateDays(d, m, y); });
+        };
+        
+        setupDateListeners(sD, sM, sY);
+        setupDateListeners(eD, eM, eY);
+        setupDateListeners(m2sD, m2sM, m2sY);
 
         var today = new Date();
+        // Set mặc định Module 1
         sM.value = today.getMonth() + 1; sY.value = today.getFullYear();
         updateDays(sD, sM, sY); sD.value = today.getDate();
         eM.value = today.getMonth() + 1; eY.value = today.getFullYear();
         updateDays(eD, eM, eY); eD.value = today.getDate();
+        
+        // Set mặc định Module 2 (Ví dụ của User: 22/02/2020)
+        m2sM.value = 2; m2sY.value = 2020;
+        updateDays(m2sD, m2sM, m2sY); m2sD.value = 22;
 
-        // HÀM TÍNH TOÁN CHUNG
-        var processCalc = function(isReal) {
+        // ================= XỬ LÝ MODULE 1 (Khoảng Cách) =================
+        var processCalcModule1 = function(isReal) {
             var d1 = parseInt(sD.value), m1 = parseInt(sM.value), y1 = parseInt(sY.value);
             var d2 = parseInt(eD.value), m2 = parseInt(eM.value), y2 = parseInt(eY.value);
 
@@ -166,8 +255,7 @@ registerTool({
                 return;
             }
 
-            var str1 = "", str2 = "", str3 = "", str4 = "";
-            var typeLabel = "";
+            var str1 = "", str2 = "", str3 = "", str4 = "", typeLabel = "";
 
             if (!isReal) {
                 typeLabel = "Công thức (30đ/tháng)";
@@ -181,7 +269,6 @@ registerTool({
                 else { monthRes = (tempM2 + 12) - m1; tempY2 = tempY2 - 1; }
 
                 yearRes = tempY2 - y1;
-
                 str1 = yearRes + " năm " + monthRes + " tháng " + dayRes + " ngày";
 
                 var totalMonths = (yearRes * 12) + monthRes;
@@ -190,7 +277,6 @@ registerTool({
                 var leftDays = (leftMonths * 30) + dayRes;
                 str2 = quarters + " quý " + leftDays + " ngày";
                 str3 = totalMonths + " tháng " + dayRes + " ngày";
-
                 var totalDays = (yearRes * 360) + (monthRes * 30) + dayRes;
                 str4 = totalDays + " ngày";
 
@@ -226,39 +312,74 @@ registerTool({
             document.getElementById('tc-res-3').innerText = str3;
             document.getElementById('tc-res-4').innerText = str4;
             document.getElementById('tc-res-type').innerText = typeLabel;
-
-            resDiv.classList.remove('hidden');
+            resDiv1.classList.remove('hidden');
 
             var startStr = ('0' + d1).slice(-2) + '/' + ('0' + m1).slice(-2) + '/' + y1;
             var endStr = ('0' + d2).slice(-2) + '/' + ('0' + m2).slice(-2) + '/' + y2;
             
-            var newHistoryItem = {
-                dateStart: startStr,
-                dateEnd: endStr,
-                resText1: str1,
-                resText4: "Tổng: " + str4,
-                typeLabel: typeLabel,
-                isReal: isReal
-            };
-
-            // THUẬT TOÁN CHỐNG SPAM: Nếu kết quả mới y hệt kết quả cũ gần nhất thì KHÔNG LƯU
             var isDuplicate = false;
             if(tcHistory.length > 0) {
                 var lastItem = tcHistory[0];
-                if(lastItem.dateStart === startStr && lastItem.dateEnd === endStr && lastItem.typeLabel === typeLabel) {
-                    isDuplicate = true;
-                }
+                if(lastItem.dateStart === startStr && lastItem.dateEnd === endStr && lastItem.typeLabel === typeLabel) isDuplicate = true;
             }
-
             if(!isDuplicate) {
-                tcHistory.unshift(newHistoryItem);
-                if(tcHistory.length > 30) tcHistory.pop(); // Lưu 30 cái, UI sẽ tự cuộn khi quá 10 cái
-                saveHistory();
-                renderHistory();
+                tcHistory.unshift({ dateStart: startStr, dateEnd: endStr, resText1: str1, resText4: "Tổng: " + str4, typeLabel: typeLabel, isReal: isReal });
+                if(tcHistory.length > 30) tcHistory.pop(); 
+                saveHistory(); renderHistory();
             }
         };
 
-        btnConv.onclick = function() { processCalc(false); };
-        btnReal.onclick = function() { processCalc(true); };
+        btnConv.onclick = function() { processCalcModule1(false); };
+        btnReal.onclick = function() { processCalcModule1(true); };
+
+        // ================= XỬ LÝ MODULE 2 (Tính Mốc) =================
+        btnMod2.onclick = function() {
+            var sD = parseInt(m2sD.value), sM = parseInt(m2sM.value), sY = parseInt(m2sY.value);
+            var wY = parseInt(m2wY.value) || 0, wM = parseInt(m2wM.value) || 0, wD = parseInt(m2wD.value) || 0;
+            var rN = parseInt(m2rNum.value) || 0, rD = parseInt(m2rDen.value) || 1;
+
+            if (rD === 0) { alert("Mẫu số không thể bằng 0!"); return; }
+
+            // Đổi tổng thời gian chờ ra ngày (Quy ước 1 tháng 30 ngày)
+            var totalWaitDays = (wY * 360) + (wM * 30) + wD;
+            
+            // Nhân tỷ lệ
+            var milestoneDays = Math.floor(totalWaitDays * (rN / rD));
+
+            // Đổi ngược ra Năm/Tháng/Ngày cộng thêm
+            var addY = Math.floor(milestoneDays / 360);
+            var rem = milestoneDays % 360;
+            var addM = Math.floor(rem / 30);
+            var addD = rem % 30;
+
+            var timeStr = addY + " năm " + addM + " tháng " + addD + " ngày";
+
+            // Tính ngày đích thực tế trên lịch
+            var targetDate = new Date(sY + addY, (sM - 1) + addM, sD + addD);
+            var tD = ('0' + targetDate.getDate()).slice(-2);
+            var tM = ('0' + (targetDate.getMonth() + 1)).slice(-2);
+            var tY = targetDate.getFullYear();
+            var dateStr = tD + "/" + tM + "/" + tY;
+
+            document.getElementById('mod2-res-time').innerText = timeStr;
+            document.getElementById('mod2-res-date').innerText = dateStr;
+            resDiv2.classList.remove('hidden');
+
+            // Lưu lịch sử cho Module 2
+            var startStr = ('0' + sD).slice(-2) + '/' + ('0' + sM).slice(-2) + '/' + sY;
+            var ratioStr = "Tỷ lệ " + rN + "/" + rD;
+            var typeLabel = "Mốc Tỷ Lệ";
+            
+            var isDuplicate = false;
+            if(tcHistory.length > 0) {
+                var lastItem = tcHistory[0];
+                if(lastItem.dateStart === startStr && lastItem.dateEnd === ratioStr && lastItem.typeLabel === typeLabel) isDuplicate = true;
+            }
+            if(!isDuplicate) {
+                tcHistory.unshift({ dateStart: startStr, dateEnd: ratioStr, resText1: "Đạt mốc: " + dateStr, resText4: "Cộng thêm: " + timeStr, typeLabel: typeLabel, isReal: false });
+                if(tcHistory.length > 30) tcHistory.pop(); 
+                saveHistory(); renderHistory();
+            }
+        };
     }
 });
