@@ -2,14 +2,11 @@
 registerTool({
     id: 'tab-calendar',
     name: 'Lịch Vạn Niên',
-    icon: '📆',
+    icon: '🗓️',
     html: `
         <div class="text-center mb-6">
             <span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>
             <h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Việt Nam</span></h2>
-            <p class="text-sm text-gray-500
-mt-2 italic">Nhập Dương ra Âm, nhập Âm ra
-Dương</p>
         </div>
 
         <div class="max-w-md mx-auto space-y-6 pb-10">
@@ -44,12 +41,12 @@ Dương</p>
                 </div>
 
                 <button id="btn-lookup" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm">
-                    🔍 TRA CỨU
+                    🔍 TRA CỨU NGAY
                 </button>
             </div>
 
             <div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">
-                Đang kết nối thư viện... ⏳
+                Đang kết nối thư viện Lịch... ⏳
             </div>
 
             <div id="cal-widget" class="hidden space-y-4">
@@ -59,14 +56,18 @@ Dương</p>
                     
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">Ngày --</div>
-                            <div class="text-lg md:text-xl font-bold text-slate-600 mt-2" id="res-main-my">Tháng -- năm --</div>
-                            <div class="text-sm font-medium text-slate-500 mt-1" id="res-sub-date">--/--/----</div>
+                            <div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">--</div>
+                            <div class="text-lg md:text-xl font-bold text-slate-600 mt-2" id="res-main-my">Tháng --, ----</div>
+                            
+                            <div class="text-sm font-medium text-slate-500 mt-3 flex items-center gap-2">
+                                <span class="bg-white/60 px-2 py-0.5 rounded text-[10px] font-bold uppercase text-slate-500 shadow-sm border border-white">Âm Lịch</span>
+                                <span id="res-sub-date" class="font-bold text-slate-700">--/--/----</span>
+                            </div>
                         </div>
 
                         <div class="text-center pt-2">
                             <div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">
-                                <div id="moon-shadow" class="absolute inset-0 bg-slate-800/40 rounded-full w-full h-full transition-transform duration-500"></div>
+                                <div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>
                             </div>
                             <div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>
                         </div>
@@ -78,7 +79,7 @@ Dương</p>
                         <span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam
                     </h3>
                     <div id="res-events" class="space-y-2 mt-2">
-                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -88,7 +89,7 @@ Dương</p>
         const loading = document.getElementById('cal-loading');
         const widget = document.getElementById('cal-widget');
         
-        // --- 1. ĐỒNG HỒ ---
+        // --- ĐỒNG HỒ THỜI GIAN THỰC ---
         const clockEl = document.getElementById('live-clock');
         const dateEl = document.getElementById('live-date');
         const wdNames = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
@@ -99,7 +100,7 @@ Dương</p>
             dateEl.innerText = `${wdNames[now.getDay()]}, ${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
         }, 1000);
 
-        // --- 2. CƠ SỞ DỮ LIỆU SỰ KIỆN (CHUẨN XÁC) ---
+        // --- CƠ SỞ DỮ LIỆU SỰ KIỆN (CHUẨN XÁC) ---
         const evSolar = {
             "01/01": ["Tết Dương Lịch"],
             "09/01": ["Ngày Học sinh, Sinh viên Việt Nam (1950)"],
@@ -157,9 +158,10 @@ Dương</p>
             const selD = document.getElementById('sel-d');
             const selM = document.getElementById('sel-m');
             const selY = document.getElementById('sel-y');
+            
             let isSolarMode = true;
 
-            // Đổ dữ liệu vào Select Box
+            // Đổ dữ liệu vào ô Chọn
             const updateDays = () => {
                 let currentD = parseInt(selD.value) || new Date().getDate();
                 let m = parseInt(selM.value) || (new Date().getMonth() + 1);
@@ -169,9 +171,7 @@ Dương</p>
                 if(currentD > maxD) currentD = maxD;
 
                 let dOpts = ''; 
-                for(let i=1; i<=maxD; i++) {
-                    dOpts += \`<option value="\${i}" \${i===currentD ? 'selected':''}>\${i}</option>\`;
-                }
+                for(let i=1; i<=maxD; i++) dOpts += \`<option value="\${i}" \${i===currentD ? 'selected':''}>\${i}</option>\`;
                 selD.innerHTML = dOpts;
             };
 
@@ -179,28 +179,50 @@ Dương</p>
             let yOpts = ''; const curY = new Date().getFullYear();
             for(let i=curY-100; i<=curY+50; i++) yOpts += \`<option value="\${i}">\${i}</option>\`; selY.innerHTML = yOpts;
 
-            // Lắng nghe đổi tháng/năm để cập nhật số ngày
             selM.addEventListener('change', updateDays);
             selY.addEventListener('change', updateDays);
 
-            // Set Mặc định Hôm nay
+            // Mặc định load ngày hôm nay
             selM.value = new Date().getMonth() + 1;
             selY.value = curY;
             updateDays();
             selD.value = new Date().getDate();
 
-            // Chuyển Mode
-            btnS.onclick = () => {
-                isSolarMode = true;
-                btnS.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-white text-orange-500 shadow-sm transition';
-                btnL.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-orange-500 transition';
-                updateDays();
-            };
+            // THUẬT TOÁN ĐỒNG BỘ: Tự quy đổi lịch khi chuyển Tab
             btnL.onclick = () => {
-                isSolarMode = false;
+                if(!isSolarMode) return;
+                let d = parseInt(selD.value), m = parseInt(selM.value), y = parseInt(selY.value);
+                try {
+                    const solar = Solar.fromYmd(y, m, d);
+                    const lunar = solar.getLunar();
+                    isSolarMode = false;
+                    selY.value = lunar.getYear();
+                    selM.value = Math.abs(lunar.getMonth());
+                    updateDays();
+                    selD.value = lunar.getDay();
+                } catch(e) {}
+                
                 btnL.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-white text-orange-500 shadow-sm transition';
                 btnS.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-orange-500 transition';
-                updateDays();
+                document.getElementById('btn-lookup').click();
+            };
+
+            btnS.onclick = () => {
+                if(isSolarMode) return;
+                let d = parseInt(selD.value), m = parseInt(selM.value), y = parseInt(selY.value);
+                try {
+                    let lunar = Lunar.fromYmd(y, m, d);
+                    const solar = lunar.getSolar();
+                    isSolarMode = true;
+                    selY.value = solar.getYear();
+                    selM.value = solar.getMonth();
+                    updateDays();
+                    selD.value = solar.getDay();
+                } catch(e) {}
+                
+                btnS.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-white text-orange-500 shadow-sm transition';
+                btnL.className = 'flex-1 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-orange-500 transition';
+                document.getElementById('btn-lookup').click();
             };
 
             const CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
@@ -211,36 +233,36 @@ Dương</p>
                 const sMonth = solar.getMonth().toString().padStart(2, '0');
                 const sYear = solar.getYear();
                 
-                const lDay = lunar.getDay();
+                const lDay = lunar.getDay().toString().padStart(2, '0');
                 const lMonthAbs = Math.abs(lunar.getMonth());
                 
                 let lYearText = CAN[lunar.getYearGanIndex()] + ' ' + CHI[lunar.getYearZhiIndex()];
-                if (lunar.getMonth() < 0) lYearText += " (Nhuận)"; // Đã bỏ hàm getLeap() gây lỗi
+                if (lunar.getMonth() < 0) lYearText += " (Nhuận)";
 
-                // GIAO DIỆN APPLE WIDGET: Âm lịch hiện to, Dương lịch hiện nhỏ ở dưới
+                // XUẤT RA UI: Dương Lịch to ở trên, Âm Lịch nhỏ ở dưới
                 document.getElementById('res-weekday').innerText = wdNames[solar.getWeek()];
-                document.getElementById('res-main-d').innerText = "Ngày " + lDay;
-                document.getElementById('res-main-my').innerText = \`Tháng \${lMonthAbs} năm \${lYearText}\`;
-                document.getElementById('res-sub-date').innerText = \`Dương Lịch: \${sDay}/\${sMonth}/\${sYear}\`;
+                document.getElementById('res-main-d').innerText = sDay;
+                document.getElementById('res-main-my').innerText = \`Tháng \${sMonth}, \${sYear}\`;
+                document.getElementById('res-sub-date').innerText = \`Ngày \${lDay} tháng \${lMonthAbs} năm \${lYearText}\`;
 
-                // Tính pha Mặt Trăng & Vẽ Bóng (Shadow)
+                // Hiệu ứng Mặt Trăng (Bóng che khuất)
                 let phaseText = 'Trăng khuyết';
-                let shadowTranslate = '100%'; // Full moon (Mặc định không có bóng)
+                let shadowTranslate = '100%'; // Sáng 100%
 
-                if (lDay === 1 || lDay >= 29) { phaseText = 'Trăng non'; shadowTranslate = '0%'; } // Tối thui
-                else if (lDay > 1 && lDay < 15) { phaseText = 'Trăng thượng huyền'; shadowTranslate = \`\${(lDay/15)*100}%\`; }
-                else if (lDay === 15 || lDay === 16) { phaseText = 'Trăng tròn'; shadowTranslate = '100%'; } // Sáng 100%
-                else if (lDay > 16 && lDay < 29) { phaseText = 'Trăng hạ huyền'; shadowTranslate = \`-\${((lDay-15)/15)*100}%\`; }
+                if (lunar.getDay() === 1 || lunar.getDay() >= 29) { phaseText = 'Trăng non'; shadowTranslate = '0%'; } // Đen thui
+                else if (lunar.getDay() > 1 && lunar.getDay() < 15) { phaseText = 'Trăng thượng huyền'; shadowTranslate = \`\${(lunar.getDay()/15)*100}%\`; }
+                else if (lunar.getDay() === 15 || lunar.getDay() === 16) { phaseText = 'Trăng tròn'; shadowTranslate = '100%'; } 
+                else if (lunar.getDay() > 16 && lunar.getDay() < 29) { phaseText = 'Trăng hạ huyền'; shadowTranslate = \`-\${((lunar.getDay()-15)/15)*100}%\`; }
 
                 document.getElementById('res-moon-text').innerText = phaseText;
                 document.getElementById('moon-shadow').style.transform = \`translateX(\${shadowTranslate})\`;
 
-                // Cập nhật Sự Kiện
+                // Xuất Sự Kiện
                 const evContainer = document.getElementById('res-events');
                 evContainer.innerHTML = '';
                 
                 let sKey = \`\${sDay}/\${sMonth}\`;
-                let lKey = \`\${lDay.toString().padStart(2, '0')}/\${lMonthAbs.toString().padStart(2, '0')}\`;
+                let lKey = \`\${lDay}/\${lMonthAbs.toString().padStart(2, '0')}\`;
                 
                 let todaysEvents = [];
                 if(evSolar[sKey]) todaysEvents = todaysEvents.concat(evSolar[sKey]);
@@ -251,7 +273,7 @@ Dương</p>
                 } else {
                     todaysEvents.forEach(e => {
                         evContainer.innerHTML += \`
-                            <div class="bg-blue-50/50 p-3 rounded-xl flex gap-3 items-start border border-blue-100">
+                            <div class="bg-white p-3 rounded-xl flex gap-3 items-start border border-orange-100 shadow-sm">
                                 <span class="text-orange-500 mt-0.5">📌</span>
                                 <span class="font-bold text-slate-700 text-xs leading-relaxed">\${e}</span>
                             </div>
@@ -260,9 +282,9 @@ Dương</p>
                 }
             };
 
+            // NÚT TRA CỨU
             document.getElementById('btn-lookup').onclick = () => {
                 let d = parseInt(selD.value), m = parseInt(selM.value), y = parseInt(selY.value);
-                
                 try {
                     if(isSolarMode) {
                         const solar = Solar.fromYmd(y, m, d);
@@ -273,28 +295,26 @@ Dương</p>
                         try { 
                             lunar = Lunar.fromYmd(y, m, d); 
                         } catch(e) { 
-                            // Nếu chọn Âm lịch ngày 30 nhưng tháng đó chỉ có 29 ngày, tự động lùi về ngày 29
+                            // Xử lý thông minh nếu người dùng chọn ngày 30 nhưng tháng Âm đó chỉ có 29 ngày
                             lunar = Lunar.fromYmd(y, m, d-1); 
-                            alert("Tháng Âm lịch này chỉ có 29 ngày! Hệ thống tự động điều chỉnh về ngày cuối tháng.");
+                            selD.value = d - 1; // Tự trả ô chọn về 29
                         }
                         const solar = lunar.getSolar();
                         renderWidget(solar, lunar);
                     }
-                } catch(e) {
-                    console.error(e);
-                }
+                } catch(e) { console.error(e); }
             };
 
             // Ép chạy lần đầu
             setTimeout(() => document.getElementById('btn-lookup').click(), 200);
         };
 
-        // NẠP THƯ VIỆN LUNAR TỪ CDN
+        // LOAD THƯ VIỆN LUNAR (Đổi link Unpkg cho chắc chắn 100% không bị lỗi mạng)
         if (typeof Solar !== 'undefined' && typeof Lunar !== 'undefined') {
             initTool();
         } else {
             const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js';
+            script.src = 'https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.js';
             script.onload = () => initTool();
             script.onerror = () => {
                 loading.innerHTML = '<span class="text-red-500">Lỗi mạng! Không tải được thư viện tính lịch.</span>';
