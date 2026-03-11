@@ -1,7 +1,7 @@
 // --- 11. Tool Không Gian Tập Trung (Focus Workspace) ---
 registerTool({
     id: 'tab-workspace',
-    name: 'Tập Trung',
+    name: 'Tập Trung(PC)',
     icon: '🎧',
     isDefault: false,
     html: `
@@ -54,17 +54,14 @@ registerTool({
             <div class="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
 
             <div class="absolute top-6 left-8 z-40 flex items-center gap-3 cursor-default hover:scale-105 transition-transform duration-300 drop-shadow-lg">
-                <div class="bg-orange-500 text-white font-black px-3 py-1.5 rounded-lg text-sm tracking-wide">NOTHING</div>
+                <div class="bg-orange-500 text-white font-black px-3 py-1.5 rounded-lg text-sm tracking-wide shadow-md">NOTHING</div>
                 <div class="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mt-0.5">BUT SOMETHING</div>
             </div>
 
             <div class="absolute top-6 right-8 z-40 flex items-center gap-3">
-                <button title="Chế độ ban đêm" class="w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white transition shadow-lg border border-white/10">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
-                <button title="Menu tùy chọn" class="w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white transition shadow-lg border border-white/10">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                </button>
+                <div id="ws-mini-clock" class="bg-black/60 backdrop-blur-md text-white font-bold px-4 py-2 rounded-full border border-white/10 text-[13px] tracking-wide shadow-lg transition-all">
+                    16:21
+                </div>
             </div>
 
             <div class="absolute top-8 left-1/2 -translate-x-1/2 flex items-center bg-black/60 backdrop-blur-md rounded-full border border-white/10 z-20 shadow-lg px-1 py-1 overflow-hidden">
@@ -93,8 +90,11 @@ registerTool({
             </div>
 
             <div class="absolute left-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 bg-black/50 backdrop-blur-xl py-5 px-3 rounded-full border border-white/10 z-30 shadow-2xl">
-                <button title="Giao diện & Đồng hồ" id="btn-toggle-themes" class="p-2.5 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition">
+                <button title="Giao diện & Hình nền" id="btn-toggle-themes" class="p-2.5 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                </button>
+                <button title="Đồng hồ đếm xuôi (Stopwatch)" id="btn-toggle-stopwatch" class="p-2.5 rounded-full text-white/60 hover:text-green-400 hover:bg-white/10 transition">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </button>
                 <button title="Thêm Ghi chú" id="btn-add-note" class="p-2.5 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -106,6 +106,31 @@ registerTool({
                 <button title="Toàn màn hình" id="ws-fullscreen-btn" class="p-2.5 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
                 </button>
+            </div>
+
+            <div id="widget-stopwatch" class="hidden absolute top-24 left-[120px] bg-[#121212]/95 backdrop-blur-xl rounded-full border border-white/10 p-2 pr-4 flex items-center gap-4 shadow-2xl z-50">
+                <div id="drag-stopwatch" class="absolute inset-0 z-0 cursor-move rounded-full"></div>
+                
+                <button id="sw-play-btn" class="relative w-12 h-12 flex items-center justify-center bg-black/80 rounded-full shrink-0 border-[3.5px] border-[#69b3a2] hover:scale-105 transition z-10 shadow-inner">
+                    <svg id="sw-icon-play" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="sw-icon-pause" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
+                </button>
+                
+                <div class="flex flex-col justify-center min-w-[75px] z-10 pointer-events-none">
+                    <div id="sw-time" class="text-2xl font-black italic text-white leading-none tracking-widest drop-shadow-sm">00:00</div>
+                    <div class="text-[9px] font-bold text-white/50 tracking-widest uppercase mt-1">STOPWATCH</div>
+                </div>
+                
+                <div class="w-px h-8 bg-white/10 z-10 ml-2"></div>
+                
+                <div class="flex items-center gap-2.5 z-10 ml-1">
+                    <button title="Đặt lại" id="sw-reset-btn" class="text-white/40 hover:text-white transition p-1">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                    </button>
+                    <button title="Đóng" class="close-sw text-white/40 hover:text-white transition p-1">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
             </div>
 
             <div id="widget-themes" class="hidden absolute top-16 left-24 w-[300px] bg-black/80 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl z-40">
@@ -187,10 +212,13 @@ registerTool({
         // --- 1. LOGIC ĐỒNG HỒ & POMODORO ---
         const timeEl = document.getElementById('ws-time');
         const dateEl = document.getElementById('ws-date');
+        const miniClockEl = document.getElementById('ws-mini-clock');
         
         function updateClock() {
             const now = new Date();
-            timeEl.innerText = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            timeEl.innerText = timeStr;
+            miniClockEl.innerText = timeStr;
             dateEl.innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         }
         setInterval(updateClock, 1000);
@@ -269,14 +297,25 @@ registerTool({
             if (file) changeBg(URL.createObjectURL(file));
         });
 
-        // --- 3. WIDGET KÉO THẢ ---
+        // --- 3. WIDGET KÉO THẢ & STOPWATCH LOGIC ---
         const toggleWidget = (btnId, widgetId) => {
             document.getElementById(btnId).addEventListener('click', () => document.getElementById(widgetId).classList.toggle('hidden'));
-            document.querySelector(`#${widgetId} .close-widget`).addEventListener('click', () => document.getElementById(widgetId).classList.add('hidden'));
+            const closeBtn = document.querySelector(`#${widgetId} .close-widget`);
+            if(closeBtn) closeBtn.addEventListener('click', () => document.getElementById(widgetId).classList.add('hidden'));
         };
+        
         toggleWidget('btn-toggle-themes', 'widget-themes');
         toggleWidget('btn-toggle-yt', 'widget-yt');
+        
+        // Bật tắt Stopwatch
+        document.getElementById('btn-toggle-stopwatch').addEventListener('click', () => {
+            document.getElementById('widget-stopwatch').classList.toggle('hidden');
+        });
+        document.querySelector('.close-sw').addEventListener('click', () => {
+            document.getElementById('widget-stopwatch').classList.add('hidden');
+        });
 
+        // Kéo thả Widget
         function dragElement(elmnt, headerId) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             const header = document.getElementById(headerId);
@@ -294,8 +333,47 @@ registerTool({
             }
             function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
         }
+        
         dragElement(document.getElementById("widget-themes"), "drag-themes");
         dragElement(document.getElementById("widget-yt"), "drag-yt");
+        dragElement(document.getElementById("widget-stopwatch"), "drag-stopwatch");
+
+        // Stopwatch Timer Logic
+        let swTime = 0, swInterval = null, isSwRunning = false;
+        const swTimeDisplay = document.getElementById('sw-time');
+        const swPlayBtn = document.getElementById('sw-play-btn');
+        const swIconPlay = document.getElementById('sw-icon-play');
+        const swIconPause = document.getElementById('sw-icon-pause');
+
+        function updateSwDisplay() {
+            const m = Math.floor(swTime / 60).toString().padStart(2, '0');
+            const s = (swTime % 60).toString().padStart(2, '0');
+            // Nếu đếm qua 60 phút thì hiển thị thêm giờ
+            if(swTime >= 3600) {
+                const h = Math.floor(swTime / 3600);
+                const mm = Math.floor((swTime % 3600) / 60).toString().padStart(2, '0');
+                swTimeDisplay.innerText = `${h}:${mm}:${s}`;
+            } else {
+                swTimeDisplay.innerText = `${m}:${s}`;
+            }
+        }
+
+        swPlayBtn.addEventListener('click', () => {
+            if (isSwRunning) {
+                clearInterval(swInterval);
+                swIconPlay.classList.remove('hidden'); swIconPause.classList.add('hidden');
+            } else {
+                swInterval = setInterval(() => { swTime++; updateSwDisplay(); }, 1000);
+                swIconPlay.classList.add('hidden'); swIconPause.classList.remove('hidden');
+            }
+            isSwRunning = !isSwRunning;
+        });
+
+        document.getElementById('sw-reset-btn').addEventListener('click', () => {
+            clearInterval(swInterval); isSwRunning = false; swTime = 0; updateSwDisplay();
+            swIconPlay.classList.remove('hidden'); swIconPause.classList.add('hidden');
+        });
+
 
         // --- 4. GHI CHÚ GIAO DIỆN MỚI ---
         const notesContainer = document.getElementById('notes-container');
@@ -462,7 +540,6 @@ registerTool({
             }
         });
 
-        // Lắng nghe sự kiện để tắt/bật viền bo góc khi full màn hình
         document.addEventListener('fullscreenchange', () => {
             if (document.fullscreenElement === wsContainer) {
                 wsContainer.classList.remove('rounded-[2rem]', 'h-[88vh]');
