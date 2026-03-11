@@ -1,4 +1,4 @@
-// --- 2. Tool Không Gian Tập Trung (Focus Workspace) ---
+// --- 11. Tool Không Gian Tập Trung (Focus Workspace) ---
 registerTool({
     id: 'tab-workspace',
     name: 'Tập Trung',
@@ -15,6 +15,24 @@ registerTool({
             
             .hide-scrollbar::-webkit-scrollbar { display: none; }
             .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            
+            /* Custom Range Slider */
+            input[type=range]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 12px;
+                width: 12px;
+                border-radius: 50%;
+                background: white;
+                cursor: pointer;
+                margin-top: -4px;
+            }
+            input[type=range]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 4px;
+                cursor: pointer;
+                background: rgba(255,255,255,0.2);
+                border-radius: 2px;
+            }
         </style>
 
         <div id="ws-container" class="relative w-full h-[85vh] min-h-[600px] rounded-[2rem] overflow-hidden shadow-2xl bg-gray-900 font-sans group transition-all duration-500">
@@ -38,7 +56,9 @@ registerTool({
                 </div>
 
                 <div id="ws-pomo-view" class="hidden flex-col items-center transition-opacity duration-500 pointer-events-auto">
-                    <div id="ws-pomo-time" class="text-8xl md:text-[10rem] font-bold drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-wider leading-none clock-font-1">25:00</div>
+                    <div id="ws-pomo-time" class="text-8xl md:text-[10rem] font-bold drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-wider leading-none clock-font-1 cursor-pointer hover:opacity-80 transition hover:scale-105" title="Nhấp để đổi số phút">25:00</div>
+                    <div class="text-white/60 text-sm mt-2 flex items-center gap-1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Nhấp vào số để thay đổi thời gian</div>
+                    
                     <div class="flex gap-4 mt-6">
                         <button id="ws-pomo-start" class="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full hover:scale-105 transition shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -105,9 +125,8 @@ registerTool({
                 </div>
                 <div class="p-4">
                     <input type="text" id="yt-input" placeholder="Dán link YouTube (URL/ID)..." class="w-full bg-black/50 text-white text-sm px-3 py-2 rounded-lg border border-white/10 focus:outline-none focus:border-orange-500 mb-3">
-                    <div class="relative w-full aspect-video bg-black rounded-lg overflow-hidden">
-                        <iframe id="yt-iframe" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/jfKfPfyJRdk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+                    <div class="relative w-full aspect-video bg-black rounded-lg overflow-hidden" id="yt-player-container">
+                        </div>
                 </div>
             </div>
 
@@ -121,31 +140,33 @@ registerTool({
                 <div class="p-5 space-y-5">
                     <div>
                         <div class="flex justify-between text-xs mb-2"><span class="flex items-center gap-2">🌧️ Tiếng mưa</span><span class="text-white/50">50%</span></div>
-                        <input type="range" class="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white" value="50">
+                        <input type="range" class="w-full h-1 bg-white/20 appearance-none cursor-pointer accent-white" value="50">
                     </div>
                     <div>
                         <div class="flex justify-between text-xs mb-2"><span class="flex items-center gap-2">⌨️ Bàn phím cơ</span><span class="text-white/50">0%</span></div>
-                        <input type="range" class="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white" value="0">
+                        <input type="range" class="w-full h-1 bg-white/20 appearance-none cursor-pointer accent-white" value="0">
                     </div>
                     <div>
                         <div class="flex justify-between text-xs mb-2"><span class="flex items-center gap-2">☕ Quán Cafe</span><span class="text-white/50">30%</span></div>
-                        <input type="range" class="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white" value="30">
+                        <input type="range" class="w-full h-1 bg-white/20 appearance-none cursor-pointer accent-white" value="30">
                     </div>
                 </div>
             </div>
 
-            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-11/12 max-w-xl bg-black/60 backdrop-blur-xl rounded-full border border-white/10 p-3 px-6 flex items-center gap-4 z-30 text-white shadow-2xl overflow-hidden">
-                <img id="ws-player-cover" src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=100&auto=format&fit=crop" class="w-10 h-10 rounded-full animate-[spin_10s_linear_infinite]" alt="cover">
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 min-w-[320px] bg-black/85 backdrop-blur-xl rounded-full border border-white/10 p-2 px-5 flex items-center gap-4 z-30 text-white shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+                <button id="ws-player-play" class="w-10 h-10 flex items-center justify-center bg-white text-black rounded-full hover:scale-105 transition shrink-0">
+                    <svg id="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="icon-pause" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
+                </button>
                 
-                <div class="flex-1 min-w-0">
-                    <div id="ws-player-title" class="text-sm font-bold truncate">Lofi Chill vibes ~ Không lời</div>
-                    <div id="ws-player-author" class="text-xs text-white/50 truncate">N.Phụng Workspace</div>
-                </div>
-                <div class="flex items-center gap-3 shrink-0">
-                    <button class="text-white/70 hover:text-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
-                    <button class="w-10 h-10 flex items-center justify-center bg-white text-black rounded-full hover:scale-105 transition"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-                    <button class="text-white/70 hover:text-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
-                </div>
+                <button id="ws-player-prev" title="Lùi 10s" class="text-white/70 hover:text-white transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+                <button id="ws-player-next" title="Tiến 10s" class="text-white/70 hover:text-white transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+                
+                <button id="ws-player-mute" title="Tắt/Mở Tiếng" class="text-white/70 hover:text-white ml-1 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+                
+                <input type="range" id="ws-player-progress" value="0" max="100" class="w-32 md:w-48 appearance-none transition bg-transparent focus:outline-none">
+                
+                <span id="ws-player-time" class="text-[13px] font-medium text-white/90 tracking-wide w-20 text-right">0:00 / 0:00</span>
             </div>
         </div>
     `,
@@ -162,15 +183,14 @@ registerTool({
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Đổi font đồng hồ
         const clockEls = [document.getElementById('ws-time'), document.getElementById('ws-pomo-time')];
         window.changeClockFont = function(fontClass) {
             clockEls.forEach(el => {
-                el.className = `text-8xl md:text-[10rem] font-bold drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-wider leading-none transition-all duration-300 ${fontClass}`;
+                el.className = `text-8xl md:text-[10rem] font-bold drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-wider leading-none transition-all duration-300 cursor-pointer hover:opacity-80 hover:scale-105 ${fontClass}`;
             });
         };
 
-        // --- 2. LOGIC TẢI ẢNH TỪ MÁY & ĐỔI NỀN ---
+        // --- 2. TẢI ẢNH TỪ MÁY & ĐỔI NỀN ---
         window.changeBg = function(url) {
             document.getElementById('ws-bg-image').src = url;
         };
@@ -183,7 +203,7 @@ registerTool({
             }
         });
 
-        // --- 3. ĐỔI CHẾ ĐỘ (CLOCK <-> POMODORO) ---
+        // --- 3. ĐỔI CHẾ ĐỘ (CLOCK <-> POMODORO) & LOGIC POMODORO ---
         const btnClock = document.getElementById('btn-mode-clock');
         const btnPomo = document.getElementById('btn-mode-pomo');
         const viewClock = document.getElementById('ws-clock-view');
@@ -203,8 +223,9 @@ registerTool({
             viewClock.classList.add('hidden'); viewClock.classList.remove('flex');
         });
 
-        // Pomodoro Timer
-        let pomoTime = 25 * 60, pomoInterval = null, isRunning = false;
+        // Pomodoro logic
+        let defaultPomoTime = 25 * 60; // 25 phút mặc định
+        let pomoTime = defaultPomoTime, pomoInterval = null, isRunning = false;
         const pomoDisplay = document.getElementById('ws-pomo-time');
         const btnPomoStart = document.getElementById('ws-pomo-start');
         const btnPomoReset = document.getElementById('ws-pomo-reset');
@@ -214,6 +235,22 @@ registerTool({
             const s = (pomoTime % 60).toString().padStart(2, '0');
             pomoDisplay.innerText = `${m}:${s}`;
         }
+
+        // TÍNH NĂNG CHỈNH SỬA THỜI GIAN
+        pomoDisplay.addEventListener('click', () => {
+            if (isRunning) {
+                alert("Vui lòng Dừng (Pause) hoặc Đặt lại (Reset) đồng hồ trước khi đổi giờ nhé!");
+                return;
+            }
+            const currentMins = Math.floor(defaultPomoTime / 60);
+            const input = prompt("Nhập số phút tập trung (VD: 5, 25, 45, 60...):", currentMins);
+            
+            if (input !== null && !isNaN(input) && input > 0) {
+                defaultPomoTime = parseInt(input) * 60;
+                pomoTime = defaultPomoTime;
+                updatePomoDisplay();
+            }
+        });
 
         btnPomoStart.addEventListener('click', () => {
             if (isRunning) {
@@ -228,8 +265,9 @@ registerTool({
             }
             isRunning = !isRunning;
         });
+
         btnPomoReset.addEventListener('click', () => {
-            clearInterval(pomoInterval); isRunning = false; pomoTime = 25 * 60; updatePomoDisplay();
+            clearInterval(pomoInterval); isRunning = false; pomoTime = defaultPomoTime; updatePomoDisplay();
             btnPomoStart.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
         });
 
@@ -247,7 +285,6 @@ registerTool({
         toggleWidget('btn-toggle-yt', 'widget-yt');
         toggleWidget('btn-toggle-mixer', 'widget-mixer');
 
-        // Logic Kéo Thả (Drag & Drop)
         function dragElement(elmnt, headerId) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             const header = document.getElementById(headerId);
@@ -277,7 +314,7 @@ registerTool({
         dragElement(document.getElementById("widget-yt"), "drag-yt");
         dragElement(document.getElementById("widget-mixer"), "drag-mixer");
 
-        // --- 5. LOGIC MULTIPLE NOTES (TẠO NHIỀU GHI CHÚ) ---
+        // --- 5. LOGIC MULTIPLE NOTES ---
         const notesContainer = document.getElementById('notes-container');
         const noteColors = [
             { bg: 'bg-pink-100', head: 'bg-pink-200/60', text: 'text-pink-900' },
@@ -293,7 +330,6 @@ registerTool({
             const id = `widget-note-${noteCounter}`;
             const headerId = `drag-note-${noteCounter}`;
             const color = noteColors[noteCounter % noteColors.length];
-            
             const topOffset = 100 + (noteCounter * 20) % 150;
             const leftOffset = 300 + (noteCounter * 30) % 200;
 
@@ -309,45 +345,124 @@ registerTool({
                 </div>
             `;
             notesContainer.insertAdjacentHTML('beforeend', noteHTML);
-            
             const newNote = document.getElementById(id);
             dragElement(newNote, headerId);
-            
-            newNote.querySelector('.close-note').addEventListener('click', () => {
-                newNote.remove();
-            });
+            newNote.querySelector('.close-note').addEventListener('click', () => { newNote.remove(); });
         });
 
-        // --- 6. YOUTUBE API: CẬP NHẬT TIÊU ĐỀ ---
-        document.getElementById('yt-input').addEventListener('change', async function(e) {
+        // --- 6. API YOUTUBE & TRÌNH PHÁT NHẠC (ĐÃ LIÊN KẾT) ---
+        let ytPlayer;
+        let isPlayerReady = false;
+
+        // Tiêm Script API Youtube nếu chưa có
+        if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        // Đợi API Youtube load xong rồi thiết lập
+        const checkYT = setInterval(() => {
+            if (window.YT && window.YT.Player) {
+                clearInterval(checkYT);
+                initYouTubePlayer();
+            }
+        }, 500);
+
+        function initYouTubePlayer() {
+            ytPlayer = new YT.Player('yt-player-container', {
+                height: '100%',
+                width: '100%',
+                videoId: 'jfKfPfyJRdk', // Video lofi mặc định (Lofi Girl)
+                playerVars: { 'playsinline': 1, 'controls': 1 },
+                events: {
+                    'onReady': () => { isPlayerReady = true; },
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Bắt sự kiện dán link để load bài nhạc
+        document.getElementById('yt-input').addEventListener('change', function(e) {
             let val = e.target.value;
             let videoId = "";
             let match = val.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
             if(match && match[1]) videoId = match[1];
             else videoId = val;
             
-            if(videoId) {
-                document.getElementById('yt-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                
-                try {
-                    // Dùng backtick chuẩn, không bị escape lỗi
-                    const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
-                    const data = await response.json();
-                    
-                    if(data.title) {
-                        document.getElementById('ws-player-title').innerText = data.title;
-                        document.getElementById('ws-player-author').innerText = data.author_name || 'YouTube Video';
-                        
-                        if(data.thumbnail_url) {
-                            document.getElementById('ws-player-cover').src = data.thumbnail_url;
-                        }
-                    }
-                } catch(error) {
-                    console.log("Không thể lấy tiêu đề tự động", error);
-                    document.getElementById('ws-player-title').innerText = "Đang phát từ YouTube";
-                    document.getElementById('ws-player-author').innerText = "Focus Workspace";
-                }
+            if(videoId && isPlayerReady) {
+                ytPlayer.loadVideoById(videoId);
             }
+        });
+
+        // Các biến UI Player
+        const playBtn = document.getElementById('ws-player-play');
+        const iconPlay = document.getElementById('icon-play');
+        const iconPause = document.getElementById('icon-pause');
+        const progressSlider = document.getElementById('ws-player-progress');
+        const timeDisplay = document.getElementById('ws-player-time');
+        
+        // Đổi Icon Play/Pause khi Youtube thay đổi trạng thái
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                iconPlay.classList.add('hidden');
+                iconPause.classList.remove('hidden');
+            } else {
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+            }
+        }
+
+        // Nút bấm Play/Pause
+        playBtn.addEventListener('click', () => {
+            if(!isPlayerReady) return;
+            const state = ytPlayer.getPlayerState();
+            if(state === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+            else ytPlayer.playVideo();
+        });
+
+        // Tua lùi/Tới 10 giây
+        document.getElementById('ws-player-prev').addEventListener('click', () => {
+            if(!isPlayerReady) return;
+            ytPlayer.seekTo(ytPlayer.getCurrentTime() - 10, true);
+        });
+        document.getElementById('ws-player-next').addEventListener('click', () => {
+            if(!isPlayerReady) return;
+            ytPlayer.seekTo(ytPlayer.getCurrentTime() + 10, true);
+        });
+
+        // Nút Mute / Unmute
+        let isMuted = false;
+        document.getElementById('ws-player-mute').addEventListener('click', () => {
+            if(!isPlayerReady) return;
+            if(isMuted) { ytPlayer.unMute(); isMuted = false; }
+            else { ytPlayer.mute(); isMuted = true; }
+        });
+
+        // Vòng lặp cập nhật thanh tiến trình & thời gian mỗi giây
+        function formatTime(sec) {
+            if (!sec) return "0:00";
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        setInterval(() => {
+            if(isPlayerReady && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+                const curr = ytPlayer.getCurrentTime();
+                const dur = ytPlayer.getDuration();
+                progressSlider.value = (curr / dur) * 100;
+                timeDisplay.innerText = formatTime(curr) + ' / ' + formatTime(dur);
+            }
+        }, 1000);
+
+        // Kéo thanh Slider để tua bài nhạc
+        progressSlider.addEventListener('input', (e) => {
+            if(!isPlayerReady) return;
+            const dur = ytPlayer.getDuration();
+            const seekTo = (e.target.value / 100) * dur;
+            ytPlayer.seekTo(seekTo, true);
         });
 
         // --- 7. FULLSCREEN ---
