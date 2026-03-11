@@ -123,3 +123,24 @@ body.dark-mode #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(45,
 @media (min-width: 768px) {
     .header-scrolled .logo-wrapper { transform: translateX(40vw) scale(0.1); }
 }
+
+/* Làm mượt tốc độ sáng viền để đồng bộ với tốc độ bay (0.5s) của logo */
+#mobile-menu-btn {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Khi cuộn (Logo bay vào): Đổi màu nút, hiện viền cam và tỏa bóng sáng */
+.header-scrolled #mobile-menu-btn {
+    border-color: rgba(249, 115, 22, 0.6) !important; 
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.25) !important; 
+    color: rgba(249, 115, 22, 1) !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Chế độ Dark Mode: Viền và bóng phát sáng màu Xanh ngọc (Teal) */
+body.dark-mode .header-scrolled #mobile-menu-btn {
+    border-color: rgba(45, 212, 191, 0.6) !important;
+    box-shadow: 0 0 15px rgba(45, 212, 191, 0.25) !important;
+    color: rgba(45, 212, 191, 1) !important;
+    background-color: rgba(30, 41, 59, 0.9) !important;
+}
