@@ -111,6 +111,7 @@ registerTool({
         <div class="text-center mb-6">
             <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Hãy trở thành</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Phím Thủ <span class="text-pink-500">Pro Max</span> ⌨️</h2>
+             <p class="text-sm text     gray-500 mt-2 italic">Cân kèo mọi siêu anh hùng bàn phím</p>
         </div>
 
         <div id="tp-setup-screen" class="glass-card p-6 md:p-8 rounded-[2rem] max-w-4xl mx-auto border-t-4 border-t-pink-400 shadow-xl space-y-6 block">

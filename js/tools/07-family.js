@@ -32,6 +32,7 @@ registerTool({
         <div class="text-center mb-6">
             <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Hệ thống gia tộc</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Quản Lý <span class="text-orange-500">Gia Phả</span> 🌳</h2>
+             <p class="text-sm text-gray-500 mt-2 italic">Hướng về gia đình, tìm mình trong đấy!</p>
         </div>
 
         <div class="flex flex-wrap justify-center gap-2 mb-6 bg-white/60 p-2 rounded-2xl border border-orange-50 shadow-sm backdrop-blur-md">
