@@ -74,7 +74,7 @@ registerTool({
 
                 <div id="ws-clock-view" class="hidden flex-col items-center transition-opacity duration-500 pointer-events-auto">
                     <div id="ws-time" class="text-[8rem] md:text-[11rem] font-bold drop-shadow-[0_4px_20px_rgba(0,0,0,0.4)] tracking-wider leading-none clock-font-1 cursor-pointer hover:opacity-80 transition hover:scale-105">16:21</div>
-                    <div id="ws-date" class="text-lg md:text-xl mt-0 font-medium text-white/80 drop-shadow-md tracking-wide">Sunday, 25 January 2026</div>
+                    <div id="ws-date" class="text-lg md:text-xl mt-0 font-medium text-white/80 drop-shadow-md tracking-wide">Sunday, 25 January</div>
                 </div>
             </div>
 
@@ -344,10 +344,8 @@ registerTool({
             });
         }
 
-        // Lấy thông tin video khi dán link mới
         function fetchVideoInfo(vid) {
-            document.getElementById('ws-track-cover').src = \`https://img.youtube.com/vi/\${vid}/hqdefault.jpg\`;
-            // Youtube Iframe API cho phép lấy data video trực tiếp (đôi khi bị delay 1 nhịp, nên set timeout nhẹ)
+            document.getElementById('ws-track-cover').src = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
             setTimeout(() => {
                 if(ytPlayer.getVideoData) {
                     const data = ytPlayer.getVideoData();
@@ -376,14 +374,13 @@ registerTool({
         const timeDisplay = document.getElementById('ws-player-time');
         const trackCover = document.getElementById('ws-track-cover');
         
-        // Quản lý trạng thái Play/Pause & Đĩa quay
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.PLAYING) {
                 iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden');
-                trackCover.classList.remove('spin-paused'); // Quay đĩa
+                trackCover.classList.remove('spin-paused'); 
             } else {
                 iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden');
-                trackCover.classList.add('spin-paused'); // Dừng đĩa
+                trackCover.classList.add('spin-paused'); 
             }
         }
 
@@ -402,13 +399,12 @@ registerTool({
             if(isMuted) { ytPlayer.unMute(); isMuted = false; } else { ytPlayer.mute(); isMuted = true; }
         });
 
-        // XỬ LÝ LOGIC LIVE VS VIDEO
         function formatTime(sec) {
             if (!sec || isNaN(sec)) return "0:00";
             const h = Math.floor(sec / 3600);
             const m = Math.floor((sec % 3600) / 60).toString().padStart(h > 0 ? 2 : 1, '0');
             const s = Math.floor(sec % 60).toString().padStart(2, '0');
-            return h > 0 ? \`\${h}:\${m}:\${s}\` : \`\${m}:\${s}\`;
+            return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
         }
 
         setInterval(() => {
@@ -416,12 +412,11 @@ registerTool({
                 const dur = ytPlayer.getDuration();
                 const curr = ytPlayer.getCurrentTime();
                 
-                // Nếu video không có thời lượng hoặc bằng 0 -> Chắc chắn là Live Stream
                 if (!dur || dur <= 0) {
                     timeDisplay.innerText = "🔴 LIVE";
                     timeDisplay.classList.add('text-red-400');
                     progressSlider.value = 100;
-                    progressSlider.disabled = true; // Khóa thanh kéo
+                    progressSlider.disabled = true;
                 } else {
                     timeDisplay.classList.remove('text-red-400');
                     progressSlider.disabled = false;
