@@ -6,42 +6,10 @@ registerTool({
     html: `
         <div class="text-center mb-6">
             <span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>
-            <h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Việt Nam</span></h2>
+            <h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>
         </div>
 
         <div class="max-w-md mx-auto space-y-5 pb-10">
-
-            <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">
-                
-                <div class="text-center w-full pb-3 border-b border-slate-100">
-                    <div id="live-clock" class="text-3xl font-black text-slate-700 font-mono tracking-tight">00:00:00</div>
-                    <div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>
-                </div>
-
-                <div class="flex bg-slate-100 p-1 rounded-xl w-full">
-                    <button id="cal-mode-solar" class="flex-1 py-2 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition">Dương Lịch</button>
-                    <button id="cal-mode-lunar" class="flex-1 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition">Âm Lịch</button>
-                </div>
-
-                <div class="flex gap-3 w-full">
-                    <div class="flex-1">
-                        <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label>
-                        <select id="sel-d" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
-                    </div>
-                    <div class="flex-1">
-                        <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label>
-                        <select id="sel-m" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
-                    </div>
-                    <div class="flex-1">
-                        <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label>
-                        <select id="sel-y" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
-                    </div>
-                </div>
-
-                <button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">
-                    🔍 TRA CỨU
-                </button>
-            </div>
 
             <div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">
                 Đang kết nối dữ liệu Thiên Văn... ⏳
@@ -70,6 +38,40 @@ registerTool({
                             <div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>
                         </div>
                     </div>
+                </div>
+
+                <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">
+                    
+                    <div class="text-center w-full pb-3 border-b border-slate-100">
+                        <div id="live-clock" class="text-3xl font-black text-slate-700 font-mono tracking-tight">00:00:00</div>
+                        <div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>
+                    </div>
+
+                    <div class="flex bg-slate-100 p-1 rounded-xl w-full">
+                        <button id="cal-mode-solar" class="flex-1 py-2 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition">Dương Lịch</button>
+                        <button id="cal-mode-lunar" class="flex-1 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition">Âm Lịch</button>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-2 w-full">
+                        <div class="flex-1">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label>
+                            <select id="sel-d" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
+                        </div>
+                        <span class="text-slate-300 font-black mt-4">/</span>
+                        <div class="flex-1">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label>
+                            <select id="sel-m" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
+                        </div>
+                        <span class="text-slate-300 font-black mt-4">/</span>
+                        <div class="flex-1">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label>
+                            <select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
+                        </div>
+                    </div>
+
+                    <button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">
+                        🔍 TRA CỨU
+                    </button>
                 </div>
 
                 <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100">
@@ -101,7 +103,6 @@ registerTool({
         </div>
     `,
     logic: function() {
-        // LƯU Ý BẢO MẬT: BẮT BUỘC DÙNG NỐI CHUỖI CỘNG (+), KHÔNG DÙNG BACKTICK BÊN TRONG NÀY.
         var loading = document.getElementById('cal-loading');
         var widget = document.getElementById('cal-widget');
         
@@ -253,7 +254,6 @@ registerTool({
             var CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
             var CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
 
-            // Hàm vẽ Lịch Tháng
             var renderMonthGrid = function(targetSolar) {
                 var y = targetSolar.getYear();
                 var m = targetSolar.getMonth();
@@ -282,7 +282,7 @@ registerTool({
                     var isSelected = (i === d);
                     var isWeekend = (s.getWeek() === 0 || s.getWeek() === 6);
                     
-                    var bgClass = isSelected ? 'bg-orange-100 border border-orange-200 shadow-sm' : 'border border-transparent hover:bg-slate-50';
+                    var bgClass = isSelected ? 'bg-orange-100 border border-orange-200 shadow-sm' : 'border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800';
                     var sColor = isWeekend ? 'text-orange-500' : 'text-slate-700';
                     if (isSelected) sColor = 'text-orange-600';
 
@@ -306,13 +306,11 @@ registerTool({
                 var lYearText = CAN[lunar.getYearGanIndex()] + ' ' + CHI[lunar.getYearZhiIndex()];
                 if (lunar.getMonth() < 0) lYearText += " (Nhuận)";
 
-                // Render Top Card
                 document.getElementById('res-weekday').innerText = wdNames[solar.getWeek()];
                 document.getElementById('res-main-d').innerText = solar.getDay();
                 document.getElementById('res-main-my').innerText = "Tháng " + solar.getMonth() + ", " + sYear;
                 document.getElementById('res-sub-date').innerText = lDayStr + "/" + lMonthStr + "/" + lYearText;
 
-                // Moon Phase
                 var phaseText = 'Trăng khuyết';
                 var shadowTranslate = '100%'; 
 
@@ -324,10 +322,8 @@ registerTool({
                 document.getElementById('res-moon-text').innerText = phaseText;
                 document.getElementById('moon-shadow').style.transform = 'translateX(' + shadowTranslate + ')';
 
-                // Render Month Grid
                 renderMonthGrid(solar);
 
-                // Render Events
                 var evContainer = document.getElementById('res-events');
                 evContainer.innerHTML = '';
                 
@@ -350,7 +346,6 @@ registerTool({
                 }
             };
 
-            // Xử lý sự kiện click vào Lịch Tháng
             document.getElementById('cal-grid').addEventListener('click', function(e) {
                 var cell = e.target.closest('.cal-cell');
                 if(cell) {

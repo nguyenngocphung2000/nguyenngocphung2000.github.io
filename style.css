@@ -87,4 +87,53 @@ body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at 
 .mobile-nav-btn:hover {
     transform: translateX(4px);
 }
+/* =========================================
+   GLOBAL DARK MODE (CHẾ ĐỘ TỐI TOÀN TRANG)
+========================================= */
+body.dark-mode {
+    background: radial-gradient(circle at top right, #0f172a, #1e293b 70%) !important;
+    color: #f8fafc !important;
+}
+body.dark-mode .glass-card,
+body.dark-mode .bg-white,
+body.dark-mode .bg-white\/90,
+body.dark-mode .bg-white\/80,
+body.dark-mode .bg-white\/60,
+body.dark-mode .bg-slate-50,
+body.dark-mode .bg-slate-100,
+body.dark-mode .bg-\[\#e3eaf1\],
+body.dark-mode .bg-\[\#eaf0f6\] {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+body.dark-mode .text-slate-800,
+body.dark-mode .text-slate-700,
+body.dark-mode .text-gray-800,
+body.dark-mode .text-gray-700,
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+    color: #f8fafc !important;
+}
+body.dark-mode .text-slate-600,
+body.dark-mode .text-slate-500,
+body.dark-mode .text-slate-400,
+body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-500 {
+    color: #94a3b8 !important;
+}
+body.dark-mode header {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    border-bottom-color: #334155 !important;
+}
+body.dark-mode #mobile-menu {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    border-color: #334155 !important;
+}
+body.dark-mode select, body.dark-mode input, body.dark-mode textarea {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+/* Giữ nguyên màu cam cho đẹp */
+body.dark-mode .text-orange-500 { color: #f97316 !important; }
 

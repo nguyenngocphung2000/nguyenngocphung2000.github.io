@@ -73,3 +73,17 @@ window.addEventListener('DOMContentLoaded', () => {
         switchTab(defaultTab);
     }
 });
+// --- KÍCH HOẠT DARK MODE ---
+const toggleDarkMode = () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('nothing_dark_mode', isDark);
+    document.getElementById('dark-mode-icon').innerText = isDark ? '☀️' : '🌙';
+};
+if(localStorage.getItem('nothing_dark_mode') === 'true') {
+    document.body.classList.add('dark-mode');
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('dark-mode-icon').innerText = '☀️';
+    });
+}
+
