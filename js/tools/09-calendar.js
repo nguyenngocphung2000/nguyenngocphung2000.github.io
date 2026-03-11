@@ -1,4 +1,4 @@
-// --- 9. Tool Lịch Vạn Niên (Bản Chuẩn Định Dạng - An toàn tuyệt đối) ---
+// --- 9. Tool Lịch Vạn Niên ---
 registerTool({
     id: 'tab-calendar',
     name: 'Lịch Vạn Niên',
@@ -7,6 +7,7 @@ registerTool({
         <div class="text-center mb-6">
             <span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>
             <h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>
+            p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>
         </div>
 
         <div class="max-w-md mx-auto space-y-5 pb-10">
@@ -17,21 +18,21 @@ registerTool({
 
             <div id="cal-widget" class="hidden space-y-5">
                 
-                <div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">
+                                <div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">
                     <div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>
                     
                     <div class="flex justify-between items-start">
-                        <div>
+                        <div class="flex-1 pr-2">
                             <div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">--</div>
                             <div class="text-lg font-bold text-slate-600 mt-2" id="res-main-my">Tháng --, ----</div>
                             
-                            <div class="text-sm font-medium text-slate-600 mt-3 flex items-center gap-2">
-                                <span class="bg-slate-200/80 text-slate-500 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50">Âm Lịch</span>
-                                <span id="res-sub-date" class="font-bold">--/--/----</span>
+                            <div class="text-sm font-medium text-slate-600 mt-4 flex items-start gap-2.5 w-full">
+                                <span class="shrink-0 whitespace-nowrap bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 mt-0.5">Âm Lịch</span>
+                                <span id="res-sub-date" class="font-bold leading-snug">--/--/----</span>
                             </div>
                         </div>
 
-                        <div class="text-center pt-2 relative z-10">
+                        <div class="text-center pt-2 relative z-10 shrink-0">
                             <div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">
                                 <div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>
                             </div>
