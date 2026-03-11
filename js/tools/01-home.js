@@ -8,53 +8,45 @@ registerTool({
         <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 mb-10 border-t-4 border-t-orange-400 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
             
-         <div class="flex flex-col md:flex-row items-center md:items-start gap-6 bg-white/80 backdrop-blur-md border border-orange-100 p-6 md:p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group">
+      <div class="relative w-24 h-24 md:w-32 md:h-32 shrink-0 z-10 group cursor-default">
+    <div class="absolute inset-0 bg-gradient-to-tr from-orange-400 to-yellow-300 rounded-full blur-md opacity-40 group-hover:opacity-80 transition duration-500"></div>
     
-    <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-100 rounded-full mix-blend-multiply filter blur-2xl opacity-60"></div>
-    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-yellow-100 rounded-full mix-blend-multiply filter blur-2xl opacity-60"></div>
-
-    <div class="relative shrink-0 z-10 group-hover:-translate-y-2 transition-transform duration-300">
-        <div class="absolute inset-0 bg-gradient-to-tr from-orange-400 to-yellow-300 rounded-full blur opacity-40 group-hover:opacity-80 transition duration-300"></div>
-        
-        <div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-orange-50 to-orange-100 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center text-5xl md:text-6xl">
-            🤖
-        </div>
-        
-        <div class="absolute bottom-2 right-2 w-5 h-5 md:w-6 md:h-6 bg-green-500 border-[3px] border-white rounded-full shadow-sm flex items-center justify-center">
-            <span class="absolute inline-flex w-full h-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
-        </div>
+    <div class="relative w-full h-full rounded-full bg-gradient-to-br from-orange-50 to-orange-100 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center text-5xl md:text-6xl transform transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-105">
+        🧑‍💻
     </div>
     
-    <div class="text-center md:text-left flex-1 z-10">
-        
-        <div class="inline-flex items-center gap-1.5 bg-gradient-to-r from-orange-100 to-orange-50 text-orange-600 px-4 py-1.5 rounded-full text-xs font-bold mb-3 shadow-sm border border-orange-200/50 hover:shadow-md transition">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-            </span>
-            Nguyễn Ngọc Phụng
-        </div>
-        
-        <h1 class="text-3xl font-extrabold text-gray-800 mb-3 tracking-tight">
-            Xin chào, tôi là <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing (N.Phụng)</span>
-        </h1>
-        
-        <p class="text-gray-600 leading-relaxed mb-5 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/50 to-transparent rounded-r-xl">
-            <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Hé lô bạn! Chào mừng ghé thăm góc nhỏ của mình. Nơi đây là cái kho nhỏ chứa mấy món đồ chơi do chính tay mình... nhờ AI code hộ 😂, cùng một rổ những thủ thuật, bí kíp hay ho mà mình nhặt nhạnh hoặc tự biên tự diễn. Ban đầu tạo ra để cứu rỗi cuộc sống của chính mình thôi, nhưng với một tấm lòng 'Bồ Tát' dạt dào, mình mang hết ra đây share cho anh em. Cứ tự nhiên như ở nhà, vọc vạch thoải mái nhé, lỗi thì... báo mình nhờ AI sửa nhé, phần liên hệ mình để phía dưới!
-        </p>
-        
-        <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-            <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Application</span>
-            <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Tips</span>
-            <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Tools</span>
-            <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Nothing</span>
-            
-            <span class="bg-orange-50 border border-orange-200 text-orange-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-orange-500 hover:text-white hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#AI_Powered 🚀</span>
-            <span class="bg-orange-50 border border-orange-200 text-orange-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-orange-500 hover:text-white hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#CodeForFun ✌️</span>
-        </div>
+    <div class="absolute bottom-1 right-1 w-5 h-5 md:w-6 md:h-6 bg-green-500 border-[3px] border-white rounded-full shadow-sm flex items-center justify-center z-20">
+        <span class="absolute inline-flex w-full h-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
     </div>
 </div>
 
+<div class="text-center md:text-left flex-1 z-10">
+    <div class="inline-flex items-center gap-1.5 bg-gradient-to-r from-orange-100 to-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold mb-3 shadow-sm border border-orange-200/50 hover:shadow-md transition">
+        <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+        </span>
+        Nguyễn Ngọc Phụng
+    </div>
+    
+    <h1 class="text-3xl font-extrabold text-gray-800 mb-2 tracking-tight">
+        Xin chào, tôi là <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing (N.Phụng)</span>
+    </h1>
+    
+    <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/50 to-transparent rounded-r-xl">
+        <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Hé lô bạn! Chào mừng ghé thăm góc nhỏ của mình. Nơi đây là cái kho nhỏ chứa mấy món đồ chơi do chính tay mình... nhờ AI code hộ 😂, cùng một rổ những thủ thuật, bí kíp hay ho mà mình nhặt nhạnh hoặc tự biên tự diễn. Ban đầu tạo ra để cứu rỗi cuộc sống của chính mình thôi, nhưng với một tấm lòng 'Bồ Tát' dạt dào, mình mang hết ra đây share cho anh em. Cứ tự nhiên như ở nhà, vọc vạch thoải mái nhé, lỗi thì... báo mình nhờ AI sửa nhé, phần liên hệ mình để phía dưới!
+    </p>
+    
+    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+        <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Application</span>
+        <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Tips</span>
+        <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Tools</span>
+        <span class="bg-white border border-gray-200 text-gray-600 px-3 py-1 rounded-lg text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Nothing</span>
+        
+        <span class="bg-orange-50 border border-orange-200 text-orange-600 px-3 py-1 rounded-lg text-xs font-bold hover:bg-orange-500 hover:text-white hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#AI_Powered 🚀</span>
+        <span class="bg-orange-50 border border-orange-200 text-orange-600 px-3 py-1 rounded-lg text-xs font-bold hover:bg-orange-500 hover:text-white hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#CodeForFun ✌️</span>
+    </div>
+</div>
         <div class="mb-4 flex items-center gap-3 px-2">
             <span class="text-2xl">📚</span>
             <h2 class="text-2xl font-bold text-gray-800">Tìm thử biết đâu có thứ cần</h2>
