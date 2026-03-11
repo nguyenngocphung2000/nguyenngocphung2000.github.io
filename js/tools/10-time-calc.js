@@ -1,122 +1,76 @@
-// --- 10. Tool Tính Số Ngày (2 Nút bấm - Quy ước & Thực tế) ---
+// --- 10. Tool Tính Số Ngày (Chống Spam Lịch Sử & Cuộn mượt) ---
 registerTool({
     id: 'tab-time-calc',
     name: 'Tính Số Ngày',
     icon: '⏳',
-    html: `
-        <style>
-            body.dark-mode .tc-card {
-                background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important;
-                border-color: #334155 !important;
-            }
-            body.dark-mode .tc-inner-card {
-                background-color: rgba(15, 23, 42, 0.6) !important;
-                border-color: rgba(45, 212, 191, 0.2) !important;
-            }
-            body.dark-mode .tc-history-item {
-                background-color: rgba(30, 41, 59, 0.8) !important;
-                border-color: rgba(255, 255, 255, 0.05) !important;
-            }
-        </style>
-
-        <div class="text-center mb-6">
-            <span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Công thức & Thực tế</span>
-            <h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>
-            <p class="text-sm text-gray-500
-mt-2 italic">Tính toán theo quy ước (1
-tháng = 30 ngày hoặc theo lịch thực tế)</p>
-        </div>
-
-        <div class="max-w-md mx-auto space-y-5 pb-10">
-            
-            <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">
-                
-                <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Từ ngày</label>
-                    <div class="flex justify-center items-center gap-2 w-full">
-                        <select id="tc-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>
-                        <span class="text-slate-300 font-black">/</span>
-                        <select id="tc-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>
-                        <span class="text-slate-300 font-black">/</span>
-                        <select id="tc-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Đến ngày</label>
-                    <div class="flex justify-center items-center gap-2 w-full">
-                        <select id="tc-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>
-                        <span class="text-slate-300 font-black">/</span>
-                        <select id="tc-end-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>
-                        <span class="text-slate-300 font-black">/</span>
-                        <select id="tc-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>
-                    </div>
-                </div>
-
-                <div class="flex gap-2 w-full mt-2">
-                    <button id="tc-btn-conv" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">
-                        <span class="text-sm">🧮 CÔNG THỨC</span>
-                        <span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30đ)</span>
-                    </button>
-                    <button id="tc-btn-real" class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">
-                        <span class="text-sm">📅 THEO LỊCH</span>
-                        <span class="text-[9px] font-medium opacity-90 mt-0.5">(Lịch thực tế)</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="tc-result" class="hidden space-y-4">
-                <div class="tc-card bg-[#e0f2fe] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative overflow-hidden">
-                    
-                    <div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-4">
-                        <div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ QUY ĐỔI</div>
-                        <div id="tc-res-type" class="text-[10px] font-bold text-teal-700/60 uppercase bg-teal-50/50 px-2 py-0.5 rounded border border-teal-100">--</div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">
-                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Chuẩn Năm - Tháng - Ngày</span>
-                            <span class="text-xl font-black text-slate-800" id="tc-res-1">--</span>
-                        </div>
-
-                        <div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">
-                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Tổng Quý (1 Quý = 3 Tháng)</span>
-                            <span class="text-lg font-bold text-slate-700" id="tc-res-2">--</span>
-                        </div>
-
-                        <div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">
-                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Tổng Tháng</span>
-                            <span class="text-lg font-bold text-slate-700" id="tc-res-3">--</span>
-                        </div>
-
-                        <div class="tc-inner-card bg-teal-500 p-4 rounded-2xl border border-teal-600 shadow-md flex flex-col">
-                            <span class="text-[9px] text-teal-100 font-bold uppercase tracking-wider mb-1">Tổng Ngày Tuyệt Đối</span>
-                            <span class="text-2xl font-black text-white" id="tc-res-4">--</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white/90 backdrop-blur-md p-5 rounded-[2rem] shadow-sm border border-slate-100">
-                <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
-                    <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                        <span>📚</span> Lịch sử tính toán
-                    </h3>
-                    <button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100">
-                        XÓA LỊCH SỬ
-                    </button>
-                </div>
-                <div id="tc-history-list" class="space-y-2 max-h-64 overflow-y-auto custom-scrollbar pr-1">
-                </div>
-            </div>
-
-        </div>
-    `,
+    html: '<style>' +
+          'body.dark-mode .tc-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
+          'body.dark-mode .tc-inner-card { background-color: rgba(15, 23, 42, 0.6) !important; border-color: rgba(45, 212, 191, 0.2) !important; } ' +
+          'body.dark-mode .tc-history-item { background-color: rgba(30, 41, 59, 0.8) !important; border-color: rgba(255, 255, 255, 0.05) !important; }' +
+          '</style>' +
+          '<div class="text-center mb-6">' +
+          '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Nhìn Lại Thời Gian</span>' +
+          '<h2 class="text-3xl font-bold mt-2 text-slate-800">Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
+          '<p class="text-sm text-gray-500
+mt-2 italic">Tính toán ngày 30 ngày/tháng hoặc theo lịch thực tế</p>' +
+          '</div>' +
+          '<div class="max-w-md mx-auto space-y-5 pb-10">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Từ ngày</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="tc-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="tc-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="tc-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
+          '</div></div>' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Đến ngày</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="tc-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="tc-end-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="tc-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 appearance-none cursor-pointer"></select>' +
+          '</div></div>' +
+          '<div class="flex gap-2 w-full mt-2">' +
+          '<button id="tc-btn-conv" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
+          '<span class="text-sm">🧮 CÔNG THỨC</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30day)</span></button>' +
+          '<button id="tc-btn-real" class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
+          '<span class="text-sm">📅 THEO LỊCH</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Lịch thực tế)</span></button>' +
+          '</div></div>' +
+          '<div id="tc-result" class="hidden space-y-4">' +
+          '<div class="tc-card bg-[#e0f2fe] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative overflow-hidden">' +
+          '<div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-4">' +
+          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ</div>' +
+          '<div id="tc-res-type" class="text-[10px] font-bold text-teal-700/60 uppercase bg-teal-50/50 px-2 py-0.5 rounded border border-teal-100">--</div>' +
+          '</div>' +
+          '<div class="space-y-3">' +
+          '<div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">' +
+          '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Chuẩn Năm - Tháng - Ngày</span>' +
+          '<span class="text-xl font-black text-slate-800" id="tc-res-1">--</span></div>' +
+          '<div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">' +
+          '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Tổng Quý (1 Quý = 3 Tháng)</span>' +
+          '<span class="text-lg font-bold text-slate-700" id="tc-res-2">--</span></div>' +
+          '<div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">' +
+          '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Tổng Tháng</span>' +
+          '<span class="text-lg font-bold text-slate-700" id="tc-res-3">--</span></div>' +
+          '<div class="tc-inner-card bg-teal-500 p-4 rounded-2xl border border-teal-600 shadow-md flex flex-col">' +
+          '<span class="text-[9px] text-teal-100 font-bold uppercase tracking-wider mb-1">Tổng Ngày Tuyệt Đối</span>' +
+          '<span class="text-2xl font-black text-white" id="tc-res-4">--</span></div>' +
+          '</div></div></div>' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-[2rem] shadow-sm border border-slate-100">' +
+          '<div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">' +
+          '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><span>📚</span> Lịch sử tính toán</h3>' +
+          '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100">XÓA LỊCH SỬ</button>' +
+          '</div>' +
+          '<div id="tc-history-list" class="space-y-2 max-h-[650px] overflow-y-auto custom-scrollbar pr-1"></div>' +
+          '</div></div>',
     logic: function() {
         var sD = document.getElementById('tc-start-d');
         var sM = document.getElementById('tc-start-m');
         var sY = document.getElementById('tc-start-y');
-        
         var eD = document.getElementById('tc-end-d');
         var eM = document.getElementById('tc-end-m');
         var eY = document.getElementById('tc-end-y');
@@ -131,9 +85,7 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
         try {
             var stored = localStorage.getItem('nothing_tc_history');
             if(stored) tcHistory = JSON.parse(stored);
-        } catch(e) {
-            tcHistory = [];
-        }
+        } catch(e) { tcHistory = []; }
 
         var saveHistory = function() {
             localStorage.setItem('nothing_tc_history', JSON.stringify(tcHistory));
@@ -165,9 +117,7 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
 
         btnClear.onclick = function() {
             if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử tính toán?")) {
-                tcHistory = [];
-                saveHistory();
-                renderHistory();
+                tcHistory = []; saveHistory(); renderHistory();
             }
         };
 
@@ -221,8 +171,7 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
             var typeLabel = "";
 
             if (!isReal) {
-                // PHƯƠNG PHÁP 1: QUY ƯỚC CÔNG THỨC (30 ngày / tháng)
-                typeLabel = "Quy ước (1 Tháng = 30 Ngày)";
+                typeLabel = "Công thức (30đ/tháng)";
                 var yearRes = 0, monthRes = 0, dayRes = 0;
                 var tempD2 = d2, tempM2 = m2, tempY2 = y2;
 
@@ -247,26 +196,20 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
                 str4 = totalDays + " ngày";
 
             } else {
-                // PHƯƠNG PHÁP 2: LỊCH THỰC TẾ
                 typeLabel = "Thực tế (Theo Lịch)";
-                
-                // Tính tổng ngày chính xác tuyệt đối
                 var msDiff = endDate.getTime() - startDate.getTime();
                 var totalDaysReal = Math.round(msDiff / (1000 * 60 * 60 * 24));
 
                 var totalMonthsReal = (y2 - y1) * 12 + (m2 - m1);
-                if (d2 < d1) totalMonthsReal--; // Nếu ngày cuối < ngày đầu thì chưa tròn 1 tháng
+                if (d2 < d1) totalMonthsReal--; 
 
                 var yearResReal = Math.floor(totalMonthsReal / 12);
                 var monthResReal = totalMonthsReal % 12;
 
-                // Tìm số ngày lẻ còn lại sau khi trừ đi tổng số tháng
                 var tempDate = new Date(y1, m1 - 1, d1);
                 var originalDay = tempDate.getDate();
                 tempDate.setMonth(tempDate.getMonth() + totalMonthsReal);
-                if (tempDate.getDate() !== originalDay) {
-                    tempDate.setDate(0); // Tránh lỗi nhảy ngày tháng 2
-                }
+                if (tempDate.getDate() !== originalDay) { tempDate.setDate(0); }
 
                 var dayResReal = Math.round((endDate.getTime() - tempDate.getTime()) / (1000 * 60 * 60 * 24));
 
@@ -279,7 +222,6 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
                 str4 = totalDaysReal + " ngày";
             }
 
-            // CẬP NHẬT UI
             document.getElementById('tc-res-1').innerText = str1;
             document.getElementById('tc-res-2').innerText = str2;
             document.getElementById('tc-res-3').innerText = str3;
@@ -288,7 +230,6 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
 
             resDiv.classList.remove('hidden');
 
-            // LƯU LỊCH SỬ
             var startStr = ('0' + d1).slice(-2) + '/' + ('0' + m1).slice(-2) + '/' + y1;
             var endStr = ('0' + d2).slice(-2) + '/' + ('0' + m2).slice(-2) + '/' + y2;
             
@@ -301,14 +242,23 @@ tháng = 30 ngày hoặc theo lịch thực tế)</p>
                 isReal: isReal
             };
 
-            tcHistory.unshift(newHistoryItem);
-            if(tcHistory.length > 15) tcHistory.pop();
-            
-            saveHistory();
-            renderHistory();
+            // THUẬT TOÁN CHỐNG SPAM: Nếu kết quả mới y hệt kết quả cũ gần nhất thì KHÔNG LƯU
+            var isDuplicate = false;
+            if(tcHistory.length > 0) {
+                var lastItem = tcHistory[0];
+                if(lastItem.dateStart === startStr && lastItem.dateEnd === endStr && lastItem.typeLabel === typeLabel) {
+                    isDuplicate = true;
+                }
+            }
+
+            if(!isDuplicate) {
+                tcHistory.unshift(newHistoryItem);
+                if(tcHistory.length > 30) tcHistory.pop(); // Lưu 30 cái, UI sẽ tự cuộn khi quá 10 cái
+                saveHistory();
+                renderHistory();
+            }
         };
 
-        // Gắn sự kiện cho 2 nút
         btnConv.onclick = function() { processCalc(false); };
         btnReal.onclick = function() { processCalc(true); };
     }
