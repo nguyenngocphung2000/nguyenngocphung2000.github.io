@@ -6,7 +6,6 @@ registerTool({
     isDefault: false,
     html: `
         <style>
-            /* Import các font chữ đẹp cho đồng hồ */
             @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito:wght@800&family=Space+Mono:wght@700&family=Pacifico&display=swap');
             
             .clock-font-1 { font-family: 'Caveat', cursive; }
@@ -259,7 +258,6 @@ registerTool({
                 pos3 = e.clientX; pos4 = e.clientY;
                 document.onmouseup = closeDragElement;
                 document.onmousemove = elementDrag;
-                // Đưa lên lớp trên cùng
                 document.querySelectorAll('[id^="widget-"]').forEach(el => el.style.zIndex = '40');
                 elmnt.style.zIndex = '50'; 
             }
@@ -296,7 +294,6 @@ registerTool({
             const headerId = `drag-note-${noteCounter}`;
             const color = noteColors[noteCounter % noteColors.length];
             
-            // Random vị trí xuất hiện để khỏi đè lên nhau hoàn toàn
             const topOffset = 100 + (noteCounter * 20) % 150;
             const leftOffset = 300 + (noteCounter * 30) % 200;
 
@@ -313,7 +310,6 @@ registerTool({
             `;
             notesContainer.insertAdjacentHTML('beforeend', noteHTML);
             
-            // Kích hoạt kéo thả và nút đóng
             const newNote = document.getElementById(id);
             dragElement(newNote, headerId);
             
@@ -322,29 +318,26 @@ registerTool({
             });
         });
 
-        // --- 6. YOUTUBE API: CẬP NHẬT TIÊU ĐỀ XUỐNG PLAYER BÊN DƯỚI ---
+        // --- 6. YOUTUBE API: CẬP NHẬT TIÊU ĐỀ ---
         document.getElementById('yt-input').addEventListener('change', async function(e) {
             let val = e.target.value;
             let videoId = "";
-            // Lọc ID từ URL
             let match = val.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
             if(match && match[1]) videoId = match[1];
-            else videoId = val; // Trực tiếp nhập ID
+            else videoId = val;
             
             if(videoId) {
-                // Đổi link iframe
                 document.getElementById('yt-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
                 
-                // Lấy thông tin video từ Noembed API để gán xuống trình phát nhạc
                 try {
-                    const response = await fetch(\`https://noembed.com/embed?url=https://www.youtube.com/watch?v=\${videoId}\`);
+                    // Dùng backtick chuẩn, không bị escape lỗi
+                    const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
                     const data = await response.json();
                     
                     if(data.title) {
                         document.getElementById('ws-player-title').innerText = data.title;
                         document.getElementById('ws-player-author').innerText = data.author_name || 'YouTube Video';
                         
-                        // Lấy thumbnail làm ảnh cover đĩa than
                         if(data.thumbnail_url) {
                             document.getElementById('ws-player-cover').src = data.thumbnail_url;
                         }
@@ -357,7 +350,7 @@ registerTool({
             }
         });
 
-        // --- 7. FULLSCREEN TÙY CHỌN ---
+        // --- 7. FULLSCREEN ---
         const wsContainer = document.getElementById('ws-container');
         document.getElementById('ws-fullscreen-btn').addEventListener('click', () => {
             if (!document.fullscreenElement) {
