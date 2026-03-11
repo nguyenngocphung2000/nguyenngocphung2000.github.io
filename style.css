@@ -13,20 +13,7 @@ html, body {
 /* ==============================================
    HIỆU ỨNG VIỀN HEADER KHI CUỘN XUỐNG
 ============================================== */
-.header-scrolled {
-    background-color: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(16px) !important;
-    border-bottom: 2px solid rgba(249, 115, 22, 0.4) !important; /* Viền dưới màu Cam mờ */
-    box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.15) !important; /* Bóng đổ màu Cam */
-    transition: all 0.3s ease-in-out;
-}
 
-/* Chế độ Dark Mode cho Header cuộn */
-body.dark-mode .header-scrolled {
-    background-color: rgba(15, 23, 42, 0.95) !important;
-    border-bottom: 2px solid rgba(45, 212, 191, 0.4) !important; /* Viền Xanh Teal */
-    box-shadow: 0 10px 25px -5px rgba(45, 212, 191, 0.15) !important; /* Bóng đổ Xanh Teal */
-}
 body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at top right, #fff4e6, #ffffff 70%); min-height: 100vh; }
 .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 30px rgba(251, 146, 60, 0.1); }
 
@@ -51,41 +38,9 @@ body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at 
     transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
 }
 
-/* Biến mất viền và màu nền khi cuộn */
-.header-scrolled {
-    background-color: transparent !important;
-    border-bottom-color: transparent !important;
-    backdrop-filter: blur(0px) !important;
-}
-
-/* Động cơ chuyển động cho Logo */
-.logo-wrapper {
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-    transform-origin: right center;
-}
-
-/* Khi cuộn: Logo bay sang phải, thu nhỏ và hút vào nút 3 gạch */
-.header-scrolled .logo-wrapper {
-    transform: translateX(calc(100vw - 90px)) scale(0.1);
-    opacity: 0;
-    pointer-events: none;
-}
-
 /* Ẩn Menu Desktop nhẹ nhàng khi cuộn */
 #desktop-nav {
     transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.header-scrolled #desktop-nav {
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-}
-
-/* Thuật toán bay riêng cho màn hình máy tính lớn */
-@media (min-width: 768px) {
-    .header-scrolled .logo-wrapper {
-        transform: translateX(40vw) scale(0.1);
-    }
 }
 /* =========================================
    HIỆU ỨNG MENU SỔ XUỐNG (DROPDOWN POP)
@@ -180,3 +135,43 @@ body.dark-mode select:focus, body.dark-mode input:focus {
 body.dark-mode #dark-mode-btn { background-color: #334155 !important; color: #f8fafc !important; }
 body.dark-mode #dark-mode-btn:hover { background-color: #475569 !important; color: #f97316 !important; }
 body.dark-mode #moon-shadow { background-color: #0f172a !important; }
+/* =========================================
+   HIỆU ỨNG HEADER & LOGO KHI CUỘN (CHUẨN APPLE)
+========================================= */
+#main-header {
+    transition: all 0.4s ease;
+}
+
+/* Khi cuộn: Hiện nền kính mờ + Viền cam phát sáng */
+.header-scrolled {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(249, 115, 22, 0.3) !important;
+    box-shadow: 0 10px 20px -5px rgba(249, 115, 22, 0.1) !important;
+}
+
+/* Chế độ Dark Mode cho thanh Header */
+body.dark-mode .header-scrolled {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.3) !important;
+    box-shadow: 0 10px 20px -5px rgba(45, 212, 191, 0.1) !important;
+}
+
+/* Động cơ thu Logo vào nút 3 gạch */
+.logo-wrapper {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    transform-origin: right center;
+}
+
+.header-scrolled .logo-wrapper {
+    transform: translateX(calc(100vw - 100px)) scale(0.1);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (min-width: 768px) {
+    .header-scrolled .logo-wrapper {
+        transform: translateX(40vw) scale(0.1);
+    }
+}
+
