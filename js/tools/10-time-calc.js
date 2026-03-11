@@ -1,4 +1,4 @@
-// --- 10. Tool Tính Số Ngày (Tích hợp Module Đa Chiều) ---
+// --- 10. Tool Tính Số Ngày (Tích hợp Tính Thời Gian Đa Chiều) ---
 registerTool({
     id: 'tab-time-calc',
     name: 'Tính Số Ngày',
@@ -68,8 +68,8 @@ registerTool({
 
           '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
-          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-600 text-sm uppercase">Giải mã mốc đa chiều</h3></div>' +
-          '<p class="text-[10px] text-slate-500 italic mt-0">Mẹo: Nhập dữ liệu đã biết, để trống các ô cần tìm (hoặc để #). Hệ thống sẽ tự động tính toán hai chiều.</p>' +
+          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-600 text-sm uppercase">Tính thời gian đa chiều</h3></div>' +
+          '<p class="text-[10px] text-slate-500 italic mt-0">Mẹo: Nhập dữ liệu đã biết, để trống (hoặc nhập 0, #) các ô cần tìm. Hệ thống sẽ tính phần còn thiếu.</p>' +
           
           '' +
           '<div>' +
@@ -84,7 +84,7 @@ registerTool({
 
           '' +
           '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">2. Ngày Chạm Mốc (Đích đến)</label>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">2. Ngày Đích Đến (Bỏ trống nếu cần tìm)</label>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
           '<select id="m2-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
           '<span class="text-slate-300 font-black">/</span>' +
@@ -104,7 +104,7 @@ registerTool({
 
           '' +
           '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">4. Tỷ lệ mốc</label>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">4. Tỷ Lệ</label>' +
           '<div class="flex justify-center items-center gap-3 w-full px-8">' +
           '<input id="m2-ratio-num" type="number" placeholder="#" class="w-20 bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-lg py-2 outline-none focus:ring-2 ring-orange-200">' +
           '<span class="text-2xl font-black text-slate-300">/</span>' +
@@ -112,17 +112,13 @@ registerTool({
           '</div></div>' +
 
           '<button id="mod2-btn-calc" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-2">' +
-          '🚀 GIẢI MÃ TỰ ĐỘNG' +
+          '🚀 TÍNH TOÁN ĐA CHIỀU' +
           '</button>' +
 
           '' +
-          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4 space-y-2">' +
-          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-3">BẢNG KẾT QUẢ ĐA CHIỀU</div>' +
-          '<div class="flex justify-between items-center bg-white/70 px-3 py-2.5 rounded-lg border border-orange-50"><span class="text-[10px] font-bold text-slate-500 uppercase">Ngày Bắt Đầu</span><span class="font-black text-slate-700 text-sm" id="res2-start">--</span></div>' +
-          '<div class="flex justify-between items-center bg-white/70 px-3 py-2.5 rounded-lg border border-orange-50"><span class="text-[10px] font-bold text-slate-500 uppercase">Ngày Đích Đến</span><span class="font-black text-orange-600 text-base" id="res2-end">--</span></div>' +
-          '<div class="flex justify-between items-center bg-white/70 px-3 py-2.5 rounded-lg border border-orange-50"><span class="text-[10px] font-bold text-slate-500 uppercase">Tổng Thời Gian</span><span class="font-black text-slate-700 text-sm" id="res2-total">--</span></div>' +
-          '<div class="flex justify-between items-center bg-white/70 px-3 py-2.5 rounded-lg border border-orange-50"><span class="text-[10px] font-bold text-slate-500 uppercase">Tỷ Lệ Mốc</span><span class="font-black text-slate-700 text-sm" id="res2-ratio">--</span></div>' +
-          '<div class="flex flex-col items-center bg-orange-500 p-3 mt-3 rounded-xl border border-orange-600 shadow-md"><span class="text-[9px] font-bold text-orange-100 uppercase tracking-wider mb-1">Thời gian đã quy đổi</span><span class="font-black text-white text-lg" id="res2-passed">--</span></div>' +
+          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
+          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
+          '<div id="mod2-dynamic-res" class="w-full"></div>' +
           '</div></div>' +
 
           '' +
@@ -135,86 +131,52 @@ registerTool({
           '</div></div>',
     logic: function() {
         // === MODULE 1 VARIABLES ===
-        var sD = document.getElementById('tc-start-d');
-        var sM = document.getElementById('tc-start-m');
-        var sY = document.getElementById('tc-start-y');
-        var eD = document.getElementById('tc-end-d');
-        var eM = document.getElementById('tc-end-m');
-        var eY = document.getElementById('tc-end-y');
-        var btnConv = document.getElementById('tc-btn-conv');
-        var btnReal = document.getElementById('tc-btn-real');
-        var resDiv1 = document.getElementById('tc-result');
+        var sD = document.getElementById('tc-start-d'), sM = document.getElementById('tc-start-m'), sY = document.getElementById('tc-start-y');
+        var eD = document.getElementById('tc-end-d'), eM = document.getElementById('tc-end-m'), eY = document.getElementById('tc-end-y');
+        var btnConv = document.getElementById('tc-btn-conv'), btnReal = document.getElementById('tc-btn-real'), resDiv1 = document.getElementById('tc-result');
 
         // === MODULE 2 VARIABLES ===
-        var m2sD = document.getElementById('m2-start-d');
-        var m2sM = document.getElementById('m2-start-m');
-        var m2sY = document.getElementById('m2-start-y');
-        
-        var m2eD = document.getElementById('m2-end-d');
-        var m2eM = document.getElementById('m2-end-m');
-        var m2eY = document.getElementById('m2-end-y');
-        
-        var m2wY = document.getElementById('m2-wait-y');
-        var m2wM = document.getElementById('m2-wait-m');
-        var m2wD = document.getElementById('m2-wait-d');
-
-        var m2rNum = document.getElementById('m2-ratio-num');
-        var m2rDen = document.getElementById('m2-ratio-den');
-        
-        var btnMod2 = document.getElementById('mod2-btn-calc');
-        var resDiv2 = document.getElementById('mod2-result');
+        var m2sD = document.getElementById('m2-start-d'), m2sM = document.getElementById('m2-start-m'), m2sY = document.getElementById('m2-start-y');
+        var m2eD = document.getElementById('m2-end-d'), m2eM = document.getElementById('m2-end-m'), m2eY = document.getElementById('m2-end-y');
+        var m2wY = document.getElementById('m2-wait-y'), m2wM = document.getElementById('m2-wait-m'), m2wD = document.getElementById('m2-wait-d');
+        var m2rNum = document.getElementById('m2-ratio-num'), m2rDen = document.getElementById('m2-ratio-den');
+        var btnMod2 = document.getElementById('mod2-btn-calc'), resDiv2 = document.getElementById('mod2-result');
 
         // === HISTORY VARIABLES ===
-        var btnClear = document.getElementById('tc-btn-clear');
-        var historyList = document.getElementById('tc-history-list');
+        var btnClear = document.getElementById('tc-btn-clear'), historyList = document.getElementById('tc-history-list');
 
         var tcHistory = [];
-        try {
-            var stored = localStorage.getItem('nothing_tc_history');
-            if(stored) tcHistory = JSON.parse(stored);
-        } catch(e) { tcHistory = []; }
-
+        try { var stored = localStorage.getItem('nothing_tc_history'); if(stored) tcHistory = JSON.parse(stored); } catch(e) { tcHistory = []; }
         var saveHistory = function() { localStorage.setItem('nothing_tc_history', JSON.stringify(tcHistory)); };
 
         var renderHistory = function() {
             historyList.innerHTML = '';
-            if(tcHistory.length === 0) {
-                historyList.innerHTML = '<div class="text-xs text-slate-400 italic text-center py-4">Chưa có lịch sử tính toán nào.</div>';
-                return;
-            }
+            if(tcHistory.length === 0) { historyList.innerHTML = '<div class="text-xs text-slate-400 italic text-center py-4">Chưa có lịch sử tính toán nào.</div>'; return; }
             for(var i = 0; i < tcHistory.length; i++) {
                 var h = tcHistory[i];
                 var colorType = 'text-teal-600';
                 if(h.typeLabel === "Thực tế (Theo Lịch)") colorType = 'text-indigo-600';
-                if(h.typeLabel === "Mốc Đa Chiều") colorType = 'text-orange-600';
+                if(h.typeLabel === "Thời Gian Đa Chiều") colorType = 'text-orange-600';
                 
                 var itemHtml = '<div class="tc-history-item bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-1 shadow-sm">';
-                itemHtml += '<div class="flex justify-between items-center">';
-                itemHtml += '<div class="text-[10px] font-bold text-slate-500">' + h.dateStart + ' ➔ ' + h.dateEnd + '</div>';
-                itemHtml += '<div class="text-[9px] font-bold ' + colorType + ' uppercase bg-white px-1.5 py-0.5 rounded border border-slate-200">' + h.typeLabel + '</div>';
-                itemHtml += '</div>';
+                itemHtml += '<div class="flex justify-between items-center"><div class="text-[10px] font-bold text-slate-500">' + h.dateStart + '</div><div class="text-[9px] font-bold ' + colorType + ' uppercase bg-white px-1.5 py-0.5 rounded border border-slate-200">' + h.typeLabel + '</div></div>';
                 itemHtml += '<div class="text-sm font-black text-slate-700 mt-1">' + h.resText1 + '</div>';
-                itemHtml += '<div class="text-xs font-medium text-slate-500">' + h.resText4 + '</div>';
-                itemHtml += '</div>';
+                itemHtml += '<div class="text-xs font-medium text-slate-500">' + h.resText4 + '</div></div>';
                 historyList.innerHTML += itemHtml;
             }
         };
 
         renderHistory();
+        btnClear.onclick = function() { if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) { tcHistory = []; saveHistory(); renderHistory(); } };
 
-        btnClear.onclick = function() {
-            if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) { tcHistory = []; saveHistory(); renderHistory(); }
-        };
-
-        // Hàm đổ dữ liệu cho các Select cơ bản (Không có ô Trống)
+        // DOM Helper Functions
         var updateDays = function(dElem, mElem, yElem) {
             var currentD = parseInt(dElem.value) || new Date().getDate();
             var m = parseInt(mElem.value) || (new Date().getMonth() + 1);
             var y = parseInt(yElem.value) || new Date().getFullYear();
             var maxD = new Date(y, m, 0).getDate(); 
             if(currentD > maxD) currentD = maxD;
-            var dOpts = ''; 
-            for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i === currentD ? 'selected' : '') + '>' + i + '</option>';
+            var dOpts = ''; for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i === currentD ? 'selected' : '') + '>' + i + '</option>';
             dElem.innerHTML = dOpts;
         };
 
@@ -225,10 +187,7 @@ registerTool({
         for(var i = curY - 50; i <= curY + 50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
         sY.innerHTML = yOpts; eY.innerHTML = yOpts; m2sY.innerHTML = yOpts;
 
-        var setupDateListeners = function(d, m, y) {
-            m.addEventListener('change', function() { updateDays(d, m, y); });
-            y.addEventListener('change', function() { updateDays(d, m, y); });
-        };
+        var setupDateListeners = function(d, m, y) { m.addEventListener('change', function() { updateDays(d, m, y); }); y.addEventListener('change', function() { updateDays(d, m, y); }); };
         setupDateListeners(sD, sM, sY); setupDateListeners(eD, eM, eY); setupDateListeners(m2sD, m2sM, m2sY);
 
         var today = new Date();
@@ -236,23 +195,19 @@ registerTool({
         eM.value = today.getMonth() + 1; eY.value = today.getFullYear(); updateDays(eD, eM, eY); eD.value = today.getDate();
         m2sM.value = 2; m2sY.value = 2020; updateDays(m2sD, m2sM, m2sY); m2sD.value = 22;
 
-        // Hàm đổ dữ liệu cho Ngày Đích (Có ô Trống #)
         var updateEndDays = function() {
-            var currentD = m2eD.value;
-            var m = parseInt(m2eM.value); var y = parseInt(m2eY.value);
+            var currentD = m2eD.value; var m = parseInt(m2eM.value); var y = parseInt(m2eY.value);
             var dOpts = '<option value=""># Ngày</option>'; 
             var maxD = (!isNaN(m) && !isNaN(y)) ? new Date(y, m, 0).getDate() : 31;
             for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i == currentD ? 'selected' : '') + '>' + i + '</option>';
             m2eD.innerHTML = dOpts;
         };
-        var mOptsE = '<option value=""># Tháng</option>'; for(var i = 1; i <= 12; i++) mOptsE += '<option value="' + i + '">' + i + '</option>'; 
-        m2eM.innerHTML = mOptsE;
-        var yOptsE = '<option value=""># Năm</option>'; for(var i = curY - 50; i <= curY + 50; i++) yOptsE += '<option value="' + i + '">' + i + '</option>'; 
-        m2eY.innerHTML = yOptsE;
+        var mOptsE = '<option value=""># Tháng</option>'; for(var i = 1; i <= 12; i++) mOptsE += '<option value="' + i + '">' + i + '</option>'; m2eM.innerHTML = mOptsE;
+        var yOptsE = '<option value=""># Năm</option>'; for(var i = curY - 50; i <= curY + 50; i++) yOptsE += '<option value="' + i + '">' + i + '</option>'; m2eY.innerHTML = yOptsE;
         updateEndDays();
         m2eM.addEventListener('change', updateEndDays); m2eY.addEventListener('change', updateEndDays);
 
-        // ================= XỬ LÝ MODULE 1 (Giữ nguyên) =================
+        // ================= XỬ LÝ MODULE 1 =================
         var processCalcModule1 = function(isReal) {
             var d1 = parseInt(sD.value), m1 = parseInt(sM.value), y1 = parseInt(sY.value);
             var d2 = parseInt(eD.value), m2 = parseInt(eM.value), y2 = parseInt(eY.value);
@@ -262,8 +217,7 @@ registerTool({
             var str1 = "", str2 = "", str3 = "", str4 = "", typeLabel = "";
             if (!isReal) {
                 typeLabel = "Công thức (30đ/tháng)";
-                var yearRes = 0, monthRes = 0, dayRes = 0;
-                var tempD2 = d2, tempM2 = m2, tempY2 = y2;
+                var yearRes = 0, monthRes = 0, dayRes = 0, tempD2 = d2, tempM2 = m2, tempY2 = y2;
                 if (tempD2 >= d1) { dayRes = tempD2 - d1; } else { dayRes = (tempD2 + 30) - d1; tempM2 = tempM2 - 1; }
                 if (tempM2 >= m1) { monthRes = tempM2 - m1; } else { monthRes = (tempM2 + 12) - m1; tempY2 = tempY2 - 1; }
                 yearRes = tempY2 - y1;
@@ -294,9 +248,9 @@ registerTool({
             resDiv1.classList.remove('hidden');
 
             var startStr = ('0'+d1).slice(-2)+'/'+('0'+m1).slice(-2)+'/'+y1; var endStr = ('0'+d2).slice(-2)+'/'+('0'+m2).slice(-2)+'/'+y2;
-            var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === startStr && tcHistory[0].dateEnd === endStr && tcHistory[0].typeLabel === typeLabel;
+            var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === startStr + ' ➔ ' + endStr && tcHistory[0].typeLabel === typeLabel;
             if(!isDup) {
-                tcHistory.unshift({ dateStart: startStr, dateEnd: endStr, resText1: str1, resText4: "Tổng: " + str4, typeLabel: typeLabel, isReal: isReal });
+                tcHistory.unshift({ dateStart: startStr + ' ➔ ' + endStr, resText1: str1, resText4: "Tổng: " + str4, typeLabel: typeLabel });
                 if(tcHistory.length > 30) tcHistory.pop(); saveHistory(); renderHistory();
             }
         };
@@ -304,97 +258,94 @@ registerTool({
         btnConv.onclick = function() { processCalcModule1(false); };
         btnReal.onclick = function() { processCalcModule1(true); };
 
-        // ================= XỬ LÝ MODULE 2 (THUẬT TOÁN ĐA CHIỀU) =================
+        // ================= XỬ LÝ MODULE 2 =================
         var getDays360 = function(d1, m1, y1, d2, m2, y2) { return ((y2 - y1) * 360) + ((m2 - m1) * 30) + (d2 - d1); };
         var daysToYMD = function(days) { return { y: Math.floor(days/360), m: Math.floor((days%360)/30), d: (days%360)%30 }; };
+        var gcd = function(a, b) { a = Math.abs(a); b = Math.abs(b); if (b === 0) return a; return gcd(b, a % b); };
+
+        var makeRow = function(label, value, isHighlight) {
+            if(isHighlight) {
+                return '<div class="flex flex-col items-center bg-orange-500 p-4 mt-2 rounded-xl border border-orange-600 shadow-md"><span class="text-[10px] font-bold text-orange-100 uppercase tracking-wider mb-1">' + label + '</span><span class="font-black text-white text-2xl text-center">' + value + '</span></div>';
+            }
+            return '<div class="flex flex-col bg-white/70 p-3 rounded-lg border border-orange-100 shadow-sm mt-3"><span class="text-[9px] font-bold text-slate-500 uppercase">' + label + '</span><span class="font-black text-slate-700 text-sm mt-0.5">' + value + '</span></div>';
+        };
 
         btnMod2.onclick = function() {
             var sD = parseInt(m2sD.value), sM = parseInt(m2sM.value), sY = parseInt(m2sY.value);
             var eD = m2eD.value, eM = m2eM.value, eY = m2eY.value;
-            var wY = m2wY.value, wM = m2wM.value, wD = m2wD.value;
-            var rN = m2rNum.value, rD = m2rDen.value;
+            
+            var wYv = parseInt(m2wY.value)||0, wMv = parseInt(m2wM.value)||0, wDv = parseInt(m2wD.value)||0;
+            var rNv = parseInt(m2rNum.value)||0, rDv = parseInt(m2rDen.value)||0;
 
             var hasEnd = (eD !== '' && eM !== '' && eY !== '');
-            var hasWait = (wY !== '' || wM !== '' || wD !== '');
-            var hasRatio = (rN !== '' && rD !== '');
+            var hasWait = (wYv > 0 || wMv > 0 || wDv > 0);
+            var hasRatio = (rNv > 0 && rDv > 0);
 
-            var resStart = ('0'+sD).slice(-2) + "/" + ('0'+sM).slice(-2) + "/" + sY;
-            var resEnd = "#", resWait = "#", resRatio = "#", resPassed = "#";
+            var waitDays = (wYv * 360) + (wMv * 30) + wDv;
+            var resPassed = "", historyMain = "", historySub = "", dynamicHtml = "";
 
             if (hasWait && hasRatio && !hasEnd) {
-                // TH1: Tìm Ngày Đích
-                var waitDays = ((parseInt(wY)||0) * 360) + ((parseInt(wM)||0) * 30) + (parseInt(wD)||0);
-                var rNum = parseInt(rN)||0, rDen = parseInt(rD)||1;
-                if(rDen === 0) { alert("Mẫu số không thể bằng 0!"); return; }
-                
-                var passDays = Math.floor(waitDays * (rNum / rDen));
+                // TÌM NGÀY ĐÍCH ĐẾN
+                var passDays = Math.floor(waitDays * (rNv / rDv));
                 var p = daysToYMD(passDays);
                 var temp = new Date(sY + p.y, (sM - 1) + p.m, sD + p.d);
-                
-                resEnd = ('0'+temp.getDate()).slice(-2) + "/" + ('0'+(temp.getMonth()+1)).slice(-2) + "/" + temp.getFullYear();
-                resWait = (parseInt(wY)||0) + " năm " + (parseInt(wM)||0) + " tháng " + (parseInt(wD)||0) + " ngày";
-                resRatio = rNum + " / " + rDen;
+                var resEnd = ('0'+temp.getDate()).slice(-2) + "/" + ('0'+(temp.getMonth()+1)).slice(-2) + "/" + temp.getFullYear();
                 resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+                dynamicHtml = makeRow("Ngày Đích Đến (Chạm mốc)", resEnd, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
+                historyMain = "Đích: " + resEnd; historySub = "Đã qua: " + resPassed;
             } 
             else if (hasEnd && hasRatio && !hasWait) {
-                // TH2: Tìm Tổng Thời Gian
+                // TÌM TỔNG THỜI GIAN CHỜ
                 var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
                 if (passDays < 0) { alert("Ngày đích phải sau ngày bắt đầu!"); return; }
-                var rNum = parseInt(rN)||0, rDen = parseInt(rD)||1;
-                if(rDen === 0 || rNum === 0) { alert("Tỷ lệ không hợp lệ!"); return; }
                 
-                var waitDays = Math.floor(passDays / (rNum / rDen));
-                var w = daysToYMD(waitDays);
+                var calcWaitDays = Math.floor(passDays / (rNv / rDv));
+                var w = daysToYMD(calcWaitDays);
                 var p = daysToYMD(passDays);
-
-                resEnd = ('0'+eD).slice(-2) + "/" + ('0'+eM).slice(-2) + "/" + eY;
-                resWait = w.y + " năm " + w.m + " tháng " + w.d + " ngày";
-                resRatio = rNum + " / " + rDen;
+                var resWait = w.y + " năm " + w.m + " tháng " + w.d + " ngày";
                 resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+                dynamicHtml = makeRow("Tổng thời gian", resWait, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
+                historyMain = "Tổng: " + resWait; historySub = "Đã qua: " + resPassed;
             }
             else if (hasEnd && hasWait && !hasRatio) {
-                // TH3: Tìm Tỷ Lệ
+                // TÌM TỶ LỆ
                 var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
                 if (passDays < 0) { alert("Ngày đích phải sau ngày bắt đầu!"); return; }
-                var waitDays = ((parseInt(wY)||0) * 360) + ((parseInt(wM)||0) * 30) + (parseInt(wD)||0);
-                if (waitDays <= 0) { alert("Tổng thời gian chờ phải lớn hơn 0!"); return; }
                 
-                var percent = ((passDays / waitDays) * 100).toFixed(2);
+                var divisor = gcd(passDays, waitDays);
+                var simpNum = passDays / divisor;
+                var simpDen = waitDays / divisor;
                 var p = daysToYMD(passDays);
-
-                resEnd = ('0'+eD).slice(-2) + "/" + ('0'+eM).slice(-2) + "/" + eY;
-                resWait = (parseInt(wY)||0) + " năm " + (parseInt(wM)||0) + " tháng " + (parseInt(wD)||0) + " ngày";
-                resRatio = percent + "% (Khoảng " + passDays + "/" + waitDays + " ngày)";
+                var resRatio = simpNum + " / " + simpDen;
                 resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+                dynamicHtml = makeRow("Tỷ lệ thời gian", resRatio, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
+                historyMain = "Tỷ lệ: " + resRatio; historySub = "Đã qua: " + resPassed;
             }
             else if (hasEnd && hasWait && hasRatio) {
-                // TH4: Nhập Đủ Hết -> Tính thời gian thực tế đã qua
+                // ĐẦY ĐỦ -> Chỉ show thời gian đã qua
                 var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
                 if (passDays < 0) { alert("Ngày đích phải sau ngày bắt đầu!"); return; }
                 var p = daysToYMD(passDays);
-
-                resEnd = ('0'+eD).slice(-2) + "/" + ('0'+eM).slice(-2) + "/" + eY;
-                resWait = (parseInt(wY)||0) + " năm " + (parseInt(wM)||0) + " tháng " + (parseInt(wD)||0) + " ngày";
-                resRatio = (parseInt(rN)||0) + " / " + (parseInt(rDen)||1);
                 resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+                dynamicHtml = makeRow("Thời gian thực tế đã qua", resPassed, true);
+                historyMain = "Đã qua: " + resPassed; historySub = "Số liệu đầy đủ";
             }
             else {
-                alert("Bạn cần cung cấp ít nhất 2 trong 3 dữ liệu: 'Ngày Chạm Mốc', 'Tổng Thời Gian' hoặc 'Tỷ Lệ' để giải mã nhé!");
+                alert("Bạn cần nhập ít nhất 2 trong 3 khối dữ liệu: 'Ngày Đích', 'Tổng Thời Gian' hoặc 'Tỷ Lệ' nhé!");
                 return;
             }
 
-            // In kết quả ra Bảng Đa Chiều
-            document.getElementById('res2-start').innerText = resStart;
-            document.getElementById('res2-end').innerText = resEnd;
-            document.getElementById('res2-total').innerText = resWait;
-            document.getElementById('res2-ratio').innerText = resRatio;
-            document.getElementById('res2-passed').innerText = resPassed;
+            document.getElementById('mod2-dynamic-res').innerHTML = dynamicHtml;
             resDiv2.classList.remove('hidden');
 
-            // Lưu lịch sử
-            var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === resStart && tcHistory[0].dateEnd === resEnd && tcHistory[0].typeLabel === "Mốc Đa Chiều";
+            var resStart = ('0'+sD).slice(-2) + "/" + ('0'+sM).slice(-2) + "/" + sY;
+            var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === resStart && tcHistory[0].resText1 === historyMain && tcHistory[0].typeLabel === "Thời Gian Đa Chiều";
             if(!isDup) {
-                tcHistory.unshift({ dateStart: resStart, dateEnd: (resEnd==='#' ? 'Tìm đích' : resEnd), resText1: "Đã qua: " + resPassed, resText4: "Tổng: " + resWait + " | Tỷ lệ: " + resRatio, typeLabel: "Mốc Đa Chiều", isReal: false });
+                tcHistory.unshift({ dateStart: "Từ: " + resStart, resText1: historyMain, resText4: historySub, typeLabel: "Thời Gian Đa Chiều" });
                 if(tcHistory.length > 30) tcHistory.pop(); saveHistory(); renderHistory();
             }
         };
