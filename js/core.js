@@ -78,12 +78,23 @@ const toggleDarkMode = () => {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
     localStorage.setItem('nothing_dark_mode', isDark);
-    document.getElementById('dark-mode-icon').innerText = isDark ? '☀️' : '🌙';
+    
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    if (iconSun && iconMoon) {
+        if (isDark) { iconSun.classList.remove('hidden'); iconMoon.classList.add('hidden'); } 
+        else { iconSun.classList.add('hidden'); iconMoon.classList.remove('hidden'); }
+    }
 };
+
 if(localStorage.getItem('nothing_dark_mode') === 'true') {
     document.body.classList.add('dark-mode');
     document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById('dark-mode-icon').innerText = '☀️';
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+        if (iconSun && iconMoon) {
+            iconSun.classList.remove('hidden');
+            iconMoon.classList.add('hidden');
+        }
     });
 }
-

@@ -88,52 +88,66 @@ body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at 
     transform: translateX(4px);
 }
 /* =========================================
-   GLOBAL DARK MODE (CHẾ ĐỘ TỐI TOÀN TRANG)
+   GLOBAL DARK MODE
 ========================================= */
 body.dark-mode {
-    background: radial-gradient(circle at top right, #0f172a, #1e293b 70%) !important;
+    background: radial-gradient(circle at top right, #1e293b, #0f172a 70%) !important;
     color: #f8fafc !important;
 }
-body.dark-mode .glass-card,
+/* Glass card trong suốt nhưng giữ lại bóng và viền sang trọng */
+body.dark-mode .glass-card {
+    background: rgba(30, 41, 59, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+/* Các khối nền trắng chuyển sang xám đen dịu mắt, không bị đặc quánh */
 body.dark-mode .bg-white,
 body.dark-mode .bg-white\/90,
 body.dark-mode .bg-white\/80,
 body.dark-mode .bg-white\/60,
 body.dark-mode .bg-slate-50,
-body.dark-mode .bg-slate-100,
-body.dark-mode .bg-\[\#e3eaf1\],
-body.dark-mode .bg-\[\#eaf0f6\] {
-    background-color: #1e293b !important;
+body.dark-mode .bg-slate-100 {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    color: #e2e8f0 !important;
+}
+/* Giữ lại màu nền Card Widget Lịch sang trọng */
+body.dark-mode .bg-\[\#e3eaf1\] {
+    background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important;
     border-color: #334155 !important;
-    color: #f8fafc !important;
 }
-body.dark-mode .text-slate-800,
-body.dark-mode .text-slate-700,
-body.dark-mode .text-gray-800,
-body.dark-mode .text-gray-700,
-body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
-    color: #f8fafc !important;
-}
-body.dark-mode .text-slate-600,
-body.dark-mode .text-slate-500,
-body.dark-mode .text-slate-400,
-body.dark-mode .text-gray-600,
-body.dark-mode .text-gray-500 {
-    color: #94a3b8 !important;
-}
-body.dark-mode header {
-    background-color: rgba(15, 23, 42, 0.8) !important;
+
+/* Cân bằng màu chữ */
+body.dark-mode .text-slate-800, body.dark-mode .text-slate-700,
+body.dark-mode .text-gray-800, body.dark-mode .text-gray-700,
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 { color: #f8fafc !important; }
+
+body.dark-mode .text-slate-600, body.dark-mode .text-slate-500,
+body.dark-mode .text-slate-400, body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-500 { color: #94a3b8 !important; }
+
+/* Header & Menu Dropdown */
+body.dark-mode #main-header {
+    background-color: rgba(15, 23, 42, 0.85) !important;
     border-bottom-color: #334155 !important;
 }
 body.dark-mode #mobile-menu {
-    background-color: rgba(15, 23, 42, 0.95) !important;
-    border-color: #334155 !important;
-}
-body.dark-mode select, body.dark-mode input, body.dark-mode textarea {
-    background-color: #0f172a !important;
-    color: #f8fafc !important;
+    background-color: rgba(30, 41, 59, 0.95) !important;
     border-color: #475569 !important;
 }
-/* Giữ nguyên màu cam cho đẹp */
-body.dark-mode .text-orange-500 { color: #f97316 !important; }
 
+/* Các ô Select, Input giữ được độ nổi */
+body.dark-mode select, body.dark-mode input, body.dark-mode textarea {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+}
+body.dark-mode select:focus, body.dark-mode input:focus {
+    border-color: #f97316 !important;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Nút Toggle Dark Mode & Mặt Trăng */
+body.dark-mode #dark-mode-btn { background-color: #334155 !important; color: #f8fafc !important; }
+body.dark-mode #dark-mode-btn:hover { background-color: #475569 !important; color: #f97316 !important; }
+body.dark-mode #moon-shadow { background-color: #0f172a !important; }

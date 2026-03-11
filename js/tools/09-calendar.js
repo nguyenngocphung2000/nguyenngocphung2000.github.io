@@ -1,8 +1,8 @@
-// --- 9. Tool Lịch Vạn Niên ---
+// --- 9. Tool Lịch Vạn Niên (Bản Chuẩn Định Dạng - An toàn tuyệt đối) ---
 registerTool({
     id: 'tab-calendar',
     name: 'Lịch Vạn Niên',
-    icon: '🗓️',
+    icon: '📆',
     html: `
         <div class="text-center mb-6">
             <span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>
@@ -87,16 +87,14 @@ registerTool({
                         <div class="text-[10px] font-bold text-orange-500">CN</div>
                     </div>
                     
-                    <div id="cal-grid" class="grid grid-cols-7 gap-1 text-center">
-                    </div>
+                    <div id="cal-grid" class="grid grid-cols-7 gap-1 text-center"></div>
                 </div>
 
                 <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">
                     <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50">
                         <span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam
                     </h3>
-                    <div id="res-events" class="space-y-2 mt-2">
-                    </div>
+                    <div id="res-events" class="space-y-2 mt-2"></div>
                 </div>
 
             </div>
@@ -305,11 +303,15 @@ registerTool({
                 
                 var lYearText = CAN[lunar.getYearGanIndex()] + ' ' + CHI[lunar.getYearZhiIndex()];
                 if (lunar.getMonth() < 0) lYearText += " (Nhuận)";
+                
+                // FORMAT: 13/02/2026 Bính Ngọ
+                var lunarFullYear = lunar.getYear();
+                var lunarFormattedString = lDayStr + "/" + lMonthStr + "/" + lunarFullYear + " " + lYearText;
 
                 document.getElementById('res-weekday').innerText = wdNames[solar.getWeek()];
                 document.getElementById('res-main-d').innerText = solar.getDay();
                 document.getElementById('res-main-my').innerText = "Tháng " + solar.getMonth() + ", " + sYear;
-                document.getElementById('res-sub-date').innerText = lDayStr + "/" + lMonthStr + "/" + lYearText;
+                document.getElementById('res-sub-date').innerText = lunarFormattedString;
 
                 var phaseText = 'Trăng khuyết';
                 var shadowTranslate = '100%'; 
