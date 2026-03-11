@@ -1,3 +1,14 @@
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    /* Cấm hiệu ứng nảy dây thun (kéo lố lòi nền xám) trên iOS */
+    overscroll-behavior-y: none;
+    /* Cấm người dùng double-tap (chạm 2 lần) để zoom */
+    touch-action: pan-y;
+    /* Ngăn bôi đen text khi vuốt chạm nhầm */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
 body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at top right, #fff4e6, #ffffff 70%); min-height: 100vh; }
 .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 30px rgba(251, 146, 60, 0.1); }
 

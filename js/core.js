@@ -73,6 +73,17 @@ window.addEventListener('DOMContentLoaded', () => {
         switchTab(defaultTab);
     }
 });
+// --- KHÓA ZOOM VÀ KHÓA KÉO LỆCH TRANG TRÊN IOS ---
+document.addEventListener('touchmove', function (event) {
+    if (event.scale !== 1 && event.scale !== undefined) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+document.addEventListener('gesturestart', function (event) {
+    event.preventDefault();
+});
+
 // --- KÍCH HOẠT DARK MODE ---
 const toggleDarkMode = () => {
     document.body.classList.toggle('dark-mode');
