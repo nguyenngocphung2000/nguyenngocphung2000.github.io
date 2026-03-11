@@ -17,18 +17,18 @@ registerTool({
             </div>
 
             <div id="cal-widget" class="hidden space-y-5">
-                
-                                <div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">
+            
+                 <div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">
                     <div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>
                     
                     <div class="flex justify-between items-start">
-                        <div class="flex-1 pr-2">
+                        <div class="flex-1 pr-2 overflow-hidden">
                             <div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">--</div>
                             <div class="text-lg font-bold text-slate-600 mt-2" id="res-main-my">Tháng --, ----</div>
                             
-                            <div class="text-sm font-medium text-slate-600 mt-4 flex items-start gap-2.5 w-full">
-                                <span class="shrink-0 whitespace-nowrap bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 mt-0.5">Âm Lịch</span>
-                                <span id="res-sub-date" class="font-bold leading-snug">--/--/----</span>
+                            <div class="mt-4 flex items-center gap-2.5 w-full">
+                                <div class="shrink-0 bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 flex items-center justify-center">Âm Lịch</div>
+                                <div id="res-sub-date" class="text-[13px] md:text-[14px] font-bold text-slate-600 whitespace-nowrap tracking-tight translate-y-[1px]">--/--/----</div>
                             </div>
                         </div>
 
@@ -40,7 +40,6 @@ registerTool({
                         </div>
                     </div>
                 </div>
-
                 <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">
                     
                     <div class="text-center w-full pb-3 border-b border-slate-100">
