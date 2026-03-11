@@ -73,17 +73,25 @@ window.addEventListener('DOMContentLoaded', () => {
         switchTab(defaultTab);
     }
 });
-// --- KHÓA ZOOM VÀ KHÓA KÉO LỆCH TRANG TRÊN IOS ---
+// --- 1. CHỐNG ZOOM MÀN HÌNH BẰNG 2 NGÓN TAY TRÊN IOS ---
 document.addEventListener('touchmove', function (event) {
     if (event.scale !== 1 && event.scale !== undefined) {
         event.preventDefault();
     }
 }, { passive: false });
-
 document.addEventListener('gesturestart', function (event) {
     event.preventDefault();
 });
 
+// --- 2. HIỆU ỨNG VIỀN HEADER KHI CUỘN ---
+window.addEventListener('scroll', function() {
+    var header = document.getElementById('main-header');
+    if (window.scrollY > 20) {
+        header.classList.add('header-scrolled');
+    } else {
+        header.classList.remove('header-scrolled');
+    }
+});
 // --- KÍCH HOẠT DARK MODE ---
 const toggleDarkMode = () => {
     document.body.classList.toggle('dark-mode');

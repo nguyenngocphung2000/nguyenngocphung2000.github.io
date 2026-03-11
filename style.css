@@ -1,13 +1,31 @@
+/* ==============================================
+   KHÓA ZOOM VÀ CỨU DÍNH (STICKY) CHO HEADER
+============================================== */
 html, body {
     max-width: 100vw;
-    overflow-x: hidden;
-    /* Cấm hiệu ứng nảy dây thun (kéo lố lòi nền xám) trên iOS */
-    overscroll-behavior-y: none;
-    /* Cấm người dùng double-tap (chạm 2 lần) để zoom */
+    overflow-x: clip; /* Bắt buộc dùng clip để không làm hỏng tính năng cuộn dính của thanh menu */
+    overscroll-behavior-y: none; /* Khóa kéo lố dây thun */
     touch-action: pan-y;
-    /* Ngăn bôi đen text khi vuốt chạm nhầm */
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+}
+
+/* ==============================================
+   HIỆU ỨNG VIỀN HEADER KHI CUỘN XUỐNG
+============================================== */
+.header-scrolled {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
+    border-bottom: 2px solid rgba(249, 115, 22, 0.4) !important; /* Viền dưới màu Cam mờ */
+    box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.15) !important; /* Bóng đổ màu Cam */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Chế độ Dark Mode cho Header cuộn */
+body.dark-mode .header-scrolled {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    border-bottom: 2px solid rgba(45, 212, 191, 0.4) !important; /* Viền Xanh Teal */
+    box-shadow: 0 10px 25px -5px rgba(45, 212, 191, 0.15) !important; /* Bóng đổ Xanh Teal */
 }
 body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at top right, #fff4e6, #ffffff 70%); min-height: 100vh; }
 .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 30px rgba(251, 146, 60, 0.1); }
