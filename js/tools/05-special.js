@@ -1,4 +1,4 @@
-// --- 5. Tool Kí tự đặc biệt (Bản Siêu Cấp: Chữ Thư Pháp + PNG Photoshop) ---
+// --- 5. Tool Kí tự đặc biệt ---
 registerTool({
     id: 'tab-special-chars',
     name: 'Kí Tự Đặc Biệt',
