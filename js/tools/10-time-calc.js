@@ -48,7 +48,7 @@ registerTool({
           '<div id="tc-result" class="hidden space-y-4">' +
           '<div class="tc-card bg-[#e0f2fe] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative overflow-hidden">' +
           '<div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-4">' +
-          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ MODULE 1</div>' +
+          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ</div>' +
           '<div id="tc-res-type" class="text-[10px] font-bold text-teal-700/60 uppercase bg-teal-50/50 px-2 py-0.5 rounded border border-teal-100">--</div>' +
           '</div>' +
           '<div class="space-y-3">' +
