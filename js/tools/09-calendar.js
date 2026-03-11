@@ -7,7 +7,7 @@ registerTool({
         <div class="text-center mb-6">
             <span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>
             <h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>
-            p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>
+            <p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>
         </div>
 
         <div class="max-w-md mx-auto space-y-5 pb-10">
