@@ -116,4 +116,3 @@ if(localStorage.getItem('nothing_dark_mode') === 'true') {
             iconMoon.classList.add('hidden');
         }
     });
-}
