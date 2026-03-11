@@ -472,7 +472,7 @@ registerTool({
                 }
             }
 
-            document.getElementById('ft-lu-common').innerHTML = \`✨ <b>Tổ tiên chung:</b> \${lcaNode.name} (Cách A \${dA} đời, cách B \${dB} đời)\`;
+            document.getElementById('ft-lu-common').innerHTML = `✨ <b>Tổ tiên chung:</b> ${lcaNode.name} (Cách A ${dA} đời, cách B ${dB} đời)`;
 
             // SIÊU THUẬT TOÁN TÍNH DANH XƯNG
             const getTitle = (distMe, distThem, gMe, gThem, sideMe, sideThem, isOlderThem, lawMe, lawThem, nodeMe, nodeThem) => {
@@ -486,7 +486,7 @@ registerTool({
                         if (lawMe) return gThem === 'male' ? "Cha (vợ/chồng)" : "Mẹ (vợ/chồng)";
                         return gThem === 'male' ? "Cha / Ba" : "Mẹ / Má";
                     }
-                    if (distMe === 2) return gThem === 'male' ? \`Ông \${sideMe==='noi'?'nội':'ngoại'}\` : \`Bà \${sideMe==='noi'?'nội':'ngoại'}\`;
+                    if (distMe === 2) return gThem === 'male' ? `Ông ${sideMe==='noi'?'nội':'ngoại'}` : `Bà ${sideMe==='noi'?'nội':'ngoại'}`;
                     if (distMe === 3) return gThem === 'male' ? "Cụ / Cố ông" : "Cụ / Cố bà";
                     if (distMe >= 4) return gThem === 'male' ? "Kị / Sơ ông" : "Kị / Sơ bà";
                 }
@@ -552,29 +552,29 @@ registerTool({
             const spouses = data.filter(n => (n.spouseId === nodeId || node.spouseId === n.id) && n.id !== nodeId);
 
             let html = '<li>';
-            html += \`<div class="inline-flex items-center z-10 relative">\`;
+            html += `<div class="inline-flex items-center z-10 relative">`;
             
             let sClassA = node.status === 'deceased' ? 'ft-node-dead' : (node.gender === 'male' ? 'ft-node-male' : 'ft-node-female');
-            let childBadgeA = node.childType === 'rieng' ? \`<div class="text-[9px] text-red-500 font-bold mt-1 leading-none">(Con riêng)</div>\` : '';
-            html += \`
-                <div class="ft-node-box" onclick="ftOpenModal('\${node.id}')">
-                    <span class="ft-node-text \${sClassA}">\${node.name}</span>
-                    \${childBadgeA}
+            let childBadgeA = node.childType === 'rieng' ? `<div class="text-[9px] text-red-500 font-bold mt-1 leading-none">(Con riêng)</div>` : '';
+            html += `
+                <div class="ft-node-box" onclick="ftOpenModal('${node.id}')">
+                    <span class="ft-node-text ${sClassA}">${node.name}</span>
+                    ${childBadgeA}
                 </div>
-            \`;
+            `;
             
             spouses.forEach(sp => {
                 if(sp.id !== node.parentId) { 
                     let sClassB = sp.status === 'deceased' ? 'ft-node-dead' : (sp.gender === 'male' ? 'ft-node-male' : 'ft-node-female');
-                    html += \`<div class="ft-bridge"></div>\`;
-                    html += \`
-                        <div class="ft-node-box bg-orange-50/30 border-dashed border-orange-300" onclick="ftOpenModal('\${sp.id}')">
-                            <span class="ft-node-text \${sClassB}">\${sp.name}</span>
+                    html += `<div class="ft-bridge"></div>`;
+                    html += `
+                        <div class="ft-node-box bg-orange-50/30 border-dashed border-orange-300" onclick="ftOpenModal('${sp.id}')">
+                            <span class="ft-node-text ${sClassB}">${sp.name}</span>
                         </div>
-                    \`;
+                    `;
                 }
             });
-            html += \`</div>\`;
+            html += `</div>`;
 
             if(children.length > 0) {
                 html += '<ul>' + children.map(c => buildTreeHTML(c.id)).join('') + '</ul>';
@@ -644,11 +644,11 @@ registerTool({
         const modal = document.getElementById('ft-modal');
         window.ftOpenModal = (id = null) => {
             let opts = '<option value="">-- Cụ Tổ / Không có --</option>';
-            data.forEach(n => { if(n.id !== id) opts += \`<option value="\${n.id}">\${n.name}</option>\`; });
+            data.forEach(n => { if(n.id !== id) opts += `<option value="${n.id}">${n.name}</option>`; });
             document.getElementById('ft-m-parent').innerHTML = opts;
             
             let spouseOpts = '<option value="">-- Độc thân / Chưa rõ --</option>';
-            data.forEach(n => { if(n.id !== id) spouseOpts += \`<option value="\${n.id}">\${n.name}</option>\`; });
+            data.forEach(n => { if(n.id !== id) spouseOpts += `<option value="${n.id}">${n.name}</option>`; });
             document.getElementById('ft-m-spouse').innerHTML = spouseOpts;
 
             if(id) {
