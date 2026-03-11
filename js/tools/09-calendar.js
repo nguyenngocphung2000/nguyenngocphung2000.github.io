@@ -1,105 +1,91 @@
-// --- 9. Tool Lịch Vạn Niên ---
+// --- 9. Tool Lịch Vạn Niên (Bản Có Chấm Đỏ Sự Kiện & Dropdown Tinh Tế) ---
 registerTool({
     id: 'tab-calendar',
-    name: 'Lịch Vạn Niên',
-    icon: '📆',
-    html: `
-        <div class="text-center mb-6">
-            <span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>
-            <h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>
-            <p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>
-        </div>
+    name: 'Vạn Niên',
+    icon: '🗓️',
+    html: '<style>' +
+          'body.dark-mode .cal-grid-sel { background-color: rgba(30, 41, 59, 0.8) !important; color: #f97316 !important; border-color: #334155 !important; }' +
+          '</style>' +
+          '<div class="text-center mb-6">' +
+          '<span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>' +
+          '<h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>' +
+             '<p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
+          '</div>' +
 
-        <div class="max-w-md mx-auto space-y-5 pb-10">
+          '<div class="max-w-md mx-auto space-y-5 pb-10">' +
 
-            <div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">
-                Đang kết nối dữ liệu Thiên Văn... ⏳
-            </div>
+          '<div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">Đang kết nối dữ liệu Thiên Văn... ⏳</div>' +
 
-            <div id="cal-widget" class="hidden space-y-5">
-            
-                 <div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">
-                    <div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>
-                    
-                    <div class="flex justify-between items-start">
-                        <div class="flex-1 pr-2 overflow-hidden">
-                            <div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">--</div>
-                            <div class="text-lg font-bold text-slate-600 mt-2" id="res-main-my">Tháng --, ----</div>
-                            
-                            <div class="mt-4 flex items-center gap-2.5 w-full">
-                                <div class="shrink-0 bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 flex items-center justify-center">Âm Lịch</div>
-                                <div id="res-sub-date" class="text-[13px] md:text-[14px] font-bold text-slate-600 whitespace-nowrap tracking-tight translate-y-[1px]">--/--/----</div>
-                            </div>
-                        </div>
+          '<div id="cal-widget" class="hidden space-y-5">' +
+          
+          '' +
+          '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">' +
+          '<div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>' +
+          '<div class="flex justify-between items-start">' +
+          '<div class="flex-1 pr-2 overflow-hidden">' +
+          '<div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">--</div>' +
+          '<div class="text-lg font-bold text-slate-600 mt-2" id="res-main-my">Tháng --, ----</div>' +
+          '<div class="mt-4 flex items-center gap-2.5 w-full">' +
+          '<div class="shrink-0 bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 flex items-center justify-center">Âm Lịch</div>' +
+          '<div id="res-sub-date" class="text-[13px] md:text-[14px] font-bold text-slate-600 whitespace-nowrap tracking-tight translate-y-[1px]">--/--/----</div>' +
+          '</div></div>' +
+          '<div class="text-center pt-2 relative z-10 shrink-0">' +
+          '<div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">' +
+          '<div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>' +
+          '</div>' +
+          '<div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>' +
+          '</div></div></div>' +
 
-                        <div class="text-center pt-2 relative z-10 shrink-0">
-                            <div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">
-                                <div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>
-                            </div>
-                            <div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">
-                    
-                    <div class="text-center w-full pb-3 border-b border-slate-100">
-                        <div id="live-clock" class="text-3xl font-black text-slate-700 font-mono tracking-tight">00:00:00</div>
-                        <div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>
-                    </div>
+          '' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">' +
+          '<div class="text-center w-full pb-3 border-b border-slate-100">' +
+          '<div id="live-clock" class="text-3xl font-black text-slate-700 font-mono tracking-tight">00:00:00</div>' +
+          '<div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>' +
+          '</div>' +
+          '<div class="flex bg-slate-100 p-1 rounded-xl w-full">' +
+          '<button id="cal-mode-solar" class="flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition">Dương Lịch</button>' +
+          '<button id="cal-mode-lunar" class="flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition">Âm Lịch</button>' +
+          '</div>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label><select id="sel-d" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+          '<span class="text-slate-300 font-black mt-4">/</span>' +
+          '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label><select id="sel-m" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+          '<span class="text-slate-300 font-black mt-4">/</span>' +
+          '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label><select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+          '</div>' +
+          '<button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">🔍 TÌM NGÀY</button>' +
+          '</div>' +
 
-                    <div class="flex bg-slate-100 p-1 rounded-xl w-full">
-                        <button id="cal-mode-solar" class="flex-1 py-2 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition">Dương Lịch</button>
-                        <button id="cal-mode-lunar" class="flex-1 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition">Âm Lịch</button>
-                    </div>
+          '' +
+          '<div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100">' +
+          
+          '' +
+          '<div class="flex justify-center items-center gap-2 mb-4">' +
+          '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">THÁNG</span>' +
+          '<div class="relative">' +
+          '<select id="grid-sel-m" class="cal-grid-sel appearance-none bg-slate-50 border border-slate-200 hover:bg-slate-100 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
+          '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
+          '</div>' +
+          '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">-</span>' +
+          '<div class="relative">' +
+          '<select id="grid-sel-y" class="cal-grid-sel appearance-none bg-slate-50 border border-slate-200 hover:bg-slate-100 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
+          '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
+          '</div>' +
+          '</div>' +
+          
+          '<div class="grid grid-cols-7 gap-1 text-center mb-2 pb-2 border-b border-slate-100">' +
+          '<div class="text-[10px] font-bold text-slate-400">T2</div><div class="text-[10px] font-bold text-slate-400">T3</div><div class="text-[10px] font-bold text-slate-400">T4</div><div class="text-[10px] font-bold text-slate-400">T5</div><div class="text-[10px] font-bold text-slate-400">T6</div><div class="text-[10px] font-bold text-orange-400">T7</div><div class="text-[10px] font-bold text-orange-500">CN</div>' +
+          '</div>' +
+          '<div id="cal-grid" class="grid grid-cols-7 gap-1 text-center"></div>' +
+          '</div>' +
 
-                    <div class="flex justify-center items-center gap-2 w-full">
-                        <div class="flex-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label>
-                            <select id="sel-d" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
-                        </div>
-                        <span class="text-slate-300 font-black mt-4">/</span>
-                        <div class="flex-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label>
-                            <select id="sel-m" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
-                        </div>
-                        <span class="text-slate-300 font-black mt-4">/</span>
-                        <div class="flex-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label>
-                            <select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select>
-                        </div>
-                    </div>
+          '' +
+          '<div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">' +
+          '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam</h3>' +
+          '<div id="res-events" class="space-y-2 mt-2"></div>' +
+          '</div>' +
 
-                    <button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">
-                        🔍 TRA CỨU
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100">
-                    <div class="text-center font-bold text-slate-700 mb-4 tracking-wider uppercase" id="cal-month-title">THÁNG -- LỊCH DƯƠNG</div>
-                    
-                    <div class="grid grid-cols-7 gap-1 text-center mb-2 pb-2 border-b border-slate-100">
-                        <div class="text-[10px] font-bold text-slate-400">T2</div>
-                        <div class="text-[10px] font-bold text-slate-400">T3</div>
-                        <div class="text-[10px] font-bold text-slate-400">T4</div>
-                        <div class="text-[10px] font-bold text-slate-400">T5</div>
-                        <div class="text-[10px] font-bold text-slate-400">T6</div>
-                        <div class="text-[10px] font-bold text-orange-400">T7</div>
-                        <div class="text-[10px] font-bold text-orange-500">CN</div>
-                    </div>
-                    
-                    <div id="cal-grid" class="grid grid-cols-7 gap-1 text-center"></div>
-                </div>
-
-                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">
-                    <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50">
-                        <span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam
-                    </h3>
-                    <div id="res-events" class="space-y-2 mt-2"></div>
-                </div>
-
-            </div>
-        </div>
-    `,
+          '</div></div>',
     logic: function() {
         var loading = document.getElementById('cal-loading');
         var widget = document.getElementById('cal-widget');
@@ -166,13 +152,12 @@ registerTool({
             "15/10": ["Ngày truyền thống Hội Liên hiệp Thanh niên Việt Nam (1956)"],
             "20/10": ["Thành lập Hội LHPN Việt Nam (1930)"],
             "09/11": ["Ngày Pháp luật Việt Nam (2013)"],
-            "18/11": ["Ngày truyền thống Mặt trận Tổ quốc Việt Nam (1930)", "Ngày Đại đoàn kết toàn dân tộc"],
+            "18/11": ["Ngày truyền thống MTTQ Việt Nam (1930)", "Ngày Đại đoàn kết toàn dân tộc"],
             "20/11": ["Ngày Nhà giáo Việt Nam (1982)"],
             "23/11": ["Ngày sinh TT Võ Văn Kiệt (1922)", "Ngày Khởi nghĩa Nam Kỳ (1940)"],
             "19/12": ["Ngày Toàn quốc kháng chiến (1946)"],
             "22/12": ["Thành lập Quân đội Nhân dân Việt Nam (1944)"]
         };
-        
         var evLunar = {
             "01/01": ["Tết Nguyên Đán (Mùng 1)"], "02/01": ["Mùng 2 Tết"], "03/01": ["Mùng 3 Tết"],
             "15/01": ["Tết Nguyên Tiêu"], "10/03": ["Giỗ Tổ Hùng Vương"],
@@ -180,6 +165,7 @@ registerTool({
             "15/07": ["Lễ Vu Lan"], "15/08": ["Tết Trung Thu"],
             "23/12": ["Đưa Ông Táo về trời"], "30/12": ["Lễ Giao Thừa"], "29/12": ["Lễ Giao Thừa (Tháng thiếu)"]
         };
+
         var initTool = function() {
             loading.classList.add('hidden');
             widget.classList.remove('hidden');
@@ -189,6 +175,9 @@ registerTool({
             var selD = document.getElementById('sel-d');
             var selM = document.getElementById('sel-m');
             var selY = document.getElementById('sel-y');
+            
+            var gridSelM = document.getElementById('grid-sel-m');
+            var gridSelY = document.getElementById('grid-sel-y');
             
             var isSolarMode = true;
 
@@ -208,16 +197,36 @@ registerTool({
             };
 
             var mOpts = ''; 
-            for(var i = 1; i <= 12; i++) mOpts += '<option value="' + i + '">' + i + '</option>'; 
+            for(var i = 1; i <= 12; i++) {
+                var optStr = '<option value="' + i + '">' + i + '</option>';
+                mOpts += optStr;
+            }
             selM.innerHTML = mOpts;
+            gridSelM.innerHTML = mOpts;
             
             var yOpts = ''; 
             var curY = new Date().getFullYear();
-            for(var i = curY - 100; i <= curY + 50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
+            for(var i = curY - 100; i <= curY + 50; i++) {
+                var optStr = '<option value="' + i + '">' + i + '</option>';
+                yOpts += optStr;
+            }
             selY.innerHTML = yOpts;
+            gridSelY.innerHTML = yOpts;
 
             selM.addEventListener('change', updateDays);
             selY.addEventListener('change', updateDays);
+
+            // Bắt sự kiện khi dùng Dropdown của Lịch Tháng
+            var handleGridSelectChange = function() {
+                document.getElementById('cal-mode-solar').click(); // Ép về chế độ Dương lịch cho chuẩn
+                selM.value = gridSelM.value;
+                selY.value = gridSelY.value;
+                selD.value = 1; // Nhảy về ngày 1 của tháng đó
+                updateDays();
+                document.getElementById('btn-lookup').click();
+            };
+            gridSelM.addEventListener('change', handleGridSelectChange);
+            gridSelY.addEventListener('change', handleGridSelectChange);
 
             selM.value = new Date().getMonth() + 1;
             selY.value = curY;
@@ -237,8 +246,8 @@ registerTool({
                     selD.value = lunar.getDay();
                 } catch(e) {}
                 
-                btnL.className = 'flex-1 py-2 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition';
-                btnS.className = 'flex-1 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition';
+                btnL.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition';
+                btnS.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition';
                 document.getElementById('btn-lookup').click();
             };
 
@@ -255,20 +264,32 @@ registerTool({
                     selD.value = solar.getDay();
                 } catch(e) {}
                 
-                btnS.className = 'flex-1 py-2 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition';
-                btnL.className = 'flex-1 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition';
+                btnS.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition';
+                btnL.className = 'flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition';
                 document.getElementById('btn-lookup').click();
             };
 
             var CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
             var CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
 
+            // Hàm đếm số sự kiện của 1 ngày (Dùng cho lưới tháng và danh sách)
+            var getEventsForDate = function(sDay, sMonth, lDay, lMonth) {
+                var sKey = ('0' + sDay).slice(-2) + '/' + ('0' + sMonth).slice(-2);
+                var lKey = ('0' + lDay).slice(-2) + '/' + ('0' + lMonth).slice(-2);
+                var events = [];
+                if(evSolar[sKey]) events = events.concat(evSolar[sKey]);
+                if(evLunar[lKey]) events = events.concat(evLunar[lKey].map(function(e) { return e + ' (Âm lịch)'; }));
+                return events;
+            };
+
             var renderMonthGrid = function(targetSolar) {
                 var y = targetSolar.getYear();
                 var m = targetSolar.getMonth();
                 var d = targetSolar.getDay();
 
-                document.getElementById('cal-month-title').innerText = 'THÁNG ' + m + ' - ' + y;
+                // Đồng bộ Select của Lưới Tháng
+                gridSelM.value = m;
+                gridSelY.value = y;
 
                 var firstDay = Solar.fromYmd(y, m, 1);
                 var startWeekDay = firstDay.getWeek(); 
@@ -295,9 +316,21 @@ registerTool({
                     var sColor = isWeekend ? 'text-orange-500' : 'text-slate-700';
                     if (isSelected) sColor = 'text-orange-600';
 
-                    gridHtml += '<div class="cal-cell flex flex-col items-center justify-center py-1.5 rounded-xl cursor-pointer transition ' + bgClass + '" data-d="' + i + '" data-m="' + m + '" data-y="' + y + '">';
-                    gridHtml += '<span class="text-sm font-bold ' + sColor + '">' + i + '</span>';
+                    // Tính Chấm Đỏ Sự Kiện
+                    var dayEvents = getEventsForDate(i, m, lDay, lMonth);
+                    var dotHtml = '<div class="h-1.5 mt-0.5 flex gap-0.5 justify-center">'; // Khung chứa chấm (giữ height cố định để không vỡ layout)
+                    if (dayEvents.length > 0) {
+                        var maxDots = Math.min(dayEvents.length, 3); // Hiện tối đa 3 chấm
+                        for(var dt = 0; dt < maxDots; dt++) {
+                            dotHtml += '<div class="w-1.5 h-1.5 bg-red-500 rounded-full shadow-sm"></div>';
+                        }
+                    }
+                    dotHtml += '</div>';
+
+                    gridHtml += '<div class="cal-cell flex flex-col items-center justify-center py-1.5 rounded-xl cursor-pointer transition min-h-[52px] ' + bgClass + '" data-d="' + i + '" data-m="' + m + '" data-y="' + y + '">';
+                    gridHtml += '<span class="text-[15px] font-bold ' + sColor + '">' + i + '</span>';
                     gridHtml += '<span class="text-[9px] text-slate-400">' + lText + '</span>';
+                    gridHtml += dotHtml;
                     gridHtml += '</div>';
                 }
                 document.getElementById('cal-grid').innerHTML = gridHtml;
@@ -314,15 +347,11 @@ registerTool({
                 
                 var lYearText = CAN[lunar.getYearGanIndex()] + ' ' + CHI[lunar.getYearZhiIndex()];
                 if (lunar.getMonth() < 0) lYearText += " (Nhuận)";
-                
-                // FORMAT: 13/02/2026 Bính Ngọ
-                var lunarFullYear = lunar.getYear();
-                var lunarFormattedString = lDayStr + "/" + lMonthStr + "/" + lunarFullYear + " " + lYearText;
 
                 document.getElementById('res-weekday').innerText = wdNames[solar.getWeek()];
                 document.getElementById('res-main-d').innerText = solar.getDay();
                 document.getElementById('res-main-my').innerText = "Tháng " + solar.getMonth() + ", " + sYear;
-                document.getElementById('res-sub-date').innerText = lunarFormattedString;
+                document.getElementById('res-sub-date').innerText = lDayStr + "/" + lMonthStr + "/" + solar.getYear() + " " + lYearText; // Fixed định dạng
 
                 var phaseText = 'Trăng khuyết';
                 var shadowTranslate = '100%'; 
@@ -340,15 +369,7 @@ registerTool({
                 var evContainer = document.getElementById('res-events');
                 evContainer.innerHTML = '';
                 
-                var sKey = sDayStr + '/' + sMonthStr;
-                var lKey = lDayStr + '/' + lMonthStr;
-                
-                var todaysEvents = [];
-                if(evSolar[sKey]) todaysEvents = todaysEvents.concat(evSolar[sKey]);
-                if(evLunar[lKey]) {
-                    var lunarEvents = evLunar[lKey].map(function(e) { return e + ' (Âm lịch)'; });
-                    todaysEvents = todaysEvents.concat(lunarEvents);
-                }
+                var todaysEvents = getEventsForDate(solar.getDay(), solar.getMonth(), lunar.getDay(), Math.abs(lunar.getMonth()));
 
                 if(todaysEvents.length === 0) {
                     evContainer.innerHTML = '<div class="text-xs text-slate-400 italic">Không có dấu ấn lịch sử nào vào ngày này.</div>';
@@ -392,7 +413,7 @@ registerTool({
                         var solar = lunar.getSolar();
                         renderWidget(solar, lunar);
                     }
-                } catch(e) { console.error(e); }
+                } catch(e) {}
             };
 
             setTimeout(function() { document.getElementById('btn-lookup').click(); }, 200);
