@@ -88,8 +88,11 @@ registerTool({
           '' +
           '<div>' +
           '<div class="flex justify-between items-end mb-1">' +
+          '<div class="flex items-center gap-2">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Nhập danh sách</label>' +
-          '<span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">Dòng: <span id="flt-cnt-in">0</span></span>' +
+          '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">Dòng: <span id="flt-cnt-in">0</span></span>' +
+          '</div>' +
+          '<button id="flt-btn-paste" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95">📋 Dán</button>' +
           '</div>' +
           '<textarea id="flt-input" class="bn-input w-full h-32 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
           '</div>' +
@@ -372,6 +375,25 @@ registerTool({
             var lines = inputArea.value.split('\n');
             document.getElementById('flt-cnt-in').innerText = inputArea.value === '' ? 0 : lines.length;
         });
+
+        // Xử lý nút dán danh sách
+        var btnPaste = document.getElementById('flt-btn-paste');
+        if (btnPaste) {
+            btnPaste.onclick = function() {
+                navigator.clipboard.readText().then(function(clipText) {
+                    if (clipText) {
+                        inputArea.value = clipText;
+                        inputArea.dispatchEvent(new Event('input')); // Kích hoạt sự kiện để đếm lại dòng
+                        
+                        var oldHtml = btnPaste.innerHTML;
+                        btnPaste.innerHTML = '✅ Đã dán';
+                        setTimeout(function() { btnPaste.innerHTML = oldHtml; }, 2000);
+                    }
+                }).catch(function(err) {
+                    alert("Trình duyệt chặn quyền truy cập Clipboard hoặc không hỗ trợ tự động dán!");
+                });
+            };
+        }
 
         document.getElementById('flt-btn-process').onclick = function() {
             var text = document.getElementById('flt-input').value;
