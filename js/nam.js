@@ -11673,7 +11673,7 @@ var nam = [
     "Thạch Ngọc Dũng",
     "Thạch Ngọc Nam",
     "Thạch Ngọc Tài",
-    "Thạch Panh Nha Nhiệne",
+    "Thạch Panh Nha Nhiện",
     "Thạch Quốc Khánh",
     "Thạch Rịch Thi",
     "Thạch Si Tha",

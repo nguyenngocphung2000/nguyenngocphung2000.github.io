@@ -1,7 +1,7 @@
-// --- 9. Tool Lịch Vạn Niên (Bản Có Chấm Đỏ Sự Kiện & Dropdown Tinh Tế) ---
+// --- 9. Tool Lịch Vạn Niên ---
 registerTool({
     id: 'tab-calendar',
-    name: 'Vạn Niên',
+    name: 'Lịch Vạn Niên',
     icon: '🗓️',
     html: '<style>' +
           'body.dark-mode .cal-grid-sel { background-color: rgba(30, 41, 59, 0.8) !important; color: #f97316 !important; border-color: #334155 !important; }' +

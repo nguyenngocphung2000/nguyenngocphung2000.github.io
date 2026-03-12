@@ -1,4 +1,4 @@
-// --- 12. Tool Đặt Tên Con (Bản Chuẩn VIP + Màng Lọc Diệt Rác + Trạm Lọc) ---
+// --- 12. Tool Đặt Tên Con ---
 registerTool({
     id: 'tab-baby-name',
     name: 'Đặt Tên Con',
@@ -32,7 +32,7 @@ registerTool({
           '</div>' +
           '<div class="flex-1">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Số lượng</label>' +
-          '<input id="bn-count" type="number" placeholder="Mặc định: 10" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200">' +
+          '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200">' +
           '</div>' +
           '</div>' +
 
@@ -44,7 +44,6 @@ registerTool({
           '<option value="3">3 Chữ</option>' +
           '<option value="4">4 Chữ</option>' +
           '<option value="5">5 Chữ</option>' +
-          '<option value="6">6 Chữ</option>' +
           '</select>' +
           '</div>' +
 
@@ -263,8 +262,9 @@ registerTool({
                 window.nameParsed = true;
             }
 
-            var count = parseInt(document.getElementById('bn-count').value) || 10;
-            if (count <= 0 || count > 200) count = 10; 
+            // Đã thay đổi số lượng mặc định thành 100
+            var count = parseInt(document.getElementById('bn-count').value) || 100;
+            if (count <= 0 || count > 200) count = 100; 
             var gender = document.getElementById('bn-gender').value;
             var lengthOpt = document.getElementById('bn-length').value;
             
@@ -273,7 +273,7 @@ registerTool({
             var inputTen = document.getElementById('bn-ten').value.trim();
 
             if (lengthOpt === '2' && inputDem !== '') {
-                alert("Tên 2 chữ thì không có Chữ lót nhé! Vui lòng xóa 'Chữ lót' hoặc đổi độ dài thành 3-4-5-6 chữ.");
+                alert("Tên 2 chữ thì không có Chữ lót nhé! Vui lòng xóa 'Chữ lót' hoặc đổi độ dài thành 3-4-5 chữ.");
                 return;
             }
 
@@ -285,7 +285,15 @@ registerTool({
                 attempts++;
                 var g = gender === 'all' ? (Math.random() < 0.5 ? 'nam' : 'nu') : gender;
                 var data = window.nameData[g];
-                var targetL = lengthOpt === 'all' ? (Math.floor(Math.random() * 5) + 2) : parseInt(lengthOpt); 
+                
+                // Logic lấy độ dài ngẫu nhiên có trọng số ưu tiên 3 và 4 chữ
+                var targetL;
+                if (lengthOpt === 'all') {
+                    var lengthWeights = [2, 3, 3, 3, 4, 4, 4, 5]; // Tăng xác suất cho 3 và 4
+                    targetL = randItem(lengthWeights);
+                } else {
+                    targetL = parseInt(lengthOpt);
+                }
 
                 var hoStr = inputHo !== '' ? capitalize(inputHo) : randItem(data.ho);
                 var demInStr = inputDem !== '' ? capitalize(inputDem) : '';
@@ -460,12 +468,11 @@ registerTool({
 
         // --- CÁC NÚT ĐIỀU KHIỂN CỦA TRẠM LỌC ---
         document.getElementById('flt-btn-clear').onclick = function() {
-            if(confirm("Xóa toàn bộ dữ liệu ở cả 2 khung Nhập và Xuất?")) {
-                document.getElementById('flt-input').value = '';
-                document.getElementById('flt-output').value = '';
-                document.getElementById('flt-cnt-in').innerText = '0';
-                document.getElementById('flt-cnt-out').innerText = '0';
-            }
+            // Đã loại bỏ hàm confirm() để chống lỗi bị chặn từ các iframe/trình duyệt
+            document.getElementById('flt-input').value = '';
+            document.getElementById('flt-output').value = '';
+            document.getElementById('flt-cnt-in').innerText = '0';
+            document.getElementById('flt-cnt-out').innerText = '0';
         };
 
         document.getElementById('flt-btn-copy').onclick = function() {
