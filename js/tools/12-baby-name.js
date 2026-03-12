@@ -1,4 +1,4 @@
-// --- 12. Tool Đặt Tên Con ---
+// --- 12. Tool Đặt Tên Con (Bản Chuẩn VIP + Trạm Xử Lý Thủ Công) ---
 registerTool({
     id: 'tab-baby-name',
     name: 'Đặt Tên Con',
@@ -6,10 +6,9 @@ registerTool({
     html: '<style>' +
           'body.dark-mode .bn-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .bn-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; } ' +
-          'body.dark-mode .bn-name-nam { background-color: rgba(30, 58, 138, 0.4) !important; border-color: rgba(59, 130, 246, 0.5) !important; color: #bfdbfe !important; } ' +
-          'body.dark-mode .bn-name-nu { background-color: rgba(131, 24, 67, 0.4) !important; border-color: rgba(236, 72, 153, 0.5) !important; color: #fbcfe8 !important; } ' +
-          'body.dark-mode .bn-icon-nam { background-color: rgba(59, 130, 246, 0.2) !important; color: #60a5fa !important; } ' +
-          'body.dark-mode .bn-icon-nu { background-color: rgba(236, 72, 153, 0.2) !important; color: #f472b6 !important; } ' +
+          'body.dark-mode .bn-name-nam { background-color: rgba(30, 58, 138, 0.4) !important; border-color: rgba(59, 130, 246, 0.3) !important; color: #bfdbfe !important; } ' +
+          'body.dark-mode .bn-name-nu { background-color: rgba(131, 24, 67, 0.4) !important; border-color: rgba(236, 72, 153, 0.3) !important; color: #fbcfe8 !important; } ' +
+          'body.dark-mode .filter-card { background-color: rgba(30, 41, 59, 0.6) !important; border-color: rgba(99, 102, 241, 0.2) !important; }' +
           '</style>' +
           '<div class="text-center mb-6">' +
           '<span class="bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-pink-200">Kho dữ liệu vô tận</span>' +
@@ -20,7 +19,7 @@ registerTool({
           '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">' +
           '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-pink-500 text-lg">⚙️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Bộ lọc tùy chỉnh</h3></div>' +
-          '<p class="text-[10.5px] text-slate-500 italic mt-0 leading-relaxed font-medium">💡 Mẹo: Muốn tìm gì thì BỎ TRỐNG ô đấy. Máy sẽ tự tìm những từ hay nhất trong kho để đắp vào chỗ trống cho bạn.</p>' +
+          '<p class="text-[10.5px] text-slate-500 italic mt-0 leading-relaxed font-medium">💡 Mẹo: Bỏ trống ô nào thì máy sẽ tự động tìm từ hay nhất đắp vào ô đó.</p>' +
           
           '<div class="flex gap-3">' +
           '<div class="flex-1">' +
@@ -37,7 +36,6 @@ registerTool({
           '</div>' +
           '</div>' +
 
-          '' +
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Độ dài tên</label>' +
           '<select id="bn-length" style="text-align-last: center;" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
@@ -50,7 +48,6 @@ registerTool({
           '</select>' +
           '</div>' +
 
-          '' +
           '<div class="flex gap-2">' +
           '<div class="w-1/3">' +
           '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Họ</label>' +
@@ -66,34 +63,144 @@ registerTool({
           '</div>' +
           '</div>' +
 
-          '<div class="w-full mt-4">' +
-          '<button id="bn-btn-gen" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
-          '✨ Đề Xuất Tên ✨' +
+          '<div class="flex gap-2 w-full mt-4">' +
+          '<button id="bn-btn-copy-gen" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-4 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 flex justify-center items-center gap-1 text-[11px] uppercase tracking-wide">' +
+          '📋 Copy' +
+          '</button>' +
+          '<button id="bn-btn-gen" class="w-2/3 bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
+          '✨ Đề Xuất Tên' +
           '</button>' +
           '</div>' +
           '</div>' +
 
           '' +
           '<div id="bn-result" class="hidden bn-card bg-slate-50 rounded-[1.5rem] p-5 shadow-sm border border-slate-200">' +
-          '<div class="text-pink-600 font-bold text-[10px] tracking-widest uppercase border-b border-pink-200/50 pb-2 mb-3 text-center">DANH SÁCH TÊN GỢI Ý</div>' +
-          '<div id="bn-res-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>' +
+          '<div class="flex justify-between items-center border-b border-pink-200/50 pb-2 mb-3">' +
+          '<div class="text-pink-600 font-bold text-[10px] tracking-widest uppercase">DANH SÁCH TÊN GỢI Ý</div>' +
+          '<button id="bn-btn-toggle" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition">Thu gọn</button>' +
+          '</div>' +
+          '<div id="bn-res-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all duration-300"></div>' +
+          '</div>' +
+
+          '' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 mt-6 filter-card">' +
+          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-indigo-500 text-lg">🛠️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Trạm xử lý danh sách</h3></div>' +
+          
+          '' +
+          '<div>' +
+          '<div class="flex justify-between items-end mb-1">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Nhập danh sách</label>' +
+          '<span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">Dòng: <span id="flt-cnt-in">0</span></span>' +
+          '</div>' +
+          '<textarea id="flt-input" class="bn-input w-full h-32 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
+          '</div>' +
+          
+          '' +
+          '<div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3 bn-input">' +
+          
+          '<div class="grid grid-cols-2 gap-3">' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded"> Xóa dòng trống</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded"> Chuẩn hóa dấu cách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-rem-num" class="w-4 h-4 text-indigo-500 rounded"> Bỏ số thứ tự cũ</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-accent" class="w-4 h-4 text-indigo-500 rounded"> Bỏ dấu Tiếng Việt</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-dup" class="w-4 h-4 text-indigo-500 rounded"> Lọc trùng lặp</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded"> Thêm số thứ tự mới</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded"> Đảo ngược danh sách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded"> Xáo trộn danh sách</label>' +
+          '</div>' +
+
+          '<div class="grid grid-cols-2 gap-3 border-t border-slate-200 pt-3">' +
+          '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none">' +
+          '<option value="none">A/a (Không can thiệp HOA/thường)</option>' +
+          '<option value="title" selected>Aa (Viết hoa chữ đầu)</option>' +
+          '<option value="lower">aa (Viết thường tất cả)</option>' +
+          '</select>' +
+          '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none">' +
+          '<option value="none">Sắp xếp (Không can thiệp)</option>' +
+          '<option value="asc">A-Z</option>' +
+          '<option value="desc">Z-A</option>' +
+          '</select>' +
+          '</div>' +
+
+          '<div class="flex items-center gap-2 border-t border-slate-200 pt-3">' +
+          '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer">' +
+          '<span class="text-[11px] font-bold text-slate-600">Lọc theo số từ:</span>' +
+          '<select id="sel-wc-op" class="bg-white border border-slate-200 rounded p-1 text-[11px] font-bold text-slate-700 outline-none"><option value="<"><</option><option value="=" selected>=</option><option value=">">></option></select>' +
+          '<input type="number" id="inp-wc-num" value="3" class="w-12 bg-white border border-slate-200 rounded p-1 text-center text-[11px] font-bold text-slate-700 outline-none">' +
+          '<span class="text-[11px] font-bold text-slate-500">từ/dòng</span>' +
+          '</div>' +
+
+          '</div>' +
+
+          '<div class="w-full">' +
+          '<button id="flt-btn-process" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
+          '🚀 THỰC HIỆN XỬ LÝ' +
+          '</button>' +
+          '</div>' +
+
+          '' +
+          '<div>' +
+          '<div class="flex justify-between items-end mb-1">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Kết quả đầu ra</label>' +
+          '<span class="text-[10px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-md border border-green-100">Dòng: <span id="flt-cnt-out">0</span></span>' +
+          '</div>' +
+          '<textarea id="flt-output" readonly class="bn-input w-full h-32 bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-700 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
+          '</div>' +
+          
+          '<div class="flex gap-2">' +
+          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase">🗑️ Xóa Tất Cả</button>' +
+          '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide">📋 Copy Kết Quả</button>' +
+          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase">⬇️ Tải TXT</button>' +
+          '</div>' +
+
           '</div>' +
           
           '</div>',
     logic: function() {
-        var btnGen = document.getElementById('bn-btn-gen');
-        var resDiv = document.getElementById('bn-result');
-        var resList = document.getElementById('bn-res-list');
-
-        // Hàm chuẩn hóa viết hoa chữ cái đầu
+        // --- CÁC BIẾN & HÀM TIỆN ÍCH ---
         var capitalize = function(str) {
             return str.trim().replace(/\s+/g, ' ').split(' ').map(function(word) {
+                if(!word) return '';
                 return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
             }).join(' ');
         };
 
-        var randItem = function(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
+        var removeAccents = function(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
+        };
+
+        var randItem = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+
+        // --- MODULE 1: GỢI Ý TÊN ---
+        var btnGen = document.getElementById('bn-btn-gen');
+        var btnCopyGen = document.getElementById('bn-btn-copy-gen');
+        var btnToggle = document.getElementById('bn-btn-toggle');
+        var resDiv = document.getElementById('bn-result');
+        var resList = document.getElementById('bn-res-list');
+        var currentResults = []; 
+
+        btnToggle.onclick = function() {
+            if (resList.classList.contains('hidden')) {
+                resList.classList.remove('hidden');
+                btnToggle.innerText = 'Thu gọn';
+            } else {
+                resList.classList.add('hidden');
+                btnToggle.innerText = 'Mở rộng';
+            }
+        };
+
+        btnCopyGen.onclick = function() {
+            if (currentResults.length === 0) { alert("Chưa có danh sách tên nào để Copy!"); return; }
+            var textToCopy = currentResults.join('\n');
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                var oldHtml = btnCopyGen.innerHTML;
+                btnCopyGen.innerHTML = '✅ OK';
+                btnCopyGen.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
+                setTimeout(function() { 
+                    btnCopyGen.innerHTML = oldHtml; 
+                    btnCopyGen.classList.remove('bg-green-100', 'text-green-600', 'border-green-200');
+                }, 2000);
+            });
         };
 
         btnGen.onclick = function() {
@@ -102,18 +209,12 @@ registerTool({
                 return;
             }
 
-            // --- BƯỚC 1: TIẾN HÀNH PHÂN RÃ DỮ LIỆU ---
             if (!window.nameParsed) {
-                window.nameData = {
-                    nam: { ho: [], demFull: [], demWords: [], ten: [] },
-                    nu: { ho: [], demFull: [], demWords: [], ten: [] }
-                };
+                window.nameData = { nam: { ho: [], demFull: [], demWords: [], ten: [] }, nu: { ho: [], demFull: [], demWords: [], ten: [] } };
                 var parsePool = function(arr, gender) {
                     arr.forEach(function(n) {
-                        // Tôn trọng dữ liệu gốc tuyệt đối, chỉ cắt khoảng trắng thừa
                         var cleanName = n.trim().replace(/\s+/g, ' ');
                         var w = cleanName.split(' ');
-                        
                         if(w.length >= 2) {
                             window.nameData[gender].ho.push(w[0]);
                             window.nameData[gender].ten.push(w[w.length-1]);
@@ -124,7 +225,6 @@ registerTool({
                             }
                         }
                     });
-                    // Loại bỏ các chữ trùng lặp để máy chạy nhanh hơn
                     window.nameData[gender].ho = [...new Set(window.nameData[gender].ho)];
                     window.nameData[gender].ten = [...new Set(window.nameData[gender].ten)];
                     window.nameData[gender].demFull = [...new Set(window.nameData[gender].demFull)];
@@ -135,10 +235,8 @@ registerTool({
                 window.nameParsed = true;
             }
 
-            // --- BƯỚC 2: ĐỌC DỮ LIỆU NGƯỜI DÙNG YÊU CẦU ---
             var count = parseInt(document.getElementById('bn-count').value) || 10;
             if (count <= 0 || count > 200) count = 10; 
-
             var gender = document.getElementById('bn-gender').value;
             var lengthOpt = document.getElementById('bn-length').value;
             
@@ -155,16 +253,12 @@ registerTool({
             var attempts = 0;
             var maxAttempts = count * 100; 
 
-            // --- BƯỚC 3: THUẬT TOÁN LẮP RÁP TÊN ---
             while (resultsMap.size < count && attempts < maxAttempts) {
                 attempts++;
-                
                 var g = gender === 'all' ? (Math.random() < 0.5 ? 'nam' : 'nu') : gender;
                 var data = window.nameData[g];
-                
                 var targetL = lengthOpt === 'all' ? (Math.floor(Math.random() * 5) + 2) : parseInt(lengthOpt); 
 
-                // Nếu có nhập thì lấy chữ nhập, bỏ trống thì bốc ngẫu nhiên
                 var hoStr = inputHo !== '' ? capitalize(inputHo) : randItem(data.ho);
                 var demInStr = inputDem !== '' ? capitalize(inputDem) : '';
                 var tenStr = inputTen !== '' ? capitalize(inputTen) : randItem(data.ten);
@@ -196,7 +290,7 @@ registerTool({
                     dem_final = dem_final === '' ? addedDem : (dem_final + ' ' + addedDem);
                 } 
                 else if (lengthOpt === '2') {
-                    dem_final = ''; // Tên 2 chữ thì ép bỏ chữ lót
+                    dem_final = ''; 
                 }
 
                 var nameParts = [];
@@ -207,45 +301,168 @@ registerTool({
                 var finalName = nameParts.join(' ').replace(/\s+/g, ' ').trim();
                 var finalWordCount = finalName.split(' ').length;
 
-                // Lọc bỏ nếu máy ghép ra tên không đúng số lượng yêu cầu
                 if (lengthOpt !== 'all' && finalWordCount !== parseInt(lengthOpt)) {
-                    if (c_ho + c_dem_in + c_ten >= parseInt(lengthOpt)) {
-                        // Ngoại lệ an toàn
-                    } else {
-                        continue; 
-                    }
+                    if (c_ho + c_dem_in + c_ten < parseInt(lengthOpt)) continue; 
                 }
 
-                // Chống trùng lặp tuyệt đối
                 if (!resultsMap.has(finalName)) {
                     resultsMap.set(finalName, g);
                 }
             }
 
-            // --- BƯỚC 4: RENDER KẾT QUẢ ---
             var generatedHTML = '';
+            currentResults = []; 
             resultsMap.forEach(function(g, finalName) {
-                var icon = g === 'nam' ? '♂' : '♀';
-                var colorClass = g === 'nam' 
-                    ? 'bn-name-nam bg-blue-100 text-blue-800 border-blue-300' 
-                    : 'bn-name-nu bg-pink-100 text-pink-800 border-pink-300';
-                    
-                var iconBgClass = g === 'nam' 
-                    ? 'bn-icon-nam bg-blue-200 text-blue-600' 
-                    : 'bn-icon-nu bg-pink-200 text-pink-600';
-                
-                generatedHTML += '<div class="p-3 rounded-xl border shadow-sm flex items-center gap-3 transition hover:scale-105 ' + colorClass + '">';
-                generatedHTML += '<div class="flex items-center justify-center w-8 h-8 rounded-full ' + iconBgClass + '"><span class="text-xl font-black leading-none pb-0.5">' + icon + '</span></div>';
+                currentResults.push(finalName); 
+                var colorClass = g === 'nam' ? 'bn-name-nam bg-blue-50 text-blue-800 border-blue-200' : 'bn-name-nu bg-pink-50 text-pink-800 border-pink-200';
+                generatedHTML += '<div class="p-3.5 rounded-xl border shadow-sm text-center ' + colorClass + '">';
                 generatedHTML += '<span class="font-bold text-[15px]">' + finalName + '</span>';
                 generatedHTML += '</div>';
             });
 
             if (resultsMap.size === 0) {
-                generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào! Hãy thử đổi bộ lọc nhé.</div>';
+                generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào!</div>';
             }
 
             resList.innerHTML = generatedHTML;
+            resList.classList.remove('hidden');
+            btnToggle.innerText = 'Thu gọn';
             resDiv.classList.remove('hidden');
+        };
+
+        // --- MODULE 2: TRẠM XỬ LÝ DANH SÁCH ---
+        var inputArea = document.getElementById('flt-input');
+        inputArea.addEventListener('input', function() {
+            var lines = inputArea.value.split('\n');
+            document.getElementById('flt-cnt-in').innerText = inputArea.value.trim() === '' ? 0 : lines.length;
+        });
+
+        document.getElementById('flt-btn-process').onclick = function() {
+            var text = document.getElementById('flt-input').value;
+            if(text.trim() === '') {
+                document.getElementById('flt-output').value = '';
+                document.getElementById('flt-cnt-out').innerText = '0';
+                return;
+            }
+            
+            var lines = text.split('\n');
+
+            // 1. Xóa dòng trống
+            if (document.getElementById('chk-empty').checked) {
+                lines = lines.filter(function(l) { return l.trim() !== ''; });
+            }
+
+            // 2. Bỏ số thứ tự cũ (Regex xóa số và các ký tự . - ) ở đầu dòng
+            if (document.getElementById('chk-rem-num').checked) {
+                lines = lines.map(function(l) { return l.replace(/^\s*\d+[\.\-\)]?\s*/, ''); });
+            }
+
+            // 3. Chuẩn hóa dấu cách
+            if (document.getElementById('chk-space').checked) {
+                lines = lines.map(function(l) { return l.replace(/\s+/g, ' ').trim(); });
+            }
+
+            // 4. Can thiệp Hoa/Thường
+            var caseOpt = document.getElementById('sel-case').value;
+            if (caseOpt === 'title') {
+                lines = lines.map(function(l) { return capitalize(l); });
+            } else if (caseOpt === 'lower') {
+                lines = lines.map(function(l) { return l.toLowerCase(); });
+            }
+
+            // 5. Bỏ dấu Tiếng Việt
+            if (document.getElementById('chk-accent').checked) {
+                lines = lines.map(function(l) { return removeAccents(l); });
+            }
+
+            // 6. Lọc theo số từ
+            if (document.getElementById('chk-wc').checked) {
+                var op = document.getElementById('sel-wc-op').value;
+                var num = parseInt(document.getElementById('inp-wc-num').value) || 0;
+                lines = lines.filter(function(l) {
+                    if (l.trim() === '') return false;
+                    var wc = l.trim().split(/\s+/).length;
+                    if (op === '<') return wc < num;
+                    if (op === '=') return wc === num;
+                    if (op === '>') return wc > num;
+                    return true;
+                });
+            }
+
+            // 7. Lọc trùng lặp
+            if (document.getElementById('chk-dup').checked) {
+                lines = [...new Set(lines)];
+            }
+
+            // 8. Sắp xếp A-Z / Z-A theo TÊN CHÍNH
+            var sortOpt = document.getElementById('sel-sort').value;
+            if (sortOpt === 'asc' || sortOpt === 'desc') {
+                lines.sort(function(a, b) {
+                    var aWords = a.trim().split(/\s+/);
+                    var bWords = b.trim().split(/\s+/);
+                    var aName = aWords[aWords.length - 1] || '';
+                    var bName = bWords[bWords.length - 1] || '';
+                    var cmp = aName.localeCompare(bName, 'vi');
+                    if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } // Nếu tên giống nhau thì so sánh nguyên dòng
+                    return sortOpt === 'asc' ? cmp : -cmp;
+                });
+            }
+
+            // 9. Đảo ngược danh sách
+            if (document.getElementById('chk-reverse').checked) {
+                lines.reverse();
+            }
+
+            // 10. Xáo trộn danh sách
+            if (document.getElementById('chk-shuffle').checked) {
+                lines.sort(function() { return 0.5 - Math.random(); });
+            }
+
+            // 11. Thêm số thứ tự mới
+            if (document.getElementById('chk-add-num').checked) {
+                lines = lines.map(function(l, i) { return (i + 1) + ". " + l; });
+            }
+
+            // Xuất kết quả
+            document.getElementById('flt-output').value = lines.join('\n');
+            document.getElementById('flt-cnt-out').innerText = lines.length;
+        };
+
+        // Các nút hành động của Trạm lọc
+        document.getElementById('flt-btn-clear').onclick = function() {
+            if(confirm("Bạn có chắc chắn muốn xóa toàn bộ dữ liệu nhập và xuất?")) {
+                document.getElementById('flt-input').value = '';
+                document.getElementById('flt-output').value = '';
+                document.getElementById('flt-cnt-in').innerText = '0';
+                document.getElementById('flt-cnt-out').innerText = '0';
+            }
+        };
+
+        document.getElementById('flt-btn-copy').onclick = function() {
+            var outText = document.getElementById('flt-output').value;
+            if (outText === "") { alert("Không có kết quả để copy!"); return; }
+            navigator.clipboard.writeText(outText).then(function() {
+                var btn = document.getElementById('flt-btn-copy');
+                var oldHtml = btn.innerHTML;
+                btn.innerHTML = '✅ Đã Copy';
+                btn.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
+                btn.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
+                setTimeout(function() { 
+                    btn.innerHTML = oldHtml; 
+                    btn.classList.remove('bg-green-100', 'text-green-600', 'border-green-200');
+                    btn.classList.add('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
+                }, 2000);
+            });
+        };
+
+        document.getElementById('flt-btn-down').onclick = function() {
+            var outText = document.getElementById('flt-output').value;
+            if (outText === "") { alert("Không có dữ liệu để tải!"); return; }
+            var blob = new Blob([outText], { type: 'text/plain;charset=utf-8' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Danh_Sach_Ten.txt';
+            link.click();
         };
     }
 });
