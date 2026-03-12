@@ -1,4 +1,4 @@
-// --- 12. Tool Đặt Tên Con (Bản Chuẩn VIP + Trạm Xử Lý Thủ Công 100% An Toàn) ---
+// --- 12. Tool Đặt Tên Con (Bản Chuẩn VIP + Màng Lọc Diệt Rác + Trạm Lọc) ---
 registerTool({
     id: 'tab-baby-name',
     name: 'Đặt Tên Con',
@@ -117,7 +117,7 @@ registerTool({
           '<option value="upper">AA (Viết HOA toàn bộ)</option>' +
           '</select>' +
           '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
-          '<option value="none">Không sắp xếp</option>' +
+          '<option value="none">Không sắp xếp bảng chữ cái</option>' +
           '<option value="asc">Sắp xếp A-Z</option>' +
           '<option value="desc">Sắp xếp Z-A</option>' +
           '</select>' +
@@ -126,7 +126,6 @@ registerTool({
           '<div class="flex items-center gap-2 border-t border-slate-200 pt-3">' +
           '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer focus:ring-indigo-500">' +
           '<span class="text-[11px] font-bold text-slate-600">Lọc theo số từ:</span>' +
-          // SỬA LỖI MÃ HTML AN TOÀN TẠI ĐÂY
           '<select id="sel-wc-op" class="bg-white border border-slate-200 rounded p-1 text-[11px] font-bold text-slate-700 outline-none">' +
           '<option value="less">&lt;</option>' +
           '<option value="eq" selected>=</option>' +
@@ -140,7 +139,7 @@ registerTool({
 
           '<div class="w-full">' +
           '<button id="flt-btn-process" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
-          '🚀 THỰC HIỆN XỬ LÝ' +
+          'XỬ LÝ' +
           '</button>' +
           '</div>' +
 
@@ -176,6 +175,25 @@ registerTool({
         };
 
         var randItem = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+
+        // --- MÀNG LỌC ĐÁNH BAY RÁC (KHẮC PHỤC LỖI DÍNH CHỮ) ---
+        var isValidSyllable = function(word) {
+            var w = word.toLowerCase();
+            var vowels = "aàáảãạăằắẳẵặâầấẩẫậeèéẻẽẹêềếểễệiìíỉĩịoòóỏõọôồốổỗộơờớởỡợuùúủũụưừứửữựyỳýỷỹỵ";
+            var hasVowel = false;
+            // Phải có ít nhất 1 nguyên âm
+            for(var i = 0; i < w.length; i++) {
+                if(vowels.indexOf(w[i]) !== -1) { hasVowel = true; break; }
+            }
+            if(!hasVowel) return false; // Vứt bỏ Nh, Th, Tr, Ng...
+            
+            // Nếu chữ chỉ có 1 ký tự, phải nằm trong danh sách có ý nghĩa
+            if (w.length === 1) {
+                var validOneChar = ['a','á','à','ả','ã','ạ','ý','ỳ','ỷ','ỹ','ỵ','ê','ề','ế','ể','ễ','ệ','ô','ồ','ố','ổ','ỗ','ộ'];
+                if (validOneChar.indexOf(w) === -1) return false; // Vứt bỏ b, c, d, ị...
+            }
+            return true;
+        };
 
         // --- MODULE 1: ĐỀ XUẤT TÊN GỢI Ý ---
         var btnGen = document.getElementById('bn-btn-gen');
@@ -221,6 +239,10 @@ registerTool({
                     arr.forEach(function(n) {
                         var cleanName = n.trim().replace(/\s+/g, ' ');
                         var w = cleanName.split(' ');
+                        
+                        // Chạy qua màng lọc diệt rác
+                        w = w.filter(isValidSyllable);
+
                         if(w.length >= 2) {
                             window.nameData[gender].ho.push(w[0]);
                             window.nameData[gender].ten.push(w[w.length-1]);
@@ -411,7 +433,7 @@ registerTool({
                     var aName = aWords[aWords.length - 1] || '';
                     var bName = bWords[bWords.length - 1] || '';
                     var cmp = aName.localeCompare(bName, 'vi');
-                    if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } // Nếu trùng Tên thì xét toàn bộ chuỗi
+                    if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } 
                     return sortOpt === 'asc' ? cmp : -cmp;
                 });
             }
