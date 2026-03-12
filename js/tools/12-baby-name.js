@@ -1,4 +1,4 @@
-// --- 12. Tool Đặt Tên Con (Sạch data 100% + Full 3 Ô Nhập Liệu) ---
+// --- 12. Tool Đặt Tên Con ---
 registerTool({
     id: 'tab-baby-name',
     name: 'Đặt Tên Con',
@@ -96,42 +96,13 @@ registerTool({
             return arr[Math.floor(Math.random() * arr.length)];
         };
 
-        // BỘ CÔNG CỤ LÀM SẠCH DATA DÍNH CHỮ SIÊU CẤP
-        var fixStuckWords = function(str) {
-            var s = str.trim();
-            // 1. Hoa thường dính nhau (NguyễnThị)
-            var lower = "a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ";
-            var upper = "A-ZÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ";
-            s = s.replace(new RegExp("([" + lower + "])([" + upper + "])", "g"), "$1 $2");
-
-            // 2. Tách 2 chữ thường dính nhau bằng Luật Ngữ Âm Tiếng Việt
-            var vowels = "aàáảãạăằắẳẵặâầấẩẫậeèéẻẽẹêềếểễệiìíỉĩịoòóỏõọôồốổỗộơờớởỡợuùúủũụưừứửữựyỳýỷỹỵ";
-            
-            // Nguyên âm dính vào phụ âm không bao giờ đứng cuối (Ví dụ: lêvăn -> êv -> chia rẽ)
-            s = s.replace(new RegExp("([" + vowels + "])([bdđhklqrsvx])", "gi"), "$1 $2");
-            
-            // Phụ âm cuối dính phụ âm đầu (Ví dụ: nguyễnthị -> nt -> chia rẽ)
-            s = s.replace(/n([bcdđklmpqrstvx])/gi, "n $1"); 
-            s = s.replace(/m([bcdđghklmnpqrstvx])/gi, "m $1");
-            s = s.replace(/c([bcdđgklmnpqrstvx])/gi, "c $1"); 
-            s = s.replace(/p([bcdđghklmnpqrstvx])/gi, "p $1");
-            s = s.replace(/t([bcdđgklmnpqsx])/gi, "t $1"); 
-            s = s.replace(/g([bcdđklmnpqrstvx])/gi, "g $1"); 
-
-            // Ép tách 1 số bộ đôi họ/lót cực kỳ hay bị dính mà quét regex có thể lọt lưới
-            s = s.replace(/(nguyễn|trần|lê|phạm|hoàng|huỳnh|phan|vũ|võ|đặng|bùi|đỗ|hồ|ngô|dương|lý)(thị|văn|ngọc|xuân|thu|minh)/gi, "$1 $2");
-            s = s.replace(/(thị|văn|ngọc|xuân|thanh|minh)(thu|hoàng|trần|phạm|lê|nguyễn|huỳnh|đặng|bùi)/gi, "$1 $2");
-
-            return s.replace(/\s+/g, ' ').trim();
-        };
-
         btnGen.onclick = function() {
             if (typeof nam === 'undefined' || typeof nu === 'undefined') {
                 alert("Lỗi: Không tìm thấy dữ liệu tên! Hãy chắc chắn file nam.js và nu.js đã được nhúng trong index.html.");
                 return;
             }
 
-            // --- BƯỚC 1: QUÉT DATA VÀ KHỬ DÍNH CHỮ ---
+            // --- BƯỚC 1: TIẾN HÀNH PHÂN RÃ DỮ LIỆU ---
             if (!window.nameParsed) {
                 window.nameData = {
                     nam: { ho: [], demFull: [], demWords: [], ten: [] },
@@ -139,8 +110,8 @@ registerTool({
                 };
                 var parsePool = function(arr, gender) {
                     arr.forEach(function(n) {
-                        // Cho chạy qua máy khử dính chữ trước khi băm
-                        var cleanName = fixStuckWords(n);
+                        // Tôn trọng dữ liệu gốc tuyệt đối, chỉ cắt khoảng trắng thừa
+                        var cleanName = n.trim().replace(/\s+/g, ' ');
                         var w = cleanName.split(' ');
                         
                         if(w.length >= 2) {
@@ -153,6 +124,7 @@ registerTool({
                             }
                         }
                     });
+                    // Loại bỏ các chữ trùng lặp để máy chạy nhanh hơn
                     window.nameData[gender].ho = [...new Set(window.nameData[gender].ho)];
                     window.nameData[gender].ten = [...new Set(window.nameData[gender].ten)];
                     window.nameData[gender].demFull = [...new Set(window.nameData[gender].demFull)];
@@ -172,7 +144,7 @@ registerTool({
             
             var inputHo = document.getElementById('bn-ho').value.trim();
             var inputDem = document.getElementById('bn-dem').value.trim();
-            var inputTen = document.getElementById('bn-ten').value.trim(); // Đã thêm ô Tên
+            var inputTen = document.getElementById('bn-ten').value.trim();
 
             if (lengthOpt === '2' && inputDem !== '') {
                 alert("Tên 2 chữ thì không có Chữ lót nhé! Vui lòng xóa 'Chữ lót' hoặc đổi độ dài thành 3-4-5-6 chữ.");
@@ -183,7 +155,7 @@ registerTool({
             var attempts = 0;
             var maxAttempts = count * 100; 
 
-            // --- BƯỚC 3: THUẬT TOÁN LAI TẠO TÊN ---
+            // --- BƯỚC 3: THUẬT TOÁN LẮP RÁP TÊN ---
             while (resultsMap.size < count && attempts < maxAttempts) {
                 attempts++;
                 
@@ -192,7 +164,7 @@ registerTool({
                 
                 var targetL = lengthOpt === 'all' ? (Math.floor(Math.random() * 5) + 2) : parseInt(lengthOpt); 
 
-                // Nếu bạn có nhập thì ưu tiên từ của bạn, bỏ trống thì máy tự bốc
+                // Nếu có nhập thì lấy chữ nhập, bỏ trống thì bốc ngẫu nhiên
                 var hoStr = inputHo !== '' ? capitalize(inputHo) : randItem(data.ho);
                 var demInStr = inputDem !== '' ? capitalize(inputDem) : '';
                 var tenStr = inputTen !== '' ? capitalize(inputTen) : randItem(data.ten);
@@ -224,7 +196,7 @@ registerTool({
                     dem_final = dem_final === '' ? addedDem : (dem_final + ' ' + addedDem);
                 } 
                 else if (lengthOpt === '2') {
-                    dem_final = '';
+                    dem_final = ''; // Tên 2 chữ thì ép bỏ chữ lót
                 }
 
                 var nameParts = [];
@@ -235,6 +207,7 @@ registerTool({
                 var finalName = nameParts.join(' ').replace(/\s+/g, ' ').trim();
                 var finalWordCount = finalName.split(' ').length;
 
+                // Lọc bỏ nếu máy ghép ra tên không đúng số lượng yêu cầu
                 if (lengthOpt !== 'all' && finalWordCount !== parseInt(lengthOpt)) {
                     if (c_ho + c_dem_in + c_ten >= parseInt(lengthOpt)) {
                         // Ngoại lệ an toàn
@@ -243,6 +216,7 @@ registerTool({
                     }
                 }
 
+                // Chống trùng lặp tuyệt đối
                 if (!resultsMap.has(finalName)) {
                     resultsMap.set(finalName, g);
                 }
