@@ -1,5 +1,5 @@
 # Xem Lịch Âm trên thanh menu
-Thay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trên menu bar của Mac cực kỳ tiện lợi và gọn nhẹ.
+Thay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trên menu bar của Mac cực kỳ tiện lợi, đẹp mắt và gọn nhẹ.
 🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**
 
 —
