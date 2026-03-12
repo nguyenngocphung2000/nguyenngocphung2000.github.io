@@ -1,4 +1,4 @@
-// --- 12. Tool Đặt Tên Con (Bản Chuẩn VIP + Trạm Xử Lý Thủ Công) ---
+// --- 12. Tool Đặt Tên Con (Bản Chuẩn VIP + Trạm Xử Lý Thủ Công 100% An Toàn) ---
 registerTool({
     id: 'tab-baby-name',
     name: 'Đặt Tên Con',
@@ -99,33 +99,39 @@ registerTool({
           '<div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3 bn-input">' +
           
           '<div class="grid grid-cols-2 gap-3">' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded"> Xóa dòng trống</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded"> Chuẩn hóa dấu cách</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-rem-num" class="w-4 h-4 text-indigo-500 rounded"> Bỏ số thứ tự cũ</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-accent" class="w-4 h-4 text-indigo-500 rounded"> Bỏ dấu Tiếng Việt</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-dup" class="w-4 h-4 text-indigo-500 rounded"> Lọc trùng lặp</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded"> Thêm số thứ tự mới</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded"> Đảo ngược danh sách</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded"> Xáo trộn danh sách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xóa dòng trống</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Chuẩn hóa dấu cách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-rem-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ số thứ tự cũ</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Thêm số thứ tự mới</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-dup" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Lọc trùng lặp</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-accent" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ dấu Tiếng Việt</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Đảo ngược danh sách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn danh sách</label>' +
           '</div>' +
 
-          '<div class="grid grid-cols-2 gap-3 border-t border-slate-200 pt-3">' +
-          '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none">' +
+          '<div class="grid grid-cols-1 gap-3 border-t border-slate-200 pt-3">' +
+          '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
           '<option value="none">A/a (Không can thiệp HOA/thường)</option>' +
-          '<option value="title" selected>Aa (Viết hoa chữ đầu)</option>' +
-          '<option value="lower">aa (Viết thường tất cả)</option>' +
+          '<option value="title" selected>Aa (Viết hoa chữ đầu mỗi từ)</option>' +
+          '<option value="lower">aa (Viết thường toàn bộ)</option>' +
+          '<option value="upper">AA (Viết HOA toàn bộ)</option>' +
           '</select>' +
-          '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none">' +
-          '<option value="none">Sắp xếp (Không can thiệp)</option>' +
-          '<option value="asc">A-Z</option>' +
-          '<option value="desc">Z-A</option>' +
+          '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+          '<option value="none">Không sắp xếp</option>' +
+          '<option value="asc">Sắp xếp A-Z</option>' +
+          '<option value="desc">Sắp xếp Z-A</option>' +
           '</select>' +
           '</div>' +
 
           '<div class="flex items-center gap-2 border-t border-slate-200 pt-3">' +
-          '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer">' +
+          '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer focus:ring-indigo-500">' +
           '<span class="text-[11px] font-bold text-slate-600">Lọc theo số từ:</span>' +
-          '<select id="sel-wc-op" class="bg-white border border-slate-200 rounded p-1 text-[11px] font-bold text-slate-700 outline-none"><option value="<"><</option><option value="=" selected>=</option><option value=">">></option></select>' +
+          // SỬA LỖI MÃ HTML AN TOÀN TẠI ĐÂY
+          '<select id="sel-wc-op" class="bg-white border border-slate-200 rounded p-1 text-[11px] font-bold text-slate-700 outline-none">' +
+          '<option value="less">&lt;</option>' +
+          '<option value="eq" selected>=</option>' +
+          '<option value="greater">&gt;</option>' +
+          '</select>' +
           '<input type="number" id="inp-wc-num" value="3" class="w-12 bg-white border border-slate-200 rounded p-1 text-center text-[11px] font-bold text-slate-700 outline-none">' +
           '<span class="text-[11px] font-bold text-slate-500">từ/dòng</span>' +
           '</div>' +
@@ -148,16 +154,16 @@ registerTool({
           '</div>' +
           
           '<div class="flex gap-2">' +
-          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase">🗑️ Xóa Tất Cả</button>' +
-          '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide">📋 Copy Kết Quả</button>' +
-          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase">⬇️ Tải TXT</button>' +
+          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">🗑️ Xóa</button>' +
+          '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">📋 Copy Kết Quả</button>' +
+          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">⬇️ Tải Txt</button>' +
           '</div>' +
 
           '</div>' +
           
           '</div>',
     logic: function() {
-        // --- CÁC BIẾN & HÀM TIỆN ÍCH ---
+        // --- CÁC HÀM TIỆN ÍCH CƠ BẢN ---
         var capitalize = function(str) {
             return str.trim().replace(/\s+/g, ' ').split(' ').map(function(word) {
                 if(!word) return '';
@@ -171,7 +177,7 @@ registerTool({
 
         var randItem = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
 
-        // --- MODULE 1: GỢI Ý TÊN ---
+        // --- MODULE 1: ĐỀ XUẤT TÊN GỢI Ý ---
         var btnGen = document.getElementById('bn-btn-gen');
         var btnCopyGen = document.getElementById('bn-btn-copy-gen');
         var btnToggle = document.getElementById('bn-btn-toggle');
@@ -194,7 +200,7 @@ registerTool({
             var textToCopy = currentResults.join('\n');
             navigator.clipboard.writeText(textToCopy).then(function() {
                 var oldHtml = btnCopyGen.innerHTML;
-                btnCopyGen.innerHTML = '✅ OK';
+                btnCopyGen.innerHTML = '✅ Đã Copy';
                 btnCopyGen.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
                 setTimeout(function() { 
                     btnCopyGen.innerHTML = oldHtml; 
@@ -321,7 +327,7 @@ registerTool({
             });
 
             if (resultsMap.size === 0) {
-                generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào!</div>';
+                generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào phù hợp!</div>';
             }
 
             resList.innerHTML = generatedHTML;
@@ -330,16 +336,16 @@ registerTool({
             resDiv.classList.remove('hidden');
         };
 
-        // --- MODULE 2: TRẠM XỬ LÝ DANH SÁCH ---
+        // --- MODULE 2: TRẠM XỬ LÝ DANH SÁCH THỦ CÔNG ---
         var inputArea = document.getElementById('flt-input');
         inputArea.addEventListener('input', function() {
             var lines = inputArea.value.split('\n');
-            document.getElementById('flt-cnt-in').innerText = inputArea.value.trim() === '' ? 0 : lines.length;
+            document.getElementById('flt-cnt-in').innerText = inputArea.value === '' ? 0 : lines.length;
         });
 
         document.getElementById('flt-btn-process').onclick = function() {
             var text = document.getElementById('flt-input').value;
-            if(text.trim() === '') {
+            if(text === '') {
                 document.getElementById('flt-output').value = '';
                 document.getElementById('flt-cnt-out').innerText = '0';
                 return;
@@ -352,7 +358,7 @@ registerTool({
                 lines = lines.filter(function(l) { return l.trim() !== ''; });
             }
 
-            // 2. Bỏ số thứ tự cũ (Regex xóa số và các ký tự . - ) ở đầu dòng
+            // 2. Bỏ số thứ tự cũ (Xóa số và dấu chấm/gạch ngang ở đầu dòng)
             if (document.getElementById('chk-rem-num').checked) {
                 lines = lines.map(function(l) { return l.replace(/^\s*\d+[\.\-\)]?\s*/, ''); });
             }
@@ -368,6 +374,8 @@ registerTool({
                 lines = lines.map(function(l) { return capitalize(l); });
             } else if (caseOpt === 'lower') {
                 lines = lines.map(function(l) { return l.toLowerCase(); });
+            } else if (caseOpt === 'upper') {
+                lines = lines.map(function(l) { return l.toUpperCase(); });
             }
 
             // 5. Bỏ dấu Tiếng Việt
@@ -375,16 +383,16 @@ registerTool({
                 lines = lines.map(function(l) { return removeAccents(l); });
             }
 
-            // 6. Lọc theo số từ
+            // 6. Lọc theo số từ (dùng chuỗi less, eq, greater để tránh lỗi HTML)
             if (document.getElementById('chk-wc').checked) {
                 var op = document.getElementById('sel-wc-op').value;
                 var num = parseInt(document.getElementById('inp-wc-num').value) || 0;
                 lines = lines.filter(function(l) {
                     if (l.trim() === '') return false;
                     var wc = l.trim().split(/\s+/).length;
-                    if (op === '<') return wc < num;
-                    if (op === '=') return wc === num;
-                    if (op === '>') return wc > num;
+                    if (op === 'less') return wc < num;
+                    if (op === 'eq') return wc === num;
+                    if (op === 'greater') return wc > num;
                     return true;
                 });
             }
@@ -403,7 +411,7 @@ registerTool({
                     var aName = aWords[aWords.length - 1] || '';
                     var bName = bWords[bWords.length - 1] || '';
                     var cmp = aName.localeCompare(bName, 'vi');
-                    if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } // Nếu tên giống nhau thì so sánh nguyên dòng
+                    if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } // Nếu trùng Tên thì xét toàn bộ chuỗi
                     return sortOpt === 'asc' ? cmp : -cmp;
                 });
             }
@@ -423,14 +431,14 @@ registerTool({
                 lines = lines.map(function(l, i) { return (i + 1) + ". " + l; });
             }
 
-            // Xuất kết quả
+            // Xuất kết quả ra màn hình
             document.getElementById('flt-output').value = lines.join('\n');
             document.getElementById('flt-cnt-out').innerText = lines.length;
         };
 
-        // Các nút hành động của Trạm lọc
+        // --- CÁC NÚT ĐIỀU KHIỂN CỦA TRẠM LỌC ---
         document.getElementById('flt-btn-clear').onclick = function() {
-            if(confirm("Bạn có chắc chắn muốn xóa toàn bộ dữ liệu nhập và xuất?")) {
+            if(confirm("Xóa toàn bộ dữ liệu ở cả 2 khung Nhập và Xuất?")) {
                 document.getElementById('flt-input').value = '';
                 document.getElementById('flt-output').value = '';
                 document.getElementById('flt-cnt-in').innerText = '0';
@@ -457,11 +465,11 @@ registerTool({
 
         document.getElementById('flt-btn-down').onclick = function() {
             var outText = document.getElementById('flt-output').value;
-            if (outText === "") { alert("Không có dữ liệu để tải!"); return; }
+            if (outText === "") { alert("Không có dữ liệu để tải xuống!"); return; }
             var blob = new Blob([outText], { type: 'text/plain;charset=utf-8' });
             var link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'Danh_Sach_Ten.txt';
+            link.download = 'Danh_Sach_Ten_Da_Loc.txt';
             link.click();
         };
     }
