@@ -16,8 +16,8 @@ const menuConfig = [
     { id: 'tab-time-calc', name: 'Thời Gian', icon: '⏳' },
     { id: 'tab-workspace', name: 'Workspace', icon: '💻' },
     { id: 'tab-baby-name', name: 'Đặt Tên Con', icon: '👶' },
-    { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '♟️' }
-];
+    { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' }]
+   ;
 
 // --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
 const toolMap = {
