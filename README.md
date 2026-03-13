@@ -12,38 +12,43 @@ Make yourself at home, feel free to tinker around. If there are any bugs... let 
 
 ---
 
-### 🛠️ Công nghệ & Thư viện sử dụng
-Dự án được xây dựng trên nền tảng **HTML5, CSS3 và Vanilla JavaScript** thuần túy, áp dụng cấu trúc **ES Modules** (Lazy Load) giúp tối ưu tốc độ tải trang cực nhanh. Giao diện được tạo hình hoàn toàn bằng **Tailwind CSS** (chạy qua CDN). Hệ thống có nhúng thêm 3 thư viện Javascript siêu nhẹ để xử lý các tính năng đặc thù: `marked.min.js` (dịch Markdown sang HTML), `html2pdf.js` (xuất file PDF) và `lunar-javascript` (tính toán âm lịch).
+### 🛠️ Tech Stack & Libraries
+This project is built on the core foundation of pure **HTML5, CSS3, and Vanilla JavaScript**, utilizing modern **ES Modules** (Lazy Load) to ensure lightning-fast page loads. The UI is completely styled with **Tailwind CSS** (via CDN) for that sleek glassmorphism look and seamless Dark Mode. 
+
+Additionally, a few super-lightweight JS libraries are integrated to power specific tools: 
+* `marked.min.js`: Parses Markdown directly into HTML.
+* `html2pdf.js`: Exports crisp PDF files.
+* `lunar-javascript`: Handles complex Lunar calendar calculations.
 
 ---
 
-### 🚀 Hướng dẫn mở rộng (Thêm Tool & Bài viết)
+### 🚀 Expansion Guide (Adding Tools & Posts)
 
-**1. Cách cấy thêm bài viết thủ thuật (Markdown):**
-* Tạo một file `.md` (VD: `cai-win.md`) và lưu vào thư mục `posts/`.
-* Mở file `js/tools/01-home.js`, tìm đến mảng `const manifest = [...]` và bổ sung thêm file của bạn vào như ví dụ sau:
+**1. How to add a new Markdown post (Tips & Tricks):**
+* Create a `.md` file (e.g., `install-windows.md`) and drop it into the `posts/` folder.
+* Open `js/tools/01-home.js`, locate the `const manifest = [...]` array, and add your new file like this:
 
 ```javascript
 const manifest = [
-    // ... các bài cũ ...
-    { title: "Hướng dẫn cài Win dạo", date: "Thủ thuật IT", path: "posts/cai-win.md" }
+    // ... previous posts ...
+    { title: "How to install Windows", date: "IT Tips", path: "posts/install-windows.md" }
 ];
 ```
 
-**2. Cách lắp ráp thêm Tool mới (Ví dụ Tool số 14):**
-* Tạo file JS mới trong thư mục `js/tools/` (VD: `14-note.js`). Toàn bộ giao diện và logic của tool này phải được bọc bên trong hàm: `export function setupTool() { ... }`.
-* Mở file `js/core.js` và làm 2 bước khai báo:
-   * **Thêm nút bấm** vào mảng `menuConfig`:
+**2. How to integrate a new Tool (e.g., Tool #14):**
+* Create a new JS file in the `js/tools/` folder (e.g., `14-note.js`). All the HTML and Logic for this tool MUST be wrapped inside this exported function: `export function setupTool() { ... }`.
+* Open `js/core.js` and do these 2 simple configurations:
+   * **Add a navigation button** to the `menuConfig` array:
      ```javascript
      const menuConfig = [
-         // ... 13 tool cũ ...
-         { id: 'tab-note', name: 'Ghi Chú', icon: '📝' }
+         // ... existing 13 tools ...
+         { id: 'tab-note', name: 'Notepad', icon: '📝' }
      ];
      ```
-   * **Thêm đường dẫn** vào danh sách `toolMap`:
+   * **Add the file path** to the `toolMap` list:
      ```javascript
      const toolMap = {
-         // ... 13 đường dẫn cũ ...
+         // ... existing 13 paths ...
          'tab-note': './tools/14-note.js'
      };
      ```

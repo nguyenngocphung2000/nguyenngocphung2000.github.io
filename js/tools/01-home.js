@@ -8,8 +8,9 @@ export function setupTool() {
     panel.className = 'tab-panel active';
     
     panel.innerHTML = `
-        <div class="space-y-8"> <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 border-t-4 border-t-orange-400 relative overflow-hidden shadow-sm">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
+        <div class="space-y-8"> 
+            <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 border-t-4 border-t-orange-400 relative overflow-hidden shadow-sm">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-100 rounded-full filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2 pointer-events-none z-0"></div>
                 
                 <div class="relative w-24 h-24 md:w-32 md:h-32 shrink-0 z-10 group cursor-default">
                     <div class="absolute inset-0 bg-gradient-to-tr from-orange-400 to-yellow-300 rounded-full blur-md opacity-40 group-hover:opacity-80 transition duration-500"></div>
@@ -33,11 +34,11 @@ export function setupTool() {
                     </div>
                     
                     <h1 class="text-3xl font-extrabold text-gray-800 mb-2 tracking-tight">
-                        Xin chào, tôi là <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing (N.Phụng)</span>
+                        Hello, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing</span>
                     </h1>
                     
-                    <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/50 to-transparent rounded-r-xl">
-                        <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Hé lô bạn! Chào mừng ghé thăm góc nhỏ của mình. Nơi đây là cái kho nhỏ chứa mấy món đồ chơi do chính tay mình... nhờ AI code hộ 😂, cùng một rổ những thủ thuật, bí kíp hay ho mà mình nhặt nhạnh hoặc tự biên tự diễn. Ban đầu tạo ra để cứu rỗi cuộc sống của chính mình thôi, nhưng với một tấm lòng 'Bồ Tát' dạt dào, mình mang hết ra đây share cho anh em. Cứ tự nhiên như ở nhà, vọc vạch thoải mái nhé, lỗi thì... báo mình nhờ AI sửa nhé, phần liên hệ mình để phía dưới!
+                    <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/10 to-transparent rounded-r-xl relative z-10 font-medium">
+                        <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Hello there! Welcome to my little corner. This is a small stash containing some little toys that I personally... asked AI to code for me 😂, along with a basket of cool tricks and tips I picked up or came up with myself. Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them, my contact info is right below!
                     </p>
                     
                     <div class="flex flex-wrap gap-2 justify-center md:justify-start">
