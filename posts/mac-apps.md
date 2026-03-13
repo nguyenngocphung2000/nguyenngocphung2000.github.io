@@ -1,9 +1,15 @@
-# Xem Lịch Âm trên thanh menu
-Thay vì cài các app nặng nề, LunarV giúp bạn xem lịch âm trên menu bar của Mac cực kỳ tiện lợi, đẹp mắt và gọn nhẹ.
-🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**
+# Tiện Ích Hữu Ích Dành Cho macOS
 
-—
-# Tạm biệt lỗi gạch chân khó chịu
-Nếu bạn đang mệt mỏi với bộ gõ mặc định của macOS hãy thử ngay các bộ gõ mã nguồn mở cực kỳ nhẹ và ổn định này:
-- ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
-- ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
+Tổng hợp các ứng dụng mã nguồn mở nhỏ gọn, giúp tối ưu hóa trải nghiệm sử dụng trên máy Mac của bạn.
+
+## 1. LunarV - Xem Lịch Âm Trên Menu Bar
+Thay vì phải cài đặt các ứng dụng nặng nề, **LunarV** cung cấp giải pháp xem lịch âm trực tiếp trên thanh menu (Menu Bar) của macOS. 
+* **Ưu điểm:** Cực kỳ tiện lợi, giao diện đẹp mắt và không tiêu tốn nhiều tài nguyên hệ thống.
+* 🔗 **[Tải LunarV tại GitHub](https://github.com/PhamHungTien/LunarV)**
+
+---
+
+## 2. Giải Pháp Gõ Tiếng Việt
+Nếu bạn đang gặp phiền toái với bộ gõ tiếng Việt mặc định của macOS (thường xuyên bị lỗi gạch chân, nhảy chữ), hãy thử ngay các bộ gõ mã nguồn mở nhẹ nhàng và ổn định sau đây:
+* ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
+* ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
