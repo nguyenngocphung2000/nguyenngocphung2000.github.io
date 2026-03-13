@@ -16,7 +16,9 @@ const menuConfig = [
     { id: 'tab-time-calc', name: 'Thời Gian', icon: '⏳' },
     { id: 'tab-workspace', name: 'Workspace', icon: '💻' },
     { id: 'tab-baby-name', name: 'Đặt Tên Con', icon: '👶' },
-    { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' }]
+    { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
+    { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' }
+]
    ;
 
 // --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
@@ -33,7 +35,8 @@ const toolMap = {
     'tab-time-calc': './tools/10-time-calc.js',
     'tab-workspace': './tools/11-workspace.js',
     'tab-baby-name': './tools/12-baby-name.js',
-    'tab-xiangqi': './tools/13-xiangqi.js'
+    'tab-xiangqi': './tools/13-xiangqi.js',
+    'tab-wheel' : './tools/14-wheel.js'
 };
 
 // --- 3. KHAI BÁO CÁC PHẦN TỬ GIAO DIỆN ---
