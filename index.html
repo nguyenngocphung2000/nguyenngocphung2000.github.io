@@ -9,11 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+  <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+    }
+</script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
     
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body class="text-gray-800 pb-20">
 
@@ -44,24 +49,8 @@
         </div>
     </header>
 
-    <main id="app-container" class="max-w-4xl mx-auto px-4 mt-8"></main>
+<main id="app-container" class="max-w-4xl mx-auto px-4 mt-8"></main>
 
-    <script src="js/core.js" defer></script>
-    <script src="js/tools/01-home.js" defer></script>
-    <script src="js/tools/02-calc.js" defer></script>
-    <script src="js/tools/03-md.js" defer></script>
-    <script src="js/tools/04-text-stat.js" defer></script>
-    <script src="js/tools/05-special.js" defer></script>
-    <script src="js/tools/06-finance.js" defer></script>
-    <script src="js/tools/07-family.js" defer></script>
-    <script src="js/tools/08-typing.js" defer></script>
-    <script src="js/tools/09-calendar.js" defer></script>
-    <script src="js/tools/10-time-calc.js" defer></script>
-   <script src="js/tools/11-workspace.js" defer></script>
-       <script src="js/nam.js" defer></script>
-    <script src="js/nu.js" defer></script>
-    <script src="js/tools/12-baby-name.js" defer></script>
-    <script src="js/tools/13-xiangqi.js" defer></script>
-
+    <script type="module" src="js/core.js"></script>
 </body>
 </html>

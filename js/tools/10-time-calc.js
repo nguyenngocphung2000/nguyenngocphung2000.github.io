@@ -1,9 +1,13 @@
-// --- 10. Tool Tính Số Ngày (Thời Gian Đa Chiều V10. Pro Max) ---
-registerTool({
-    id: 'tab-time-calc',
-    name: 'Tính Số Ngày',
-    icon: '⏳',
-    html: '<style>' +
+export function setupTool() {
+    const tabId = 'tab-time-calc';
+
+    if (document.getElementById(tabId)) return;
+
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+
+    panel.innerHTML = '<style>' +
           'body.dark-mode .tc-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .tc-inner-card { background-color: rgba(15, 23, 42, 0.6) !important; border-color: rgba(45, 212, 191, 0.2) !important; } ' +
           'body.dark-mode .tc-history-item { background-color: rgba(30, 41, 59, 0.8) !important; border-color: rgba(255, 255, 255, 0.05) !important; }' +
@@ -145,268 +149,257 @@ registerTool({
           '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100">XÓA LỊCH SỬ</button>' +
           '</div>' +
           '<div id="tc-history-list" class="space-y-2 max-h-[650px] overflow-y-auto custom-scrollbar pr-1"></div>' +
-          '</div></div>',
-    logic: function() {
-        // === MODULE 1 VARIABLES ===
-        var sD = document.getElementById('tc-start-d'), sM = document.getElementById('tc-start-m'), sY = document.getElementById('tc-start-y');
-        var eD = document.getElementById('tc-end-d'), eM = document.getElementById('tc-end-m'), eY = document.getElementById('tc-end-y');
-        var btnConv = document.getElementById('tc-btn-conv'), btnReal = document.getElementById('tc-btn-real'), resDiv1 = document.getElementById('tc-result');
+          '</div></div>';
 
-        // === MODULE 2 VARIABLES ===
-        var m2sD = document.getElementById('m2-start-d'), m2sM = document.getElementById('m2-start-m'), m2sY = document.getElementById('m2-start-y');
-        var m2eD = document.getElementById('m2-end-d'), m2eM = document.getElementById('m2-end-m'), m2eY = document.getElementById('m2-end-y');
-        var m2wY = document.getElementById('m2-wait-y'), m2wM = document.getElementById('m2-wait-m'), m2wD = document.getElementById('m2-wait-d');
-        var m2rNum = document.getElementById('m2-ratio-num'), m2rDen = document.getElementById('m2-ratio-den');
-        var btnMod2 = document.getElementById('mod2-btn-calc'), resDiv2 = document.getElementById('mod2-result');
+    document.getElementById('app-container').appendChild(panel);
 
-        // === HISTORY VARIABLES ===
-        var btnClear = document.getElementById('tc-btn-clear'), historyList = document.getElementById('tc-history-list');
+    // ==========================================
+    // LOGIC CHUYỂN ĐỔI SANG MODULE
+    // ==========================================
+    var sD = document.getElementById('tc-start-d'), sM = document.getElementById('tc-start-m'), sY = document.getElementById('tc-start-y');
+    var eD = document.getElementById('tc-end-d'), eM = document.getElementById('tc-end-m'), eY = document.getElementById('tc-end-y');
+    var btnConv = document.getElementById('tc-btn-conv'), btnReal = document.getElementById('tc-btn-real'), resDiv1 = document.getElementById('tc-result');
 
-        var tcHistory = [];
-        try { var stored = localStorage.getItem('nothing_tc_history'); if(stored) tcHistory = JSON.parse(stored); } catch(e) { tcHistory = []; }
-        var saveHistory = function() { localStorage.setItem('nothing_tc_history', JSON.stringify(tcHistory)); };
+    var m2sD = document.getElementById('m2-start-d'), m2sM = document.getElementById('m2-start-m'), m2sY = document.getElementById('m2-start-y');
+    var m2eD = document.getElementById('m2-end-d'), m2eM = document.getElementById('m2-end-m'), m2eY = document.getElementById('m2-end-y');
+    var m2wY = document.getElementById('m2-wait-y'), m2wM = document.getElementById('m2-wait-m'), m2wD = document.getElementById('m2-wait-d');
+    var m2rNum = document.getElementById('m2-ratio-num'), m2rDen = document.getElementById('m2-ratio-den');
+    var btnMod2 = document.getElementById('mod2-btn-calc'), resDiv2 = document.getElementById('mod2-result');
 
-        var renderHistory = function() {
-            historyList.innerHTML = '';
-            if(tcHistory.length === 0) { historyList.innerHTML = '<div class="text-xs text-slate-400 italic text-center py-4">Chưa có lịch sử tính toán nào.</div>'; return; }
-            for(var i = 0; i < tcHistory.length; i++) {
-                var h = tcHistory[i];
-                var colorType = 'text-teal-600';
-                if(h.typeLabel === "Thực tế (Theo Lịch)") colorType = 'text-indigo-600';
-                if(h.typeLabel === "Thời Gian Đa Chiều") colorType = 'text-orange-600';
-                
-                var itemHtml = '<div class="tc-history-item bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-1 shadow-sm">';
-                itemHtml += '<div class="flex justify-between items-center"><div class="text-[10px] font-bold text-slate-500">' + h.dateStart + '</div><div class="text-[9px] font-bold ' + colorType + ' uppercase bg-white px-1.5 py-0.5 rounded border border-slate-200">' + h.typeLabel + '</div></div>';
-                itemHtml += '<div class="text-sm font-black text-slate-700 mt-1">' + h.resText1 + '</div>';
-                itemHtml += '<div class="text-xs font-medium text-slate-500">' + h.resText4 + '</div></div>';
-                historyList.innerHTML += itemHtml;
-            }
-        };
+    var btnClear = document.getElementById('tc-btn-clear'), historyList = document.getElementById('tc-history-list');
 
-        renderHistory();
-        btnClear.onclick = function() { if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) { tcHistory = []; saveHistory(); renderHistory(); } };
+    var tcHistory = [];
+    try { var stored = localStorage.getItem('nothing_tc_history'); if(stored) tcHistory = JSON.parse(stored); } catch(e) { tcHistory = []; }
+    var saveHistory = function() { localStorage.setItem('nothing_tc_history', JSON.stringify(tcHistory)); };
 
-        // DOM Helper Functions
-        var updateDays = function(dElem, mElem, yElem) {
-            var currentD = parseInt(dElem.value) || new Date().getDate();
-            var m = parseInt(mElem.value) || (new Date().getMonth() + 1);
-            var y = parseInt(yElem.value) || new Date().getFullYear();
-            var maxD = new Date(y, m, 0).getDate(); 
-            if(currentD > maxD) currentD = maxD;
-            var dOpts = ''; for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i === currentD ? 'selected' : '') + '>' + i + '</option>';
-            dElem.innerHTML = dOpts;
-        };
-
-        var mOpts = ''; for(var i = 1; i <= 12; i++) mOpts += '<option value="' + i + '">' + i + '</option>'; 
-        sM.innerHTML = mOpts; eM.innerHTML = mOpts; m2sM.innerHTML = mOpts;
-        
-        var yOpts = ''; var curY = new Date().getFullYear();
-        for(var i = curY - 50; i <= curY + 50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
-        sY.innerHTML = yOpts; eY.innerHTML = yOpts; m2sY.innerHTML = yOpts;
-
-        var setupDateListeners = function(d, m, y) { m.addEventListener('change', function() { updateDays(d, m, y); }); y.addEventListener('change', function() { updateDays(d, m, y); }); };
-        setupDateListeners(sD, sM, sY); setupDateListeners(eD, eM, eY); setupDateListeners(m2sD, m2sM, m2sY);
-
-        var today = new Date();
-        sM.value = today.getMonth() + 1; sY.value = today.getFullYear(); updateDays(sD, sM, sY); sD.value = today.getDate();
-        eM.value = today.getMonth() + 1; eY.value = today.getFullYear(); updateDays(eD, eM, eY); eD.value = today.getDate();
-        m2sM.value = today.getMonth() + 1; m2sY.value = today.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = today.getDate();
-
-        var updateEndDays = function() {
-            var currentD = m2eD.value; var m = parseInt(m2eM.value); var y = parseInt(m2eY.value);
-            var dOpts = '<option value=""># Ngày</option>'; 
-            var maxD = (!isNaN(m) && !isNaN(y)) ? new Date(y, m, 0).getDate() : 31;
-            for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i == currentD ? 'selected' : '') + '>' + i + '</option>';
-            m2eD.innerHTML = dOpts;
-        };
-        var mOptsE = '<option value=""># Tháng</option>'; for(var i = 1; i <= 12; i++) mOptsE += '<option value="' + i + '">' + i + '</option>'; m2eM.innerHTML = mOptsE;
-        var yOptsE = '<option value=""># Năm</option>'; for(var i = curY - 50; i <= curY + 50; i++) yOptsE += '<option value="' + i + '">' + i + '</option>'; m2eY.innerHTML = yOptsE;
-        updateEndDays();
-        m2eM.addEventListener('change', updateEndDays); m2eY.addEventListener('change', updateEndDays);
-
-        // Mặc định Ngày đích đến là hôm nay
-        m2eM.value = today.getMonth() + 1;
-        m2eY.value = today.getFullYear();
-        updateEndDays();
-        m2eD.value = today.getDate();
-
-        // Nút Xóa trống Ngày đích đến
-        document.getElementById('m2-btn-clear-end').onclick = function() {
-            m2eD.value = ""; m2eM.value = ""; m2eY.value = "";
-            updateEndDays();
-        };
-
-        // Nút Làm mới (Reset toàn bộ Module 2)
-        document.getElementById('mod2-btn-reset').onclick = function() {
-            var td = new Date();
-            m2sM.value = td.getMonth() + 1; m2sY.value = td.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = td.getDate();
-            m2eM.value = td.getMonth() + 1; m2eY.value = td.getFullYear(); updateEndDays(); m2eD.value = td.getDate();
-            m2wY.value = ""; m2wM.value = ""; m2wD.value = "";
-            m2rNum.value = ""; m2rDen.value = "";
-            resDiv2.classList.add('hidden');
-        };
-
-        // Nút Nhập Nhanh Tỷ Lệ
-        var ratioBtns = document.querySelectorAll('.m2-quick-ratio');
-        for(var k = 0; k < ratioBtns.length; k++) {
-            ratioBtns[k].onclick = function() {
-                m2rNum.value = this.getAttribute('data-num');
-                m2rDen.value = this.getAttribute('data-den');
-            };
-        }
-
-        // ================= XỬ LÝ MODULE 1 =================
-        var processCalcModule1 = function(isReal) {
-            var d1 = parseInt(sD.value), m1 = parseInt(sM.value), y1 = parseInt(sY.value);
-            var d2 = parseInt(eD.value), m2 = parseInt(eM.value), y2 = parseInt(eY.value);
-            var startDate = new Date(y1, m1 - 1, d1), endDate = new Date(y2, m2 - 1, d2);
-            if (endDate < startDate) { alert("Lỗi: Ngày kết thúc phải lớn hơn ngày bắt đầu!"); return; }
-
-            var str1 = "", str2 = "", str3 = "", str4 = "", typeLabel = "";
-            if (!isReal) {
-                typeLabel = "Công thức (30đ/tháng)";
-                var yearRes = 0, monthRes = 0, dayRes = 0, tempD2 = d2, tempM2 = m2, tempY2 = y2;
-                if (tempD2 >= d1) { dayRes = tempD2 - d1; } else { dayRes = (tempD2 + 30) - d1; tempM2 = tempM2 - 1; }
-                if (tempM2 >= m1) { monthRes = tempM2 - m1; } else { monthRes = (tempM2 + 12) - m1; tempY2 = tempY2 - 1; }
-                yearRes = tempY2 - y1;
-                str1 = yearRes + " năm " + monthRes + " tháng " + dayRes + " ngày";
-                var totalMonths = (yearRes * 12) + monthRes;
-                str2 = Math.floor(totalMonths / 3) + " quý " + ((totalMonths % 3) * 30 + dayRes) + " ngày";
-                str3 = totalMonths + " tháng " + dayRes + " ngày";
-                str4 = ((yearRes * 360) + (monthRes * 30) + dayRes) + " ngày";
-            } else {
-                typeLabel = "Thực tế (Theo Lịch)";
-                var totalDaysReal = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-                var totalMonthsReal = (y2 - y1) * 12 + (m2 - m1);
-                if (d2 < d1) totalMonthsReal--; 
-                var yearResReal = Math.floor(totalMonthsReal / 12), monthResReal = totalMonthsReal % 12;
-                var tempDate = new Date(y1, m1 - 1, d1); var originalDay = tempDate.getDate();
-                tempDate.setMonth(tempDate.getMonth() + totalMonthsReal);
-                if (tempDate.getDate() !== originalDay) { tempDate.setDate(0); }
-                var dayResReal = Math.round((endDate.getTime() - tempDate.getTime()) / (1000 * 60 * 60 * 24));
-                str1 = yearResReal + " năm " + monthResReal + " tháng " + dayResReal + " ngày";
-                str2 = Math.floor(totalMonthsReal / 3) + " quý " + (totalMonthsReal % 3) + " tháng " + dayResReal + " ngày";
-                str3 = totalMonthsReal + " tháng " + dayResReal + " ngày";
-                str4 = totalDaysReal + " ngày";
-            }
-
-            document.getElementById('tc-res-1').innerText = str1; document.getElementById('tc-res-2').innerText = str2;
-            document.getElementById('tc-res-3').innerText = str3; document.getElementById('tc-res-4').innerText = str4;
-            document.getElementById('tc-res-type').innerText = typeLabel;
-            resDiv1.classList.remove('hidden');
-
-            var startStr = ('0'+d1).slice(-2)+'/'+('0'+m1).slice(-2)+'/'+y1; var endStr = ('0'+d2).slice(-2)+'/'+('0'+m2).slice(-2)+'/'+y2;
-            var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === startStr + ' ➔ ' + endStr && tcHistory[0].typeLabel === typeLabel;
-            if(!isDup) {
-                tcHistory.unshift({ dateStart: startStr + ' ➔ ' + endStr, resText1: str1, resText4: "Tổng: " + str4, typeLabel: typeLabel });
-                if(tcHistory.length > 30) tcHistory.pop(); saveHistory(); renderHistory();
-            }
-        };
-
-        btnConv.onclick = function() { processCalcModule1(false); };
-        btnReal.onclick = function() { processCalcModule1(true); };
-
-        // ================= XỬ LÝ MODULE 2 =================
-        var getDays360 = function(d1, m1, y1, d2, m2, y2) { return ((y2 - y1) * 360) + ((m2 - m1) * 30) + (d2 - d1); };
-        var daysToYMD = function(days) { return { y: Math.floor(days/360), m: Math.floor((days%360)/30), d: (days%360)%30 }; };
-        var gcd = function(a, b) { a = Math.abs(a); b = Math.abs(b); if (b === 0) return a; return gcd(b, a % b); };
-
-        var makeRow = function(label, value, isHighlight) {
-            if(isHighlight) {
-                return '<div class="flex flex-col items-center bg-orange-500 p-4 mt-2 rounded-xl border border-orange-600 shadow-md"><span class="text-[10px] font-bold text-orange-100 uppercase tracking-wider mb-1">' + label + '</span><span class="font-black text-white text-2xl text-center">' + value + '</span></div>';
-            }
-            return '<div class="flex flex-col bg-white/70 p-3 rounded-lg border border-orange-100 shadow-sm mt-3"><span class="text-[9px] font-bold text-slate-500 uppercase">' + label + '</span><span class="font-black text-slate-700 text-sm mt-0.5">' + value + '</span></div>';
-        };
-
-        btnMod2.onclick = function() {
-            var sD = parseInt(m2sD.value), sM = parseInt(m2sM.value), sY = parseInt(m2sY.value);
-            var eD = m2eD.value, eM = m2eM.value, eY = m2eY.value;
+    var renderHistory = function() {
+        historyList.innerHTML = '';
+        if(tcHistory.length === 0) { historyList.innerHTML = '<div class="text-xs text-slate-400 italic text-center py-4">Chưa có lịch sử tính toán nào.</div>'; return; }
+        for(var i = 0; i < tcHistory.length; i++) {
+            var h = tcHistory[i];
+            var colorType = 'text-teal-600';
+            if(h.typeLabel === "Thực tế (Theo Lịch)") colorType = 'text-indigo-600';
+            if(h.typeLabel === "Thời Gian Đa Chiều") colorType = 'text-orange-600';
             
-            var wYv = parseInt(m2wY.value)||0, wMv = parseInt(m2wM.value)||0, wDv = parseInt(m2wD.value)||0;
-            var rNv = parseInt(m2rNum.value)||0, rDv = parseInt(m2rDen.value)||0;
+            var itemHtml = '<div class="tc-history-item bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-1 shadow-sm">';
+            itemHtml += '<div class="flex justify-between items-center"><div class="text-[10px] font-bold text-slate-500">' + h.dateStart + '</div><div class="text-[9px] font-bold ' + colorType + ' uppercase bg-white px-1.5 py-0.5 rounded border border-slate-200">' + h.typeLabel + '</div></div>';
+            itemHtml += '<div class="text-sm font-black text-slate-700 mt-1">' + h.resText1 + '</div>';
+            itemHtml += '<div class="text-xs font-medium text-slate-500">' + h.resText4 + '</div></div>';
+            historyList.innerHTML += itemHtml;
+        }
+    };
 
-            var hasEnd = (eD !== '' && eM !== '' && eY !== '');
-            var hasWait = (m2wY.value !== '' || m2wM.value !== '' || m2wD.value !== '');
-            var hasRatio = (m2rNum.value !== '' && m2rDen.value !== '');
+    renderHistory();
+    btnClear.onclick = function() { if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) { tcHistory = []; saveHistory(); renderHistory(); } };
 
-            var waitDays = (wYv * 360) + (wMv * 30) + wDv;
-            var resPassed = "", historyMain = "", historySub = "", dynamicHtml = "";
+    var updateDays = function(dElem, mElem, yElem) {
+        var currentD = parseInt(dElem.value) || new Date().getDate();
+        var m = parseInt(mElem.value) || (new Date().getMonth() + 1);
+        var y = parseInt(yElem.value) || new Date().getFullYear();
+        var maxD = new Date(y, m, 0).getDate(); 
+        if(currentD > maxD) currentD = maxD;
+        var dOpts = ''; for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i === currentD ? 'selected' : '') + '>' + i + '</option>';
+        dElem.innerHTML = dOpts;
+    };
 
-            if (hasEnd && !hasWait && !hasRatio) {
-                // NGOẠI LỆ MỚI: Chỉ nhập Bắt đầu & Kết thúc -> Tính thẳng ra Tổng thời gian
-                var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
-                
-                var p = daysToYMD(passDays);
-                resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+    var mOpts = ''; for(var i = 1; i <= 12; i++) mOpts += '<option value="' + i + '">' + i + '</option>'; 
+    sM.innerHTML = mOpts; eM.innerHTML = mOpts; m2sM.innerHTML = mOpts;
+    
+    var yOpts = ''; var curY = new Date().getFullYear();
+    for(var i = curY - 50; i <= curY + 50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
+    sY.innerHTML = yOpts; eY.innerHTML = yOpts; m2sY.innerHTML = yOpts;
 
-                dynamicHtml = makeRow("Tổng thời gian quy đổi", resPassed, true);
-                historyMain = "Tổng: " + resPassed; historySub = "Đã tính khoảng cách";
-            }
-            else if (hasWait && hasRatio && !hasEnd) {
-                // TÌM NGÀY ĐÍCH ĐẾN
-                var passDays = Math.floor((waitDays * rNv) / rDv);
-                var p = daysToYMD(passDays);
-                var temp = new Date(sY + p.y, (sM - 1) + p.m, sD + p.d);
-                var resEnd = ('0'+temp.getDate()).slice(-2) + "/" + ('0'+(temp.getMonth()+1)).slice(-2) + "/" + temp.getFullYear();
-                resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+    var setupDateListeners = function(d, m, y) { m.addEventListener('change', function() { updateDays(d, m, y); }); y.addEventListener('change', function() { updateDays(d, m, y); }); };
+    setupDateListeners(sD, sM, sY); setupDateListeners(eD, eM, eY); setupDateListeners(m2sD, m2sM, m2sY);
 
-                dynamicHtml = makeRow("Ngày Đích Đến (Chạm mốc)", resEnd, true) + makeRow("Thời gian quy đổi (Cộng thêm)", resPassed, false);
-                historyMain = "Đích: " + resEnd; historySub = "Cộng thêm: " + resPassed;
-            } 
-            else if (hasEnd && hasRatio && !hasWait) {
-                // TÌM TỔNG THỜI GIAN
-                var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
-                
-                var calcWaitDays = Math.floor((passDays * rDv) / rNv);
-                var w = daysToYMD(calcWaitDays);
-                var p = daysToYMD(passDays);
-                var resWait = w.y + " năm " + w.m + " tháng " + w.d + " ngày";
-                resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+    var today = new Date();
+    sM.value = today.getMonth() + 1; sY.value = today.getFullYear(); updateDays(sD, sM, sY); sD.value = today.getDate();
+    eM.value = today.getMonth() + 1; eY.value = today.getFullYear(); updateDays(eD, eM, eY); eD.value = today.getDate();
+    m2sM.value = today.getMonth() + 1; m2sY.value = today.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = today.getDate();
 
-                dynamicHtml = makeRow("Tổng thời gian", resWait, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
-                historyMain = "Tổng: " + resWait; historySub = "Đã qua: " + resPassed;
-            }
-            else if (hasEnd && hasWait && !hasRatio) {
-                // TÌM TỶ LỆ
-                var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
-                
-                var divisor = gcd(passDays, waitDays);
-                var simpNum = passDays / divisor;
-                var simpDen = waitDays / divisor;
-                var p = daysToYMD(passDays);
-                var resRatio = simpNum + " / " + simpDen;
-                resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+    var updateEndDays = function() {
+        var currentD = m2eD.value; var m = parseInt(m2eM.value); var y = parseInt(m2eY.value);
+        var dOpts = '<option value=""># Ngày</option>'; 
+        var maxD = (!isNaN(m) && !isNaN(y)) ? new Date(y, m, 0).getDate() : 31;
+        for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i == currentD ? 'selected' : '') + '>' + i + '</option>';
+        m2eD.innerHTML = dOpts;
+    };
+    var mOptsE = '<option value=""># Tháng</option>'; for(var i = 1; i <= 12; i++) mOptsE += '<option value="' + i + '">' + i + '</option>'; m2eM.innerHTML = mOptsE;
+    var yOptsE = '<option value=""># Năm</option>'; for(var i = curY - 50; i <= curY + 50; i++) yOptsE += '<option value="' + i + '">' + i + '</option>'; m2eY.innerHTML = yOptsE;
+    updateEndDays();
+    m2eM.addEventListener('change', updateEndDays); m2eY.addEventListener('change', updateEndDays);
 
-                dynamicHtml = makeRow("Tỷ lệ đạt được", resRatio, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
-                historyMain = "Tỷ lệ: " + resRatio; historySub = "Đã qua: " + resPassed;
-            }
-            else if (hasEnd && hasWait && hasRatio) {
-                // ĐẦY ĐỦ THÔNG TIN
-                var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
-                if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
-                var p = daysToYMD(passDays);
-                resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+    m2eM.value = today.getMonth() + 1;
+    m2eY.value = today.getFullYear();
+    updateEndDays();
+    m2eD.value = today.getDate();
 
-                dynamicHtml = makeRow("Thời gian thực tế đã qua", resPassed, true);
-                historyMain = "Đã qua: " + resPassed; historySub = "Số liệu đầy đủ";
-            }
-            else {
-                alert("Bạn cần cung cấp các dữ liệu phù hợp (VD: Chỉ cần Ngày Bắt Đầu + Đích, HOẶC cung cấp ít nhất 2 trong 3 khối dữ liệu để tìm ẩn số còn lại).");
-                return;
-            }
+    document.getElementById('m2-btn-clear-end').onclick = function() {
+        m2eD.value = ""; m2eM.value = ""; m2eY.value = "";
+        updateEndDays();
+    };
 
-            document.getElementById('mod2-dynamic-res').innerHTML = dynamicHtml;
-            resDiv2.classList.remove('hidden');
+    document.getElementById('mod2-btn-reset').onclick = function() {
+        var td = new Date();
+        m2sM.value = td.getMonth() + 1; m2sY.value = td.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = td.getDate();
+        m2eM.value = td.getMonth() + 1; m2eY.value = td.getFullYear(); updateEndDays(); m2eD.value = td.getDate();
+        m2wY.value = ""; m2wM.value = ""; m2wD.value = "";
+        m2rNum.value = ""; m2rDen.value = "";
+        resDiv2.classList.add('hidden');
+    };
 
-            var resStart = ('0'+sD).slice(-2) + "/" + ('0'+sM).slice(-2) + "/" + sY;
-            var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === "Từ: " + resStart && tcHistory[0].resText1 === historyMain && tcHistory[0].typeLabel === "Thời Gian Đa Chiều";
-            if(!isDup) {
-                tcHistory.unshift({ dateStart: "Từ: " + resStart, resText1: historyMain, resText4: historySub, typeLabel: "Thời Gian Đa Chiều" });
-                if(tcHistory.length > 30) tcHistory.pop(); saveHistory(); renderHistory();
-            }
+    var ratioBtns = document.querySelectorAll('.m2-quick-ratio');
+    for(var k = 0; k < ratioBtns.length; k++) {
+        ratioBtns[k].onclick = function() {
+            m2rNum.value = this.getAttribute('data-num');
+            m2rDen.value = this.getAttribute('data-den');
         };
     }
-});
+
+    var processCalcModule1 = function(isReal) {
+        var d1 = parseInt(sD.value), m1 = parseInt(sM.value), y1 = parseInt(sY.value);
+        var d2 = parseInt(eD.value), m2 = parseInt(eM.value), y2 = parseInt(eY.value);
+        var startDate = new Date(y1, m1 - 1, d1), endDate = new Date(y2, m2 - 1, d2);
+        if (endDate < startDate) { alert("Lỗi: Ngày kết thúc phải lớn hơn ngày bắt đầu!"); return; }
+
+        var str1 = "", str2 = "", str3 = "", str4 = "", typeLabel = "";
+        if (!isReal) {
+            typeLabel = "Công thức (30đ/tháng)";
+            var yearRes = 0, monthRes = 0, dayRes = 0, tempD2 = d2, tempM2 = m2, tempY2 = y2;
+            if (tempD2 >= d1) { dayRes = tempD2 - d1; } else { dayRes = (tempD2 + 30) - d1; tempM2 = tempM2 - 1; }
+            if (tempM2 >= m1) { monthRes = tempM2 - m1; } else { monthRes = (tempM2 + 12) - m1; tempY2 = tempY2 - 1; }
+            yearRes = tempY2 - y1;
+            str1 = yearRes + " năm " + monthRes + " tháng " + dayRes + " ngày";
+            var totalMonths = (yearRes * 12) + monthRes;
+            str2 = Math.floor(totalMonths / 3) + " quý " + ((totalMonths % 3) * 30 + dayRes) + " ngày";
+            str3 = totalMonths + " tháng " + dayRes + " ngày";
+            str4 = ((yearRes * 360) + (monthRes * 30) + dayRes) + " ngày";
+        } else {
+            typeLabel = "Thực tế (Theo Lịch)";
+            var totalDaysReal = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+            var totalMonthsReal = (y2 - y1) * 12 + (m2 - m1);
+            if (d2 < d1) totalMonthsReal--; 
+            var yearResReal = Math.floor(totalMonthsReal / 12), monthResReal = totalMonthsReal % 12;
+            var tempDate = new Date(y1, m1 - 1, d1); var originalDay = tempDate.getDate();
+            tempDate.setMonth(tempDate.getMonth() + totalMonthsReal);
+            if (tempDate.getDate() !== originalDay) { tempDate.setDate(0); }
+            var dayResReal = Math.round((endDate.getTime() - tempDate.getTime()) / (1000 * 60 * 60 * 24));
+            str1 = yearResReal + " năm " + monthResReal + " tháng " + dayResReal + " ngày";
+            str2 = Math.floor(totalMonthsReal / 3) + " quý " + (totalMonthsReal % 3) + " tháng " + dayResReal + " ngày";
+            str3 = totalMonthsReal + " tháng " + dayResReal + " ngày";
+            str4 = totalDaysReal + " ngày";
+        }
+
+        document.getElementById('tc-res-1').innerText = str1; document.getElementById('tc-res-2').innerText = str2;
+        document.getElementById('tc-res-3').innerText = str3; document.getElementById('tc-res-4').innerText = str4;
+        document.getElementById('tc-res-type').innerText = typeLabel;
+        resDiv1.classList.remove('hidden');
+
+        var startStr = ('0'+d1).slice(-2)+'/'+('0'+m1).slice(-2)+'/'+y1; var endStr = ('0'+d2).slice(-2)+'/'+('0'+m2).slice(-2)+'/'+y2;
+        var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === startStr + ' ➔ ' + endStr && tcHistory[0].typeLabel === typeLabel;
+        if(!isDup) {
+            tcHistory.unshift({ dateStart: startStr + ' ➔ ' + endStr, resText1: str1, resText4: "Tổng: " + str4, typeLabel: typeLabel });
+            if(tcHistory.length > 30) tcHistory.pop(); saveHistory(); renderHistory();
+        }
+    };
+
+    btnConv.onclick = function() { processCalcModule1(false); };
+    btnReal.onclick = function() { processCalcModule1(true); };
+
+    var getDays360 = function(d1, m1, y1, d2, m2, y2) { return ((y2 - y1) * 360) + ((m2 - m1) * 30) + (d2 - d1); };
+    var daysToYMD = function(days) { return { y: Math.floor(days/360), m: Math.floor((days%360)/30), d: (days%360)%30 }; };
+    var gcd = function(a, b) { a = Math.abs(a); b = Math.abs(b); if (b === 0) return a; return gcd(b, a % b); };
+
+    var makeRow = function(label, value, isHighlight) {
+        if(isHighlight) {
+            return '<div class="flex flex-col items-center bg-orange-500 p-4 mt-2 rounded-xl border border-orange-600 shadow-md"><span class="text-[10px] font-bold text-orange-100 uppercase tracking-wider mb-1">' + label + '</span><span class="font-black text-white text-2xl text-center">' + value + '</span></div>';
+        }
+        return '<div class="flex flex-col bg-white/70 p-3 rounded-lg border border-orange-100 shadow-sm mt-3"><span class="text-[9px] font-bold text-slate-500 uppercase">' + label + '</span><span class="font-black text-slate-700 text-sm mt-0.5">' + value + '</span></div>';
+    };
+
+    btnMod2.onclick = function() {
+        var sD = parseInt(m2sD.value), sM = parseInt(m2sM.value), sY = parseInt(m2sY.value);
+        var eD = m2eD.value, eM = m2eM.value, eY = m2eY.value;
+        
+        var wYv = parseInt(m2wY.value)||0, wMv = parseInt(m2wM.value)||0, wDv = parseInt(m2wD.value)||0;
+        var rNv = parseInt(m2rNum.value)||0, rDv = parseInt(m2rDen.value)||0;
+
+        var hasEnd = (eD !== '' && eM !== '' && eY !== '');
+        var hasWait = (m2wY.value !== '' || m2wM.value !== '' || m2wD.value !== '');
+        var hasRatio = (m2rNum.value !== '' && m2rDen.value !== '');
+
+        var waitDays = (wYv * 360) + (wMv * 30) + wDv;
+        var resPassed = "", historyMain = "", historySub = "", dynamicHtml = "";
+
+        if (hasEnd && !hasWait && !hasRatio) {
+            var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
+            if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
+            
+            var p = daysToYMD(passDays);
+            resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+            dynamicHtml = makeRow("Tổng thời gian quy đổi", resPassed, true);
+            historyMain = "Tổng: " + resPassed; historySub = "Đã tính khoảng cách";
+        }
+        else if (hasWait && hasRatio && !hasEnd) {
+            var passDays = Math.floor((waitDays * rNv) / rDv);
+            var p = daysToYMD(passDays);
+            var temp = new Date(sY + p.y, (sM - 1) + p.m, sD + p.d);
+            var resEnd = ('0'+temp.getDate()).slice(-2) + "/" + ('0'+(temp.getMonth()+1)).slice(-2) + "/" + temp.getFullYear();
+            resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+            dynamicHtml = makeRow("Ngày Đích Đến (Chạm mốc)", resEnd, true) + makeRow("Thời gian quy đổi (Cộng thêm)", resPassed, false);
+            historyMain = "Đích: " + resEnd; historySub = "Cộng thêm: " + resPassed;
+        } 
+        else if (hasEnd && hasRatio && !hasWait) {
+            var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
+            if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
+            
+            var calcWaitDays = Math.floor((passDays * rDv) / rNv);
+            var w = daysToYMD(calcWaitDays);
+            var p = daysToYMD(passDays);
+            var resWait = w.y + " năm " + w.m + " tháng " + w.d + " ngày";
+            resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+            dynamicHtml = makeRow("Tổng thời gian", resWait, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
+            historyMain = "Tổng: " + resWait; historySub = "Đã qua: " + resPassed;
+        }
+        else if (hasEnd && hasWait && !hasRatio) {
+            var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
+            if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
+            
+            var divisor = gcd(passDays, waitDays);
+            var simpNum = passDays / divisor;
+            var simpDen = waitDays / divisor;
+            var p = daysToYMD(passDays);
+            var resRatio = simpNum + " / " + simpDen;
+            resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+            dynamicHtml = makeRow("Tỷ lệ đạt được", resRatio, true) + makeRow("Thời gian đã quy đổi", resPassed, false);
+            historyMain = "Tỷ lệ: " + resRatio; historySub = "Đã qua: " + resPassed;
+        }
+        else if (hasEnd && hasWait && hasRatio) {
+            var passDays = getDays360(sD, sM, sY, parseInt(eD), parseInt(eM), parseInt(eY));
+            if (passDays < 0) { alert("Ngày đích đến phải lớn hơn ngày bắt đầu!"); return; }
+            var p = daysToYMD(passDays);
+            resPassed = p.y + " năm " + p.m + " tháng " + p.d + " ngày";
+
+            dynamicHtml = makeRow("Thời gian thực tế đã qua", resPassed, true);
+            historyMain = "Đã qua: " + resPassed; historySub = "Số liệu đầy đủ";
+        }
+        else {
+            alert("Bạn cần cung cấp các dữ liệu phù hợp (VD: Chỉ cần Ngày Bắt Đầu + Đích, HOẶC cung cấp ít nhất 2 trong 3 khối dữ liệu để tìm ẩn số còn lại).");
+            return;
+        }
+
+        document.getElementById('mod2-dynamic-res').innerHTML = dynamicHtml;
+        resDiv2.classList.remove('hidden');
+
+        var resStart = ('0'+sD).slice(-2) + "/" + ('0'+sM).slice(-2) + "/" + sY;
+        var isDup = tcHistory.length > 0 && tcHistory[0].dateStart === "Từ: " + resStart && tcHistory[0].resText1 === historyMain && tcHistory[0].typeLabel === "Thời Gian Đa Chiều";
+        if(!isDup) {
+            tcHistory.unshift({ dateStart: "Từ: " + resStart, resText1: historyMain, resText4: historySub, typeLabel: "Thời Gian Đa Chiều" });
+            if(tcHistory.length > 30) tcHistory.pop(); saveHistory(); renderHistory();
+        }
+    };
+}

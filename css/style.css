@@ -57,38 +57,8 @@ body { font-family: 'Lexend', sans-serif; background: radial-gradient(circle at 
 #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(249, 115, 22, 0.3); border-radius: 10px; }
 
 /* =========================================
-   GLOBAL DARK MODE
-========================================= */
-body.dark-mode { background: radial-gradient(circle at top right, #1e293b, #0f172a 70%) !important; color: #f8fafc !important; }
-
-body.dark-mode .glass-card { background: rgba(30, 41, 59, 0.6) !important; border-color: rgba(255, 255, 255, 0.08) !important; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important; }
-
-body.dark-mode .bg-white, body.dark-mode .bg-white\/90, body.dark-mode .bg-white\/80, body.dark-mode .bg-white\/60, body.dark-mode .bg-slate-50, body.dark-mode .bg-slate-100 {
-    background-color: rgba(30, 41, 59, 0.8) !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
-    color: #e2e8f0 !important;
-}
-
-body.dark-mode .bg-\[\#e3eaf1\] { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; }
-
-body.dark-mode .text-slate-800, body.dark-mode .text-slate-700, body.dark-mode .text-gray-800, body.dark-mode .text-gray-700, body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 { color: #f8fafc !important; }
-
-body.dark-mode .text-slate-600, body.dark-mode .text-slate-500, body.dark-mode .text-slate-400, body.dark-mode .text-gray-600, body.dark-mode .text-gray-500 { color: #94a3b8 !important; }
-
-body.dark-mode #mobile-menu { background-color: rgba(30, 41, 59, 0.95) !important; border-color: #475569 !important; }
-
-body.dark-mode select, body.dark-mode input, body.dark-mode textarea { background-color: rgba(15, 23, 42, 0.6) !important; color: #f8fafc !important; border-color: #334155 !important; }
-body.dark-mode select:focus, body.dark-mode input:focus { border-color: #f97316 !important; box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important; }
-
-body.dark-mode #dark-mode-btn { background-color: #334155 !important; color: #f8fafc !important; }
-body.dark-mode #dark-mode-btn:hover { background-color: #475569 !important; color: #f97316 !important; }
-body.dark-mode #moon-shadow { background-color: #0f172a !important; }
-body.dark-mode #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(45, 212, 191, 0.3); }
-
-/* =========================================
    HIỆU ỨNG HEADER TÀNG HÌNH VÀ LOGO BAY
 ========================================= */
-/* Đã gộp tất cả định dạng Header vào đây, ép tàng hình 100% ở mọi chế độ */
 #main-header, body.dark-mode #main-header {
     background-color: transparent !important;
     border: none !important;
@@ -119,12 +89,10 @@ body.dark-mode #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(45,
     .header-scrolled .logo-wrapper { transform: translateX(40vw) scale(0.1); }
 }
 
-/* Làm mượt tốc độ sáng viền để đồng bộ với tốc độ bay (0.5s) của logo */
 #mobile-menu-btn {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Khi cuộn (Logo bay vào): Đổi màu nút, hiện viền cam và tỏa bóng sáng */
 .header-scrolled #mobile-menu-btn {
     border-color: rgba(249, 115, 22, 0.6) !important; 
     box-shadow: 0 0 15px rgba(249, 115, 22, 0.25) !important; 
@@ -132,7 +100,6 @@ body.dark-mode #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(45,
     background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Chế độ Dark Mode: Viền và bóng phát sáng màu Xanh ngọc (Teal) */
 body.dark-mode .header-scrolled #mobile-menu-btn {
     border-color: rgba(45, 212, 191, 0.6) !important;
     box-shadow: 0 0 15px rgba(45, 212, 191, 0.25) !important;
@@ -144,3 +111,70 @@ body.dark-mode .header-scrolled #mobile-menu-btn {
     pointer-events: auto !important;
 }
 
+/* =========================================
+   GLOBAL DARK MODE (BẢN VÁ LỖI TOÀN DIỆN MỚI NHẤT)
+========================================= */
+/* 1. Nền tổng thể của toàn bộ trang */
+body.dark-mode { 
+    background: radial-gradient(circle at top right, #1e293b, #0f172a 70%) !important; 
+    color: #f8fafc !important; 
+}
+
+/* 2. Thẻ kính Glass-card mờ ảo */
+body.dark-mode .glass-card { 
+    background: rgba(30, 41, 59, 0.6) !important; 
+    border-color: rgba(255, 255, 255, 0.08) !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important; 
+}
+
+/* 3. BẮT BỆNH: Ép tất cả các màu nền Sáng, Pastel (Cam, Xanh, Đỏ...) thành màu Tối đồng bộ */
+body.dark-mode .bg-white, body.dark-mode .bg-white\/90, body.dark-mode .bg-white\/80, body.dark-mode .bg-white\/60, body.dark-mode .bg-white\/50, 
+body.dark-mode .bg-slate-50, body.dark-mode .bg-slate-100, body.dark-mode .bg-gray-50, body.dark-mode .bg-gray-100,
+body.dark-mode .bg-orange-50, body.dark-mode .bg-orange-50\/50, body.dark-mode .bg-orange-50\/30, body.dark-mode .bg-orange-100,
+body.dark-mode .bg-red-50, body.dark-mode .bg-red-50\/50, body.dark-mode .bg-red-100,
+body.dark-mode .bg-emerald-50, body.dark-mode .bg-emerald-50\/50, body.dark-mode .bg-emerald-50\/30, body.dark-mode .bg-emerald-100,
+body.dark-mode .bg-cyan-50, body.dark-mode .bg-cyan-50\/50, body.dark-mode .bg-cyan-100,
+body.dark-mode .bg-blue-50, body.dark-mode .bg-blue-50\/50, body.dark-mode .bg-blue-100,
+body.dark-mode .bg-yellow-50, body.dark-mode .bg-yellow-50\/50, body.dark-mode .bg-yellow-100,
+body.dark-mode .bg-pink-50, body.dark-mode .bg-pink-50\/50, body.dark-mode .bg-pink-100,
+body.dark-mode .bg-purple-50, body.dark-mode .bg-purple-50\/50, body.dark-mode .bg-purple-100,
+body.dark-mode .bg-indigo-50, body.dark-mode .bg-indigo-50\/50, body.dark-mode .bg-indigo-100 {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .bg-\[\#e3eaf1\], body.dark-mode .bg-\[\#eaf0f6\] { 
+    background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; 
+    border-color: #334155 !important; 
+}
+
+/* 4. Đảo chữ màu Tối thành màu Sáng (Trắng/Xám nhạt) */
+body.dark-mode .text-slate-800, body.dark-mode .text-slate-700, 
+body.dark-mode .text-gray-800, body.dark-mode .text-gray-700, 
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 { 
+    color: #f8fafc !important; 
+}
+
+body.dark-mode .text-slate-600, body.dark-mode .text-slate-500, body.dark-mode .text-slate-400, 
+body.dark-mode .text-gray-600, body.dark-mode .text-gray-500, body.dark-mode .text-gray-400 { 
+    color: #94a3b8 !important; 
+}
+
+/* 5. Khung nhập liệu (Input, Select, Textarea) */
+body.dark-mode select, body.dark-mode input, body.dark-mode textarea { 
+    background-color: rgba(15, 23, 42, 0.6) !important; 
+    color: #f8fafc !important; 
+    border-color: #334155 !important; 
+}
+body.dark-mode select:focus, body.dark-mode input:focus, body.dark-mode textarea:focus { 
+    border-color: #f97316 !important; 
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important; 
+}
+
+/* 6. Chi tiết nhỏ khác */
+body.dark-mode #mobile-menu { background-color: rgba(15, 23, 42, 0.95) !important; border-color: #475569 !important; }
+body.dark-mode #dark-mode-btn { background-color: #334155 !important; color: #f8fafc !important; }
+body.dark-mode #dark-mode-btn:hover { background-color: #475569 !important; color: #f97316 !important; }
+body.dark-mode #moon-shadow { background-color: #0f172a !important; }
+body.dark-mode #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(45, 212, 191, 0.3); }

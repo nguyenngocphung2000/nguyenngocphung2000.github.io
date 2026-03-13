@@ -1,4 +1,4 @@
-var nam = [
+[   
     "A Giao",
     "An Minh Hùng",
     "An Văn Hiếu",
@@ -17112,5 +17112,4 @@ var nam = [
     "Đới Quang Thắng",
     "Ưng Phương Duy",
     "Ưng Trọng Nghĩa",
-    "Ưng Vi Vương"
-]
+    "Ưng Vi Vương"]

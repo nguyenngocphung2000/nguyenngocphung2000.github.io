@@ -1,10 +1,13 @@
-// --- 1. Tool Trang Chủ ---
-registerTool({
-    id: 'tab-home',
-    name: 'Trang Chủ',
-    icon: '🏠',
-    isDefault: true,
-    html: `
+export function setupTool() {
+    const tabId = 'tab-home';
+    
+    if (document.getElementById(tabId)) return;
+    
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+    
+    panel.innerHTML = `
         <div class="space-y-8"> <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 border-t-4 border-t-orange-400 relative overflow-hidden shadow-sm">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
                 
@@ -74,130 +77,127 @@ registerTool({
                 </div>
             </div>
 
-        </div> `,
-    logic: function() {
-        const guideList = document.getElementById('guide-list');
-        const searchInput = document.getElementById('guide-search');
-        const noResult = document.getElementById('guide-no-result');
-        
-        let loadedGuides = [];
-
-        // 🟢 BẢNG ĐIỀU KHIỂN BÀI VIẾT: 
-        const manifest = [
-            { title: "ℹ️ Contact me", date: "Nothing", path: "posts/contact.md" },
-            { title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", path: "posts/bot-telegram.md" },
-            { title: "⛑️ Chặn quảng cáo Web, App, Zalo bằng NextDNS", date: "Thủ thuật IOS", path: "posts/nextdns.md" },
-            { title: "📅 Cài Lịch Âm & Bộ gõ tiếng Việt trên macOS", date: "Thủ thuật Mac", path: "posts/mac-apps.md" }
-        ];
-
-        // Hàm gọi API tải tất cả các file .md cùng lúc
-        const fetchAllMarkdown = async () => {
-            try {
-                const promises = manifest.map(async (item) => {
-                    const response = await fetch(item.path);
-                    if (!response.ok) throw new Error("Lỗi tải file " + item.path);
-                    const markdownText = await response.text();
-                    
-                    return {
-                        title: item.title,
-                        date: item.date,
-                        content: markdownText
-                    };
-                });
-
-                loadedGuides = await Promise.all(promises);
-                renderGuideList();
-
-            } catch (error) {
-                console.error("Lỗi khi tải dữ liệu bài viết:", error);
-                guideList.innerHTML = `<div class="text-center p-5 text-red-500 bg-red-50 rounded-2xl border border-red-100">⚠️ Không thể tải được bài viết. Vui lòng kiểm tra lại đường dẫn file thư mục <b>posts/</b>.</div>`;
-            }
-        };
-
-        // Hàm vẽ giao diện bài viết lên HTML
-        const renderGuideList = () => {
-            guideList.innerHTML = ''; 
-            
-            loadedGuides.forEach((guide, index) => {
-                const item = document.createElement('div');
-                item.className = 'guide-item glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
+        </div>
+    `;
+    
+    document.getElementById('app-container').appendChild(panel);
+    
+    // --- BẮT ĐẦU LOGIC ---
+    const guideList = document.getElementById('guide-list');
+    const searchInput = document.getElementById('guide-search');
+    const noResult = document.getElementById('guide-no-result');
+    
+    let loadedGuides = [];
+    
+    const manifest = [
+        { title: "ℹ️ Contact me", date: "Nothing", path: "posts/contact.md" },
+        { title: "🤖 Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", path: "posts/bot-telegram.md" },
+        { title: "⛑️ Chặn quảng cáo Web, App, Zalo bằng NextDNS", date: "Thủ thuật IOS", path: "posts/nextdns.md" },
+        { title: "📅 Cài Lịch Âm & Bộ gõ tiếng Việt trên macOS", date: "Thủ thuật Mac", path: "posts/mac-apps.md" }
+    ];
+    
+    const fetchAllMarkdown = async () => {
+        try {
+            const promises = manifest.map(async (item) => {
+                const response = await fetch(item.path);
+                if (!response.ok) throw new Error("Lỗi tải file " + item.path);
+                const markdownText = await response.text();
                 
-                item.innerHTML = `
-                    <button class="w-full text-left p-5 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
-                        <div>
-                            <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-lg pr-4">${guide.title}</h3>
-                            <p class="inline-block mt-2 bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${guide.date}</p>
-                        </div>
-                        <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">▼</div>
-                    </button>
-                    <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
-                        <div class="prose-custom p-6 md:p-8" id="md-render-${index}"></div>
+                return {
+                    title: item.title,
+                    date: item.date,
+                    content: markdownText
+                };
+            });
+            
+            loadedGuides = await Promise.all(promises);
+            renderGuideList();
+            
+        } catch (error) {
+            console.error("Lỗi khi tải dữ liệu bài viết:", error);
+            guideList.innerHTML = `<div class="text-center p-5 text-red-500 bg-red-50 rounded-2xl border border-red-100">⚠️ Không thể tải được bài viết. Vui lòng kiểm tra lại đường dẫn file thư mục <b>posts/</b>.</div>`;
+        }
+    };
+    
+    const renderGuideList = () => {
+        guideList.innerHTML = '';
+        
+        loadedGuides.forEach((guide, index) => {
+            const item = document.createElement('div');
+            item.className = 'guide-item glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
+            
+            item.innerHTML = `
+                <button class="w-full text-left p-5 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
+                    <div>
+                        <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-lg pr-4">${guide.title}</h3>
+                        <p class="inline-block mt-2 bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${guide.date}</p>
                     </div>
-                `;
-                guideList.appendChild(item);
-            });
-        };
-
-        // Kích hoạt hàm tải dữ liệu khi tab được mở
-        fetchAllMarkdown();
-
-        // BỘ LỌC TÌM KIẾM THÔNG MINH
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase().trim();
-            const items = document.querySelectorAll('.guide-item');
-            let hasVisible = false;
-
-            loadedGuides.forEach((guide, index) => {
-                const match = guide.title.toLowerCase().includes(term) || guide.content.toLowerCase().includes(term);
-                if (match) {
-                    if(items[index]) items[index].style.display = 'block';
-                    hasVisible = true;
-                } else {
-                    if(items[index]) items[index].style.display = 'none';
-                }
-            });
-
-            if (!hasVisible) {
-                noResult.classList.remove('hidden');
+                    <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">▼</div>
+                </button>
+                <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
+                    <div class="prose-custom p-6 md:p-8" id="md-render-${index}"></div>
+                </div>
+            `;
+            guideList.appendChild(item);
+        });
+    };
+    
+    fetchAllMarkdown();
+    
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        const items = document.querySelectorAll('.guide-item');
+        let hasVisible = false;
+        
+        loadedGuides.forEach((guide, index) => {
+            const match = guide.title.toLowerCase().includes(term) || guide.content.toLowerCase().includes(term);
+            if (match) {
+                if (items[index]) items[index].style.display = 'block';
+                hasVisible = true;
             } else {
-                noResult.classList.add('hidden');
+                if (items[index]) items[index].style.display = 'none';
             }
         });
-
-        // Đóng mở bài viết (Dịch Markdown sang HTML)
-        window.toggleGuide = function(index) {
-            const contentDiv = document.getElementById('content-' + index);
-            const iconDiv = document.getElementById('icon-' + index);
-            const renderDiv = document.getElementById('md-render-' + index);
-
-            if (contentDiv.classList.contains('hidden')) {
-                loadedGuides.forEach((_, i) => {
-                    if (i !== index) {
-                        document.getElementById('content-' + i).classList.add('hidden');
-                        document.getElementById('icon-' + i).style.transform = 'rotate(0deg)';
-                    }
-                });
-
-                contentDiv.classList.remove('hidden');
-                iconDiv.style.transform = 'rotate(180deg)';
-                
-                if (renderDiv.innerHTML.trim() === '') {
-                    if (window.marked) {
-                        let text = loadedGuides[index].content;
-                        text = text.replace(/^@time\[(.*?)\] (.*)$/gm, '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>');
-                        renderDiv.innerHTML = marked.parse(text);
-                        renderDiv.querySelectorAll('a').forEach(link => {
-                            link.setAttribute('target', '_blank');
-                            link.className = 'text-orange-500 font-bold hover:underline';
-                        });
-                    } else {
-                        renderDiv.innerHTML = "<p class='text-red-500'>Lỗi: Không tải được thư viện giải mã Markdown.</p>";
-                    }
+        
+        if (!hasVisible) {
+            noResult.classList.remove('hidden');
+        } else {
+            noResult.classList.add('hidden');
+        }
+    });
+    
+    window.toggleGuide = function(index) {
+        const contentDiv = document.getElementById('content-' + index);
+        const iconDiv = document.getElementById('icon-' + index);
+        const renderDiv = document.getElementById('md-render-' + index);
+        
+        if (contentDiv.classList.contains('hidden')) {
+            loadedGuides.forEach((_, i) => {
+                if (i !== index) {
+                    document.getElementById('content-' + i).classList.add('hidden');
+                    document.getElementById('icon-' + i).style.transform = 'rotate(0deg)';
                 }
-            } else {
-                contentDiv.classList.add('hidden');
-                iconDiv.style.transform = 'rotate(0deg)';
+            });
+            
+            contentDiv.classList.remove('hidden');
+            iconDiv.style.transform = 'rotate(180deg)';
+            
+            if (renderDiv.innerHTML.trim() === '') {
+                if (window.marked) {
+                    let text = loadedGuides[index].content;
+                    text = text.replace(/^@time\[(.*?)\] (.*)$/gm, '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>');
+                    renderDiv.innerHTML = marked.parse(text);
+                    renderDiv.querySelectorAll('a').forEach(link => {
+                        link.setAttribute('target', '_blank');
+                        link.className = 'text-orange-500 font-bold hover:underline';
+                    });
+                } else {
+                    renderDiv.innerHTML = "<p class='text-red-500'>Lỗi: Không tải được thư viện giải mã Markdown.</p>";
+                }
             }
-        };
-    }
-});
+        } else {
+            contentDiv.classList.add('hidden');
+            iconDiv.style.transform = 'rotate(0deg)';
+        }
+    };
+}

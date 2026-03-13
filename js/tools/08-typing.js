@@ -1,11 +1,14 @@
-// --- 8. Tool Luyện Đánh Máy ---
-registerTool({
-    id: 'tab-typing',
-    name: 'Gõ Phím',
-    icon: '⌨️',
-    html: `
+export function setupTool() {
+    const tabId = 'tab-typing';
+
+    if (document.getElementById(tabId)) return;
+
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+
+    panel.innerHTML = `
         <style>
-            /* Nhúng Font lập trình siêu đẹp JetBrains Mono */
             @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
             .type-theme-light {
@@ -37,7 +40,7 @@ registerTool({
             }
 
             .typing-text-area {
-                font-family: 'JetBrains Mono', monospace; /* Ép font lập trình xịn */
+                font-family: 'JetBrains Mono', monospace; 
                 font-size: 1.3rem;
                 line-height: 1.8;
                 position: relative;
@@ -80,11 +83,10 @@ registerTool({
             }
             @keyframes blink { 50% { opacity: 0; } }
 
-            /* BÍ THUẬT CHỐNG GIẬT MÀN HÌNH ĐIỆN THOẠI */
             #hidden-input { 
                 position: absolute; 
                 width: 10px; height: 10px; 
-                opacity: 0; /* Tàng hình 100% */
+                opacity: 0; 
                 z-index: -1; 
                 border: none; outline: none; resize: none;
                 padding: 0; margin: 0;
@@ -111,7 +113,7 @@ registerTool({
         <div class="text-center mb-6">
             <span class="bg-gray-800 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Hãy trở thành</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Phím Thủ <span class="text-pink-500">Pro Max</span> ⌨️</h2>
-             <p class="text-sm text     gray-500 mt-2 italic">Cân kèo mọi siêu anh hùng bàn phím</p>
+             <p class="text-sm text-gray-500 mt-2 italic">Cân kèo mọi siêu anh hùng bàn phím</p>
         </div>
 
         <div id="tp-setup-screen" class="glass-card p-6 md:p-8 rounded-[2rem] max-w-4xl mx-auto border-t-4 border-t-pink-400 shadow-xl space-y-6 block">
@@ -151,8 +153,7 @@ registerTool({
 
                 <textarea id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                 
-                <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Múa phím thần sầu - Đánh thức bản năng
- *</div>
+                <div class="mt-8 text-center text-[10px] md:text-xs opacity-50 z-30" style="color: var(--text-normal)">* Múa phím thần sầu - Đánh thức bản năng *</div>
             </div>
         </div>
 
@@ -179,269 +180,271 @@ registerTool({
                 <button id="tp-btn-new" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow-md">📝 Bài mới</button>
             </div>
         </div>
-    `,
-    logic: function() {
-        const btnLight = document.getElementById('tp-btn-light');
-        const btnDark = document.getElementById('tp-btn-dark');
-        const typeContainer = document.getElementById('typing-container');
-        const countOverlay = document.getElementById('countdown-overlay');
+    `;
 
-        btnLight.onclick = () => {
-            btnLight.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-white text-pink-500 shadow-sm transition';
-            btnDark.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-blue-500 transition';
-            typeContainer.classList.remove('type-theme-dark');
-            typeContainer.classList.add('type-theme-light');
-            countOverlay.classList.remove('bg-gray-900/80');
-            countOverlay.classList.add('bg-white/80');
-        };
+    document.getElementById('app-container').appendChild(panel);
 
-        btnDark.onclick = () => {
-            btnDark.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-gray-700 text-blue-400 shadow-sm transition';
-            btnLight.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-pink-500 transition';
-            typeContainer.classList.remove('type-theme-light');
-            typeContainer.classList.add('type-theme-dark');
-            countOverlay.classList.remove('bg-white/80');
-            countOverlay.classList.add('bg-gray-900/80');
-        };
+    // ==========================================
+    // LOGIC CHUYỂN ĐỔI SANG MODULE
+    // ==========================================
+    const btnLight = document.getElementById('tp-btn-light');
+    const btnDark = document.getElementById('tp-btn-dark');
+    const typeContainer = document.getElementById('typing-container');
+    const countOverlay = document.getElementById('countdown-overlay');
 
-        const sourceText = document.getElementById('tp-source-text');
-        const setupScreen = document.getElementById('tp-setup-screen');
-        const gameScreen = document.getElementById('tp-game-screen');
-        const resultScreen = document.getElementById('tp-result-screen');
+    btnLight.onclick = () => {
+        btnLight.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-white text-pink-500 shadow-sm transition';
+        btnDark.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-blue-500 transition';
+        typeContainer.classList.remove('type-theme-dark');
+        typeContainer.classList.add('type-theme-light');
+        countOverlay.classList.remove('bg-gray-900/80');
+        countOverlay.classList.add('bg-white/80');
+    };
+
+    btnDark.onclick = () => {
+        btnDark.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-gray-700 text-blue-400 shadow-sm transition';
+        btnLight.className = 'px-3 md:px-4 py-1.5 rounded-lg text-xs md:text-sm font-bold text-gray-500 hover:text-pink-500 transition';
+        typeContainer.classList.remove('type-theme-light');
+        typeContainer.classList.add('type-theme-dark');
+        countOverlay.classList.remove('bg-white/80');
+        countOverlay.classList.add('bg-gray-900/80');
+    };
+
+    const sourceText = document.getElementById('tp-source-text');
+    const setupScreen = document.getElementById('tp-setup-screen');
+    const gameScreen = document.getElementById('tp-game-screen');
+    const resultScreen = document.getElementById('tp-result-screen');
+    
+    const wordsContainer = document.getElementById('words-container');
+    const hiddenInput = document.getElementById('hidden-input');
+    const caret = document.getElementById('caret');
+    
+    let textChunks = [];       
+    let currentChunkIdx = 0;   
+    let targetText = "";       
+    let charElements = []; 
+    
+    let startTime = null;
+    let timerInterval = null;
+    let countIntervalObj = null;
+    let isPlaying = false;
+    
+    let previousCorrectChars = 0; 
+    let previousTotalTyped = 0;
+
+    const liveWpm = document.getElementById('live-wpm');
+    const liveAcc = document.getElementById('live-acc');
+    const liveTime = document.getElementById('live-time');
+    const liveProgress = document.getElementById('live-progress');
+
+    const chunkText = (text) => {
+        const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
+        const chunks = [];
+        const WORDS_PER_SCREEN = 50; 
+
+        for (let i = 0; i < words.length; i += WORDS_PER_SCREEN) {
+            let chunkStr = words.slice(i, i + WORDS_PER_SCREEN).join(' ');
+            if (i + WORDS_PER_SCREEN < words.length) chunkStr += ' ';
+            chunks.push(chunkStr);
+        }
+        return chunks;
+    };
+
+    const loadChunk = (index) => {
+        targetText = textChunks[index];
+        wordsContainer.innerHTML = '';
+        charElements = [];
         
-        const wordsContainer = document.getElementById('words-container');
-        const hiddenInput = document.getElementById('hidden-input');
-        const caret = document.getElementById('caret');
+        for (let i = 0; i < targetText.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = targetText[i]; 
+            span.className = 'char';
+            wordsContainer.appendChild(span);
+            charElements.push(span);
+        }
+
+        hiddenInput.value = '';
+        hiddenInput.maxLength = targetText.length;
+        liveProgress.innerText = (index + 1) + '/' + textChunks.length;
         
-        let textChunks = [];       
-        let currentChunkIdx = 0;   
-        let targetText = "";       
-        let charElements = []; 
+        updateCaret();
+
+        typeContainer.classList.remove('flash-effect');
+        void typeContainer.offsetWidth; 
+        typeContainer.classList.add('flash-effect');
+    };
+
+    const initGame = (text) => {
+        textChunks = chunkText(text);
+        currentChunkIdx = 0;
+        previousCorrectChars = 0;
+        previousTotalTyped = 0;
+
+        isPlaying = false;
+        startTime = null;
         
-        let startTime = null;
-        let timerInterval = null;
-        let countIntervalObj = null;
-        let isPlaying = false;
+        liveWpm.innerText = '0';
+        liveAcc.innerText = '100';
+        liveTime.innerText = '0';
         
-        let previousCorrectChars = 0; 
-        let previousTotalTyped = 0;
+        loadChunk(currentChunkIdx);
+    };
 
-        const liveWpm = document.getElementById('live-wpm');
-        const liveAcc = document.getElementById('live-acc');
-        const liveTime = document.getElementById('live-time');
-        const liveProgress = document.getElementById('live-progress');
-
-        const chunkText = (text) => {
-            const words = text.trim().replace(/\n/g, ' ').split(/\s+/).filter(w => w.length > 0);
-            const chunks = [];
-            const WORDS_PER_SCREEN = 50; 
-
-            for (let i = 0; i < words.length; i += WORDS_PER_SCREEN) {
-                let chunkStr = words.slice(i, i + WORDS_PER_SCREEN).join(' ');
-                if (i + WORDS_PER_SCREEN < words.length) chunkStr += ' ';
-                chunks.push(chunkStr);
-            }
-            return chunks;
-        };
-
-        const loadChunk = (index) => {
-            targetText = textChunks[index];
-            wordsContainer.innerHTML = '';
-            charElements = [];
-            
-            for (let i = 0; i < targetText.length; i++) {
-                const span = document.createElement('span');
-                span.textContent = targetText[i]; 
-                span.className = 'char';
-                wordsContainer.appendChild(span);
-                charElements.push(span);
-            }
-
-            hiddenInput.value = '';
-            hiddenInput.maxLength = targetText.length;
-            liveProgress.innerText = (index + 1) + '/' + textChunks.length;
-            
-            updateCaret();
-
-            typeContainer.classList.remove('flash-effect');
-            void typeContainer.offsetWidth; 
-            typeContainer.classList.add('flash-effect');
-        };
-
-        const initGame = (text) => {
-            textChunks = chunkText(text);
-            currentChunkIdx = 0;
-            previousCorrectChars = 0;
-            previousTotalTyped = 0;
-
-            isPlaying = false;
-            startTime = null;
-            
-            liveWpm.innerText = '0';
-            liveAcc.innerText = '100';
-            liveTime.innerText = '0';
-            
-            loadChunk(currentChunkIdx);
-        };
-
-        const updateCaret = () => {
-            const currentLen = hiddenInput.value.length;
-            
-            if(currentLen >= targetText.length) {
-                const typedText = hiddenInput.value;
-                for(let i=0; i<typedText.length; i++) {
-                    if(typedText[i] === targetText[i]) previousCorrectChars++;
-                }
-                previousTotalTyped += typedText.length;
-
-                if (currentChunkIdx < textChunks.length - 1) {
-                    currentChunkIdx++;
-                    loadChunk(currentChunkIdx);
-                } else {
-                    finishGame();
-                }
-                return;
-            }
-
-            const targetChar = charElements[currentLen];
-            if(targetChar) {
-                // Di chuyển con trỏ nhấp nháy
-                caret.style.left = targetChar.offsetLeft + 'px';
-                caret.style.top = targetChar.offsetTop + 'px';
-                const h = targetChar.offsetHeight;
-                caret.style.height = h > 0 ? h + 'px' : '1.5rem';
-
-                // BÍ THUẬT: Di chuyển vùng nhập ẩn bám sát theo chữ để mobile không cuộn lên đầu!
-                hiddenInput.style.left = targetChar.offsetLeft + 'px';
-                hiddenInput.style.top = targetChar.offsetTop + 'px';
-            }
-        };
-
-        const calculateStats = (timeSecs) => {
+    const updateCaret = () => {
+        const currentLen = hiddenInput.value.length;
+        
+        if(currentLen >= targetText.length) {
             const typedText = hiddenInput.value;
-            let currentCorrect = 0;
             for(let i=0; i<typedText.length; i++) {
-                if(typedText[i] === targetText[i]) currentCorrect++;
+                if(typedText[i] === targetText[i]) previousCorrectChars++;
             }
+            previousTotalTyped += typedText.length;
 
-            let totalCorrect = previousCorrectChars + currentCorrect;
-            let totalTyped = previousTotalTyped + typedText.length;
-
-            let wpm = timeSecs > 0 ? Math.round((totalCorrect / 5) / (timeSecs / 60)) : 0;
-            let acc = totalTyped > 0 ? Math.round((totalCorrect / totalTyped) * 100) : 100;
-            
-            return { wpm, acc };
-        };
-
-        hiddenInput.addEventListener('input', () => {
-            if(!isPlaying) {
-                hiddenInput.value = '';
-                return;
+            if (currentChunkIdx < textChunks.length - 1) {
+                currentChunkIdx++;
+                loadChunk(currentChunkIdx);
+            } else {
+                finishGame();
             }
+            return;
+        }
 
-            const typedText = hiddenInput.value;
-            
-            if(!startTime && typedText.length > 0) {
-                startTime = Date.now();
-                timerInterval = setInterval(() => {
-                    const secs = Math.floor((Date.now() - startTime) / 1000);
-                    liveTime.innerText = secs;
-                    const stats = calculateStats(secs);
-                    liveWpm.innerText = stats.wpm;
-                    liveAcc.innerText = stats.acc;
-                }, 1000);
-            }
+        const targetChar = charElements[currentLen];
+        if(targetChar) {
+            caret.style.left = targetChar.offsetLeft + 'px';
+            caret.style.top = targetChar.offsetTop + 'px';
+            const h = targetChar.offsetHeight;
+            caret.style.height = h > 0 ? h + 'px' : '1.5rem';
 
-            for(let i=0; i < targetText.length; i++) {
-                charElements[i].classList.remove('correct', 'incorrect');
-                if(i < typedText.length) {
-                    if(typedText[i] === targetText[i]) {
-                        charElements[i].classList.add('correct');
-                    } else {
-                        charElements[i].classList.add('incorrect');
-                    }
+            hiddenInput.style.left = targetChar.offsetLeft + 'px';
+            hiddenInput.style.top = targetChar.offsetTop + 'px';
+        }
+    };
+
+    const calculateStats = (timeSecs) => {
+        const typedText = hiddenInput.value;
+        let currentCorrect = 0;
+        for(let i=0; i<typedText.length; i++) {
+            if(typedText[i] === targetText[i]) currentCorrect++;
+        }
+
+        let totalCorrect = previousCorrectChars + currentCorrect;
+        let totalTyped = previousTotalTyped + typedText.length;
+
+        let wpm = timeSecs > 0 ? Math.round((totalCorrect / 5) / (timeSecs / 60)) : 0;
+        let acc = totalTyped > 0 ? Math.round((totalCorrect / totalTyped) * 100) : 100;
+        
+        return { wpm, acc };
+    };
+
+    hiddenInput.addEventListener('input', () => {
+        if(!isPlaying) {
+            hiddenInput.value = '';
+            return;
+        }
+
+        const typedText = hiddenInput.value;
+        
+        if(!startTime && typedText.length > 0) {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                const secs = Math.floor((Date.now() - startTime) / 1000);
+                liveTime.innerText = secs;
+                const stats = calculateStats(secs);
+                liveWpm.innerText = stats.wpm;
+                liveAcc.innerText = stats.acc;
+            }, 1000);
+        }
+
+        for(let i=0; i < targetText.length; i++) {
+            charElements[i].classList.remove('correct', 'incorrect');
+            if(i < typedText.length) {
+                if(typedText[i] === targetText[i]) {
+                    charElements[i].classList.add('correct');
+                } else {
+                    charElements[i].classList.add('incorrect');
                 }
             }
-            updateCaret();
-        });
+        }
+        updateCaret();
+    });
 
-        typeContainer.addEventListener('click', () => {
-            if (isPlaying) {
+    typeContainer.addEventListener('click', () => {
+        if (isPlaying) {
+            hiddenInput.focus();
+        }
+    });
+
+    const startBtn = document.getElementById('tp-btn-start');
+    const countText = document.getElementById('countdown-text');
+
+    const startCountdown = () => {
+        if(countIntervalObj) clearInterval(countIntervalObj);
+        
+        let count = 3;
+        countText.innerText = count;
+        countOverlay.classList.remove('hidden');
+        
+        countIntervalObj = setInterval(() => {
+            count--;
+            if(count > 0) {
+                countText.innerText = count;
+            } else if(count === 0) {
+                countText.innerText = "GÕ!";
+            } else {
+                clearInterval(countIntervalObj);
+                countOverlay.classList.add('hidden');
+                isPlaying = true;
                 hiddenInput.focus();
             }
-        });
+        }, 1000); 
+    };
 
-        const startBtn = document.getElementById('tp-btn-start');
-        const countText = document.getElementById('countdown-text');
+    startBtn.onclick = () => {
+        const text = sourceText.value.trim();
+        if(!text) { alert("Vui lòng dán văn bản vào nhé!"); return; }
+        
+        setupScreen.classList.add('hidden');
+        resultScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+        
+        hiddenInput.value = '';
+        
+        initGame(text);
+        startCountdown();
+        
+        gameScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
-        const startCountdown = () => {
-            if(countIntervalObj) clearInterval(countIntervalObj);
-            
-            let count = 3;
-            countText.innerText = count;
-            countOverlay.classList.remove('hidden');
-            
-            countIntervalObj = setInterval(() => {
-                count--;
-                if(count > 0) {
-                    countText.innerText = count;
-                } else if(count === 0) {
-                    countText.innerText = "GÕ!";
-                } else {
-                    clearInterval(countIntervalObj);
-                    countOverlay.classList.add('hidden');
-                    isPlaying = true;
-                    hiddenInput.focus();
-                }
-            }, 1000); 
-        };
+    const finishGame = () => {
+        isPlaying = false;
+        clearInterval(timerInterval);
+        hiddenInput.blur(); 
 
-        startBtn.onclick = () => {
-            const text = sourceText.value.trim();
-            if(!text) { alert("Vui lòng dán văn bản vào nhé!"); return; }
-            
-            setupScreen.classList.add('hidden');
-            resultScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
-            
-            hiddenInput.value = '';
-            
-            initGame(text);
-            startCountdown();
-            
-            gameScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        };
+        const secs = Math.floor((Date.now() - startTime) / 1000);
+        const stats = calculateStats(secs);
 
-        const finishGame = () => {
-            isPlaying = false;
-            clearInterval(timerInterval);
-            hiddenInput.blur(); 
+        document.getElementById('res-wpm').innerText = stats.wpm;
+        document.getElementById('res-acc').innerText = stats.acc + '%';
+        document.getElementById('res-time').innerText = secs + 's';
 
-            const secs = Math.floor((Date.now() - startTime) / 1000);
-            const stats = calculateStats(secs);
+        gameScreen.classList.add('hidden');
+        resultScreen.classList.remove('hidden');
+    };
 
-            document.getElementById('res-wpm').innerText = stats.wpm;
-            document.getElementById('res-acc').innerText = stats.acc + '%';
-            document.getElementById('res-time').innerText = secs + 's';
+    document.getElementById('tp-btn-retry').onclick = () => {
+        resultScreen.classList.add('hidden');
+        gameScreen.classList.remove('hidden');
+        
+        hiddenInput.value = '';
+        initGame(sourceText.value);
+        startCountdown();
+    };
 
-            gameScreen.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-        };
-
-        document.getElementById('tp-btn-retry').onclick = () => {
-            resultScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
-            
-            hiddenInput.value = '';
-            initGame(sourceText.value);
-            startCountdown();
-        };
-
-        document.getElementById('tp-btn-new').onclick = () => {
-            resultScreen.classList.add('hidden');
-            setupScreen.classList.remove('hidden');
-            sourceText.value = '';
-            sourceText.focus();
-        };
-    }
-});
+    document.getElementById('tp-btn-new').onclick = () => {
+        resultScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        sourceText.value = '';
+        sourceText.focus();
+    };
+}

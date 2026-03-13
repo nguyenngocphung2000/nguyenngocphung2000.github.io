@@ -1,9 +1,14 @@
-// --- 12. Tool Đặt Tên Con ---
-registerTool({
-    id: 'tab-baby-name',
-    name: 'Đặt Tên Con',
-    icon: '👶',
-    html: '<style>' +
+export function setupTool() {
+    const tabId = 'tab-baby-name';
+
+    if (document.getElementById(tabId)) return;
+
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+
+    // Giữ nguyên 100% cấu trúc chuỗi HTML của bạn
+    panel.innerHTML = '<style>' +
           'body.dark-mode .bn-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .bn-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; } ' +
           'body.dark-mode .bn-name-nam { background-color: rgba(30, 58, 138, 0.4) !important; border-color: rgba(59, 130, 246, 0.3) !important; color: #bfdbfe !important; } ' +
@@ -15,12 +20,9 @@ registerTool({
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Đặt Tên Cho <span class="text-pink-500">Bé Yêu</span></h2>' +
           '</div>' +
           '<div class="max-w-md mx-auto space-y-6 pb-10">' +
-
-          '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">' +
           '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-pink-500 text-lg">⚙️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Bộ lọc tùy chỉnh</h3></div>' +
           '<p class="text-[10.5px] text-slate-500 italic mt-0 leading-relaxed font-medium">💡 Mẹo: Bỏ trống ô nào thì máy sẽ tự động tìm từ hay nhất đắp vào ô đó.</p>' +
-          
           '<div class="flex gap-3">' +
           '<div class="flex-1">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Giới tính</label>' +
@@ -35,7 +37,6 @@ registerTool({
           '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200">' +
           '</div>' +
           '</div>' +
-
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Độ dài tên</label>' +
           '<select id="bn-length" style="text-align-last: center;" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
@@ -46,7 +47,6 @@ registerTool({
           '<option value="5">5 Chữ</option>' +
           '</select>' +
           '</div>' +
-
           '<div class="flex gap-2">' +
           '<div class="w-1/3">' +
           '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Họ</label>' +
@@ -61,7 +61,6 @@ registerTool({
           '<input id="bn-ten" type="text" placeholder="Tâm..." class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-3 text-center font-bold text-slate-700 outline-none focus:ring-2 ring-pink-200">' +
           '</div>' +
           '</div>' +
-
           '<div class="flex gap-2 w-full mt-4">' +
           '<button id="bn-btn-copy-gen" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-4 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 flex justify-center items-center gap-1 text-[11px] uppercase tracking-wide">' +
           '📋 Copy' +
@@ -71,8 +70,6 @@ registerTool({
           '</button>' +
           '</div>' +
           '</div>' +
-
-          '' +
           '<div id="bn-result" class="hidden bn-card bg-slate-50 rounded-[1.5rem] p-5 shadow-sm border border-slate-200">' +
           '<div class="flex justify-between items-center border-b border-pink-200/50 pb-2 mb-3">' +
           '<div class="text-pink-600 font-bold text-[10px] tracking-widest uppercase">DANH SÁCH TÊN GỢI Ý</div>' +
@@ -80,12 +77,8 @@ registerTool({
           '</div>' +
           '<div id="bn-res-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all duration-300"></div>' +
           '</div>' +
-
-          '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 mt-6 filter-card">' +
           '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-indigo-500 text-lg">🛠️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Trạm xử lý danh sách</h3></div>' +
-          
-          '' +
           '<div>' +
           '<div class="flex justify-between items-end mb-1">' +
           '<div class="flex items-center gap-2">' +
@@ -96,10 +89,7 @@ registerTool({
           '</div>' +
           '<textarea id="flt-input" class="bn-input w-full h-32 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
           '</div>' +
-          
-          '' +
           '<div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3 bn-input">' +
-          
           '<div class="grid grid-cols-2 gap-3">' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xóa dòng trống</label>' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Chuẩn hóa dấu cách</label>' +
@@ -110,7 +100,6 @@ registerTool({
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Đảo ngược danh sách</label>' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn danh sách</label>' +
           '</div>' +
-
           '<div class="grid grid-cols-1 gap-3 border-t border-slate-200 pt-3">' +
           '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
           '<option value="none">A/a (Không can thiệp HOA/thường)</option>' +
@@ -124,7 +113,6 @@ registerTool({
           '<option value="desc">Sắp xếp Z-A</option>' +
           '</select>' +
           '</div>' +
-
           '<div class="flex items-center gap-2 border-t border-slate-200 pt-3">' +
           '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer focus:ring-indigo-500">' +
           '<span class="text-[11px] font-bold text-slate-600">Lọc theo số từ:</span>' +
@@ -136,16 +124,12 @@ registerTool({
           '<input type="number" id="inp-wc-num" value="3" class="w-12 bg-white border border-slate-200 rounded p-1 text-center text-[11px] font-bold text-slate-700 outline-none">' +
           '<span class="text-[11px] font-bold text-slate-500">từ/dòng</span>' +
           '</div>' +
-
           '</div>' +
-
           '<div class="w-full">' +
           '<button id="flt-btn-process" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
           'XỬ LÝ' +
           '</button>' +
           '</div>' +
-
-          '' +
           '<div>' +
           '<div class="flex justify-between items-end mb-1">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Kết quả đầu ra</label>' +
@@ -153,98 +137,100 @@ registerTool({
           '</div>' +
           '<textarea id="flt-output" readonly class="bn-input w-full h-32 bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-700 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
           '</div>' +
-          
           '<div class="flex gap-2">' +
           '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">🗑️ Xóa</button>' +
           '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">📋 Copy Kết Quả</button>' +
           '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">⬇️ Tải Txt</button>' +
           '</div>' +
-
           '</div>' +
-          
-          '</div>',
-    logic: function() {
-        // --- CÁC HÀM TIỆN ÍCH CƠ BẢN ---
-        var capitalize = function(str) {
-            return str.trim().replace(/\s+/g, ' ').split(' ').map(function(word) {
-                if(!word) return '';
-                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-            }).join(' ');
-        };
+          '</div>';
 
-        var removeAccents = function(str) {
-            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
-        };
+    document.getElementById('app-container').appendChild(panel);
 
-        var randItem = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+    // --- LOGIC ĐÃ ĐƯỢC NÂNG CẤP ĐỂ DÙNG FETCH JSON ---
+    var capitalize = function(str) {
+        return str.trim().replace(/\s+/g, ' ').split(' ').map(function(word) {
+            if(!word) return '';
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }).join(' ');
+    };
 
-        // --- MÀNG LỌC ĐÁNH BAY RÁC (KHẮC PHỤC LỖI DÍNH CHỮ) ---
-        var isValidSyllable = function(word) {
-            var w = word.toLowerCase();
-            var vowels = "aàáảãạăằắẳẵặâầấẩẫậeèéẻẽẹêềếểễệiìíỉĩịoòóỏõọôồốổỗộơờớởỡợuùúủũụưừứửữựyỳýỷỹỵ";
-            var hasVowel = false;
-            // Phải có ít nhất 1 nguyên âm
-            for(var i = 0; i < w.length; i++) {
-                if(vowels.indexOf(w[i]) !== -1) { hasVowel = true; break; }
-            }
-            if(!hasVowel) return false; // Vứt bỏ Nh, Th, Tr, Ng...
-            
-            // Nếu chữ chỉ có 1 ký tự, phải nằm trong danh sách có ý nghĩa
-            if (w.length === 1) {
-                var validOneChar = ['a','á','à','ả','ã','ạ','ý','ỳ','ỷ','ỹ','ỵ','ê','ề','ế','ể','ễ','ệ','ô','ồ','ố','ổ','ỗ','ộ'];
-                if (validOneChar.indexOf(w) === -1) return false; // Vứt bỏ b, c, d, ị...
-            }
-            return true;
-        };
+    var removeAccents = function(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
+    };
 
-        // --- MODULE 1: ĐỀ XUẤT TÊN GỢI Ý ---
-        var btnGen = document.getElementById('bn-btn-gen');
-        var btnCopyGen = document.getElementById('bn-btn-copy-gen');
-        var btnToggle = document.getElementById('bn-btn-toggle');
-        var resDiv = document.getElementById('bn-result');
-        var resList = document.getElementById('bn-res-list');
-        var currentResults = []; 
+    var randItem = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
 
-        btnToggle.onclick = function() {
-            if (resList.classList.contains('hidden')) {
-                resList.classList.remove('hidden');
-                btnToggle.innerText = 'Thu gọn';
-            } else {
-                resList.classList.add('hidden');
-                btnToggle.innerText = 'Mở rộng';
-            }
-        };
+    var isValidSyllable = function(word) {
+        var w = word.toLowerCase();
+        var vowels = "aàáảãạăằắẳẵặâầấẩẫậeèéẻẽẹêềếểễệiìíỉĩịoòóỏõọôồốổỗộơờớởỡợuùúủũụưừứửữựyỳýỷỹỵ";
+        var hasVowel = false;
+        for(var i = 0; i < w.length; i++) {
+            if(vowels.indexOf(w[i]) !== -1) { hasVowel = true; break; }
+        }
+        if(!hasVowel) return false; 
+        
+        if (w.length === 1) {
+            var validOneChar = ['a','á','à','ả','ã','ạ','ý','ỳ','ỷ','ỹ','ỵ','ê','ề','ế','ể','ễ','ệ','ô','ồ','ố','ổ','ỗ','ộ'];
+            if (validOneChar.indexOf(w) === -1) return false; 
+        }
+        return true;
+    };
 
-        btnCopyGen.onclick = function() {
-            if (currentResults.length === 0) { alert("Chưa có danh sách tên nào để Copy!"); return; }
-            var textToCopy = currentResults.join('\n');
-            navigator.clipboard.writeText(textToCopy).then(function() {
-                var oldHtml = btnCopyGen.innerHTML;
-                btnCopyGen.innerHTML = '✅ Đã Copy';
-                btnCopyGen.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
-                setTimeout(function() { 
-                    btnCopyGen.innerHTML = oldHtml; 
-                    btnCopyGen.classList.remove('bg-green-100', 'text-green-600', 'border-green-200');
-                }, 2000);
-            });
-        };
+    var btnGen = document.getElementById('bn-btn-gen');
+    var btnCopyGen = document.getElementById('bn-btn-copy-gen');
+    var btnToggle = document.getElementById('bn-btn-toggle');
+    var resDiv = document.getElementById('bn-result');
+    var resList = document.getElementById('bn-res-list');
+    var currentResults = []; 
 
-        btnGen.onclick = function() {
-            if (typeof nam === 'undefined' || typeof nu === 'undefined') {
-                alert("Lỗi: Không tìm thấy dữ liệu tên! Hãy chắc chắn file nam.js và nu.js đã được nhúng trong index.html.");
-                return;
-            }
+    btnToggle.onclick = function() {
+        if (resList.classList.contains('hidden')) {
+            resList.classList.remove('hidden');
+            btnToggle.innerText = 'Thu gọn';
+        } else {
+            resList.classList.add('hidden');
+            btnToggle.innerText = 'Mở rộng';
+        }
+    };
 
-            if (!window.nameParsed) {
+    btnCopyGen.onclick = function() {
+        if (currentResults.length === 0) { alert("Chưa có danh sách tên nào để Copy!"); return; }
+        var textToCopy = currentResults.join('\n');
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            var oldHtml = btnCopyGen.innerHTML;
+            btnCopyGen.innerHTML = '✅ Đã Copy';
+            btnCopyGen.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
+            setTimeout(function() { 
+                btnCopyGen.innerHTML = oldHtml; 
+                btnCopyGen.classList.remove('bg-green-100', 'text-green-600', 'border-green-200');
+            }, 2000);
+        });
+    };
+
+    // Nâng cấp thành hàm async để fetch dữ liệu từ JSON
+    btnGen.onclick = async function() {
+        if (!window.nameParsed) {
+            btnGen.innerHTML = '⏳ ĐANG TẢI DỮ LIỆU...';
+            try {
+                // Tự động tìm và tải file nam.json và nu.json trong thư mục data/
+                const [resNam, resNu] = await Promise.all([
+                    fetch('data/nam.json'),
+                    fetch('data/nu.json')
+                ]);
+                
+                if (!resNam.ok || !resNu.ok) throw new Error("Không thể tải file dữ liệu.");
+                
+                const namDataArr = await resNam.json();
+                const nuDataArr = await resNu.json();
+
                 window.nameData = { nam: { ho: [], demFull: [], demWords: [], ten: [] }, nu: { ho: [], demFull: [], demWords: [], ten: [] } };
+                
                 var parsePool = function(arr, gender) {
                     arr.forEach(function(n) {
                         var cleanName = n.trim().replace(/\s+/g, ' ');
                         var w = cleanName.split(' ');
-                        
-                        // Chạy qua màng lọc diệt rác
                         w = w.filter(isValidSyllable);
-
                         if(w.length >= 2) {
                             window.nameData[gender].ho.push(w[0]);
                             window.nameData[gender].ten.push(w[w.length-1]);
@@ -260,268 +246,246 @@ registerTool({
                     window.nameData[gender].demFull = [...new Set(window.nameData[gender].demFull)];
                     window.nameData[gender].demWords = [...new Set(window.nameData[gender].demWords)];
                 };
-                parsePool(nam, 'nam');
-                parsePool(nu, 'nu');
+                
+                parsePool(namDataArr, 'nam');
+                parsePool(nuDataArr, 'nu');
                 window.nameParsed = true;
-            }
-
-            // Đã thay đổi số lượng mặc định thành 100
-            var count = parseInt(document.getElementById('bn-count').value) || 100;
-            if (count <= 0 || count > 200) count = 100; 
-            var gender = document.getElementById('bn-gender').value;
-            var lengthOpt = document.getElementById('bn-length').value;
-            
-            var inputHo = document.getElementById('bn-ho').value.trim();
-            var inputDem = document.getElementById('bn-dem').value.trim();
-            var inputTen = document.getElementById('bn-ten').value.trim();
-
-            if (lengthOpt === '2' && inputDem !== '') {
-                alert("Tên 2 chữ thì không có Chữ lót nhé! Vui lòng xóa 'Chữ lót' hoặc đổi độ dài thành 3-4-5 chữ.");
+                btnGen.innerHTML = '✨ Đề Xuất Tên';
+            } catch (error) {
+                alert("Lỗi: Không tìm thấy file dữ liệu (data/nam.json hoặc data/nu.json). Hãy kiểm tra lại cấu trúc thư mục!");
+                btnGen.innerHTML = '✨ Đề Xuất Tên';
                 return;
             }
-
-            var resultsMap = new Map(); 
-            var attempts = 0;
-            var maxAttempts = count * 100; 
-
-            while (resultsMap.size < count && attempts < maxAttempts) {
-                attempts++;
-                var g = gender === 'all' ? (Math.random() < 0.5 ? 'nam' : 'nu') : gender;
-                var data = window.nameData[g];
-                
-                // Logic lấy độ dài ngẫu nhiên có trọng số ưu tiên 3 và 4 chữ
-                var targetL;
-                if (lengthOpt === 'all') {
-                    var lengthWeights = [2, 3, 3, 3, 4, 4, 4, 5]; // Tăng xác suất cho 3 và 4
-                    targetL = randItem(lengthWeights);
-                } else {
-                    targetL = parseInt(lengthOpt);
-                }
-
-                var hoStr = inputHo !== '' ? capitalize(inputHo) : randItem(data.ho);
-                var demInStr = inputDem !== '' ? capitalize(inputDem) : '';
-                var tenStr = inputTen !== '' ? capitalize(inputTen) : randItem(data.ten);
-
-                var c_ho = hoStr.split(' ').length;
-                var c_ten = tenStr.split(' ').length; 
-                var c_dem_in = demInStr === '' ? 0 : demInStr.split(' ').length;
-
-                var needed_dem = targetL - c_ho - c_ten - c_dem_in;
-                var dem_final = demInStr;
-
-                if (needed_dem > 0) {
-                    var addedDem = '';
-                    var exactDems = data.demFull.filter(function(d) { return d.split(' ').length === needed_dem; });
-                    if (exactDems.length > 0 && Math.random() < 0.5) {
-                        addedDem = randItem(exactDems);
-                    } else {
-                        var tempDemArr = [];
-                        var lastWord = dem_final.split(' ').pop();
-                        for (var j = 0; j < needed_dem; j++) {
-                            var w = randItem(data.demWords);
-                            var localTries = 0;
-                            while (w === lastWord && localTries < 15) { w = randItem(data.demWords); localTries++; }
-                            tempDemArr.push(w);
-                            lastWord = w;
-                        }
-                        addedDem = tempDemArr.join(' ');
-                    }
-                    dem_final = dem_final === '' ? addedDem : (dem_final + ' ' + addedDem);
-                } 
-                else if (lengthOpt === '2') {
-                    dem_final = ''; 
-                }
-
-                var nameParts = [];
-                if (hoStr) nameParts.push(hoStr);
-                if (dem_final) nameParts.push(dem_final);
-                if (tenStr) nameParts.push(tenStr);
-                
-                var finalName = nameParts.join(' ').replace(/\s+/g, ' ').trim();
-                var finalWordCount = finalName.split(' ').length;
-
-                if (lengthOpt !== 'all' && finalWordCount !== parseInt(lengthOpt)) {
-                    if (c_ho + c_dem_in + c_ten < parseInt(lengthOpt)) continue; 
-                }
-
-                if (!resultsMap.has(finalName)) {
-                    resultsMap.set(finalName, g);
-                }
-            }
-
-            var generatedHTML = '';
-            currentResults = []; 
-            resultsMap.forEach(function(g, finalName) {
-                currentResults.push(finalName); 
-                var colorClass = g === 'nam' ? 'bn-name-nam bg-blue-50 text-blue-800 border-blue-200' : 'bn-name-nu bg-pink-50 text-pink-800 border-pink-200';
-                generatedHTML += '<div class="p-3.5 rounded-xl border shadow-sm text-center ' + colorClass + '">';
-                generatedHTML += '<span class="font-bold text-[15px]">' + finalName + '</span>';
-                generatedHTML += '</div>';
-            });
-
-            if (resultsMap.size === 0) {
-                generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào phù hợp!</div>';
-            }
-
-            resList.innerHTML = generatedHTML;
-            resList.classList.remove('hidden');
-            btnToggle.innerText = 'Thu gọn';
-            resDiv.classList.remove('hidden');
-        };
-
-        // --- MODULE 2: TRẠM XỬ LÝ DANH SÁCH THỦ CÔNG ---
-        var inputArea = document.getElementById('flt-input');
-        inputArea.addEventListener('input', function() {
-            var lines = inputArea.value.split('\n');
-            document.getElementById('flt-cnt-in').innerText = inputArea.value === '' ? 0 : lines.length;
-        });
-
-        // Xử lý nút dán danh sách
-        var btnPaste = document.getElementById('flt-btn-paste');
-        if (btnPaste) {
-            btnPaste.onclick = function() {
-                navigator.clipboard.readText().then(function(clipText) {
-                    if (clipText) {
-                        inputArea.value = clipText;
-                        inputArea.dispatchEvent(new Event('input')); // Kích hoạt sự kiện để đếm lại dòng
-                        
-                        var oldHtml = btnPaste.innerHTML;
-                        btnPaste.innerHTML = '✅ Đã dán';
-                        setTimeout(function() { btnPaste.innerHTML = oldHtml; }, 2000);
-                    }
-                }).catch(function(err) {
-                    alert("Trình duyệt chặn quyền truy cập Clipboard hoặc không hỗ trợ tự động dán!");
-                });
-            };
         }
 
-        document.getElementById('flt-btn-process').onclick = function() {
-            var text = document.getElementById('flt-input').value;
-            if(text === '') {
-                document.getElementById('flt-output').value = '';
-                document.getElementById('flt-cnt-out').innerText = '0';
-                return;
-            }
+        var count = parseInt(document.getElementById('bn-count').value) || 100;
+        if (count <= 0 || count > 200) count = 100; 
+        var gender = document.getElementById('bn-gender').value;
+        var lengthOpt = document.getElementById('bn-length').value;
+        
+        var inputHo = document.getElementById('bn-ho').value.trim();
+        var inputDem = document.getElementById('bn-dem').value.trim();
+        var inputTen = document.getElementById('bn-ten').value.trim();
+
+        if (lengthOpt === '2' && inputDem !== '') {
+            alert("Tên 2 chữ thì không có Chữ lót nhé! Vui lòng xóa 'Chữ lót' hoặc đổi độ dài thành 3-4-5 chữ.");
+            return;
+        }
+
+        var resultsMap = new Map(); 
+        var attempts = 0;
+        var maxAttempts = count * 100; 
+
+        while (resultsMap.size < count && attempts < maxAttempts) {
+            attempts++;
+            var g = gender === 'all' ? (Math.random() < 0.5 ? 'nam' : 'nu') : gender;
+            var data = window.nameData[g];
             
-            var lines = text.split('\n');
-
-            // 1. Xóa dòng trống
-            if (document.getElementById('chk-empty').checked) {
-                lines = lines.filter(function(l) { return l.trim() !== ''; });
+            var targetL;
+            if (lengthOpt === 'all') {
+                var lengthWeights = [2, 3, 3, 3, 4, 4, 4, 5]; 
+                targetL = randItem(lengthWeights);
+            } else {
+                targetL = parseInt(lengthOpt);
             }
 
-            // 2. Bỏ số thứ tự cũ (Xóa số và dấu chấm/gạch ngang ở đầu dòng)
-            if (document.getElementById('chk-rem-num').checked) {
-                lines = lines.map(function(l) { return l.replace(/^\s*\d+[\.\-\)]?\s*/, ''); });
+            var hoStr = inputHo !== '' ? capitalize(inputHo) : randItem(data.ho);
+            var demInStr = inputDem !== '' ? capitalize(inputDem) : '';
+            var tenStr = inputTen !== '' ? capitalize(inputTen) : randItem(data.ten);
+
+            var c_ho = hoStr.split(' ').length;
+            var c_ten = tenStr.split(' ').length; 
+            var c_dem_in = demInStr === '' ? 0 : demInStr.split(' ').length;
+
+            var needed_dem = targetL - c_ho - c_ten - c_dem_in;
+            var dem_final = demInStr;
+
+            if (needed_dem > 0) {
+                var addedDem = '';
+                var exactDems = data.demFull.filter(function(d) { return d.split(' ').length === needed_dem; });
+                if (exactDems.length > 0 && Math.random() < 0.5) {
+                    addedDem = randItem(exactDems);
+                } else {
+                    var tempDemArr = [];
+                    var lastWord = dem_final.split(' ').pop();
+                    for (var j = 0; j < needed_dem; j++) {
+                        var w = randItem(data.demWords);
+                        var localTries = 0;
+                        while (w === lastWord && localTries < 15) { w = randItem(data.demWords); localTries++; }
+                        tempDemArr.push(w);
+                        lastWord = w;
+                    }
+                    addedDem = tempDemArr.join(' ');
+                }
+                dem_final = dem_final === '' ? addedDem : (dem_final + ' ' + addedDem);
+            } 
+            else if (lengthOpt === '2') {
+                dem_final = ''; 
             }
 
-            // 3. Chuẩn hóa dấu cách
-            if (document.getElementById('chk-space').checked) {
-                lines = lines.map(function(l) { return l.replace(/\s+/g, ' ').trim(); });
+            var nameParts = [];
+            if (hoStr) nameParts.push(hoStr);
+            if (dem_final) nameParts.push(dem_final);
+            if (tenStr) nameParts.push(tenStr);
+            
+            var finalName = nameParts.join(' ').replace(/\s+/g, ' ').trim();
+            var finalWordCount = finalName.split(' ').length;
+
+            if (lengthOpt !== 'all' && finalWordCount !== parseInt(lengthOpt)) {
+                if (c_ho + c_dem_in + c_ten < parseInt(lengthOpt)) continue; 
             }
 
-            // 4. Can thiệp Hoa/Thường
-            var caseOpt = document.getElementById('sel-case').value;
-            if (caseOpt === 'title') {
-                lines = lines.map(function(l) { return capitalize(l); });
-            } else if (caseOpt === 'lower') {
-                lines = lines.map(function(l) { return l.toLowerCase(); });
-            } else if (caseOpt === 'upper') {
-                lines = lines.map(function(l) { return l.toUpperCase(); });
+            if (!resultsMap.has(finalName)) {
+                resultsMap.set(finalName, g);
             }
+        }
 
-            // 5. Bỏ dấu Tiếng Việt
-            if (document.getElementById('chk-accent').checked) {
-                lines = lines.map(function(l) { return removeAccents(l); });
-            }
+        var generatedHTML = '';
+        currentResults = []; 
+        resultsMap.forEach(function(g, finalName) {
+            currentResults.push(finalName); 
+            var colorClass = g === 'nam' ? 'bn-name-nam bg-blue-50 text-blue-800 border-blue-200' : 'bn-name-nu bg-pink-50 text-pink-800 border-pink-200';
+            generatedHTML += '<div class="p-3.5 rounded-xl border shadow-sm text-center ' + colorClass + '">';
+            generatedHTML += '<span class="font-bold text-[15px]">' + finalName + '</span>';
+            generatedHTML += '</div>';
+        });
 
-            // 6. Lọc theo số từ (dùng chuỗi less, eq, greater để tránh lỗi HTML)
-            if (document.getElementById('chk-wc').checked) {
-                var op = document.getElementById('sel-wc-op').value;
-                var num = parseInt(document.getElementById('inp-wc-num').value) || 0;
-                lines = lines.filter(function(l) {
-                    if (l.trim() === '') return false;
-                    var wc = l.trim().split(/\s+/).length;
-                    if (op === 'less') return wc < num;
-                    if (op === 'eq') return wc === num;
-                    if (op === 'greater') return wc > num;
-                    return true;
-                });
-            }
+        if (resultsMap.size === 0) {
+            generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào phù hợp!</div>';
+        }
 
-            // 7. Lọc trùng lặp
-            if (document.getElementById('chk-dup').checked) {
-                lines = [...new Set(lines)];
-            }
+        resList.innerHTML = generatedHTML;
+        resList.classList.remove('hidden');
+        btnToggle.innerText = 'Thu gọn';
+        resDiv.classList.remove('hidden');
+    };
 
-            // 8. Sắp xếp A-Z / Z-A theo TÊN CHÍNH
-            var sortOpt = document.getElementById('sel-sort').value;
-            if (sortOpt === 'asc' || sortOpt === 'desc') {
-                lines.sort(function(a, b) {
-                    var aWords = a.trim().split(/\s+/);
-                    var bWords = b.trim().split(/\s+/);
-                    var aName = aWords[aWords.length - 1] || '';
-                    var bName = bWords[bWords.length - 1] || '';
-                    var cmp = aName.localeCompare(bName, 'vi');
-                    if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } 
-                    return sortOpt === 'asc' ? cmp : -cmp;
-                });
-            }
+    var inputArea = document.getElementById('flt-input');
+    inputArea.addEventListener('input', function() {
+        var lines = inputArea.value.split('\n');
+        document.getElementById('flt-cnt-in').innerText = inputArea.value === '' ? 0 : lines.length;
+    });
 
-            // 9. Đảo ngược danh sách
-            if (document.getElementById('chk-reverse').checked) {
-                lines.reverse();
-            }
-
-            // 10. Xáo trộn danh sách
-            if (document.getElementById('chk-shuffle').checked) {
-                lines.sort(function() { return 0.5 - Math.random(); });
-            }
-
-            // 11. Thêm số thứ tự mới
-            if (document.getElementById('chk-add-num').checked) {
-                lines = lines.map(function(l, i) { return (i + 1) + ". " + l; });
-            }
-
-            // Xuất kết quả ra màn hình
-            document.getElementById('flt-output').value = lines.join('\n');
-            document.getElementById('flt-cnt-out').innerText = lines.length;
-        };
-
-        // --- CÁC NÚT ĐIỀU KHIỂN CỦA TRẠM LỌC ---
-        document.getElementById('flt-btn-clear').onclick = function() {
-            // Đã loại bỏ hàm confirm() để chống lỗi bị chặn từ các iframe/trình duyệt
-            document.getElementById('flt-input').value = '';
-            document.getElementById('flt-output').value = '';
-            document.getElementById('flt-cnt-in').innerText = '0';
-            document.getElementById('flt-cnt-out').innerText = '0';
-        };
-
-        document.getElementById('flt-btn-copy').onclick = function() {
-            var outText = document.getElementById('flt-output').value;
-            if (outText === "") { alert("Không có kết quả để copy!"); return; }
-            navigator.clipboard.writeText(outText).then(function() {
-                var btn = document.getElementById('flt-btn-copy');
-                var oldHtml = btn.innerHTML;
-                btn.innerHTML = '✅ Đã Copy';
-                btn.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
-                btn.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
-                setTimeout(function() { 
-                    btn.innerHTML = oldHtml; 
-                    btn.classList.remove('bg-green-100', 'text-green-600', 'border-green-200');
-                    btn.classList.add('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
-                }, 2000);
+    var btnPaste = document.getElementById('flt-btn-paste');
+    if (btnPaste) {
+        btnPaste.onclick = function() {
+            navigator.clipboard.readText().then(function(clipText) {
+                if (clipText) {
+                    inputArea.value = clipText;
+                    inputArea.dispatchEvent(new Event('input')); 
+                    
+                    var oldHtml = btnPaste.innerHTML;
+                    btnPaste.innerHTML = '✅ Đã dán';
+                    setTimeout(function() { btnPaste.innerHTML = oldHtml; }, 2000);
+                }
+            }).catch(function(err) {
+                alert("Trình duyệt chặn quyền truy cập Clipboard hoặc không hỗ trợ tự động dán!");
             });
         };
-
-        document.getElementById('flt-btn-down').onclick = function() {
-            var outText = document.getElementById('flt-output').value;
-            if (outText === "") { alert("Không có dữ liệu để tải xuống!"); return; }
-            var blob = new Blob([outText], { type: 'text/plain;charset=utf-8' });
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'Danh_Sach_Ten_Da_Loc.txt';
-            link.click();
-        };
     }
-});
+
+    document.getElementById('flt-btn-process').onclick = function() {
+        var text = document.getElementById('flt-input').value;
+        if(text === '') {
+            document.getElementById('flt-output').value = '';
+            document.getElementById('flt-cnt-out').innerText = '0';
+            return;
+        }
+        
+        var lines = text.split('\n');
+
+        if (document.getElementById('chk-empty').checked) {
+            lines = lines.filter(function(l) { return l.trim() !== ''; });
+        }
+        if (document.getElementById('chk-rem-num').checked) {
+            lines = lines.map(function(l) { return l.replace(/^\s*\d+[\.\-\)]?\s*/, ''); });
+        }
+        if (document.getElementById('chk-space').checked) {
+            lines = lines.map(function(l) { return l.replace(/\s+/g, ' ').trim(); });
+        }
+
+        var caseOpt = document.getElementById('sel-case').value;
+        if (caseOpt === 'title') {
+            lines = lines.map(function(l) { return capitalize(l); });
+        } else if (caseOpt === 'lower') {
+            lines = lines.map(function(l) { return l.toLowerCase(); });
+        } else if (caseOpt === 'upper') {
+            lines = lines.map(function(l) { return l.toUpperCase(); });
+        }
+
+        if (document.getElementById('chk-accent').checked) {
+            lines = lines.map(function(l) { return removeAccents(l); });
+        }
+
+        if (document.getElementById('chk-wc').checked) {
+            var op = document.getElementById('sel-wc-op').value;
+            var num = parseInt(document.getElementById('inp-wc-num').value) || 0;
+            lines = lines.filter(function(l) {
+                if (l.trim() === '') return false;
+                var wc = l.trim().split(/\s+/).length;
+                if (op === 'less') return wc < num;
+                if (op === 'eq') return wc === num;
+                if (op === 'greater') return wc > num;
+                return true;
+            });
+        }
+
+        if (document.getElementById('chk-dup').checked) {
+            lines = [...new Set(lines)];
+        }
+
+        var sortOpt = document.getElementById('sel-sort').value;
+        if (sortOpt === 'asc' || sortOpt === 'desc') {
+            lines.sort(function(a, b) {
+                var aWords = a.trim().split(/\s+/);
+                var bWords = b.trim().split(/\s+/);
+                var aName = aWords[aWords.length - 1] || '';
+                var bName = bWords[bWords.length - 1] || '';
+                var cmp = aName.localeCompare(bName, 'vi');
+                if (cmp === 0) { cmp = a.localeCompare(b, 'vi'); } 
+                return sortOpt === 'asc' ? cmp : -cmp;
+            });
+        }
+
+        if (document.getElementById('chk-reverse').checked) { lines.reverse(); }
+        if (document.getElementById('chk-shuffle').checked) { lines.sort(function() { return 0.5 - Math.random(); }); }
+        if (document.getElementById('chk-add-num').checked) { lines = lines.map(function(l, i) { return (i + 1) + ". " + l; }); }
+
+        document.getElementById('flt-output').value = lines.join('\n');
+        document.getElementById('flt-cnt-out').innerText = lines.length;
+    };
+
+    document.getElementById('flt-btn-clear').onclick = function() {
+        document.getElementById('flt-input').value = '';
+        document.getElementById('flt-output').value = '';
+        document.getElementById('flt-cnt-in').innerText = '0';
+        document.getElementById('flt-cnt-out').innerText = '0';
+    };
+
+    document.getElementById('flt-btn-copy').onclick = function() {
+        var outText = document.getElementById('flt-output').value;
+        if (outText === "") { alert("Không có kết quả để copy!"); return; }
+        navigator.clipboard.writeText(outText).then(function() {
+            var btn = document.getElementById('flt-btn-copy');
+            var oldHtml = btn.innerHTML;
+            btn.innerHTML = '✅ Đã Copy';
+            btn.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
+            btn.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
+            setTimeout(function() { 
+                btn.innerHTML = oldHtml; 
+                btn.classList.remove('bg-green-100', 'text-green-600', 'border-green-200');
+                btn.classList.add('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
+            }, 2000);
+        });
+    };
+
+    document.getElementById('flt-btn-down').onclick = function() {
+        var outText = document.getElementById('flt-output').value;
+        if (outText === "") { alert("Không có dữ liệu để tải xuống!"); return; }
+        var blob = new Blob([outText], { type: 'text/plain;charset=utf-8' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Danh_Sach_Ten_Da_Loc.txt';
+        link.click();
+    };
+}

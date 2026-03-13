@@ -1,9 +1,13 @@
-// --- 4. Tool Thống kê văn bản ---
-registerTool({
-    id: 'tab-text-stat',
-    name: 'Thống Kê Chữ',
-    icon: '📊',
-    html: `
+export function setupTool() {
+    const tabId = 'tab-text-stat';
+    
+    if (document.getElementById(tabId)) return;
+    
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+    
+    panel.innerHTML = `
         <div class="text-center mb-6">
             <span class="bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Tiện ích chữ</span>
             <h2 class="text-3xl font-bold mt-2 text-gray-800">Thống Kê <span class="text-emerald-500">Văn Bản</span> 📊</h2>
@@ -47,49 +51,50 @@ registerTool({
                 <div>Thời gian đọc (~200 từ/phút): <span id="ts-read-time" class="text-emerald-700 font-bold">0 giây</span></div>
             </div>
         </div>
-    `,
-    logic: function() {
-        const input = document.getElementById('ts-input');
-        const outChars = document.getElementById('ts-chars');
-        const outWords = document.getElementById('ts-words');
-        const outLines = document.getElementById('ts-lines');
-        const outBytes = document.getElementById('ts-bytes');
-        const outCharsNoSpace = document.getElementById('ts-chars-nospace');
-        const outReadTime = document.getElementById('ts-read-time');
-        const btnClear = document.getElementById('ts-clear');
-
-        const calculateStats = () => {
-            const text = input.value;
-            outChars.innerText = text.length;
-            outCharsNoSpace.innerText = text.replace(/\s/g, '').length;
-
-            const words = text.trim().split(/\s+/).filter(w => w.length > 0);
-            outWords.innerText = words.length;
-
-            outLines.innerText = text.length === 0 ? 0 : text.split('\n').length;
-
-            // Tính KB làm tròn 2 chữ số thập phân
-            const byteSize = new Blob([text]).size;
-            outBytes.innerText = (byteSize / 1024).toFixed(2);
-
-            const minutes = words.length / 200;
-            if (minutes === 0) {
-                outReadTime.innerText = "0 giây";
-            } else if (minutes < 1) {
-                outReadTime.innerText = Math.ceil(minutes * 60) + " giây";
-            } else {
-                const m = Math.floor(minutes);
-                const s = Math.ceil((minutes - m) * 60);
-                outReadTime.innerText = `${m} phút ${s} giây`;
-            }
-        };
-
-        input.addEventListener('input', calculateStats);
-
-        btnClear.addEventListener('click', () => {
-            input.value = '';
-            calculateStats();
-            input.focus();
-        });
-    }
-});
+    `;
+    
+    document.getElementById('app-container').appendChild(panel);
+    
+    // --- BẮT ĐẦU LOGIC ---
+    const input = document.getElementById('ts-input');
+    const outChars = document.getElementById('ts-chars');
+    const outWords = document.getElementById('ts-words');
+    const outLines = document.getElementById('ts-lines');
+    const outBytes = document.getElementById('ts-bytes');
+    const outCharsNoSpace = document.getElementById('ts-chars-nospace');
+    const outReadTime = document.getElementById('ts-read-time');
+    const btnClear = document.getElementById('ts-clear');
+    
+    const calculateStats = () => {
+        const text = input.value;
+        outChars.innerText = text.length;
+        outCharsNoSpace.innerText = text.replace(/\s/g, '').length;
+        
+        const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+        outWords.innerText = words.length;
+        
+        outLines.innerText = text.length === 0 ? 0 : text.split('\n').length;
+        
+        const byteSize = new Blob([text]).size;
+        outBytes.innerText = (byteSize / 1024).toFixed(2);
+        
+        const minutes = words.length / 200;
+        if (minutes === 0) {
+            outReadTime.innerText = "0 giây";
+        } else if (minutes < 1) {
+            outReadTime.innerText = Math.ceil(minutes * 60) + " giây";
+        } else {
+            const m = Math.floor(minutes);
+            const s = Math.ceil((minutes - m) * 60);
+            outReadTime.innerText = `${m} phút ${s} giây`;
+        }
+    };
+    
+    input.addEventListener('input', calculateStats);
+    
+    btnClear.addEventListener('click', () => {
+        input.value = '';
+        calculateStats();
+        input.focus();
+    });
+}

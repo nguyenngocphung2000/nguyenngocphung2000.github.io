@@ -1,10 +1,13 @@
-// --- 11. Tool Không Gian Tập Trung (Focus Workspace) ---
-registerTool({
-    id: 'tab-workspace',
-    name: 'Tập Trung(PC)',
-    icon: '🎧',
-    isDefault: false,
-    html: `
+export function setupTool() {
+    const tabId = 'tab-workspace';
+
+    if (document.getElementById(tabId)) return;
+
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+
+    panel.innerHTML = `
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito:wght@800&family=Space+Mono:wght@700&family=Pacifico&display=swap');
             
@@ -207,347 +210,341 @@ registerTool({
                 <span id="ws-player-time" class="text-[11px] font-bold text-white/70 tracking-wider min-w-[75px] shrink-0 text-right whitespace-nowrap">0:00 / 0:00</span>
             </div>
         </div>
-    `,
-    logic: function() {
-        // --- 1. LOGIC ĐỒNG HỒ & POMODORO ---
-        const timeEl = document.getElementById('ws-time');
-        const dateEl = document.getElementById('ws-date');
-        const miniClockEl = document.getElementById('ws-mini-clock');
-        
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-            timeEl.innerText = timeStr;
-            miniClockEl.innerText = timeStr;
-            dateEl.innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    `;
+
+    document.getElementById('app-container').appendChild(panel);
+
+    // ==========================================
+    // LOGIC CHUYỂN ĐỔI SANG MODULE
+    // ==========================================
+    const timeEl = document.getElementById('ws-time');
+    const dateEl = document.getElementById('ws-date');
+    const miniClockEl = document.getElementById('ws-mini-clock');
+    
+    function updateClock() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+        timeEl.innerText = timeStr;
+        miniClockEl.innerText = timeStr;
+        dateEl.innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const clockEls = [document.getElementById('ws-time'), document.getElementById('ws-pomo-time')];
+    window.changeClockFont = function(fontClass) {
+        clockEls.forEach(el => {
+            el.className = `text-[8rem] md:text-[12rem] font-bold drop-shadow-[0_4px_25px_rgba(0,0,0,0.5)] tracking-wider leading-none transition-all duration-300 cursor-pointer hover:opacity-80 hover:scale-105 ${fontClass}`;
+        });
+    };
+
+    const btnClock = document.getElementById('btn-mode-clock');
+    const btnPomo = document.getElementById('btn-mode-pomo');
+    const viewClock = document.getElementById('ws-clock-view');
+    const viewPomo = document.getElementById('ws-pomo-view');
+
+    btnClock.addEventListener('click', () => {
+        btnClock.className = "px-5 py-2 rounded-full bg-white text-black text-[10px] font-bold tracking-widest uppercase transition-all shadow-sm";
+        btnPomo.className = "px-5 py-2 rounded-full text-white/70 hover:text-white text-[10px] font-bold tracking-widest uppercase transition-all";
+        viewClock.classList.remove('hidden'); viewClock.classList.add('flex');
+        viewPomo.classList.add('hidden'); viewPomo.classList.remove('flex');
+    });
+
+    btnPomo.addEventListener('click', () => {
+        btnPomo.className = "px-5 py-2 rounded-full bg-white text-black text-[10px] font-bold tracking-widest uppercase transition-all shadow-sm";
+        btnClock.className = "px-5 py-2 rounded-full text-white/70 hover:text-white text-[10px] font-bold tracking-widest uppercase transition-all";
+        viewPomo.classList.remove('hidden'); viewPomo.classList.add('flex');
+        viewClock.classList.add('hidden'); viewClock.classList.remove('flex');
+    });
+
+    let defaultPomoTime = 25 * 60, pomoTime = defaultPomoTime, pomoInterval = null, isRunning = false;
+    const pomoDisplay = document.getElementById('ws-pomo-time');
+    const btnPomoStart = document.getElementById('ws-pomo-start');
+    const btnPomoReset = document.getElementById('ws-pomo-reset');
+    const pomoPlayIcon = document.getElementById('pomo-icon-play');
+    const pomoPauseIcon = document.getElementById('pomo-icon-pause');
+
+    function updatePomoDisplay() {
+        const m = Math.floor(pomoTime / 60).toString().padStart(2, '0');
+        const s = (pomoTime % 60).toString().padStart(2, '0');
+        pomoDisplay.innerText = `${m}:${s}`;
+    }
+
+    pomoDisplay.addEventListener('click', () => {
+        if (isRunning) { alert("Dừng đồng hồ trước khi đổi giờ nhé!"); return; }
+        const input = prompt("Nhập số phút tập trung (VD: 25, 45, 60):", Math.floor(defaultPomoTime / 60));
+        if (input && !isNaN(input) && input > 0) {
+            defaultPomoTime = parseInt(input) * 60; pomoTime = defaultPomoTime; updatePomoDisplay();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+    });
 
-        const clockEls = [document.getElementById('ws-time'), document.getElementById('ws-pomo-time')];
-        window.changeClockFont = function(fontClass) {
-            clockEls.forEach(el => {
-                el.className = `text-[8rem] md:text-[12rem] font-bold drop-shadow-[0_4px_25px_rgba(0,0,0,0.5)] tracking-wider leading-none transition-all duration-300 cursor-pointer hover:opacity-80 hover:scale-105 ${fontClass}`;
-            });
-        };
-
-        const btnClock = document.getElementById('btn-mode-clock');
-        const btnPomo = document.getElementById('btn-mode-pomo');
-        const viewClock = document.getElementById('ws-clock-view');
-        const viewPomo = document.getElementById('ws-pomo-view');
-
-        btnClock.addEventListener('click', () => {
-            btnClock.className = "px-5 py-2 rounded-full bg-white text-black text-[10px] font-bold tracking-widest uppercase transition-all shadow-sm";
-            btnPomo.className = "px-5 py-2 rounded-full text-white/70 hover:text-white text-[10px] font-bold tracking-widest uppercase transition-all";
-            viewClock.classList.remove('hidden'); viewClock.classList.add('flex');
-            viewPomo.classList.add('hidden'); viewPomo.classList.remove('flex');
-        });
-
-        btnPomo.addEventListener('click', () => {
-            btnPomo.className = "px-5 py-2 rounded-full bg-white text-black text-[10px] font-bold tracking-widest uppercase transition-all shadow-sm";
-            btnClock.className = "px-5 py-2 rounded-full text-white/70 hover:text-white text-[10px] font-bold tracking-widest uppercase transition-all";
-            viewPomo.classList.remove('hidden'); viewPomo.classList.add('flex');
-            viewClock.classList.add('hidden'); viewClock.classList.remove('flex');
-        });
-
-        let defaultPomoTime = 25 * 60, pomoTime = defaultPomoTime, pomoInterval = null, isRunning = false;
-        const pomoDisplay = document.getElementById('ws-pomo-time');
-        const btnPomoStart = document.getElementById('ws-pomo-start');
-        const btnPomoReset = document.getElementById('ws-pomo-reset');
-        const pomoPlayIcon = document.getElementById('pomo-icon-play');
-        const pomoPauseIcon = document.getElementById('pomo-icon-pause');
-
-        function updatePomoDisplay() {
-            const m = Math.floor(pomoTime / 60).toString().padStart(2, '0');
-            const s = (pomoTime % 60).toString().padStart(2, '0');
-            pomoDisplay.innerText = `${m}:${s}`;
-        }
-
-        pomoDisplay.addEventListener('click', () => {
-            if (isRunning) { alert("Dừng đồng hồ trước khi đổi giờ nhé!"); return; }
-            const input = prompt("Nhập số phút tập trung (VD: 25, 45, 60):", Math.floor(defaultPomoTime / 60));
-            if (input && !isNaN(input) && input > 0) {
-                defaultPomoTime = parseInt(input) * 60; pomoTime = defaultPomoTime; updatePomoDisplay();
-            }
-        });
-
-        btnPomoStart.addEventListener('click', () => {
-            if (isRunning) {
-                clearInterval(pomoInterval);
-                pomoPlayIcon.classList.remove('hidden'); pomoPauseIcon.classList.add('hidden');
-            } else {
-                pomoInterval = setInterval(() => {
-                    if (pomoTime > 0) { pomoTime--; updatePomoDisplay(); } 
-                    else { clearInterval(pomoInterval); alert("Hết giờ! Nghỉ ngơi nhé ☕"); }
-                }, 1000);
-                pomoPlayIcon.classList.add('hidden'); pomoPauseIcon.classList.remove('hidden');
-            }
-            isRunning = !isRunning;
-        });
-
-        btnPomoReset.addEventListener('click', () => {
-            clearInterval(pomoInterval); isRunning = false; pomoTime = defaultPomoTime; updatePomoDisplay();
+    btnPomoStart.addEventListener('click', () => {
+        if (isRunning) {
+            clearInterval(pomoInterval);
             pomoPlayIcon.classList.remove('hidden'); pomoPauseIcon.classList.add('hidden');
-        });
-
-        // --- 2. HÌNH NỀN ---
-        window.changeBg = function(url) { document.getElementById('ws-bg-image').src = url; };
-        document.getElementById('local-bg-upload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) changeBg(URL.createObjectURL(file));
-        });
-
-        // --- 3. WIDGET KÉO THẢ & STOPWATCH LOGIC ---
-        const toggleWidget = (btnId, widgetId) => {
-            document.getElementById(btnId).addEventListener('click', () => document.getElementById(widgetId).classList.toggle('hidden'));
-            const closeBtn = document.querySelector(`#${widgetId} .close-widget`);
-            if(closeBtn) closeBtn.addEventListener('click', () => document.getElementById(widgetId).classList.add('hidden'));
-        };
-        
-        toggleWidget('btn-toggle-themes', 'widget-themes');
-        toggleWidget('btn-toggle-yt', 'widget-yt');
-        
-        // Bật tắt Stopwatch
-        document.getElementById('btn-toggle-stopwatch').addEventListener('click', () => {
-            document.getElementById('widget-stopwatch').classList.toggle('hidden');
-        });
-        document.querySelector('.close-sw').addEventListener('click', () => {
-            document.getElementById('widget-stopwatch').classList.add('hidden');
-        });
-
-        // Kéo thả Widget
-        function dragElement(elmnt, headerId) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            const header = document.getElementById(headerId);
-            if(header) header.onmousedown = dragMouseDown;
-            function dragMouseDown(e) {
-                e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY;
-                document.onmouseup = closeDragElement; document.onmousemove = elementDrag;
-                document.querySelectorAll('[id^="widget-"]').forEach(el => el.style.zIndex = '40');
-                elmnt.style.zIndex = '50'; 
-            }
-            function elementDrag(e) {
-                e.preventDefault(); pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
-                pos3 = e.clientX; pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px"; elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-            function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
-        }
-        
-        dragElement(document.getElementById("widget-themes"), "drag-themes");
-        dragElement(document.getElementById("widget-yt"), "drag-yt");
-        dragElement(document.getElementById("widget-stopwatch"), "drag-stopwatch");
-
-        // Stopwatch Timer Logic
-        let swTime = 0, swInterval = null, isSwRunning = false;
-        const swTimeDisplay = document.getElementById('sw-time');
-        const swPlayBtn = document.getElementById('sw-play-btn');
-        const swIconPlay = document.getElementById('sw-icon-play');
-        const swIconPause = document.getElementById('sw-icon-pause');
-
-        function updateSwDisplay() {
-            const m = Math.floor(swTime / 60).toString().padStart(2, '0');
-            const s = (swTime % 60).toString().padStart(2, '0');
-            // Nếu đếm qua 60 phút thì hiển thị thêm giờ
-            if(swTime >= 3600) {
-                const h = Math.floor(swTime / 3600);
-                const mm = Math.floor((swTime % 3600) / 60).toString().padStart(2, '0');
-                swTimeDisplay.innerText = `${h}:${mm}:${s}`;
-            } else {
-                swTimeDisplay.innerText = `${m}:${s}`;
-            }
-        }
-
-        swPlayBtn.addEventListener('click', () => {
-            if (isSwRunning) {
-                clearInterval(swInterval);
-                swIconPlay.classList.remove('hidden'); swIconPause.classList.add('hidden');
-            } else {
-                swInterval = setInterval(() => { swTime++; updateSwDisplay(); }, 1000);
-                swIconPlay.classList.add('hidden'); swIconPause.classList.remove('hidden');
-            }
-            isSwRunning = !isSwRunning;
-        });
-
-        document.getElementById('sw-reset-btn').addEventListener('click', () => {
-            clearInterval(swInterval); isSwRunning = false; swTime = 0; updateSwDisplay();
-            swIconPlay.classList.remove('hidden'); swIconPause.classList.add('hidden');
-        });
-
-
-        // --- 4. GHI CHÚ GIAO DIỆN MỚI ---
-        const notesContainer = document.getElementById('notes-container');
-        const noteColors = [
-            { bg: 'bg-[#ffcdd2]', head: 'bg-[#ef9a9a]', text: 'text-[#b71c1c]' },
-            { bg: 'bg-[#c8e6c9]', head: 'bg-[#a5d6a7]', text: 'text-[#1b5e20]' },
-            { bg: 'bg-[#bbdefb]', head: 'bg-[#90caf9]', text: 'text-[#0d47a1]' },
-            { bg: 'bg-[#fff9c4]', head: 'bg-[#fff59d]', text: 'text-[#f57f17]' }
-        ];
-        let noteCounter = 0;
-        document.getElementById('btn-add-note').addEventListener('click', () => {
-            noteCounter++; const id = `widget-note-${noteCounter}`; const headerId = `drag-note-${noteCounter}`;
-            const color = noteColors[noteCounter % noteColors.length];
-            const html = `
-                <div id="${id}" class="absolute w-[260px] ${color.bg} rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] overflow-hidden" style="top: ${100 + (noteCounter*30)%150}px; left: ${300 + (noteCounter*40)%200}px; z-index: 45;">
-                    <div id="${headerId}" class="${color.head} p-2.5 flex justify-between items-center cursor-move">
-                        <span class="${color.text} text-[11px] font-extrabold uppercase tracking-wider">Ghi chú ${noteCounter}</span>
-                        <button class="close-note text-black/40 hover:text-black transition">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                        </button>
-                    </div>
-                    <div class="px-3 py-1.5 border-b border-black/10 flex gap-2.5 text-black/50 bg-white/20">
-                        <button class="hover:text-black font-bold text-xs">B</button>
-                        <button class="hover:text-black italic text-xs">I</button>
-                        <button class="hover:text-black underline text-xs">U</button>
-                        <button class="hover:text-black font-mono text-xs ml-auto">&lt;/&gt;</button>
-                    </div>
-                    <div class="p-3">
-                        <textarea class="w-full h-36 bg-transparent ${color.text} text-[13px] focus:outline-none resize-none font-medium placeholder-black/30" placeholder="Nhập nội dung..."></textarea>
-                    </div>
-                </div>`;
-            notesContainer.insertAdjacentHTML('beforeend', html);
-            const newNote = document.getElementById(id); dragElement(newNote, headerId);
-            newNote.querySelector('.close-note').addEventListener('click', () => newNote.remove());
-        });
-
-        // --- 5. YOUTUBE PLAYER & TRACK INFO ---
-        let ytPlayer; let isPlayerReady = false;
-        const currentVideoId = 'jfKfPfyJRdk';
-
-        if (!window.YT) {
-            const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
-
-        const checkYT = setInterval(() => {
-            if (window.YT && window.YT.Player) { clearInterval(checkYT); initYouTubePlayer(); }
-        }, 500);
-
-        function initYouTubePlayer() {
-            ytPlayer = new YT.Player('yt-player-container', {
-                height: '100%', width: '100%', videoId: currentVideoId,
-                playerVars: { 'playsinline': 1, 'controls': 1 },
-                events: {
-                    'onReady': (e) => { isPlayerReady = true; fetchVideoInfo(currentVideoId); },
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function fetchVideoInfo(vid) {
-            document.getElementById('ws-track-cover').src = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
-            setTimeout(() => {
-                if(ytPlayer.getVideoData) {
-                    const data = ytPlayer.getVideoData();
-                    document.getElementById('ws-track-title').innerText = data.title || "Unknown Audio";
-                    document.getElementById('ws-track-author').innerText = data.author || "YouTube Stream";
-                }
+        } else {
+            pomoInterval = setInterval(() => {
+                if (pomoTime > 0) { pomoTime--; updatePomoDisplay(); } 
+                else { clearInterval(pomoInterval); alert("Hết giờ! Nghỉ ngơi nhé ☕"); }
             }, 1000);
+            pomoPlayIcon.classList.add('hidden'); pomoPauseIcon.classList.remove('hidden');
         }
+        isRunning = !isRunning;
+    });
 
-        document.getElementById('yt-input').addEventListener('change', function(e) {
-            let val = e.target.value; let videoId = "";
-            let match = val.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
-            if(match && match[1]) videoId = match[1]; else videoId = val;
-            
-            if(videoId && isPlayerReady) {
-                ytPlayer.loadVideoById(videoId);
-                fetchVideoInfo(videoId);
-            }
-        });
+    btnPomoReset.addEventListener('click', () => {
+        clearInterval(pomoInterval); isRunning = false; pomoTime = defaultPomoTime; updatePomoDisplay();
+        pomoPlayIcon.classList.remove('hidden'); pomoPauseIcon.classList.add('hidden');
+    });
 
-        const playBtn = document.getElementById('ws-player-play');
-        const iconPlay = document.getElementById('icon-play');
-        const iconPause = document.getElementById('icon-pause');
-        const progressSlider = document.getElementById('ws-player-progress');
-        const timeDisplay = document.getElementById('ws-player-time');
-        const trackCover = document.getElementById('ws-track-cover');
-        
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.PLAYING) {
-                iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden');
-                trackCover.classList.remove('spin-paused'); 
-            } else {
-                iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden');
-                trackCover.classList.add('spin-paused'); 
-            }
+    window.changeBg = function(url) { document.getElementById('ws-bg-image').src = url; };
+    document.getElementById('local-bg-upload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) changeBg(URL.createObjectURL(file));
+    });
+
+    const toggleWidget = (btnId, widgetId) => {
+        document.getElementById(btnId).addEventListener('click', () => document.getElementById(widgetId).classList.toggle('hidden'));
+        const closeBtn = document.querySelector(`#${widgetId} .close-widget`);
+        if(closeBtn) closeBtn.addEventListener('click', () => document.getElementById(widgetId).classList.add('hidden'));
+    };
+    
+    toggleWidget('btn-toggle-themes', 'widget-themes');
+    toggleWidget('btn-toggle-yt', 'widget-yt');
+    
+    document.getElementById('btn-toggle-stopwatch').addEventListener('click', () => {
+        document.getElementById('widget-stopwatch').classList.toggle('hidden');
+    });
+    document.querySelector('.close-sw').addEventListener('click', () => {
+        document.getElementById('widget-stopwatch').classList.add('hidden');
+    });
+
+    function dragElement(elmnt, headerId) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        const header = document.getElementById(headerId);
+        if(header) header.onmousedown = dragMouseDown;
+        function dragMouseDown(e) {
+            e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY;
+            document.onmouseup = closeDragElement; document.onmousemove = elementDrag;
+            document.querySelectorAll('[id^="widget-"]').forEach(el => el.style.zIndex = '40');
+            elmnt.style.zIndex = '50'; 
         }
-
-        playBtn.addEventListener('click', () => {
-            if(!isPlayerReady) return;
-            if(ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
-            else ytPlayer.playVideo();
-        });
-
-        document.getElementById('ws-player-prev').addEventListener('click', () => { if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() - 10, true); });
-        document.getElementById('ws-player-next').addEventListener('click', () => { if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 10, true); });
-        
-        let isMuted = false;
-        document.getElementById('ws-player-mute').addEventListener('click', () => {
-            if(!isPlayerReady) return;
-            if(isMuted) { ytPlayer.unMute(); isMuted = false; } else { ytPlayer.mute(); isMuted = true; }
-        });
-
-        function formatTime(sec) {
-            if (!sec || isNaN(sec) || sec === Infinity) return "0:00";
-            const h = Math.floor(sec / 3600);
-            const m = Math.floor((sec % 3600) / 60).toString().padStart(h > 0 ? 2 : 1, '0');
-            const s = Math.floor(sec % 60).toString().padStart(2, '0');
-            return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+        function elementDrag(e) {
+            e.preventDefault(); pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
+            pos3 = e.clientX; pos4 = e.clientY;
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px"; elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
         }
+        function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
+    }
+    
+    dragElement(document.getElementById("widget-themes"), "drag-themes");
+    dragElement(document.getElementById("widget-yt"), "drag-yt");
+    dragElement(document.getElementById("widget-stopwatch"), "drag-stopwatch");
 
-        setInterval(() => {
-            if(isPlayerReady && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
-                const dur = ytPlayer.getDuration();
-                const curr = ytPlayer.getCurrentTime();
-                
-                let isLive = false;
-                if (ytPlayer.getVideoData) {
-                    const vData = ytPlayer.getVideoData();
-                    if (vData && vData.isLive) isLive = true;
-                }
-                if (!dur || dur <= 0 || dur > 43200 || curr > 43200) {
-                    isLive = true;
-                }
-                
-                if (isLive) {
-                    timeDisplay.innerText = "🔴 LIVE";
-                    timeDisplay.classList.add('text-red-400');
-                    progressSlider.value = 100;
-                    progressSlider.disabled = true;
-                } else {
-                    timeDisplay.classList.remove('text-red-400');
-                    progressSlider.disabled = false;
-                    progressSlider.value = (curr / dur) * 100;
-                    timeDisplay.innerText = formatTime(curr) + ' / ' + formatTime(dur);
-                }
-            }
-        }, 1000);
+    let swTime = 0, swInterval = null, isSwRunning = false;
+    const swTimeDisplay = document.getElementById('sw-time');
+    const swPlayBtn = document.getElementById('sw-play-btn');
+    const swIconPlay = document.getElementById('sw-icon-play');
+    const swIconPause = document.getElementById('sw-icon-pause');
 
-        progressSlider.addEventListener('input', (e) => {
-            if(!isPlayerReady || progressSlider.disabled) return;
-            const dur = ytPlayer.getDuration();
-            ytPlayer.seekTo((e.target.value / 100) * dur, true);
-        });
+    function updateSwDisplay() {
+        const m = Math.floor(swTime / 60).toString().padStart(2, '0');
+        const s = (swTime % 60).toString().padStart(2, '0');
+        if(swTime >= 3600) {
+            const h = Math.floor(swTime / 3600);
+            const mm = Math.floor((swTime % 3600) / 60).toString().padStart(2, '0');
+            swTimeDisplay.innerText = `${h}:${mm}:${s}`;
+        } else {
+            swTimeDisplay.innerText = `${m}:${s}`;
+        }
+    }
 
-        // --- 6. LOGIC TRÀN TOÀN MÀN HÌNH (FULL BLEED) ---
-        const wsContainer = document.getElementById('ws-container');
-        document.getElementById('ws-fullscreen-btn').addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                wsContainer.requestFullscreen().catch(err => console.log(err));
-            } else {
-                document.exitFullscreen();
-            }
-        });
+    swPlayBtn.addEventListener('click', () => {
+        if (isSwRunning) {
+            clearInterval(swInterval);
+            swIconPlay.classList.remove('hidden'); swIconPause.classList.add('hidden');
+        } else {
+            swInterval = setInterval(() => { swTime++; updateSwDisplay(); }, 1000);
+            swIconPlay.classList.add('hidden'); swIconPause.classList.remove('hidden');
+        }
+        isSwRunning = !isSwRunning;
+    });
 
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement === wsContainer) {
-                wsContainer.classList.remove('rounded-[2rem]', 'h-[88vh]');
-                wsContainer.classList.add('h-screen', 'rounded-none');
-            } else {
-                wsContainer.classList.add('rounded-[2rem]', 'h-[88vh]');
-                wsContainer.classList.remove('h-screen', 'rounded-none');
+    document.getElementById('sw-reset-btn').addEventListener('click', () => {
+        clearInterval(swInterval); isSwRunning = false; swTime = 0; updateSwDisplay();
+        swIconPlay.classList.remove('hidden'); swIconPause.classList.add('hidden');
+    });
+
+
+    const notesContainer = document.getElementById('notes-container');
+    const noteColors = [
+        { bg: 'bg-[#ffcdd2]', head: 'bg-[#ef9a9a]', text: 'text-[#b71c1c]' },
+        { bg: 'bg-[#c8e6c9]', head: 'bg-[#a5d6a7]', text: 'text-[#1b5e20]' },
+        { bg: 'bg-[#bbdefb]', head: 'bg-[#90caf9]', text: 'text-[#0d47a1]' },
+        { bg: 'bg-[#fff9c4]', head: 'bg-[#fff59d]', text: 'text-[#f57f17]' }
+    ];
+    let noteCounter = 0;
+    document.getElementById('btn-add-note').addEventListener('click', () => {
+        noteCounter++; const id = `widget-note-${noteCounter}`; const headerId = `drag-note-${noteCounter}`;
+        const color = noteColors[noteCounter % noteColors.length];
+        const html = `
+            <div id="${id}" class="absolute w-[260px] ${color.bg} rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] overflow-hidden" style="top: ${100 + (noteCounter*30)%150}px; left: ${300 + (noteCounter*40)%200}px; z-index: 45;">
+                <div id="${headerId}" class="${color.head} p-2.5 flex justify-between items-center cursor-move">
+                    <span class="${color.text} text-[11px] font-extrabold uppercase tracking-wider">Ghi chú ${noteCounter}</span>
+                    <button class="close-note text-black/40 hover:text-black transition">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="px-3 py-1.5 border-b border-black/10 flex gap-2.5 text-black/50 bg-white/20">
+                    <button class="hover:text-black font-bold text-xs">B</button>
+                    <button class="hover:text-black italic text-xs">I</button>
+                    <button class="hover:text-black underline text-xs">U</button>
+                    <button class="hover:text-black font-mono text-xs ml-auto">&lt;/&gt;</button>
+                </div>
+                <div class="p-3">
+                    <textarea class="w-full h-36 bg-transparent ${color.text} text-[13px] focus:outline-none resize-none font-medium placeholder-black/30" placeholder="Nhập nội dung..."></textarea>
+                </div>
+            </div>`;
+        notesContainer.insertAdjacentHTML('beforeend', html);
+        const newNote = document.getElementById(id); dragElement(newNote, headerId);
+        newNote.querySelector('.close-note').addEventListener('click', () => newNote.remove());
+    });
+
+    let ytPlayer; let isPlayerReady = false;
+    const currentVideoId = 'jfKfPfyJRdk';
+
+    if (!window.YT) {
+        const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    const checkYT = setInterval(() => {
+        if (window.YT && window.YT.Player) { clearInterval(checkYT); initYouTubePlayer(); }
+    }, 500);
+
+    function initYouTubePlayer() {
+        ytPlayer = new YT.Player('yt-player-container', {
+            height: '100%', width: '100%', videoId: currentVideoId,
+            playerVars: { 'playsinline': 1, 'controls': 1 },
+            events: {
+                'onReady': (e) => { isPlayerReady = true; fetchVideoInfo(currentVideoId); },
+                'onStateChange': onPlayerStateChange
             }
         });
     }
-});
+
+    function fetchVideoInfo(vid) {
+        document.getElementById('ws-track-cover').src = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`;
+        setTimeout(() => {
+            if(ytPlayer.getVideoData) {
+                const data = ytPlayer.getVideoData();
+                document.getElementById('ws-track-title').innerText = data.title || "Unknown Audio";
+                document.getElementById('ws-track-author').innerText = data.author || "YouTube Stream";
+            }
+        }, 1000);
+    }
+
+    document.getElementById('yt-input').addEventListener('change', function(e) {
+        let val = e.target.value; let videoId = "";
+        let match = val.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+        if(match && match[1]) videoId = match[1]; else videoId = val;
+        
+        if(videoId && isPlayerReady) {
+            ytPlayer.loadVideoById(videoId);
+            fetchVideoInfo(videoId);
+        }
+    });
+
+    const playBtn = document.getElementById('ws-player-play');
+    const iconPlay = document.getElementById('icon-play');
+    const iconPause = document.getElementById('icon-pause');
+    const progressSlider = document.getElementById('ws-player-progress');
+    const timeDisplay = document.getElementById('ws-player-time');
+    const trackCover = document.getElementById('ws-track-cover');
+    
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+            iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden');
+            trackCover.classList.remove('spin-paused'); 
+        } else {
+            iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden');
+            trackCover.classList.add('spin-paused'); 
+        }
+    }
+
+    playBtn.addEventListener('click', () => {
+        if(!isPlayerReady) return;
+        if(ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+        else ytPlayer.playVideo();
+    });
+
+    document.getElementById('ws-player-prev').addEventListener('click', () => { if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() - 10, true); });
+    document.getElementById('ws-player-next').addEventListener('click', () => { if(isPlayerReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 10, true); });
+    
+    let isMuted = false;
+    document.getElementById('ws-player-mute').addEventListener('click', () => {
+        if(!isPlayerReady) return;
+        if(isMuted) { ytPlayer.unMute(); isMuted = false; } else { ytPlayer.mute(); isMuted = true; }
+    });
+
+    function formatTime(sec) {
+        if (!sec || isNaN(sec) || sec === Infinity) return "0:00";
+        const h = Math.floor(sec / 3600);
+        const m = Math.floor((sec % 3600) / 60).toString().padStart(h > 0 ? 2 : 1, '0');
+        const s = Math.floor(sec % 60).toString().padStart(2, '0');
+        return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+    }
+
+    setInterval(() => {
+        if(isPlayerReady && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+            const dur = ytPlayer.getDuration();
+            const curr = ytPlayer.getCurrentTime();
+            
+            let isLive = false;
+            if (ytPlayer.getVideoData) {
+                const vData = ytPlayer.getVideoData();
+                if (vData && vData.isLive) isLive = true;
+            }
+            if (!dur || dur <= 0 || dur > 43200 || curr > 43200) {
+                isLive = true;
+            }
+            
+            if (isLive) {
+                timeDisplay.innerText = "🔴 LIVE";
+                timeDisplay.classList.add('text-red-400');
+                progressSlider.value = 100;
+                progressSlider.disabled = true;
+            } else {
+                timeDisplay.classList.remove('text-red-400');
+                progressSlider.disabled = false;
+                progressSlider.value = (curr / dur) * 100;
+                timeDisplay.innerText = formatTime(curr) + ' / ' + formatTime(dur);
+            }
+        }
+    }, 1000);
+
+    progressSlider.addEventListener('input', (e) => {
+        if(!isPlayerReady || progressSlider.disabled) return;
+        const dur = ytPlayer.getDuration();
+        ytPlayer.seekTo((e.target.value / 100) * dur, true);
+    });
+
+    const wsContainer = document.getElementById('ws-container');
+    document.getElementById('ws-fullscreen-btn').addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            wsContainer.requestFullscreen().catch(err => console.log(err));
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement === wsContainer) {
+            wsContainer.classList.remove('rounded-[2rem]', 'h-[88vh]');
+            wsContainer.classList.add('h-screen', 'rounded-none');
+        } else {
+            wsContainer.classList.add('rounded-[2rem]', 'h-[88vh]');
+            wsContainer.classList.remove('h-screen', 'rounded-none');
+        }
+    });
+}

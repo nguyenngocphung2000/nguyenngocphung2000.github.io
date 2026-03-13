@@ -1,17 +1,18 @@
-// --- 3. Tool Markdown ---
-registerTool({
-    id: 'tab-md',
-    name: 'Đọc Markdown',
-    icon: '📝',
-    html: `
+export function setupTool() {
+    const tabId = 'tab-md';
+    
+    if (document.getElementById(tabId)) return;
+    
+    const panel = document.createElement('div');
+    panel.id = tabId;
+    panel.className = 'tab-panel active';
+    
+    panel.innerHTML = `
         <style>
-            /* Ép code ngắn (inline) tự động xuống dòng, không đâm thủng màn hình */
             .prose-custom code {
                 white-space: pre-wrap !important;
                 word-break: break-word !important;
             }
-            
-            /* Khối code dài (block) sẽ nằm gọn trong khung, vuốt ngang để xem */
             .prose-custom pre {
                 max-width: 100%;
                 overflow-x: auto;
@@ -28,15 +29,11 @@ registerTool({
                 color: #334155 !important;
                 padding: 0 !important;
             }
-            
-            /* Ép toàn bộ khung không bao giờ được phình to hơn thiết bị */
             #md-preview {
                 max-width: 100%;
                 overflow-x: hidden;
                 word-wrap: break-word;
             }
-            
-            /* Đảm bảo hình ảnh nếu có cũng tự thu nhỏ vừa vặn */
             .prose-custom img {
                 max-width: 100%;
                 height: auto;
@@ -62,29 +59,31 @@ registerTool({
             
             <div id="md-preview" class="prose-custom mt-6 p-6 bg-white rounded-2xl shadow-inner min-h-[150px] border border-gray-100"></div>
         </div>
-    `,
-    logic: function() {
-        const mdIn = document.getElementById('md-input');
-        const mdPre = document.getElementById('md-preview');
-        const mdFile = document.getElementById('md-file');
-
-        const renderMD = () => {
-            if(window.marked) mdPre.innerHTML = marked.parse(mdIn.value);
-        };
-
-        mdIn.addEventListener('input', renderMD);
-
-        if (mdFile) {
-            mdFile.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    mdIn.value = e.target.result; 
-                    renderMD();                   
-                };
-                reader.readAsText(file);
-            });
-        }
+    `;
+    
+    document.getElementById('app-container').appendChild(panel);
+    
+    // --- BẮT ĐẦU LOGIC ---
+    const mdIn = document.getElementById('md-input');
+    const mdPre = document.getElementById('md-preview');
+    const mdFile = document.getElementById('md-file');
+    
+    const renderMD = () => {
+        if (window.marked) mdPre.innerHTML = marked.parse(mdIn.value);
+    };
+    
+    mdIn.addEventListener('input', renderMD);
+    
+    if (mdFile) {
+        mdFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                mdIn.value = e.target.result;
+                renderMD();
+            };
+            reader.readAsText(file);
+        });
     }
-});
+}
