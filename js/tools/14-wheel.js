@@ -67,17 +67,14 @@ export function setupTool() {
 
             <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white overflow-hidden flex flex-col">
                 
-                <div class="p-4 border-b border-slate-200/60 bg-red-50/40">
-                    <button type="button" id="btn-wheel-reset-all" class="w-full bg-white hover:bg-red-50 text-red-600 font-black py-4 rounded-xl shadow-sm border border-red-200 transition active:scale-95 text-sm uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span>⚠️</span> LÀM MỚI TOÀN BỘ DỮ LIỆU
+                <div class="flex gap-2 p-3 md:p-4 bg-slate-50/80 border-b border-slate-200/60">
+                    <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap">
+                        🗑️ Xóa sạch
                     </button>
-                </div>
-
-                <div class="flex gap-2 p-4 bg-slate-50/80 border-b border-slate-200/60">
-                    <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold py-3 rounded-xl shadow-sm transition flex justify-center items-center gap-1 active:scale-95 border border-slate-200">
+                    <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
                         🔀 Tráo đổi
                     </button>
-                    <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold py-3 rounded-xl shadow-sm transition flex justify-center items-center gap-1 active:scale-95 border border-slate-200">
+                    <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
                         ↕️ Sắp xếp
                     </button>
                 </div>
@@ -104,7 +101,7 @@ export function setupTool() {
         </div>
 
         <div id="wheel-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md px-4">
-            <div id="wheel-modal-content" class="bg-white rounded-[2rem] w-full max-w-sm overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+            <div id="wheel-modal-content" class="bg-white rounded-[2rem] w-full max-w-sm overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform scale-0">
                 <div class="bg-gradient-to-r from-amber-400 to-orange-500 p-6 text-center relative overflow-hidden flex flex-col items-center justify-center">
                     <div class="sunburst"></div>
                     <span class="text-4xl relative z-10 mb-2 drop-shadow-md">🏆</span>
@@ -160,13 +157,12 @@ export function setupTool() {
     const colors = ['#ef4444', '#f59e0b', '#eab308', '#22c55e', '#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef'];
     
     let names = [];
-    let results = []; // Sẽ chứa các Object: { text: "Tên", label: "Lần X" }
-    let totalSpinsCounter = 0; // Đếm tổng số lần quay vĩnh viễn
+    let results = []; 
+    let totalSpinsCounter = 0; 
     let currentRotation = 0;
     let isSpinning = false;
     let currentWinner = "";
 
-    // TẢI DỮ LIỆU TỪ TRÌNH DUYỆT
     const savedSpins = safeGet('wheel_spins');
     if(savedSpins) totalSpinsCounter = parseInt(savedSpins);
 
@@ -174,7 +170,6 @@ export function setupTool() {
     if(savedResults) { 
         try { 
             let parsed = JSON.parse(savedResults);
-            // Chuẩn hóa dữ liệu cũ (nếu có) sang dạng Object mới
             if(parsed.length > 0 && typeof parsed[0] === 'string') {
                 results = parsed.map((name, idx) => ({ text: name, label: 'Lần ' + (parsed.length - idx) }));
             } else {
@@ -188,7 +183,7 @@ export function setupTool() {
     if (savedData !== null) {
         inputArea.value = savedData;
     } else {
-        inputArea.value = ""; // Mặc định không có đề xuất
+        inputArea.value = ""; 
     }
 
     // --- TABS CHUYỂN ĐỔI ---
@@ -222,7 +217,6 @@ export function setupTool() {
             resultListDiv.innerHTML = '<div class="text-center text-slate-400 text-sm font-medium py-10">Chưa có kết quả nào</div>';
             return;
         }
-        // Dùng Object res.text và res.label để nhãn Lần quay luôn dính chặt với Tên
         resultListDiv.innerHTML = results.map(res => `
             <div class="flex items-center justify-between p-2 border-b border-slate-100 bg-white mb-0.5 rounded shadow-sm hover:bg-slate-50 transition">
                 <span class="font-bold text-slate-700 text-xs truncate max-w-[80%] pl-1">${res.text}</span>
@@ -356,7 +350,6 @@ export function setupTool() {
         
         currentWinner = names[index];
         
-        // Tăng đếm & Tạo Object (Neo chặt Lần quay vào Tên)
         totalSpinsCounter++;
         safeSave('wheel_spins', totalSpinsCounter);
         
@@ -367,17 +360,22 @@ export function setupTool() {
         winnerNameDisplay.innerText = currentWinner;
         modal.classList.remove('hidden');
         modal.classList.add('flex');
-        modalContent.classList.remove('scale-0');
-        modalContent.classList.add('wheel-modal-enter');
+        
+        setTimeout(() => {
+            modalContent.classList.remove('scale-0');
+            modalContent.classList.add('wheel-modal-enter');
+        }, 10);
     };
 
     const closeModal = () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
         modalContent.classList.remove('wheel-modal-enter');
+        modalContent.classList.add('scale-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }, 300);
     };
 
-    // Nút Xóa Tên (Trong Modal) - Vẫn giữ nguyên để xóa người đã trúng thưởng khỏi vòng quay tiếp theo
     const removeWinner = () => {
         let lines = inputArea.value.split('\n');
         const idx = lines.findIndex(l => l.trim() === currentWinner);
@@ -395,10 +393,8 @@ export function setupTool() {
     btnRemove.addEventListener('click', removeWinner);
     
     // ==========================================
-    // TÍNH NĂNG TRÁO ĐỔI & SẮP XẾP CHUẨN YÊU CẦU
+    // TRÁO ĐỔI & SẮP XẾP
     // ==========================================
-    
-    // TRÁO ĐỔI: CHỈ TRỘN DANH SÁCH CHỜ (MỤC)
     document.getElementById('btn-wheel-shuffle').addEventListener('click', () => {
         if(names.length > 0) {
             names.sort(() => Math.random() - 0.5);
@@ -407,16 +403,12 @@ export function setupTool() {
         }
     });
 
-    // SẮP XẾP: SẮP XẾP CẢ 2 DANH SÁCH (MỤC & KẾT QUẢ)
     document.getElementById('btn-wheel-sort').addEventListener('click', () => {
-        // 1. Sắp xếp Mục chờ quay
         if(names.length > 0) {
             names.sort((a, b) => a.localeCompare(b, 'vi'));
             inputArea.value = names.join('\n');
             updateNames();
         }
-        
-        // 2. Sắp xếp Danh sách kết quả (Nhãn "Lần quay" sẽ dính theo tên)
         if(results.length > 0) {
             results.sort((a, b) => a.text.localeCompare(b.text, 'vi'));
             safeSave('wheel_results', JSON.stringify(results));
@@ -425,36 +417,55 @@ export function setupTool() {
     });
 
     // ==========================================
-    // THUẬT TOÁN HỦY DIỆT: LÀM MỚI TOÀN BỘ (RESET ALL)
+    // THUẬT TOÁN HỦY DIỆT MỚI: BẤM 2 LẦN ĐỂ XÓA 
+    // (CHỐNG LỖI APP CHẶN LỆNH CONFIRM)
     // ==========================================
-    document.getElementById('btn-wheel-reset-all').addEventListener('click', function(e) {
+    const btnResetAll = document.getElementById('btn-wheel-reset-all');
+    let resetTimeout;
+
+    btnResetAll.addEventListener('click', function(e) {
         e.preventDefault();
         
-        // Nếu chả có dữ liệu gì thì thôi không làm phiền
-        if (names.length === 0 && results.length === 0) return;
+        // Không có dữ liệu thì không làm gì
+        if (names.length === 0 && results.length === 0 && inputArea.value.trim() === '') return;
 
-        // Bật popup HỆ THỐNG - Đảm bảo uy quyền mạnh nhất, không thể bị lỗi đè
-        let isConfirmed = window.confirm("⚠️ CẢNH BÁO!\nBạn có chắc chắn muốn XÓA SẠCH toàn bộ danh sách Mục và Lịch sử Kết quả?\n\nThao tác này không thể khôi phục!");
-        
-        if (isConfirmed) {
-            // 1. Đập nát dữ liệu mảng & giao diện Textarea
+        // Nếu chưa được bấm lần 1 -> Đổi màu cảnh báo
+        if (btnResetAll.dataset.confirm !== "true") {
+            btnResetAll.dataset.confirm = "true";
+            btnResetAll.innerHTML = "⚠️ Chắc chưa?";
+            btnResetAll.className = "flex-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-md transition-colors flex justify-center items-center gap-1 active:scale-95 whitespace-nowrap";
+            
+            // Tự động quay về bình thường sau 3 giây nếu không bấm tiếp
+            resetTimeout = setTimeout(() => {
+                btnResetAll.dataset.confirm = "false";
+                btnResetAll.innerHTML = "🗑️ Xóa sạch";
+                btnResetAll.className = "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap";
+            }, 3000);
+        } 
+        // Bấm lần 2 -> Tiến hành tiêu diệt dữ liệu
+        else {
+            clearTimeout(resetTimeout);
+            
+            // Trả nút về hình dáng cũ
+            btnResetAll.dataset.confirm = "false";
+            btnResetAll.innerHTML = "🗑️ Xóa sạch";
+            btnResetAll.className = "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap";
+
+            // Xóa sách sành sanh
             inputArea.value = "";
             names = [];
             results = [];
             totalSpinsCounter = 0;
             countDisplay.innerText = "0";
             
-            // 2. Cào sạch LocalStorage bằng hàm Safe
             safeRemove('wheel_names');
             safeRemove('wheel_results');
             safeRemove('wheel_spins');
             
-            // 3. Phanh gấp Vòng quay về góc 0 độ
             currentRotation = 0;
             canvas.style.transition = 'none';
             canvas.style.transform = 'rotate(0deg)';
             
-            // 4. Render lại toàn bộ giao diện (Mặt trống)
             drawWheel();
             renderResults();
         }
