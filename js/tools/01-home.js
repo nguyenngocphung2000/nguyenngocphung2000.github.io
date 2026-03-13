@@ -35,7 +35,7 @@ export function setupTool() {
                     </div>
                     
                     <h1 class="text-3xl font-extrabold text-gray-800 mb-2 tracking-tight">
-                        Xin chào, tôi là <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing (N.Phụng)</span>
+                        Hi I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing</span>
                     </h1>
                     
                     <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/10 to-transparent rounded-r-xl relative z-10 font-medium">
