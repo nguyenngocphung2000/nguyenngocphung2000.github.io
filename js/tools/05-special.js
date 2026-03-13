@@ -22,12 +22,12 @@ export function setupTool() {
                         <div class="bg-indigo-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🔤</div>
                         <div>
                             <h3 class="font-bold text-gray-800">Studio Chữ Nghệ Thuật (Tải PNG)</h3>
-                            <p class="text-xs text-gray-500">Tải font, viết thư pháp dọc và xuất ảnh trong suốt!</p>
+                            <p class="text-xs text-gray-500">Hỗ trợ .ttf, .otf, .woff, .woff2 - Thêm viền & bóng đổ!</p>
                         </div>
                     </div>
                     <label class="cursor-pointer bg-indigo-100 text-indigo-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-indigo-200 transition shadow-sm whitespace-nowrap text-center h-fit">
-                        📂 Chọn Font (.ttf, .otf)
-                        <input type="file" id="font-upload" accept=".ttf, .otf, .woff, .woff2" class="hidden">
+                        📂 Chọn Font 
+                       <input type="file" id="font-upload" accept="*/*" class="hidden">
                     </label>
                 </div>
 
@@ -35,16 +35,25 @@ export function setupTool() {
                     <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-indigo-200 shadow-sm font-bold text-indigo-700 transition" data-align="left" title="Căn trái">⬅️ Trái</button>
                     <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-transparent font-bold text-indigo-700 transition" data-align="center" title="Căn giữa">↔️ Giữa</button>
                     <button class="font-btn p-2 rounded-lg hover:bg-indigo-200 bg-transparent font-bold text-indigo-700 transition" data-align="right" title="Căn phải">➡️ Phải</button>
-
                     <div class="w-px h-6 bg-indigo-300 mx-1 hidden md:block"></div>
-
                     <button id="btn-vertical" class="p-2 rounded-lg hover:bg-indigo-200 bg-white border border-indigo-100 shadow-sm font-bold text-indigo-700 transition" title="Xếp từ theo chiều dọc">⬇️ Dọc</button>
-
                     <div class="w-px h-6 bg-indigo-300 mx-1 hidden md:block"></div>
 
                     <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-lg shadow-sm border border-indigo-100">
-                        <input type="color" id="font-color" value="#4f46e5" class="w-8 h-8 rounded cursor-pointer border-none p-0 bg-transparent" title="Màu chữ">
-                        <input type="range" id="font-size" min="20" max="150" value="40" class="w-20 md:w-24 cursor-pointer accent-indigo-500" title="Cỡ chữ">
+                        <input type="color" id="font-color" value="#4f46e5" class="w-6 h-6 rounded cursor-pointer border-none p-0 bg-transparent" title="Màu chữ">
+                        <input type="range" id="font-size" min="20" max="150" value="50" class="w-16 md:w-20 cursor-pointer accent-indigo-500" title="Cỡ chữ">
+                    </div>
+
+                    <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-lg shadow-sm border border-indigo-100">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase">Viền</label>
+                        <input type="color" id="stroke-color" value="#ffffff" class="w-6 h-6 rounded cursor-pointer border-none p-0 bg-transparent" title="Màu viền">
+                        <input type="range" id="stroke-width" min="0" max="10" value="0" class="w-16 md:w-20 cursor-pointer accent-indigo-500" title="Độ dày viền">
+                    </div>
+
+                    <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-lg shadow-sm border border-indigo-100">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase">Bóng</label>
+                        <input type="color" id="shadow-color" value="#000000" class="w-6 h-6 rounded cursor-pointer border-none p-0 bg-transparent" title="Màu bóng">
+                        <input type="range" id="shadow-blur" min="0" max="20" value="0" class="w-16 md:w-20 cursor-pointer accent-indigo-500" title="Độ nhòe bóng">
                     </div>
 
                     <div class="w-full md:w-px md:h-6 bg-transparent md:bg-indigo-300 mx-1"></div>
@@ -58,7 +67,7 @@ export function setupTool() {
                     <textarea id="custom-font-input" class="w-full md:w-1/2 h-48 bg-white border border-indigo-100 rounded-2xl p-4 outline-none focus:ring-2 ring-indigo-200 text-gray-700 resize-none font-medium placeholder-gray-400" placeholder="Nhập nội dung chữ của bạn vào đây..."></textarea>
 
                     <div class="w-full md:w-1/2 min-h-[12rem] bg-gray-100 rounded-2xl border border-indigo-200 overflow-hidden relative flex p-4" style="background-image: linear-gradient(45deg, #e5e7eb 25%, transparent 25%), linear-gradient(-45deg, #e5e7eb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e7eb 75%), linear-gradient(-45deg, transparent 75%, #e5e7eb 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
-                        <div id="custom-font-preview" class="w-full h-full text-[#4f46e5] break-words" style="text-align: left;">Chữ sẽ hiện ở đây</div>
+                        <div id="custom-font-preview" class="w-full h-full break-words transition-all duration-200" style="text-align: left;">Chữ sẽ hiện ở đây</div>
                     </div>
                 </div>
             </div>
@@ -108,15 +117,17 @@ export function setupTool() {
 
     document.getElementById('app-container').appendChild(panel);
 
-    // ==========================================
-    // LOGIC CHUYỂN ĐỔI SANG MODULE
-    // ==========================================
     const fontUpload = document.getElementById('font-upload');
     const fontPreview = document.getElementById('custom-font-preview');
     const fontInput = document.getElementById('custom-font-input');
     const btnVertical = document.getElementById('btn-vertical');
+    
     const fontColor = document.getElementById('font-color');
     const fontSize = document.getElementById('font-size');
+    const strokeColor = document.getElementById('stroke-color');
+    const strokeWidth = document.getElementById('stroke-width');
+    const shadowColor = document.getElementById('shadow-color');
+    const shadowBlur = document.getElementById('shadow-blur');
     const alignBtns = document.querySelectorAll('.font-btn');
     const btnDownload = document.getElementById('btn-download-png');
 
@@ -131,6 +142,13 @@ export function setupTool() {
         fontPreview.style.color = fontColor.value;
         fontPreview.style.fontSize = fontSize.value + 'px';
         fontPreview.style.fontFamily = loadedFontName || 'sans-serif';
+        
+        fontPreview.style.webkitTextStroke = strokeWidth.value > 0 ? `${strokeWidth.value}px ${strokeColor.value}` : 'none';
+        if (shadowBlur.value > 0) {
+            fontPreview.style.textShadow = `2px 2px ${shadowBlur.value}px ${shadowColor.value}`;
+        } else {
+            fontPreview.style.textShadow = 'none';
+        }
 
         if (isVertical) {
             const lines = actualText.split('\n');
@@ -160,18 +178,21 @@ export function setupTool() {
         }
     };
 
-    fontInput.addEventListener('input', updatePreview);
-    fontColor.addEventListener('input', updatePreview);
-    fontSize.addEventListener('input', updatePreview);
+    [fontInput, fontColor, fontSize, strokeColor, strokeWidth, shadowColor, shadowBlur].forEach(el => {
+        el.addEventListener('input', updatePreview);
+    });
 
     fontUpload.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        
         const reader = new FileReader();
         reader.onload = function(evt) {
-            const fontDataUrl = evt.target.result;
+            const fontBuffer = evt.target.result;
             loadedFontName = 'CustomFont_' + Date.now();
-            const newFont = new FontFace(loadedFontName, `url(${fontDataUrl})`);
+            
+            const newFont = new FontFace(loadedFontName, fontBuffer);
+            
             newFont.load().then((loaded) => {
                 document.fonts.add(loaded);
                 fontInput.placeholder = "✅ Font tải thành công! Gõ chữ vào đây...";
@@ -179,9 +200,9 @@ export function setupTool() {
                     fontInput.value = "Tết trong nhà\nLộc trên trời";
                 }
                 updatePreview();
-            }).catch(err => alert("Lỗi tải font. Hãy đảm bảo file bạn chọn là định dạng .ttf hoặc .otf!"));
+            }).catch(err => alert("Lỗi tải font. Đảm bảo file của bạn đúng chuẩn .ttf, .otf, .woff hoặc .woff2!"));
         };
-        reader.readAsDataURL(file);
+        reader.readAsArrayBuffer(file);
     });
 
     alignBtns.forEach(btn => {
@@ -217,6 +238,10 @@ export function setupTool() {
         const scale = 3; 
         const size = parseInt(fontSize.value) * scale; 
         const color = fontColor.value;
+        const sColor = strokeColor.value;
+        const sWidth = parseInt(strokeWidth.value) * scale;
+        const shColor = shadowColor.value;
+        const shBlur = parseInt(shadowBlur.value) * scale;
         const fontFamily = loadedFontName || 'sans-serif';
 
         const canvas = document.createElement('canvas');
@@ -224,6 +249,31 @@ export function setupTool() {
         const lines = actualText.split('\n'); 
 
         ctx.font = `${size}px "${fontFamily}"`;
+
+        const drawText = (text, x, y) => {
+            if(shBlur > 0) {
+                ctx.shadowColor = shColor;
+                ctx.shadowBlur = shBlur;
+                ctx.shadowOffsetX = shBlur / 4;
+                ctx.shadowOffsetY = shBlur / 4;
+            } else {
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+            }
+
+            ctx.fillStyle = color;
+            ctx.fillText(text, x, y);
+
+            ctx.shadowColor = 'transparent'; 
+            ctx.shadowBlur = 0;
+
+            if(sWidth > 0) {
+                ctx.lineWidth = sWidth;
+                ctx.strokeStyle = sColor;
+                ctx.strokeText(text, x, y);
+                ctx.fillText(text, x, y); 
+            }
+        };
 
         if (isVertical) {
             let colWidths = [];
@@ -248,22 +298,22 @@ export function setupTool() {
             
             totalWidth += gap * (Math.max(0, cols.length - 1));
             
-            canvas.width = totalWidth + (40 * scale);
-            canvas.height = maxTotalHeight + (40 * scale);
+            const padding = (sWidth + shBlur + 20) * scale;
+            canvas.width = totalWidth + (padding * 2);
+            canvas.height = maxTotalHeight + (padding * 2);
 
             ctx.font = `${size}px "${fontFamily}"`; 
-            ctx.fillStyle = color;
             ctx.textBaseline = 'top';
             ctx.textAlign = 'center';
 
-            let startX = 20 * scale; 
-            let startY = 20 * scale;
+            let startX = padding; 
+            let startY = padding;
 
             cols.forEach((words, i) => {
                 let curX = startX + (colWidths[i] / 2);
                 let curY = startY;
                 words.forEach(word => {
-                    ctx.fillText(word, curX, curY);
+                    drawText(word, curX, curY);
                     curY += size * 1.3;
                 });
                 startX += colWidths[i] + gap;
@@ -275,29 +325,29 @@ export function setupTool() {
                 if(w > maxWidth) maxWidth = w;
             });
             
-            canvas.width = maxWidth + (40 * scale);
-            canvas.height = (lines.length * size * 1.3) + (40 * scale);
+            const padding = (sWidth + shBlur + 20) * scale;
+            canvas.width = maxWidth + (padding * 2);
+            canvas.height = (lines.length * size * 1.3) + (padding * 2);
 
             ctx.font = `${size}px "${fontFamily}"`; 
-            ctx.fillStyle = color;
             ctx.textBaseline = 'top';
 
-            let startY = 20 * scale;
-            let startX = 20 * scale;
+            let startY = padding;
+            let startX = padding;
 
             if (currentAlign === 'center') {
                 ctx.textAlign = 'center';
                 startX = canvas.width / 2;
             } else if (currentAlign === 'right') {
                 ctx.textAlign = 'right';
-                startX = canvas.width - (20 * scale);
+                startX = canvas.width - padding;
             } else {
                 ctx.textAlign = 'left';
-                startX = 20 * scale;
+                startX = padding;
             }
 
             lines.forEach(line => {
-                ctx.fillText(line, startX, startY);
+                drawText(line, startX, startY);
                 startY += size * 1.3;
             });
         }
