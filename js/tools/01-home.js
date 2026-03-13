@@ -9,7 +9,7 @@ export function setupTool() {
     
     panel.innerHTML = `
         <div class="space-y-8"> 
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 border-t-4 border-t-orange-400 relative overflow-hidden shadow-sm">
+            <div class="glass-card p-5 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 border-t-4 border-t-orange-400 relative overflow-hidden shadow-sm">
                 
                 <div class="absolute top-0 right-0 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
                 
@@ -54,14 +54,14 @@ export function setupTool() {
                 </div>
             </div>
 
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] border-t-4 border-t-orange-400 relative overflow-hidden bg-white/40 shadow-sm">
+            <div class="glass-card p-3 sm:p-6 md:p-8 rounded-[2rem] border-t-4 border-t-orange-400 relative overflow-hidden bg-white/40 shadow-sm">
                 
-                <div class="mb-6 flex items-center gap-3 px-2">
+                <div class="mb-6 flex items-center gap-3 px-2 mt-2">
                     <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-xl shadow-inner">📚</div>
-                    <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Tìm thử biết đâu có thứ cần</h2>
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 tracking-tight">Tìm thử biết đâu có thứ cần</h2>
                 </div>
 
-                <div class="relative mb-8 group">
+                <div class="relative mb-6 group">
                     <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                         <span class="text-gray-400 group-focus-within:text-orange-500 transition-colors">🔍</span>
                     </div>
@@ -83,7 +83,7 @@ export function setupTool() {
     
     document.getElementById('app-container').appendChild(panel);
     
-    // --- BẮT ĐẦU LOGIC LAZY LOAD (Giữ nguyên siêu mượt) ---
+    // --- BẮT ĐẦU LOGIC LAZY LOAD ---
     const guideList = document.getElementById('guide-list');
     const searchInput = document.getElementById('guide-search');
     const noResult = document.getElementById('guide-no-result');
@@ -105,15 +105,15 @@ export function setupTool() {
             item.className = 'guide-item glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
             
             item.innerHTML = `
-                <button class="w-full text-left p-5 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
+                <button class="w-full text-left p-4 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
                     <div>
-                        <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-lg pr-4">${guide.title}</h3>
+                        <h3 class="font-bold text-gray-800 group-hover:text-orange-500 transition text-base md:text-lg pr-4">${guide.title}</h3>
                         <p class="inline-block mt-2 bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">${guide.date}</p>
                     </div>
                     <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">▼</div>
                 </button>
                 <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
-                    <div class="prose-custom p-6 md:p-8" id="md-render-${index}"></div>
+                    <div class="prose-custom p-3 sm:p-5 md:p-8 text-[15px] sm:text-base" id="md-render-${index}"></div>
                 </div>
             `;
             guideList.appendChild(item);
