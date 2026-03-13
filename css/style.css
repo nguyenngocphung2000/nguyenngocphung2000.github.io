@@ -178,3 +178,42 @@ body.dark-mode #dark-mode-btn { background-color: #334155 !important; color: #f8
 body.dark-mode #dark-mode-btn:hover { background-color: #475569 !important; color: #f97316 !important; }
 body.dark-mode #moon-shadow { background-color: #0f172a !important; }
 body.dark-mode #mobile-nav::-webkit-scrollbar-thumb { background-color: rgba(45, 212, 191, 0.3); }
+/* ========================================= */
+/* BẦU TRỜI SAO GLOBAL CHO DARK MODE         */
+/* ========================================= */
+#global-star-bg {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    width: 100vw; 
+    height: 100vh;
+    z-index: -999; /* Nằm dưới cùng, tuyệt đối không che tool hay hộp thoại */
+    pointer-events: none; /* Bỏ qua mọi tương tác chuột, không gây liệt nút bấm */
+    overflow: hidden;
+    background: transparent; /* Trong suốt, giữ nguyên màu nền dark mode hiện tại của web */
+    opacity: 0; /* Mặc định ẨN ở chế độ nền sáng */
+    transition: opacity 0.8s ease-in-out; /* Hiện ra mượt mà khi bật Dark Mode */
+}
+
+/* HIỂN THỊ KHI BẬT DARK MODE */
+html.dark #global-star-bg, 
+body.dark-mode #global-star-bg {
+    opacity: 1;
+}
+
+.global-star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: global-twinkle infinite alternate;
+}
+
+/* Hiệu ứng nhấp nháy tỏa sáng nhẹ nhàng */
+@keyframes global-twinkle {
+    0% { opacity: 0; transform: scale(0.5); box-shadow: 0 0 0 rgba(255,255,255,0); }
+    50% { opacity: 0.6; transform: scale(1); box-shadow: 0 0 5px rgba(255,255,255,0.3); }
+    100% { opacity: 0; transform: scale(0.5); box-shadow: 0 0 0 rgba(255,255,255,0); }
+}

@@ -17,7 +17,8 @@ const menuConfig = [
     { id: 'tab-workspace', name: 'Workspace', icon: '💻' },
     { id: 'tab-baby-name', name: 'Đặt Tên Con', icon: '👶' },
     { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
-    { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' }
+    { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
+    { id: 'tab-sleep', name: 'Tính Giấc Ngủ' ,icon: '🌙' }
 ]
    ;
 
@@ -36,7 +37,9 @@ const toolMap = {
     'tab-workspace': './tools/11-workspace.js',
     'tab-baby-name': './tools/12-baby-name.js',
     'tab-xiangqi': './tools/13-xiangqi.js',
-    'tab-wheel' : './tools/14-wheel.js'
+    'tab-wheel' : './tools/14-wheel.js',
+    'tab-sleep': './tools/15-sleep.js'
+
 };
 
 // --- 3. KHAI BÁO CÁC PHẦN TỬ GIAO DIỆN ---
@@ -190,3 +193,44 @@ if (window.location.hash) {
     if (toolMap[hashTab]) initialTab = hashTab;
 }
 switchTab(initialTab);
+// =========================================
+// HIỆU ỨNG BẦU TRỜI SAO TỰ ĐỘNG
+// =========================================
+function initGlobalStars() {
+    // Tránh tạo trùng lặp nếu hàm bị gọi nhiều lần
+    if (document.getElementById('global-star-bg')) return;
+    
+    // Tạo lớp màng chứa sao
+    const starContainer = document.createElement('div');
+    starContainer.id = 'global-star-bg';
+    
+    // Rải khoảng 70 ngôi sao khắp màn hình (Không nên để quá nhiều gây nặng máy)
+    const starCount = 70;
+    
+    for (let i = 0; i < starCount; i++) {
+        let star = document.createElement('div');
+        star.className = 'global-star';
+        
+        // Kích thước sao ngẫu nhiên (từ siêu nhỏ 1px đến 2.5px)
+        let size = Math.random() * 1.5 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        
+        // Vị trí rải rác ngẫu nhiên trên toàn bộ view màn hình
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.left = Math.random() * 100 + 'vw';
+        
+        // Nhấp nháy không đồng đều để tạo cảm giác tự nhiên
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        // Chu kỳ nhấp nháy chậm hơn một chút để làm nền tĩnh lặng, không làm rối mắt
+        star.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        
+        starContainer.appendChild(star);
+    }
+    
+    // Chèn lớp màng vào thẳng thẻ body
+    document.body.appendChild(starContainer);
+}
+
+// Chạy hàm tạo sao khi trang web vừa load xong
+document.addEventListener('DOMContentLoaded', initGlobalStars);
