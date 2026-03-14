@@ -16,7 +16,7 @@
 
 ### 2. Thiết lập Phông chữ và Căn đoạn văn (Font & Paragraph)
 * **Phông chữ:** Times New Roman.
-* **Cỡ chữ (Size):** **14**.
+* **Cỡ chữ (Size):** **13**.
 * **Căn lề (Alignment):** Căn đều hai bên (Justify).
 * **Giãn dòng (Line Spacing):** **Multiple 1.2** *(Tạo độ thoáng vừa phải, tối ưu hơn mức 1.5).*
 * **Giãn đoạn (Spacing):** Before **6 pt**, After **6 pt**.
