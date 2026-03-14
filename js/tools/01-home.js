@@ -39,7 +39,7 @@ export function setupTool() {
                     </h1>
                     
                     <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/10 to-transparent rounded-r-xl relative z-10 font-medium">
-                        <strong class="text-orange-600">NOTHING BUT SOMETHING</strong> • Hello there! Welcome to my little corner. This is a small stash containing some little toys that I personally... asked AI to code for me 😂, along with a basket of cool tricks and tips I picked up or came up with myself. Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them, my contact info is right below!
+                        <strong class="text-orange-600">NOTHING YET EVERYTHING</strong> • Hello there! Welcome to my little corner. This is a small stash containing some little toys that I personally... asked AI to code for me 😂, along with a basket of cool tricks and tips I picked up or came up with myself. Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them, my contact info is right below!
                     </p>
                     
                     <div class="flex flex-wrap gap-2 justify-center md:justify-start">
