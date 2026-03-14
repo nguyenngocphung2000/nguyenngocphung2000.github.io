@@ -13,17 +13,23 @@
 
 ### 1. Khởi tạo tài khoản
 1. Truy cập trang chủ [NextDNS](https://nextdns.io).
+
 2. Nhấn vào **my.nextdns.io** (góc trên bên phải) để vào bảng điều khiển.
+
 3. Ghi nhớ mã **ID** của cấu hình vừa được tạo để sử dụng cho thiết bị của bạn.
 
 ### 2. Thêm bộ lọc quảng cáo (Tab `Privacy`)
+
 1. Chuyển sang thẻ **Privacy**.
+
 2. Tìm mục **Blocklists** và thêm 2 bộ lọc thiết yếu sau:
    * `hostsVN` (Tối ưu cho web Việt Nam)
    * `AdGuard DNS filter` (Bộ lọc quảng cáo quốc tế)
 
 ### 3. Cài đặt lên thiết bị (Tab `Setup`)
+
 1. Trở về thẻ **Setup**.
+
 2. Kéo xuống phần **Setup Guide** và làm theo hướng dẫn tương ứng với hệ điều hành thiết bị của bạn (Windows, macOS, Android, Router...).
 3. 🍎 **Dành riêng cho thiết bị Apple (iOS/macOS):** Truy cập nhanh vào [apple.nextdns.io](https://apple.nextdns.io/) để tự động tạo và tải hồ sơ cấu hình.
 
@@ -37,12 +43,14 @@
 * **Mở khóa link tiếp thị (Affiliate):** Bật tính năng **Allow Affiliate & Tracking Links** nếu bạn thường xuyên mua sắm qua Shopee, Lazada hoặc hay click vào các link kết quả được tài trợ trên Google Search.
 
 ### Tùy chỉnh tại Tab `Parental Control` (Quản lý gia đình)
+
 * **Chặn cờ bạc:** Tại mục *Categories*, thêm `Gambling`.
 * **Bảo vệ trẻ em:** * Tại mục *Categories*, thêm `P*rn` để chặn nội dung người lớn.
     * Bật tính năng **SafeSearch** (Tìm kiếm an toàn trên Google, Bing, YouTube).
     * Thiết lập **Recreation Time** để giới hạn khung giờ truy cập internet/giải trí.
 
 ### Tùy chỉnh tại Tab `Settings`
+
 * **Khắc phục mạng chậm:** Nếu cảm thấy tốc độ mạng bị suy giảm sau khi dùng NextDNS, hãy tìm và **Tắt** tính năng `Anonymized EDNS Client Subnet`.
 
 ---
@@ -55,7 +63,9 @@ Zalo thường hiển thị quảng cáo ở mục "Khám phá" và "Nhật ký"
 > Việc chặn các tên miền này có thể làm **vô hiệu hóa tính năng chuyển khoản nhanh** trong Zalo chat. Hãy cân nhắc kỹ trước khi áp dụng.
 
 **Cách thực hiện:**
+
 1. Mở bảng điều khiển NextDNS, chọn thẻ **Denylist**.
+
 2. Thêm lần lượt các tên miền dưới đây vào danh sách (nhấn Enter sau mỗi dòng):
 
 `social.zalopay.vn`  
@@ -87,6 +97,7 @@ Zalo thường hiển thị quảng cáo ở mục "Khám phá" và "Nhật ký"
 ---
 
 ## 📌 Thông Tin Bổ Sung
+
 * **Giới hạn miễn phí:** 300.000 truy vấn/tháng (Hoàn toàn đủ dùng cho cá nhân với 1-2 thiết bị).
 * **Tài liệu tham khảo chuyên sâu:** Tham khảo Wiki của dự án hostsVN tại [Github hostsVN/NextDNS](https://github.com/bigdargon/hostsVN/wiki/NextDNS).
 

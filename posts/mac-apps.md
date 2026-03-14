@@ -9,7 +9,9 @@ Thay vì phải cài đặt các ứng dụng nặng nề, **LunarV** cung cấp
 
 ---
 
+
 ## 2. Giải Pháp Gõ Tiếng Việt
+
 Nếu bạn đang gặp phiền toái với bộ gõ tiếng Việt mặc định của macOS (thường xuyên bị lỗi gạch chân, nhảy chữ), hãy thử ngay các bộ gõ mã nguồn mở nhẹ nhàng và ổn định sau đây:
 * ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
 * ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
