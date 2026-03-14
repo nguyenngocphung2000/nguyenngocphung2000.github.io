@@ -96,7 +96,8 @@ export function setupTool() {
         { title: "Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", path: "posts/bot-telegram.md" },
         { title: "Chặn quảng cáo Web, App, Zalo bằng NextDNS", date: "Thủ thuật IOS", path: "posts/nextdns.md" },
         { title: "Cài Lịch Âm & Bộ gõ tiếng Việt trên macOS", date: "Thủ thuật Mac", path: "posts/mac-apps.md" },
-        { title: "Tổng hợp tài liệu học lập trình và công nghệ thông tin từ Freetuts", date: "Tài liệu học tập", path: "posts/tong-hop-tai-lieu-freetuts.md" }
+        { title: "Tổng hợp tài liệu học lập trình và công nghệ thông tin từ Freetuts", date: "Tài liệu học tập", path: "posts/tong-hop-tai-lieu-freetuts.md" },
+        { title: "Tổng hợp các nhóm crack/mod/hack - apk/ipa(android/ios) trên Telegram", date: "Phần mềm/Ứng dụng", path: "posts/group-telegram.md" }
     ];
     
     const renderGuideList = () => {
