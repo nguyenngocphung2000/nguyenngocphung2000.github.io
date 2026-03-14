@@ -1,4 +1,4 @@
-# TÀI LIỆU HỌC LẬP TRÌNH & CÔNG NGHỆ THÔNG TIN
+# TÀI LIỆU HỌC LẬP TRÌNH VÀ CÔNG NGHỆ THÔNG TIN
 **Nguồn tài liệu:** Freetuts.net
 
 ---

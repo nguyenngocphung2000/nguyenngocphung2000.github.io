@@ -8,6 +8,16 @@ export function setupTool() {
     panel.className = 'tab-panel active';
     
     panel.innerHTML = `
+        <style>
+            /* THỦ THUẬT TYPOGRAPHY CAO CẤP DÀNH CHO CĂN ĐỀU 2 BÊN */
+            .premium-justify {
+                text-align: justify;
+                text-justify: inter-word;
+                hyphens: auto;
+                -webkit-hyphens: auto;
+                word-spacing: -0.02em; /* Thu hẹp nhẹ khoảng cách các từ */
+            }
+        </style>
         <div class="space-y-8"> 
             <div class="glass-card p-5 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 border-t-4 border-t-orange-400 relative overflow-hidden shadow-sm">
                 
@@ -38,7 +48,7 @@ export function setupTool() {
                         Hi I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 drop-shadow-sm">Nothing</span>
                     </h1>
                     
-                    <p class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/10 to-transparent rounded-r-xl relative z-10 font-medium">
+                    <p lang="en" class="text-gray-600 leading-relaxed mb-4 text-sm md:text-base border-l-4 border-orange-300 pl-4 py-1 bg-gradient-to-r from-orange-50/10 to-transparent rounded-r-xl relative z-10 font-medium premium-justify">
                         <strong class="text-orange-600">NOTHING YET EVERYTHING</strong> • Hello there! Welcome to my little corner. This is a small stash containing some little toys that I personally... asked AI to code for me 😂, along with a basket of cool tricks and tips I picked up or came up with myself. Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them, my contact info is right below!
                     </p>
                     
@@ -88,7 +98,6 @@ export function setupTool() {
     const searchInput = document.getElementById('guide-search');
     const noResult = document.getElementById('guide-no-result');
     
-    // Lưu trữ nội dung bài viết đã tải
     let cachedContent = {};
     
     const manifest = [
@@ -105,7 +114,8 @@ export function setupTool() {
         guideList.innerHTML = '';
         manifest.forEach((guide, index) => {
             const item = document.createElement('div');
-            item.className = 'guide-item glass-card rounded-[1.5rem] overflow-hidden border border-orange-50 shadow-sm transition hover:shadow-md';
+            item.id = `guide-item-${index}`;
+            item.className = 'guide-item bg-white rounded-[1.5rem] overflow-hidden border border-orange-100 shadow-sm transition hover:shadow-md';
             
             item.innerHTML = `
                 <button class="w-full text-left p-4 md:px-6 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
@@ -115,8 +125,8 @@ export function setupTool() {
                     </div>
                     <div id="icon-${index}" class="text-gray-400 transform transition-transform duration-300 w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0">▼</div>
                 </button>
-                <div id="content-${index}" class="hidden border-t border-orange-50 bg-white/60">
-                    <div class="prose-custom p-3 sm:p-5 md:p-8 text-[15px] sm:text-base" id="md-render-${index}"></div>
+                <div id="content-${index}" class="hidden border-t border-orange-50 bg-gray-50/30">
+                    <div class="prose-custom max-w-none text-justify p-4 sm:p-6 md:p-8 text-[15px] sm:text-base leading-relaxed" id="md-render-${index}"></div>
                 </div>
             `;
             guideList.appendChild(item);
@@ -151,11 +161,16 @@ export function setupTool() {
         const contentDiv = document.getElementById('content-' + index);
         const iconDiv = document.getElementById('icon-' + index);
         const renderDiv = document.getElementById('md-render-' + index);
+        const parentItem = document.getElementById('guide-item-' + index);
         
         manifest.forEach((_, i) => {
             if (i !== index) {
-                document.getElementById('content-' + i).classList.add('hidden');
-                document.getElementById('icon-' + i).style.transform = 'rotate(0deg)';
+                const otherContent = document.getElementById('content-' + i);
+                const otherIcon = document.getElementById('icon-' + i);
+                if(otherContent && !otherContent.classList.contains('hidden')) {
+                    otherContent.classList.add('hidden');
+                    otherIcon.style.transform = 'rotate(0deg)';
+                }
             }
         });
         
@@ -165,7 +180,6 @@ export function setupTool() {
             
             if (!cachedContent[index]) {
                 renderDiv.innerHTML = '<div class="text-orange-500 font-bold animate-pulse text-center py-4">Đang nạp dữ liệu bài viết... ⏳</div>';
-                
                 try {
                     const response = await fetch(manifest[index].path);
                     if (!response.ok) throw new Error("Lỗi tải file");
@@ -184,11 +198,18 @@ export function setupTool() {
             }
             
             renderDiv.innerHTML = cachedContent[index];
-            
             renderDiv.querySelectorAll('a').forEach(link => {
                 link.setAttribute('target', '_blank');
                 link.className = 'text-orange-500 font-bold hover:underline';
             });
+
+            setTimeout(() => {
+                if (parentItem) {
+                    const yOffset = -30; 
+                    const y = parentItem.getBoundingClientRect().top + window.scrollY + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            }, 100); 
             
         } else {
             contentDiv.classList.add('hidden');
