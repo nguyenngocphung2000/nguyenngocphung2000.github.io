@@ -1,4 +1,4 @@
-// --- 16. Tool Trình Chạy HTML/CSS/JS Code Editor chuẩn VS Code  ---
+// --- 16. Tool Trình Chạy HTML/CSS/JS (Code Editor chuẩn VS Code + Tích hợp Mini Console) ---
 export function setupTool() {
     const tabId = 'tab-html-runner';
     
@@ -8,6 +8,7 @@ export function setupTool() {
     panel.id = tabId;
     panel.className = 'tab-panel active';
     
+    // Giao diện xám/đen chuẩn Cobalt + Auto Dark Mode
     panel.innerHTML = `
         <style>
             .cobalt-ui-wrapper {
@@ -119,24 +120,20 @@ export function setupTool() {
                 pointer-events: none; 
             }
 
-            /* ========================================= */
-            /* 🎨 BẢNG MÀU CÚ PHÁP BAN NGÀY (Light Theme) */
-            /* ========================================= */
-            .syn-tag { color: #d73a49; }       /* Thẻ HTML (Đỏ) */
-            .syn-attr { color: #6f42c1; }      /* Thuộc tính (Tím) */
-            .syn-str { color: #032f62; }       /* Chuỗi String (Xanh đậm) */
-            .syn-kw { color: #d73a49; font-weight: 600; }  /* Từ khóa JS (Đỏ) */
-            .syn-func { color: #005cc5; font-weight: 600; } /* Tên hàm (Xanh dương) */
-            .syn-num { color: #005cc5; }       /* Số liệu (Xanh dương) */
-            .syn-css { color: #005cc5; }       /* CSS Props (Xanh dương) */
-            .syn-cmt { color: #6a737d; font-style: italic; } /* Chú thích (Xám) */
+            /* MÀU CÚ PHÁP BAN NGÀY */
+            .syn-tag { color: #d73a49; }       
+            .syn-attr { color: #6f42c1; }      
+            .syn-str { color: #032f62; }       
+            .syn-kw { color: #d73a49; font-weight: 600; }  
+            .syn-func { color: #005cc5; font-weight: 600; } 
+            .syn-num { color: #005cc5; }       
+            .syn-css { color: #005cc5; }       
+            .syn-cmt { color: #6a737d; font-style: italic; } 
 
             .scroll-hide::-webkit-scrollbar { width: 4px; height: 4px; }
             .scroll-hide::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-            /* ========================================= */
-            /* 🌙 ĐỘ DARK MODE ĐỈNH CAO CHUẨN COBALT DARK  */
-            /* ========================================= */
+            /* MÀU CÚ PHÁP BAN ĐÊM & DARK MODE GIAO DIỆN */
             html.dark .cobalt-ui-wrapper, body.dark .cobalt-ui-wrapper { background-color: #18181b; color: #f4f4f5; }
             html.dark .cb-btn, body.dark .cb-btn { background-color: #27272a; color: #e4e4e7; }
             html.dark .cb-btn:active, body.dark .cb-btn:active { background-color: #3f3f46; }
@@ -148,15 +145,14 @@ export function setupTool() {
             html.dark .cb-textarea::selection, body.dark .cb-textarea::selection { background: rgba(255, 255, 255, 0.2); }
             html.dark .scroll-hide::-webkit-scrollbar-thumb, body.dark .scroll-hide::-webkit-scrollbar-thumb { background: #3f3f46; }
 
-            /* 🎨 BẢNG MÀU CÚ PHÁP BAN ĐÊM (Neon Dark Theme) */
-            html.dark .syn-tag, body.dark .syn-tag { color: #7ee787; }      /* Thẻ HTML (Xanh Neon) */
-            html.dark .syn-attr, body.dark .syn-attr { color: #d2a8ff; }    /* Thuộc tính (Tím nhạt) */
-            html.dark .syn-str, body.dark .syn-str { color: #a5d6ff; }      /* Chuỗi (Xanh dương sáng) */
-            html.dark .syn-kw, body.dark .syn-kw { color: #ff7b72; font-weight: 600;}  /* Từ khóa JS (Đỏ san hô) */
-            html.dark .syn-func, body.dark .syn-func { color: #d2a8ff; font-weight: 600;} /* Tên hàm (Tím) */
-            html.dark .syn-num, body.dark .syn-num { color: #79c0ff; }      /* Số liệu (Xanh lơ) */
-            html.dark .syn-css, body.dark .syn-css { color: #79c0ff; }      /* CSS Props (Xanh lơ) */
-            html.dark .syn-cmt, body.dark .syn-cmt { color: #8b949e; }      /* Chú thích (Xám bạc) */
+            html.dark .syn-tag, body.dark .syn-tag { color: #7ee787; }      
+            html.dark .syn-attr, body.dark .syn-attr { color: #d2a8ff; }    
+            html.dark .syn-str, body.dark .syn-str { color: #a5d6ff; }      
+            html.dark .syn-kw, body.dark .syn-kw { color: #ff7b72; font-weight: 600;}  
+            html.dark .syn-func, body.dark .syn-func { color: #d2a8ff; font-weight: 600;} 
+            html.dark .syn-num, body.dark .syn-num { color: #79c0ff; }      
+            html.dark .syn-css, body.dark .syn-css { color: #79c0ff; }      
+            html.dark .syn-cmt, body.dark .syn-cmt { color: #8b949e; }      
         </style>
 
         <div class="cobalt-ui-wrapper w-full max-w-3xl mx-auto p-3 sm:p-5 shadow-md relative z-10">
@@ -207,38 +203,18 @@ export function setupTool() {
     const copyBtn = document.getElementById('cb-copy');
     const pasteBtn = document.getElementById('cb-paste');
 
-    // 🚀 THUẬT TOÁN HIGHLIGHT MỚI: THEO QUY LUẬT & SIÊU CHI TIẾT
     function highlightCode(code) {
-        // 1. Mã hóa HTML trước để không vỡ layout
         let html = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        
-        // 2. CHUỖI VĂN BẢN (Strings)
         html = html.replace(/(&quot;.*?&quot;|'.*?'|`.*?`)/g, '<span class="syn-str">$1</span>');
-        
-        // 3. CHÚ THÍCH (Comments)
         html = html.replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="syn-cmt">$1</span>');
         html = html.replace(/(?<!:)(\/\/.*$)/gm, '<span class="syn-cmt">$1</span>');
-        
-        // 4. THẺ HTML (HTML Tags: html, body, div, h1...)
         html = html.replace(/(&lt;\/?)([a-zA-Z0-9-]+)/g, '$1<span class="syn-tag">$2</span>');
-        
-        // 5. THUỘC TÍNH HTML (HTML Attributes: class=, id=...)
         html = html.replace(/([a-zA-Z0-9_-]+)(?==<span class="syn-str">)/g, '<span class="syn-attr">$1</span>');
-
-        // 6. THUỘC TÍNH CSS (CSS Properties: color:, font-size:...)
         html = html.replace(/([a-zA-Z0-9_-]+)(?=: )/g, '<span class="syn-css">$1</span>');
-
-        // 7. TÊN HÀM (Functions: console.log, alert...)
         html = html.replace(/\b([a-zA-Z0-9_]+)(?=\()/g, '<span class="syn-func">$1</span>');
-
-        // 8. CON SỐ (Numbers: 100, 0.5...) 
-        // Phép Regex này sử dụng (?![^<]*>) để ĐẢM BẢO nó không bao giờ chèn lầm vào mã HTML sinh ra do các class trước đó.
         html = html.replace(/\b(\d+(\.\d+)?)\b(?![^<]*>)/g, '<span class="syn-num">$1</span>');
-        
-        // 9. TỪ KHÓA LẬP TRÌNH (Keywords)
         const keywords = /\b(function|const|let|var|return|if|else|for|while|document|window|console|import|export|true|false|new|class|await|async)\b(?![^<]*>)/g;
         html = html.replace(keywords, '<span class="syn-kw">$1</span>');
-
         return html;
     }
 
@@ -292,27 +268,73 @@ export function setupTool() {
         }
     });
 
+    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE VÀO TAB MỚI ---
     runBtn.addEventListener('click', function() {
         const code = codeInput.value;
         if (!code.trim()) {
-            alert('please enter some code!');
+            alert('Vui lòng gõ mã code trước khi chạy nhé bạn yêu!');
             return;
         }
         
         const newWindow = window.open('', '_blank');
         
+        // Đoạn Script bí mật cắm vào ĐẦU TAB MỚI để bắt cóc lệnh console.log
+        const prependConsoleLogic = `
+        <script>
+            window.__devLogs = [];
+            const ogLog = console.log, ogErr = console.error, ogWarn = console.warn;
+            function _fmtArgs(a) { return Array.from(a).map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' '); }
+            console.log = function() { ogLog.apply(console, arguments); window.__devLogs.push({msg: _fmtArgs(arguments), type: 'log'}); };
+            console.error = function() { ogErr.apply(console, arguments); window.__devLogs.push({msg: _fmtArgs(arguments), type: 'err'}); };
+            console.warn = function() { ogWarn.apply(console, arguments); window.__devLogs.push({msg: _fmtArgs(arguments), type: 'warn'}); };
+            window.onerror = function(msg, url, line) { window.__devLogs.push({msg: msg + ' (Lỗi ở dòng ' + line + ')', type: 'err'}); return false; };
+        </script>
+        `;
+
+        // Giao diện Mini Console cắm vào CUỐI TAB MỚI
+        const appendConsoleUI = `
+        <div id="sys-console-ui" style="position:fixed; bottom:0; left:0; width:100%; height:22vh; min-height:160px; background:rgba(24,24,27,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid #3f3f46; color:#e4e4e7; font-family:monospace; z-index:2147483645; display:flex; flex-direction:column; box-shadow: 0 -10px 30px rgba(0,0,0,0.3);">
+            <div style="background:#27272a; padding:8px 15px; font-size:12px; font-weight:bold; color:#a1a1aa; border-bottom:1px solid #3f3f46; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system, sans-serif; text-transform:uppercase;">
+                <span style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:8px; height:8px; background-color:#10b981; border-radius:50%;"></span> Terminal Logs</span>
+                <span style="cursor:pointer; color:#ef4444; padding:4px 8px; border-radius:4px; background:rgba(239,68,68,0.1);" onclick="document.getElementById('sys-console-ui').style.display='none'">✕ Đóng</span>
+            </div>
+            <div id="sys-console-body" style="flex:1; overflow-y:auto; padding:12px; font-size:13px; line-height:1.6;"></div>
+        </div>
+        <script>
+            const cbBody = document.getElementById('sys-console-body');
+            function _printUI(item) {
+                const d = document.createElement('div');
+                d.style.borderBottom = '1px dashed rgba(255,255,255,0.05)'; d.style.padding = '6px 0'; d.style.wordBreak = 'break-all';
+                if(item.type === 'err') d.style.color = '#f87171'; 
+                else if(item.type === 'warn') d.style.color = '#fbe331'; 
+                else d.style.color = '#e4e4e7';
+                d.innerHTML = '<strong style="opacity:0.5; margin-right:5px;">❯</strong> ' + item.msg;
+                cbBody.appendChild(d);
+            }
+            // In ra những log đã bắt được trong lúc code vừa chạy
+            window.__devLogs.forEach(_printUI);
+            
+            // Ghi đè lại lần nữa để in trực tiếp nếu User bấm nút trên Web
+            console.log = function() { ogLog.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'log'}); cbBody.scrollTop = cbBody.scrollHeight; };
+            console.error = function() { ogErr.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'err'}); cbBody.scrollTop = cbBody.scrollHeight; };
+            console.warn = function() { ogWarn.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'warn'}); cbBody.scrollTop = cbBody.scrollHeight; };
+        </script>
+        `;
+
+        // Logo Cam Đóng dấu
         const orangeLogoWatermark = `
-            <div style="position: fixed; bottom: 20px; right: 20px; z-index: 2147483647; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 999px; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.25); border: 1.5px solid rgba(249, 115, 22, 0.3); font-family: sans-serif; pointer-events: none;">
+            <div style="position: fixed; bottom: calc(22vh + 15px); right: 20px; z-index: 2147483647; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 999px; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.25); border: 1.5px solid rgba(249, 115, 22, 0.3); font-family: sans-serif; pointer-events: none;">
                 <span style="background: linear-gradient(90deg, #f97316, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; font-size: 14px; letter-spacing: 1px;">NOTHING</span>
-                <span style="font-size: 16px; filter: drop-shadow(0 2px 4px rgba(249,115,22,0.4));">🧑‍💻</span>
+                <span style="font-size: 16px;">🧑‍💻</span>
             </div>
         `;
         
-        newWindow.document.write(code + orangeLogoWatermark);
+        // HỢP THỂ VÀ CHẠY
+        newWindow.document.write(prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark);
         newWindow.document.close();
     });
 
-    // Mã mẫu thể hiện đầy đủ các loại màu sắc
-    codeInput.value = `\n<!DOCTYPE html>\n<html>\n<head>\n  <title>hello</title>\n</head>\n<body>\n  <h1 id="title" class="main-text">hello world!</h1>\n  \n  <style>\n    body { background-color: #18181b; }\n    h1 { color: #f97316; font-size: 24px; }\n  </style>\n\n  <script>\n    // JS Function test\n    const limit = 100;\n    function sayHello() {\n      console.log("no more bugs! " + limit);\n    }\n    sayHello();\n  </script>\n</body>\n</html>`;
+    // Mã mẫu có gắn Console.log và Lỗi để test ngay
+    codeInput.value = `<!DOCTYPE html>\n<html>\n<head>\n  <title>Test Console</title>\n  <style>\n    body { font-family: sans-serif; text-align: center; margin-top: 50px; }\n    button { padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 8px; border: none; background: #2563eb; color: white; }\n  </style>\n</head>\n<body>\n  <h1>Mini Console Terminal 🚀</h1>\n  <button onclick="testConsole()">Bấm vào đây test Log</button>\n  <button style="background: #dc2626;" onclick="testError()">Tạo Lỗi Đỏ</button>\n\n  <script>\n    // Log ngay khi vừa mở trang\n    console.log("Trang đã tải xong! Sẵn sàng phục vụ.");\n    console.warn("Cảnh báo: Bạn code xịn quá!");\n\n    function testConsole() {\n      const randomNum = Math.floor(Math.random() * 100);\n      console.log("Nút đã được bấm! Số ngẫu nhiên: " + randomNum);\n    }\n\n    function testError() {\n      console.error("Ôi hỏng! Lỗi nghiêm trọng rồi!");\n      // Cố tình gọi một hàm không tồn tại để test báo lỗi tự động\n      hamNayKhongTonTai(); \n    }\n  </script>\n</body>\n</html>`;
     codeInput.dispatchEvent(new Event('input')); 
 }
