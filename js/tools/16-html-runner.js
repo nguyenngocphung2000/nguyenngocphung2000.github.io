@@ -1,4 +1,4 @@
-// --- 16. Tool Trình Chạy HTML/CSS/JS (Bản Vá Lỗi Code Highlight + Auto Dark Mode) ---
+// --- 16. Tool Trình Chạy HTML/CSS/JS Code Editor chuẩn VS Code  ---
 export function setupTool() {
     const tabId = 'tab-html-runner';
     
@@ -8,7 +8,6 @@ export function setupTool() {
     panel.id = tabId;
     panel.className = 'tab-panel active';
     
-    // Giao diện xám/đen chuẩn Cobalt, System Fonts, Auto Dark Mode
     panel.innerHTML = `
         <style>
             .cobalt-ui-wrapper {
@@ -69,12 +68,14 @@ export function setupTool() {
                 width: 40px;
                 background-color: #f8fafc;
                 border-right: 1px solid #f1f5f9;
-                text-align: center;
+                text-align: right;
+                padding-right: 8px;
                 color: #94a3b8;
                 font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
                 font-size: 13px;
                 line-height: 22px;
-                padding: 12px 0;
+                padding-top: 12px;
+                padding-bottom: 12px;
                 overflow: hidden;
                 user-select: none;
                 transition: background-color 0.3s, border-color 0.3s;
@@ -118,32 +119,44 @@ export function setupTool() {
                 pointer-events: none; 
             }
 
-            /* MÀU CÚ PHÁP BAN NGÀY */
-            .syn-tag { color: #22863a; }       
-            .syn-str { color: #032f62; }       
-            .syn-kw { color: #d73a49; font-weight: bold; } 
-            .syn-cmt { color: #6a737d; font-style: italic; } 
+            /* ========================================= */
+            /* 🎨 BẢNG MÀU CÚ PHÁP BAN NGÀY (Light Theme) */
+            /* ========================================= */
+            .syn-tag { color: #d73a49; }       /* Thẻ HTML (Đỏ) */
+            .syn-attr { color: #6f42c1; }      /* Thuộc tính (Tím) */
+            .syn-str { color: #032f62; }       /* Chuỗi String (Xanh đậm) */
+            .syn-kw { color: #d73a49; font-weight: 600; }  /* Từ khóa JS (Đỏ) */
+            .syn-func { color: #005cc5; font-weight: 600; } /* Tên hàm (Xanh dương) */
+            .syn-num { color: #005cc5; }       /* Số liệu (Xanh dương) */
+            .syn-css { color: #005cc5; }       /* CSS Props (Xanh dương) */
+            .syn-cmt { color: #6a737d; font-style: italic; } /* Chú thích (Xám) */
 
             .scroll-hide::-webkit-scrollbar { width: 4px; height: 4px; }
             .scroll-hide::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-            /* --- AUTO DARK MODE --- */
+            /* ========================================= */
+            /* 🌙 ĐỘ DARK MODE ĐỈNH CAO CHUẨN COBALT DARK  */
+            /* ========================================= */
             html.dark .cobalt-ui-wrapper, body.dark .cobalt-ui-wrapper { background-color: #18181b; color: #f4f4f5; }
             html.dark .cb-btn, body.dark .cb-btn { background-color: #27272a; color: #e4e4e7; }
             html.dark .cb-btn:active, body.dark .cb-btn:active { background-color: #3f3f46; }
             html.dark .cb-btn-black, body.dark .cb-btn-black { background-color: #ffffff; color: #000000; }
-            html.dark .cb-editor-box, body.dark .cb-editor-box { background-color: #09090b; border-color: #27272a; }
-            html.dark .cb-lines, body.dark .cb-lines { background-color: #09090b; border-color: #27272a; color: #52525b; }
-            html.dark .cb-highlight, body.dark .cb-highlight { color: #e4e4e7; }
+            html.dark .cb-editor-box, body.dark .cb-editor-box { background-color: #0d1117; border-color: #30363d; }
+            html.dark .cb-lines, body.dark .cb-lines { background-color: #0d1117; border-color: #30363d; color: #6e7681; }
+            html.dark .cb-highlight, body.dark .cb-highlight { color: #c9d1d9; }
             html.dark .cb-textarea, body.dark .cb-textarea { caret-color: #ffffff; }
             html.dark .cb-textarea::selection, body.dark .cb-textarea::selection { background: rgba(255, 255, 255, 0.2); }
             html.dark .scroll-hide::-webkit-scrollbar-thumb, body.dark .scroll-hide::-webkit-scrollbar-thumb { background: #3f3f46; }
 
-            /* MÀU CÚ PHÁP BAN ĐÊM (Neon) */
-            html.dark .syn-tag, body.dark .syn-tag { color: #7ee787; }      
-            html.dark .syn-str, body.dark .syn-str { color: #a5d6ff; }      
-            html.dark .syn-kw, body.dark .syn-kw { color: #ff7b72; }        
-            html.dark .syn-cmt, body.dark .syn-cmt { color: #8b949e; }      
+            /* 🎨 BẢNG MÀU CÚ PHÁP BAN ĐÊM (Neon Dark Theme) */
+            html.dark .syn-tag, body.dark .syn-tag { color: #7ee787; }      /* Thẻ HTML (Xanh Neon) */
+            html.dark .syn-attr, body.dark .syn-attr { color: #d2a8ff; }    /* Thuộc tính (Tím nhạt) */
+            html.dark .syn-str, body.dark .syn-str { color: #a5d6ff; }      /* Chuỗi (Xanh dương sáng) */
+            html.dark .syn-kw, body.dark .syn-kw { color: #ff7b72; font-weight: 600;}  /* Từ khóa JS (Đỏ san hô) */
+            html.dark .syn-func, body.dark .syn-func { color: #d2a8ff; font-weight: 600;} /* Tên hàm (Tím) */
+            html.dark .syn-num, body.dark .syn-num { color: #79c0ff; }      /* Số liệu (Xanh lơ) */
+            html.dark .syn-css, body.dark .syn-css { color: #79c0ff; }      /* CSS Props (Xanh lơ) */
+            html.dark .syn-cmt, body.dark .syn-cmt { color: #8b949e; }      /* Chú thích (Xám bạc) */
         </style>
 
         <div class="cobalt-ui-wrapper w-full max-w-3xl mx-auto p-3 sm:p-5 shadow-md relative z-10">
@@ -194,23 +207,36 @@ export function setupTool() {
     const copyBtn = document.getElementById('cb-copy');
     const pasteBtn = document.getElementById('cb-paste');
 
-    // THUẬT TOÁN HIGHLIGHT MỚI: Cực an toàn, không tự ăn thịt chính mình!
+    // 🚀 THUẬT TOÁN HIGHLIGHT MỚI: THEO QUY LUẬT & SIÊU CHI TIẾT
     function highlightCode(code) {
         // 1. Mã hóa HTML trước để không vỡ layout
         let html = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         
-        // 2. Chuỗi (Làm trước để từ khóa trong chuỗi không bị đổi màu)
+        // 2. CHUỖI VĂN BẢN (Strings)
         html = html.replace(/(&quot;.*?&quot;|'.*?'|`.*?`)/g, '<span class="syn-str">$1</span>');
         
-        // 3. Comment (Dùng regex tránh bắt link http://)
+        // 3. CHÚ THÍCH (Comments)
         html = html.replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="syn-cmt">$1</span>');
         html = html.replace(/(?<!:)(\/\/.*$)/gm, '<span class="syn-cmt">$1</span>');
         
-        // 4. Thẻ HTML (Chỉ lấy tên thẻ, vd: html, body, div...)
-        html = html.replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<span class="syn-tag">$2</span>');
+        // 4. THẺ HTML (HTML Tags: html, body, div, h1...)
+        html = html.replace(/(&lt;\/?)([a-zA-Z0-9-]+)/g, '$1<span class="syn-tag">$2</span>');
         
-        // 5. Từ khóa JS (Đã xóa các từ dễ gây lỗi như span, class)
-        const keywords = /\b(function|const|let|var|return|if|else|document|window|console|import|export|true|false)\b/g;
+        // 5. THUỘC TÍNH HTML (HTML Attributes: class=, id=...)
+        html = html.replace(/([a-zA-Z0-9_-]+)(?==<span class="syn-str">)/g, '<span class="syn-attr">$1</span>');
+
+        // 6. THUỘC TÍNH CSS (CSS Properties: color:, font-size:...)
+        html = html.replace(/([a-zA-Z0-9_-]+)(?=: )/g, '<span class="syn-css">$1</span>');
+
+        // 7. TÊN HÀM (Functions: console.log, alert...)
+        html = html.replace(/\b([a-zA-Z0-9_]+)(?=\()/g, '<span class="syn-func">$1</span>');
+
+        // 8. CON SỐ (Numbers: 100, 0.5...) 
+        // Phép Regex này sử dụng (?![^<]*>) để ĐẢM BẢO nó không bao giờ chèn lầm vào mã HTML sinh ra do các class trước đó.
+        html = html.replace(/\b(\d+(\.\d+)?)\b(?![^<]*>)/g, '<span class="syn-num">$1</span>');
+        
+        // 9. TỪ KHÓA LẬP TRÌNH (Keywords)
+        const keywords = /\b(function|const|let|var|return|if|else|for|while|document|window|console|import|export|true|false|new|class|await|async)\b(?![^<]*>)/g;
         html = html.replace(keywords, '<span class="syn-kw">$1</span>');
 
         return html;
@@ -286,6 +312,7 @@ export function setupTool() {
         newWindow.document.close();
     });
 
-    codeInput.value = `\n<!DOCTYPE html>\n<html>\n<head>\n  <title>hello</title>\n</head>\n<body>\n  <h1>hello world!</h1>\n  <script>\n    console.log("no more bugs!");\n  </script>\n</body>\n</html>`;
+    // Mã mẫu thể hiện đầy đủ các loại màu sắc
+    codeInput.value = `\n<!DOCTYPE html>\n<html>\n<head>\n  <title>hello</title>\n</head>\n<body>\n  <h1 id="title" class="main-text">hello world!</h1>\n  \n  <style>\n    body { background-color: #18181b; }\n    h1 { color: #f97316; font-size: 24px; }\n  </style>\n\n  <script>\n    // JS Function test\n    const limit = 100;\n    function sayHello() {\n      console.log("no more bugs! " + limit);\n    }\n    sayHello();\n  </script>\n</body>\n</html>`;
     codeInput.dispatchEvent(new Event('input')); 
 }
