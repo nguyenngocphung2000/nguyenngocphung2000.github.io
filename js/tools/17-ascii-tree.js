@@ -1,4 +1,4 @@
-// --- 17. Tool ASCII Tree Generator (Tạo cây thư mục từ ZIP - Có Auto Dark Mode) ---
+// --- 17. Tool ASCII Tree Generator (Thêm Nút Tải Ảnh Tự Động Vẽ Canvas) ---
 export function setupTool() {
     const tabId = 'tab-ascii-tree';
     
@@ -100,6 +100,7 @@ export function setupTool() {
             .ascii-controls {
                 display: flex;
                 justify-content: flex-end;
+                gap: 0.75rem;
                 padding: 1rem 1.5rem;
                 border-top: 1px solid #e5e7eb;
                 background-color: #f9fafb;
@@ -122,6 +123,10 @@ export function setupTool() {
             }
             .ascii-btn:hover { background-color: #1d4ed8; transform: translateY(-1px); }
             .ascii-btn:active { transform: translateY(1px); }
+            
+            /* Nút tải ảnh màu khác để dễ nhận diện */
+            .ascii-btn-download { background-color: #10b981; }
+            .ascii-btn-download:hover { background-color: #059669; }
 
             .scroll-hide::-webkit-scrollbar { width: 6px; height: 6px; }
             .scroll-hide::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
@@ -142,6 +147,8 @@ export function setupTool() {
             html.dark .ascii-controls, body.dark .ascii-controls { background-color: #27272a; border-color: #3f3f46; }
             html.dark .ascii-btn, body.dark .ascii-btn { background-color: #3b82f6; }
             html.dark .ascii-btn:hover, body.dark .ascii-btn:hover { background-color: #2563eb; }
+            html.dark .ascii-btn-download, body.dark .ascii-btn-download { background-color: #10b981; }
+            html.dark .ascii-btn-download:hover, body.dark .ascii-btn-download:hover { background-color: #059669; }
             html.dark .scroll-hide::-webkit-scrollbar-thumb, body.dark .scroll-hide::-webkit-scrollbar-thumb { background: #52525b; }
         </style>
 
@@ -183,6 +190,10 @@ export function setupTool() {
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         <span id="ascii-copy-text">Copy Code</span>
                     </button>
+                    <button class="ascii-btn ascii-btn-download" id="ascii-dl-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span id="ascii-dl-text">Tải Ảnh</span>
+                    </button>
                 </div>
             </div>
 
@@ -203,6 +214,8 @@ export function setupTool() {
     const cmdPanel = document.getElementById('cmdPanel');
     const copyBtn = document.getElementById('ascii-copy-btn');
     const copyText = document.getElementById('ascii-copy-text');
+    const dlBtn = document.getElementById('ascii-dl-btn');
+    const dlText = document.getElementById('ascii-dl-text');
 
     function processZip(file) {
         if (!file || !file.name.endsWith('.zip')) {
@@ -310,7 +323,6 @@ export function setupTool() {
 
         const { dirs, files } = listPaths(root);
         
-        // Đã gỡ lỗi Syntax Error do lạm dụng dấu gạch chéo ngược ở đây!
         const mkdirs = dirs.length > 0 ? `mkdir -p ${dirs.map(d => `"${d}"`).join(" ")}` : "";
         const touches = files.length > 0 ? `touch ${files.map(f => `"${f}"`).join(" ")}` : "";
         
@@ -320,6 +332,7 @@ export function setupTool() {
         cmdPanel.textContent = cmdOutput;
     }
 
+    // Xử lý chuyển Tab
     document.querySelectorAll(".ascii-tab").forEach(t => {
         t.onclick = () => {
             document.querySelectorAll(".ascii-tab").forEach(x => x.classList.remove("active"));
@@ -328,20 +341,92 @@ export function setupTool() {
             const tab = t.dataset.tab;
             treePanel.style.display = tab === "tree" ? "block" : "none";
             cmdPanel.style.display = tab === "cmd" ? "block" : "none";
+            
+            // Chỉ hiện nút Tải Ảnh nếu đang ở tab ASCII Tree
+            dlBtn.style.display = tab === "tree" ? "flex" : "none";
         }
     });
 
+    // Xử lý Copy
     copyBtn.onclick = () => {
         const activeTab = document.querySelector(".ascii-tab.active").dataset.tab;
         const textToCopy = activeTab === "tree" ? asciiOutput : cmdOutput;
 
         navigator.clipboard.writeText(textToCopy).then(() => {
             copyText.innerText = 'Đã Copy!';
-            copyBtn.style.backgroundColor = '#10b981'; 
+            copyBtn.style.backgroundColor = '#059669'; 
             setTimeout(() => {
                 copyText.innerText = 'Copy Code';
                 copyBtn.style.backgroundColor = ''; 
             }, 1500);
         });
+    };
+
+    // --- LOGIC TẢI ẢNH (CANVAS DRAWING) ---
+    dlBtn.onclick = () => {
+        if (!asciiOutput) return;
+
+        dlText.innerText = 'Đang vẽ...';
+        
+        setTimeout(() => {
+            const lines = asciiOutput.split('\n');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Kích thước font và dòng
+            const fontSize = 14;
+            const lineHeight = 22;
+            const padding = 30;
+            
+            // Thiết lập font lần đầu để đo chiều rộng chính xác
+            ctx.font = `${fontSize}px monospace, "Courier New"`;
+            
+            // Tìm dòng dài nhất để đặt chiều rộng Canvas
+            let maxWidth = 0;
+            for (let line of lines) {
+                const w = ctx.measureText(line).width;
+                if (w > maxWidth) maxWidth = w;
+            }
+            
+            // Scale x2 để ảnh tải về nét căng (High-Res Retina)
+            const scale = 2;
+            canvas.width = (maxWidth + padding * 2) * scale;
+            canvas.height = (lines.length * lineHeight + padding * 2) * scale;
+            
+            // Reset lại tỉ lệ và font sau khi thay đổi kích thước canvas
+            ctx.scale(scale, scale);
+            ctx.font = `${fontSize}px monospace, "Courier New"`;
+            ctx.textBaseline = 'top';
+            
+            // Kiểm tra xem người dùng đang bật Dark Mode hay Light Mode để tô màu nền ảnh tương ứng
+            const isDark = document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
+            
+            // Vẽ màu nền
+            ctx.fillStyle = isDark ? '#18181b' : '#ffffff'; // Nền đen nhám hoặc trắng tinh
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Vẽ màu chữ
+            ctx.fillStyle = isDark ? '#d1d5db' : '#374151'; 
+            
+            // Viết từng dòng text lên ảnh
+            lines.forEach((line, i) => {
+                ctx.fillText(line, padding, padding + (i * lineHeight));
+            });
+            
+            // Xuất ra file ảnh và kích hoạt tải về
+            const link = document.createElement('a');
+            link.download = 'ascii-tree-export.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            // Báo hiệu thành công
+            dlText.innerText = 'Đã Tải!';
+            dlBtn.style.backgroundColor = '#059669'; 
+            setTimeout(() => {
+                dlText.innerText = 'Tải Ảnh';
+                dlBtn.style.backgroundColor = ''; 
+            }, 1500);
+            
+        }, 100); // Timeout nhẹ để UI kịp update chữ "Đang vẽ..."
     };
 }
