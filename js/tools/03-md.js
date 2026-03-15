@@ -9,6 +9,16 @@ export function setupTool() {
     
     panel.innerHTML = `
         <style>
+            /* Typography Căn Đều Hoàn Hảo */
+            .premium-justify {
+                text-align: justify !important;
+                text-justify: inter-word;
+                word-spacing: -0.04em; 
+                letter-spacing: -0.015em; 
+                hyphens: auto;
+                -webkit-hyphens: auto;
+                overflow-wrap: break-word; 
+            }
             .prose-custom code {
                 white-space: pre-wrap !important;
                 word-break: break-word !important;
@@ -47,17 +57,17 @@ export function setupTool() {
              <p class="text-sm text-gray-500 mt-2 italic">Nhập ngôn ngữ markdown hoặc chọn file .md.</p>
         </div>
         
-        <div class="glass-card p-6 md:p-8 rounded-[2rem] w-full overflow-hidden">
+        <div class="glass-card p-4 sm:p-6 md:p-8 rounded-[2rem] w-full overflow-hidden">
             <div class="flex justify-center mb-4">
-                <label class="cursor-pointer bg-orange-100 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-orange-200 transition shadow-sm">
-                    📁 Chọn File(.md)
+                <label class="cursor-pointer bg-orange-100 text-orange-600 px-6 py-2.5 rounded-full text-sm font-bold hover:bg-orange-200 transition shadow-sm active:scale-95 flex items-center gap-2">
+                    <span>📁</span> Chọn File (.md)
                     <input type="file" id="md-file" accept=".md" class="hidden">
                 </label>
             </div>
             
-            <textarea id="md-input" class="w-full h-40 bg-gray-50 rounded-xl p-4 font-mono text-sm border border-gray-100 focus:outline-none focus:ring-2 ring-orange-200" placeholder="# Gõ Markdown vào đây hoặc chọn file..."></textarea>
+            <textarea id="md-input" class="w-full h-48 bg-gray-50/80 backdrop-blur-sm rounded-2xl p-5 font-mono text-sm border border-gray-200 focus:outline-none focus:ring-4 ring-orange-100 shadow-inner transition-all placeholder-gray-400" placeholder="# Gõ Markdown vào đây hoặc tải file lên..."></textarea>
             
-            <div id="md-preview" class="prose-custom mt-6 p-6 bg-white rounded-2xl shadow-inner min-h-[150px] border border-gray-100"></div>
+            <div id="md-preview" class="prose-custom max-w-none premium-justify mt-6 p-5 sm:p-6 md:p-8 bg-white rounded-[1.5rem] shadow-sm border border-gray-100 min-h-[150px] leading-relaxed text-[15px] sm:text-base"></div>
         </div>
     `;
     
@@ -69,7 +79,16 @@ export function setupTool() {
     const mdFile = document.getElementById('md-file');
     
     const renderMD = () => {
-        if (window.marked) mdPre.innerHTML = marked.parse(mdIn.value);
+        if (window.marked) {
+            mdPre.innerHTML = marked.parse(mdIn.value);
+            // Xử lý thêm các thẻ link (mở tab mới, làm nổi bật màu cam)
+            mdPre.querySelectorAll('a').forEach(link => {
+                link.setAttribute('target', '_blank');
+                link.className = 'text-orange-500 font-bold hover:underline';
+            });
+        } else {
+            mdPre.innerHTML = '<p class="text-red-500">Thư viện giải mã Markdown chưa được tải!</p>';
+        }
     };
     
     mdIn.addEventListener('input', renderMD);
