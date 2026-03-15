@@ -4,7 +4,6 @@ export function setupTool() {
     
     if (document.getElementById(tabId)) return;
     
-    const panel = document.createElement('div');
     panel.id = tabId;
     panel.className = 'tab-panel active';
     
