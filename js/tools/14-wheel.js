@@ -4,6 +4,7 @@ export function setupTool() {
     
     if (document.getElementById(tabId)) return;
     
+    const panel = document.createElement('div');
     panel.id = tabId;
     panel.className = 'tab-panel active';
     
@@ -417,7 +418,6 @@ export function setupTool() {
 
     // ==========================================
     // THUẬT TOÁN HỦY DIỆT MỚI: BẤM 2 LẦN ĐỂ XÓA 
-    // (CHỐNG LỖI APP CHẶN LỆNH CONFIRM)
     // ==========================================
     const btnResetAll = document.getElementById('btn-wheel-reset-all');
     let resetTimeout;
