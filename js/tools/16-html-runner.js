@@ -268,7 +268,7 @@ export function setupTool() {
         }
     });
 
-    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE VÀO TAB MỚI ---
+    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE (Có nút Thu gọn) VÀO TAB MỚI ---
     runBtn.addEventListener('click', function() {
         const code = codeInput.value;
         if (!code.trim()) {
@@ -278,7 +278,7 @@ export function setupTool() {
         
         const newWindow = window.open('', '_blank');
         
-        // Đoạn Script bí mật cắm vào ĐẦU TAB MỚI để bắt cóc lệnh console.log
+        // Đoạn Script bí mật cắm vào ĐẦU TAB MỚI để bắt cóc lệnh console
         const prependConsoleLogic = `
         <script>
             window.__devLogs = [];
@@ -291,17 +291,43 @@ export function setupTool() {
         </script>
         `;
 
-        // Giao diện Mini Console cắm vào CUỐI TAB MỚI
+        // Giao diện Mini Console cắm vào CUỐI TAB MỚI (Đã thêm nút Thu Gọn và hiệu ứng trượt)
         const appendConsoleUI = `
-        <div id="sys-console-ui" style="position:fixed; bottom:0; left:0; width:100%; height:22vh; min-height:160px; background:rgba(24,24,27,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid #3f3f46; color:#e4e4e7; font-family:monospace; z-index:2147483645; display:flex; flex-direction:column; box-shadow: 0 -10px 30px rgba(0,0,0,0.3);">
+        <div id="sys-console-ui" style="position:fixed; bottom:0; left:0; width:100%; height:22vh; min-height:160px; background:rgba(24,24,27,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid #3f3f46; color:#e4e4e7; font-family:monospace; z-index:2147483645; display:flex; flex-direction:column; box-shadow: 0 -10px 30px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
             <div style="background:#27272a; padding:8px 15px; font-size:12px; font-weight:bold; color:#a1a1aa; border-bottom:1px solid #3f3f46; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system, sans-serif; text-transform:uppercase;">
                 <span style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:8px; height:8px; background-color:#10b981; border-radius:50%;"></span> Terminal Logs</span>
-                <span style="cursor:pointer; color:#ef4444; padding:4px 8px; border-radius:4px; background:rgba(239,68,68,0.1);" onclick="document.getElementById('sys-console-ui').style.display='none'">✕ Đóng</span>
+                <div style="display: flex; gap: 8px;">
+                    <span id="sys-console-toggle" style="cursor:pointer; color:#60a5fa; padding:4px 8px; border-radius:4px; background:rgba(59,130,246,0.1); transition: 0.2s;" onclick="_toggleConsole()">▼ Thu gọn</span>
+                    <span style="cursor:pointer; color:#ef4444; padding:4px 8px; border-radius:4px; background:rgba(239,68,68,0.1);" onclick="document.getElementById('sys-console-ui').style.display='none'">✕ Đóng</span>
+                </div>
             </div>
-            <div id="sys-console-body" style="flex:1; overflow-y:auto; padding:12px; font-size:13px; line-height:1.6;"></div>
+            <div id="sys-console-body" style="flex:1; overflow-y:auto; padding:12px; font-size:13px; line-height:1.6; transition: opacity 0.2s;"></div>
         </div>
         <script>
+            const cbUI = document.getElementById('sys-console-ui');
             const cbBody = document.getElementById('sys-console-body');
+            const cbToggle = document.getElementById('sys-console-toggle');
+            const wmLogo = document.getElementById('nothing-watermark');
+            let isExp = true;
+
+            // Hàm kích hoạt hiệu ứng Thu gọn / Mở rộng
+            function _toggleConsole() {
+                isExp = !isExp;
+                if(isExp) {
+                    cbUI.style.height = '22vh';
+                    cbUI.style.minHeight = '160px';
+                    cbBody.style.display = 'block';
+                    cbToggle.innerText = '▼ Thu gọn';
+                    if(wmLogo) wmLogo.style.bottom = 'calc(22vh + 15px)'; // Logo nhảy lên
+                } else {
+                    cbUI.style.height = '35px'; // Chỉ giữ lại thanh Header
+                    cbUI.style.minHeight = '0';
+                    cbBody.style.display = 'none';
+                    cbToggle.innerText = '▲ Mở rộng';
+                    if(wmLogo) wmLogo.style.bottom = '45px'; // Logo rơi xuống sát thanh Header
+                }
+            }
+            
             function _printUI(item) {
                 const d = document.createElement('div');
                 d.style.borderBottom = '1px dashed rgba(255,255,255,0.05)'; d.style.padding = '6px 0'; d.style.wordBreak = 'break-all';
@@ -311,6 +337,7 @@ export function setupTool() {
                 d.innerHTML = '<strong style="opacity:0.5; margin-right:5px;">❯</strong> ' + item.msg;
                 cbBody.appendChild(d);
             }
+            
             // In ra những log đã bắt được trong lúc code vừa chạy
             window.__devLogs.forEach(_printUI);
             
@@ -321,49 +348,68 @@ export function setupTool() {
         </script>
         `;
 
-        // Logo Cam Đóng dấu
+        // Logo Cam Đóng dấu (Đã thêm ID "nothing-watermark" và thuộc tính transition để nó trượt lên xuống mượt mà)
         const orangeLogoWatermark = `
-            <div style="position: fixed; bottom: calc(22vh + 15px); right: 20px; z-index: 2147483647; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 999px; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.25); border: 1.5px solid rgba(249, 115, 22, 0.3); font-family: sans-serif; pointer-events: none;">
+            <div id="nothing-watermark" style="position: fixed; bottom: calc(22vh + 15px); right: 20px; z-index: 2147483647; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 999px; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.25); border: 1.5px solid rgba(249, 115, 22, 0.3); font-family: sans-serif; pointer-events: none; transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
                 <span style="background: linear-gradient(90deg, #f97316, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; font-size: 14px; letter-spacing: 1px;">NOTHING</span>
-                <span style="font-size: 16px;">🧑‍💻</span>
+                <span style="font-size: 16px; filter: drop-shadow(0 2px 4px rgba(249,115,22,0.4));">🧑‍💻</span>
             </div>
         `;
         
+        // HỢP THỂ VÀ CHẠY
         newWindow.document.write(prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark);
         newWindow.document.close();
     });
-
     codeInput.value = `<!DOCTYPE html>
 <html>
 <head>
   <style>
     body { font-family: system-ui; display: grid; place-items: center; height: 80vh; background: #18181b; color: #fff; margin: 0; }
-    .box { text-align: center; padding: 2rem; border-radius: 1.2rem; background: #27272a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    button { margin: 5px; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    .btn-log { background: #3b82f6; color: white; }
-    .btn-err { background: #ef4444; color: white; }
+    .box { text-align: center; padding: 2.5rem; border-radius: 1.5rem; background: #27272a; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid #3f3f46; transition: transform 0.3s; }
+    .box:hover { transform: translateY(-5px); }
+    h2 { margin: 0 0 10px 0; font-size: 1.8rem; font-weight: 800; }
+    #cb-num-display { font-size: 4rem; font-weight: 900; color: #60a5fa; margin: 20px 0; text-shadow: 0 0 15px rgba(96, 165, 250, 0.5); }
+    .cb-btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+    button { padding: 12px 24px; border: none; border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s ease; }
+    .btn-spin { background: #3b82f6; color: white; }
+    .btn-spin:hover { background: #2563eb; }
+    .btn-bug { background: #ef4444; color: white; opacity: 0.8; }
+    .btn-bug:hover { opacity: 1; }
     button:active { transform: scale(0.95); }
+    @keyframes pulse { 0% { text-shadow: 0 0 15px rgba(96, 165, 250, 0.5); } 50% { text-shadow: 0 0 25px rgba(96, 165, 250, 0.8); } 100% { text-shadow: 0 0 15px rgba(96, 165, 250, 0.5); } }
+    .spinning { animation: pulse 0.5s infinite; }
   </style>
 </head>
 <body>
   <div class="box">
-    <h2>🚀 Live Console</h2>
-    <p style="color: #a1a1aa; font-size: 14px; margin-bottom: 20px;">Bấm nút để test Terminal bên dưới</p>
-    <button class="btn-log" onclick="testLog()">Gửi Log</button>
-    <button class="btn-err" onclick="testErr()">Tạo Lỗi</button>
+    <h2>🎰 Random Spinner</h2>
+    <div id="cb-num-display">00</div>
+    <div class="cb-btn-group">
+      <button class="btn-spin" onclick="spinNumber()">Quay Số</button>
+      <button class="btn-bug" onclick="generateBug()">Tạo Lỗi</button>
+    </div>
   </div>
   
   <script>
-    console.log("✅ Hệ thống khởi động thành công!");
-    console.warn("⚠️ Chú ý: Bạn code quá mượt!");
+    console.log("✅ Live Console đã sẵn sàng phục vụ!");
+    console.warn("⚠️ Chú ý: Code mẫu này quá 'cool'!");
 
-    function testLog() {
-      const id = Math.random().toString(36).substr(2, 5).toUpperCase();
-      console.log("👉 Ping ID: " + id);
+    function spinNumber() {
+      console.log("⏳ Đang quay số ngẫu nhiên...");
+      const display = document.getElementById('cb-num-display');
+      display.classList.add('spinning');
+      
+      setTimeout(() => {
+        display.classList.remove('spinning');
+        const num = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+        display.innerText = num;
+        console.log("🎉 Chúc mừng! Số may mắn là: " + num);
+      }, 1500);
     }
 
-    function testErr() {
-      console.error("❌ Báo động đỏ: Thiếu cà phê trầm trọng!");
+    function generateBug() {
+      console.error("❌ Báo động đỏ: Coffee Level Critical!");
+      // Cố tình gọi hàm sai để test bắt lỗi đỏ chót của Console
       goiHamNayChoVui(); 
     }
   </script>
