@@ -386,14 +386,11 @@ export function setupTool() {
     <div id="cb-num-display">00</div>
     <div class="cb-btn-group">
       <button class="btn-spin" onclick="spinNumber()">Quay Số</button>
-      <button class="btn-bug" onclick="generateBug()">Tạo Lỗi</button>
     </div>
   </div>
   
   <script>
-    console.log();
-    console.warn("Chú ý: Code mẫu này quá 'cool'!");
-
+   
     function spinNumber() {
       console.log("Đang quay số ngẫu nhiên...");
       const display = document.getElementById('cb-num-display');
@@ -405,11 +402,6 @@ export function setupTool() {
         display.innerText = num;
         console.log("Chúc mừng! Số may mắn là: " + num);
       }, 1500);
-    }
-
-    function generateBug() {
-      console.error();
-      goiHamNayChoVui(); 
     }
   </script>
 </body>
