@@ -19,7 +19,7 @@ const menuConfig = [
     { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
     { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
     { id: 'tab-sleep', name: 'Tính Giấc Ngủ' ,icon: '🌙' },
-    { id: 'tab-js-runner', icon: '💻', name: 'JS Runner' }
+    { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' }
 
 ]
    ;
@@ -41,7 +41,7 @@ const toolMap = {
     'tab-xiangqi': './tools/13-xiangqi.js',
     'tab-wheel' : './tools/14-wheel.js',
     'tab-sleep': './tools/15-sleep.js',
-    'tab-js-runner': './tools/16-js-runner.js'
+    'tab-html-runner': './tools/16-html-runner.js'
 
 
 };
