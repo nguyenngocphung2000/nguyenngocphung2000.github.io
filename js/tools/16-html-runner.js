@@ -329,12 +329,46 @@ export function setupTool() {
             </div>
         `;
         
-        // HỢP THỂ VÀ CHẠY
         newWindow.document.write(prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark);
         newWindow.document.close();
     });
 
-    // Mã mẫu có gắn Console.log và Lỗi để test ngay
-    codeInput.value = `<!DOCTYPE html>\n<html>\n<head>\n  <title>Test Console</title>\n  <style>\n    body { font-family: sans-serif; text-align: center; margin-top: 50px; }\n    button { padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 8px; border: none; background: #2563eb; color: white; }\n  </style>\n</head>\n<body>\n  <h1>Mini Console Terminal 🚀</h1>\n  <button onclick="testConsole()">Bấm vào đây test Log</button>\n  <button style="background: #dc2626;" onclick="testError()">Tạo Lỗi Đỏ</button>\n\n  <script>\n    // Log ngay khi vừa mở trang\n    console.log("Trang đã tải xong! Sẵn sàng phục vụ.");\n    console.warn("Cảnh báo: Bạn code xịn quá!");\n\n    function testConsole() {\n      const randomNum = Math.floor(Math.random() * 100);\n      console.log("Nút đã được bấm! Số ngẫu nhiên: " + randomNum);\n    }\n\n    function testError() {\n      console.error("Ôi hỏng! Lỗi nghiêm trọng rồi!");\n      // Cố tình gọi một hàm không tồn tại để test báo lỗi tự động\n      hamNayKhongTonTai(); \n    }\n  </script>\n</body>\n</html>`;
+    codeInput.value = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: system-ui; display: grid; place-items: center; height: 80vh; background: #18181b; color: #fff; margin: 0; }
+    .box { text-align: center; padding: 2rem; border-radius: 1.2rem; background: #27272a; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    button { margin: 5px; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .btn-log { background: #3b82f6; color: white; }
+    .btn-err { background: #ef4444; color: white; }
+    button:active { transform: scale(0.95); }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>🚀 Live Console</h2>
+    <p style="color: #a1a1aa; font-size: 14px; margin-bottom: 20px;">Bấm nút để test Terminal bên dưới</p>
+    <button class="btn-log" onclick="testLog()">Gửi Log</button>
+    <button class="btn-err" onclick="testErr()">Tạo Lỗi</button>
+  </div>
+  
+  <script>
+    console.log("✅ Hệ thống khởi động thành công!");
+    console.warn("⚠️ Chú ý: Bạn code quá mượt!");
+
+    function testLog() {
+      const id = Math.random().toString(36).substr(2, 5).toUpperCase();
+      console.log("👉 Ping ID: " + id);
+    }
+
+    function testErr() {
+      console.error("❌ Báo động đỏ: Thiếu cà phê trầm trọng!");
+      goiHamNayChoVui(); 
+    }
+  </script>
+</body>
+</html>`;
     codeInput.dispatchEvent(new Event('input')); 
+
 }
