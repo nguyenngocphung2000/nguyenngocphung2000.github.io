@@ -1,4 +1,4 @@
-// --- 16. Tool Trình Chạy HTML/CSS/JS (Code Editor chuẩn VS Code + Tích hợp Mini Console) ---
+// --- 16. Tool Trình Chạy HTML/CSS/JS ---
 export function setupTool() {
     const tabId = 'tab-html-runner';
     
@@ -7,8 +7,7 @@ export function setupTool() {
     const panel = document.createElement('div');
     panel.id = tabId;
     panel.className = 'tab-panel active';
-    
-    // Giao diện xám/đen chuẩn Cobalt + Auto Dark Mode
+
     panel.innerHTML = `
         <style>
             .cobalt-ui-wrapper {
@@ -268,17 +267,14 @@ export function setupTool() {
         }
     });
 
-    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE (Có nút Thu gọn) VÀO TAB MỚI ---
+    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE (Đã sửa lỗi F5 và Logo) ---
     runBtn.addEventListener('click', function() {
         const code = codeInput.value;
         if (!code.trim()) {
             alert('Vui lòng gõ mã code trước khi chạy nhé bạn yêu!');
             return;
         }
-        
-        const newWindow = window.open('', '_blank');
-        
-        // Đoạn Script bí mật cắm vào ĐẦU TAB MỚI để bắt cóc lệnh console
+
         const prependConsoleLogic = `
         <script>
             window.__devLogs = [];
@@ -288,10 +284,9 @@ export function setupTool() {
             console.error = function() { ogErr.apply(console, arguments); window.__devLogs.push({msg: _fmtArgs(arguments), type: 'err'}); };
             console.warn = function() { ogWarn.apply(console, arguments); window.__devLogs.push({msg: _fmtArgs(arguments), type: 'warn'}); };
             window.onerror = function(msg, url, line) { window.__devLogs.push({msg: msg + ' (Lỗi ở dòng ' + line + ')', type: 'err'}); return false; };
-        </script>
+        <\/script>
         `;
 
-        // Giao diện Mini Console cắm vào CUỐI TAB MỚI (Đã thêm nút Thu Gọn và hiệu ứng trượt)
         const appendConsoleUI = `
         <div id="sys-console-ui" style="position:fixed; bottom:0; left:0; width:100%; height:22vh; min-height:160px; background:rgba(24,24,27,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid #3f3f46; color:#e4e4e7; font-family:monospace; z-index:2147483645; display:flex; flex-direction:column; box-shadow: 0 -10px 30px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
             <div style="background:#27272a; padding:8px 15px; font-size:12px; font-weight:bold; color:#a1a1aa; border-bottom:1px solid #3f3f46; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system, sans-serif; text-transform:uppercase;">
@@ -304,14 +299,15 @@ export function setupTool() {
             <div id="sys-console-body" style="flex:1; overflow-y:auto; padding:12px; font-size:13px; line-height:1.6; transition: opacity 0.2s;"></div>
         </div>
         <script>
-            const cbUI = document.getElementById('sys-console-ui');
-            const cbBody = document.getElementById('sys-console-body');
-            const cbToggle = document.getElementById('sys-console-toggle');
-            const wmLogo = document.getElementById('nothing-watermark');
             let isExp = true;
 
-            // Hàm kích hoạt hiệu ứng Thu gọn / Mở rộng
+            // Hàm kích hoạt hiệu ứng Thu gọn / Mở rộng (Đã bắt đúng Logo)
             function _toggleConsole() {
+                const cbUI = document.getElementById('sys-console-ui');
+                const cbBody = document.getElementById('sys-console-body');
+                const cbToggle = document.getElementById('sys-console-toggle');
+                const wmLogo = document.getElementById('nothing-watermark'); // Lấy element ngay lúc click để không bị null
+                
                 isExp = !isExp;
                 if(isExp) {
                     cbUI.style.height = '22vh';
@@ -324,10 +320,11 @@ export function setupTool() {
                     cbUI.style.minHeight = '0';
                     cbBody.style.display = 'none';
                     cbToggle.innerText = '▲ Mở rộng';
-                    if(wmLogo) wmLogo.style.bottom = '45px'; // Logo rơi xuống sát thanh Header
+                    if(wmLogo) wmLogo.style.bottom = '45px'; // Logo rơi xuống
                 }
             }
             
+            const cbBodyStatic = document.getElementById('sys-console-body');
             function _printUI(item) {
                 const d = document.createElement('div');
                 d.style.borderBottom = '1px dashed rgba(255,255,255,0.05)'; d.style.padding = '6px 0'; d.style.wordBreak = 'break-all';
@@ -335,20 +332,19 @@ export function setupTool() {
                 else if(item.type === 'warn') d.style.color = '#fbe331'; 
                 else d.style.color = '#e4e4e7';
                 d.innerHTML = '<strong style="opacity:0.5; margin-right:5px;">❯</strong> ' + item.msg;
-                cbBody.appendChild(d);
+                if(cbBodyStatic) cbBodyStatic.appendChild(d);
             }
             
             // In ra những log đã bắt được trong lúc code vừa chạy
             window.__devLogs.forEach(_printUI);
             
             // Ghi đè lại lần nữa để in trực tiếp nếu User bấm nút trên Web
-            console.log = function() { ogLog.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'log'}); cbBody.scrollTop = cbBody.scrollHeight; };
-            console.error = function() { ogErr.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'err'}); cbBody.scrollTop = cbBody.scrollHeight; };
-            console.warn = function() { ogWarn.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'warn'}); cbBody.scrollTop = cbBody.scrollHeight; };
-        </script>
+            console.log = function() { ogLog.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'log'}); if(cbBodyStatic) cbBodyStatic.scrollTop = cbBodyStatic.scrollHeight; };
+            console.error = function() { ogErr.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'err'}); if(cbBodyStatic) cbBodyStatic.scrollTop = cbBodyStatic.scrollHeight; };
+            console.warn = function() { ogWarn.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'warn'}); if(cbBodyStatic) cbBodyStatic.scrollTop = cbBodyStatic.scrollHeight; };
+        <\/script>
         `;
 
-        // Logo Cam Đóng dấu (Đã thêm ID "nothing-watermark" và thuộc tính transition để nó trượt lên xuống mượt mà)
         const orangeLogoWatermark = `
             <div id="nothing-watermark" style="position: fixed; bottom: calc(22vh + 15px); right: 20px; z-index: 2147483647; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 999px; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.25); border: 1.5px solid rgba(249, 115, 22, 0.3); font-family: sans-serif; pointer-events: none; transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
                 <span style="background: linear-gradient(90deg, #f97316, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; font-size: 14px; letter-spacing: 1px;">NOTHING</span>
@@ -356,10 +352,14 @@ export function setupTool() {
             </div>
         `;
         
-        // HỢP THỂ VÀ CHẠY
-        newWindow.document.write(prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark);
-        newWindow.document.close();
+
+        const fullHTML = prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark;
+        const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
+        const blobUrl = URL.createObjectURL(blob);
+        
+        window.open(blobUrl, '_blank');
     });
+
     codeInput.value = `<!DOCTYPE html>
 <html>
 <head>
@@ -391,11 +391,11 @@ export function setupTool() {
   </div>
   
   <script>
-    console.log("✅ Live Console đã sẵn sàng phục vụ!");
-    console.warn("⚠️ Chú ý: Code mẫu này quá 'cool'!");
+    console.log();
+    console.warn("Chú ý: Code mẫu này quá 'cool'!");
 
     function spinNumber() {
-      console.log("⏳ Đang quay số ngẫu nhiên...");
+      console.log("Đang quay số ngẫu nhiên...");
       const display = document.getElementById('cb-num-display');
       display.classList.add('spinning');
       
@@ -403,13 +403,12 @@ export function setupTool() {
         display.classList.remove('spinning');
         const num = Math.floor(Math.random() * 100).toString().padStart(2, '0');
         display.innerText = num;
-        console.log("🎉 Chúc mừng! Số may mắn là: " + num);
+        console.log("Chúc mừng! Số may mắn là: " + num);
       }, 1500);
     }
 
     function generateBug() {
-      console.error("❌ Báo động đỏ: Coffee Level Critical!");
-      // Cố tình gọi hàm sai để test bắt lỗi đỏ chót của Console
+      console.error();
       goiHamNayChoVui(); 
     }
   </script>
