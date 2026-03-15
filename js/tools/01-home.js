@@ -1,4 +1,4 @@
-// --- Tool Trang Chủ (Fix Căn Đều 2 Bên - Micro Typography Chuẩn Tạp Chí) ---
+
 export function setupTool() {
     const tabId = 'tab-home';
     
@@ -57,7 +57,7 @@ export function setupTool() {
                     
                     <div class="mb-5 relative">
                         <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-orange-400 to-yellow-300 rounded-full"></div>
-                        <p lang="en" class="text-gray-600 leading-relaxed text-[14.5px] md:text-base pl-5 py-1.5 font-medium perfect-justify bg-gradient-to-r from-orange-50/40 to-transparent rounded-r-xl">
+                        <p lang="en" class="text-gray-600 leading-relaxed text-[14.5px] md:text-base pl-5 py-1.5 font-medium perfect-justify bg-gradient-to-r from-orange-50/10 to-transparent rounded-r-xl">
                             <strong class="text-orange-600 tracking-tight">NOTHING YET EVERYTHING</strong> • Hello there! Welcome to my little corner. This is a small stash containing some little toys that I personally... asked AI to code for me 😂, along with a basket of cool tricks and tips I picked up or came up with myself. Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them, my contact info is right below!
                         </p>
                     </div>
