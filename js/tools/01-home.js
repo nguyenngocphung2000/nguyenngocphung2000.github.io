@@ -116,7 +116,8 @@ export function setupTool() {
         { title: "Cài Lịch Âm & Bộ gõ tiếng Việt trên macOS", date: "Thủ thuật Mac", path: "posts/mac-apps.md" },
         { title: "Tổng hợp tài liệu học lập trình và công nghệ thông tin từ Freetuts", date: "Tài liệu học tập", path: "posts/tong-hop-tai-lieu-freetuts.md" },
         { title: "Tổng hợp các nhóm crack mod hack - apk,ipa(android/ios) trên Telegram", date: "Phần mềm/Ứng dụng", path: "posts/group-telegram.md" },
-        { title: "Cài đặt Word trình bày văn bản hành chính chuẩn nghị định 30", date: "Phần mềm/Hướng dẫn", path: "posts/ad-documents.md" }
+        { title: "Cài đặt Word trình bày văn bản hành chính chuẩn nghị định 30", date: "Phần mềm/Hướng dẫn", path: "posts/ad-documents.md" },
+            { title: "Tổng hợp các trang web chia sẻ tài nguyên ứng dụng trên Mac", date: "Phần mềm/Ứng dụng", path: "posts/mac-webs.md" }
     ];
     
     const renderGuideList = () => {
