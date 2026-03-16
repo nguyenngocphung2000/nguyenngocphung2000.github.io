@@ -1,15 +1,21 @@
 # TRANG WEB CHIA SẺ TÀI NGUYÊN CHO MAC OS
 **Nguồn tài liệu:** Sưu tầm ở J2Team
-
 —
 
-## Danh sách
+## Danh sách trang web
 
-- [APPSTORRENT.RU](https://appstorrent.ru)
-- [CMACKED.COM](https://cmacked.com/apps/)
-- [DIGIT77.COM](https://www.digit77.com)
-- [HAXMAC.CC](https://haxmac.cc)
-- [MACKED.APP](https://macked.app)
-- [MACLIFE.CO](https://maclife.co)
-- [TAIWEBS.COM](https://taiwebs.com/)
-- [TORRENTMAC.NET](https://www.torrentmac.net)
+1 - [APPSTORRENT.RU](https://appstorrent.ru)
+
+2 - [CMACKED.COM](https://cmacked.com/apps/)
+
+3 - [DIGIT77.COM](https://www.digit77.com)
+
+4 - [HAXMAC.CC](https://haxmac.cc)
+
+5 - [MACKED.APP](https://macked.app)
+
+6 - [MACLIFE.CO](https://maclife.co)
+
+7 - [TAIWEBS.COM](https://taiwebs.com/)
+
+8 - [TORRENTMAC.NET](https://www.torrentmac.net)
