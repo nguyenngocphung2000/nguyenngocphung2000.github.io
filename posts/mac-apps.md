@@ -18,3 +18,10 @@ Nếu bạn đang gặp phiền toái với bộ gõ tiếng Việt mặc địn
 * ⌨️ **[PHTV - Tải về tại đây](https://github.com/PhamHungTien/PHTV)**
  
 * ⌨️ **[Xkey - Tải về tại đây](https://github.com/xmannv/xkey)**
+
+## 3. Biến Tablet, Android thành màn phụ cho Macbook
+
+Kết nối qua USB3 hoặc thunderbolt,hỗ trợ full cử chỉ touch.
+- Tác giả: Nguyễn Đức Đạt
+
+* 🖥️ **[Sidescreen - Tải về tại đây](https://github.com/tranvuongquocdat/SideScreen)**
