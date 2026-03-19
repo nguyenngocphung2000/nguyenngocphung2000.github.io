@@ -6,6 +6,9 @@ Tài liệu này tổng hợp danh sách các kênh và nhóm trên nền tảng
 
 ## 1. Nền tảng Android (.apk)
 
+- [@CongDongReVanced](https://t.me/CongDongReVanced) :
+Chuyên cung cấp các ứng dụng Modded application
+
 - [@Alexey070315](https://t.me/Alexey070315): Chuyên cung cấp các ứng dụng phiên bản cao cấp (Premium/VIP).
 - [@APPS_FULL](https://t.me/APPS_FULL): Kênh phân phối các ứng dụng đã qua chỉnh sửa (Modded applications).
 - [@SharaAPK](https://t.me/SharaAPK): Cung cấp các ứng dụng can thiệp tính năng chuyên sâu.
