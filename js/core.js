@@ -155,11 +155,25 @@ if (mainHeader) {
     });
 }
 
-// 2. Gắn sự kiện mở Menu Mobile
+// 2. Gắn sự kiện mở Menu Mobile và đóng khi nhấp ra ngoài
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 if (mobileMenuBtn && mobileMenu) {
+    // Sự kiện bấm nút để mở/đóng
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
+    });
+
+    // Sự kiện theo dõi nhấp chuột trên toàn màn hình
+    document.addEventListener('click', function(event) {
+        // Kiểm tra xem menu có đang mở hay không
+        const isMenuOpen = !mobileMenu.classList.contains('hidden');
+        
+        if (isMenuOpen) {
+            // Nếu click không nằm trong menu VÀ không nằm trên nút mở
+            if (!mobileMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                mobileMenu.classList.add('hidden'); // Thu gọn menu
+            }
+        }
     });
 }
 
