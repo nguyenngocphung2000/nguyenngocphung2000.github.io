@@ -1,18 +1,18 @@
-# Hi there 👋, I'm Nothing 
+# Hi there, I'm Nothing 
 
-### 🌟 NOTHING BUT SOMETHING 🌟
+### NOTHING BUT SOMETHING
 
-> *Hello there! Welcome to my little corner.* 🏕️
+> *Hello there! Welcome to my little corner.*
 
 This is a small stash containing some little toys that I personally... **asked AI to code for me** 😂, along with a basket of cool tricks and tips I picked up or came up with myself. 
 
-Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart 🧘‍♂️, I decided to bring them all out here to share with everyone. 
+Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. 
 
-Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them! 🛠️🤖
+Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them! 
 
 ---
 
-### 🛠️ Tech Stack & Libraries
+### Tech Stack & Libraries
 This project is built on the core foundation of pure **HTML5, CSS3, and Vanilla JavaScript**, utilizing modern **ES Modules** (Lazy Load) to ensure lightning-fast page loads. The UI is completely styled with **Tailwind CSS** (via CDN) for that sleek glassmorphism look and seamless Dark Mode. 
 
 Additionally, a few super-lightweight JS libraries are integrated to power specific tools: 
@@ -22,7 +22,7 @@ Additionally, a few super-lightweight JS libraries are integrated to power speci
 
 ---
 
-### 🚀 Expansion Guide (Adding Tools & Posts)
+### Expansion Guide (Adding Tools & Posts)
 
 **1. How to add a new Markdown post (Tips & Tricks):**
 * Create a `.md` file (e.g., `install-windows.md`) and drop it into the `posts/` folder.
@@ -55,7 +55,7 @@ const manifest = [
 
 ---
 
-### 📫 Get in touch
+### Get in touch
 Don't hesitate to ping me if you need help, want to report bugs, or simply want to team up for something cool:
 
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/nothing3272)
