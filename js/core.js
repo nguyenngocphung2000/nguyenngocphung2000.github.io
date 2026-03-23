@@ -6,22 +6,13 @@
 const menuConfig = [
     { id: 'tab-home', name: 'Trang Chủ', icon: '🏠' },
     { id: 'tab-calc', name: 'Tính Toán', icon: '🧮' },
-    { id: 'tab-md', name: 'Markdown', icon: '📝' },
-    { id: 'tab-text-stat', name: 'Đếm Chữ', icon: '📊' },
-    { id: 'tab-special-chars', name: 'Kí Tự Đặc Biệt', icon: '✨' },
     { id: 'tab-finance', name: 'Lãi Suất', icon: '💰' },
-    { id: 'tab-family-pro', name: 'Gia Phả', icon: '🌳' },
-    { id: 'tab-typing', name: 'Gõ Phím', icon: '⌨️' },
     { id: 'tab-calendar', name: 'Lịch Vạn Niên', icon: '📅' },
     { id: 'tab-time-calc', name: 'Thời Gian', icon: '⏳' },
-    { id: 'tab-workspace', name: 'Workspace', icon: '💻' },
     { id: 'tab-baby-name', name: 'Đặt Tên Con', icon: '👶' },
     { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
     { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
-    { id: 'tab-sleep', name: 'Tính Giấc Ngủ' ,icon: '🌙' },
-    { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' },
-    { id: 'tab-ascii-tree', icon: '📂', name: 'ASCII Tree' }
-
+    { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' }
 
 ]
    ;
@@ -30,21 +21,13 @@ const menuConfig = [
 const toolMap = {
     'tab-home': './tools/01-home.js',
     'tab-calc': './tools/02-calc.js',
-    'tab-md': './tools/03-md.js',
-    'tab-text-stat': './tools/04-text-stat.js',
-    'tab-special-chars': './tools/05-special.js',
-    'tab-finance': './tools/06-finance.js',
-    'tab-family-pro': './tools/07-family.js',
-    'tab-typing': './tools/08-typing.js',
-    'tab-calendar': './tools/09-calendar.js',
-    'tab-time-calc': './tools/10-time-calc.js',
-    'tab-workspace': './tools/11-workspace.js',
-    'tab-baby-name': './tools/12-baby-name.js',
-    'tab-xiangqi': './tools/13-xiangqi.js',
-    'tab-wheel' : './tools/14-wheel.js',
-    'tab-sleep': './tools/15-sleep.js',
-    'tab-html-runner': './tools/16-html-runner.js',
-    'tab-ascii-tree': './tools/17-ascii-tree.js'
+    'tab-finance': './tools/03-finance.js',
+    'tab-calendar': './tools/04-calendar.js',
+    'tab-time-calc': './tools/05-time-calc.js',
+    'tab-baby-name': './tools/06-baby-name.js',
+    'tab-xiangqi': './tools/07-xiangqi.js',
+    'tab-wheel' : './tools/08-wheel.js',
+    'tab-html-runner': './tools/09-html-runner.js',
 
 
 };
