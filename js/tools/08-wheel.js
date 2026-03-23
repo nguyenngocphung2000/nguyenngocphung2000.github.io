@@ -1,4 +1,3 @@
-// --- 14. Tool Vòng Quay Ngẫu Nhiên (Reset Mạnh Mẽ - Neo Dữ Liệu - View Khổng Lồ) ---
 export function setupTool() {
     const tabId = 'tab-wheel';
     
@@ -11,7 +10,7 @@ export function setupTool() {
     panel.innerHTML = `
         <style>
             .wheel-modal-enter { animation: wheelPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-            @keyframes wheelPopIn {
+            @keyframes wheelPopIn 
                 0% { opacity: 0; transform: scale(0.7) translateY(20px); }
                 100% { opacity: 1; transform: scale(1) translateY(0); }
             }

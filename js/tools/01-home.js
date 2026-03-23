@@ -1,4 +1,3 @@
-
 export function setupTool() {
     const tabId = 'tab-home';
     

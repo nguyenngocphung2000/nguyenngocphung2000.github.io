@@ -1,4 +1,3 @@
-// --- 16. Tool Trình Chạy HTML/CSS/JS ---
 export function setupTool() {
     const tabId = 'tab-html-runner';
     
