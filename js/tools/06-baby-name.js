@@ -1,13 +1,12 @@
 export function setupTool() {
     const tabId = 'tab-baby-name';
-
     if (document.getElementById(tabId)) return;
 
     const panel = document.createElement('div');
     panel.id = tabId;
     panel.className = 'tab-panel active';
 
-    // Giữ nguyên 100% cấu trúc chuỗi HTML của bạn
+    // Đã cập nhật cấu trúc HTML chia 2 cột cho màn hình lớn
     panel.innerHTML = '<style>' +
           'body.dark-mode .bn-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .bn-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; } ' +
@@ -19,7 +18,14 @@ export function setupTool() {
           '<span class="bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-pink-200">Kho dữ liệu vô tận</span>' +
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Đặt Tên Cho <span class="text-pink-500">Bé Yêu</span></h2>' +
           '</div>' +
-          '<div class="max-w-md mx-auto space-y-6 pb-10">' +
+          
+          // BỌC GIAO DIỆN CHÍNH: Hỗ trợ hiển thị 2 cột trên màn hình ngang (lg)
+          '<div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">' +
+          '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
+
+          // ================= CỘT TRÁI =================
+          '<div class="w-full max-w-md mx-auto space-y-6">' +
+
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">' +
           '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-pink-500 text-lg">⚙️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Bộ lọc tùy chỉnh</h3></div>' +
           '<p class="text-[10.5px] text-slate-500 italic mt-0 leading-relaxed font-medium">💡 Mẹo: Bỏ trống ô nào thì máy sẽ tự động tìm từ hay nhất đắp vào ô đó.</p>' +
@@ -70,6 +76,7 @@ export function setupTool() {
           '</button>' +
           '</div>' +
           '</div>' +
+          
           '<div id="bn-result" class="hidden bn-card bg-slate-50 rounded-[1.5rem] p-5 shadow-sm border border-slate-200">' +
           '<div class="flex justify-between items-center border-b border-pink-200/50 pb-2 mb-3">' +
           '<div class="text-pink-600 font-bold text-[10px] tracking-widest uppercase">DANH SÁCH TÊN GỢI Ý</div>' +
@@ -77,7 +84,13 @@ export function setupTool() {
           '</div>' +
           '<div id="bn-res-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all duration-300"></div>' +
           '</div>' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 mt-6 filter-card">' +
+          
+          '</div>' + // KẾT THÚC CỘT TRÁI
+
+          // ================= CỘT PHẢI =================
+          '<div class="w-full max-w-md mx-auto space-y-6">' +
+
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 filter-card">' +
           '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-indigo-500 text-lg">🛠️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Trạm xử lý danh sách</h3></div>' +
           '<div>' +
           '<div class="flex justify-between items-end mb-1">' +
@@ -143,7 +156,11 @@ export function setupTool() {
           '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">⬇️ Tải Txt</button>' +
           '</div>' +
           '</div>' +
-          '</div>';
+          
+          '</div>' + // KẾT THÚC CỘT PHẢI
+
+          '</div>' + // KẾT THÚC DÒNG FLEX CONTAINER
+          '</div>';  // KẾT THÚC BỌC NGOÀI CÙNG
 
     document.getElementById('app-container').appendChild(panel);
 

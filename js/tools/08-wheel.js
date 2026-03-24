@@ -10,7 +10,7 @@ export function setupTool() {
     panel.innerHTML = `
         <style>
             .wheel-modal-enter { animation: wheelPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-            @keyframes wheelPopIn 
+            @keyframes wheelPopIn {
                 0% { opacity: 0; transform: scale(0.7) translateY(20px); }
                 100% { opacity: 1; transform: scale(1) translateY(0); }
             }
@@ -38,62 +38,69 @@ export function setupTool() {
             <h2 class="text-3xl font-black mt-2 text-gray-800 tracking-tight">Vòng Quay <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">May Mắn</span> 🎡</h2>
         </div>
 
-        <div class="max-w-lg mx-auto space-y-6 pb-10 px-2">
-            
-            <div class="relative w-full aspect-square max-w-[360px] mx-auto mt-2 mb-10">
-                <div class="absolute top-1/2 right-[-25px] transform -translate-y-1/2 z-40 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
-                    <svg width="55" height="55" viewBox="0 0 24 24" fill="#fbbf24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 12L22 2L17 12L22 22L4 12Z" stroke="#78350f" stroke-width="2" stroke-linejoin="round"/>
-                    </svg>
-                </div>
+        <div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">
+            <div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">
                 
-                <div class="w-full h-full rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.3)] relative overflow-hidden bg-slate-900 border-4 border-slate-300 flex items-center justify-center">
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 opacity-60">
-                        <div style="transform: scale(0.65); white-space: nowrap;">
-                            <div class="flex items-center space-x-2">
-                                <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm">NOTHING</div>
-                                <span class="font-bold text-white drop-shadow-md uppercase text-[10px] tracking-widest mt-1">BUT SOMETHING</span>
+                <div class="w-full max-w-md mx-auto flex flex-col items-center pt-2">
+                    <div class="relative w-full aspect-square max-w-[360px] mx-auto mt-2">
+                        <div class="absolute top-1/2 right-[-25px] transform -translate-y-1/2 z-40 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
+                            <svg width="55" height="55" viewBox="0 0 24 24" fill="#fbbf24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 12L22 2L17 12L22 22L4 12Z" stroke="#78350f" stroke-width="2" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="w-full h-full rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.3)] relative overflow-hidden bg-slate-900 border-4 border-slate-300 flex items-center justify-center">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 opacity-60">
+                                <div style="transform: scale(0.65); white-space: nowrap;">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm">NOTHING</div>
+                                        <span class="font-bold text-white drop-shadow-md uppercase text-[10px] tracking-widest mt-1">BUT SOMETHING</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <canvas id="wheel-canvas" width="1000" height="1000" class="w-full h-full relative z-0"></canvas>
+                        </div>
+
+                        <button type="button" id="btn-spin-center" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-amber-200 to-amber-500 rounded-full w-[22%] h-[22%] shadow-[0_8px_20px_rgba(0,0,0,0.5),_inset_0_-5px_10px_rgba(180,83,9,0.5),_inset_0_5px_10px_rgba(255,255,255,0.8)] font-black text-amber-900 border-[5px] border-white flex flex-col items-center justify-center active:scale-90 transition-transform z-30 cursor-pointer select-none btn-spin-pulse text-lg md:text-xl tracking-widest uppercase">
+                            QUAY
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full max-w-md mx-auto">
+                    <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white overflow-hidden flex flex-col">
+                        
+                        <div class="flex gap-2 p-3 md:p-4 bg-slate-50/80 border-b border-slate-200/60">
+                            <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap">
+                                🗑️ Xóa sạch
+                            </button>
+                            <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
+                                🔀 Tráo đổi
+                            </button>
+                            <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
+                                ↕️ Sắp xếp
+                            </button>
+                        </div>
+
+                        <div class="flex border-b border-slate-200/60 bg-white">
+                            <button type="button" id="tab-btn-list" class="flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors">
+                                Mục (<span id="wheel-count">0</span>)
+                            </button>
+                            <button type="button" id="tab-btn-results" class="flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors">
+                                Các kết quả (<span id="wheel-result-count">0</span>)
+                            </button>
+                        </div>
+
+                        <div id="tab-content-list" class="p-4 block">
+                            <textarea id="wheel-input" class="w-full h-[400px] lg:h-[450px] bg-slate-50/50 border border-slate-200 rounded-2xl p-4 text-sm font-semibold text-slate-700 outline-none focus:ring-2 ring-indigo-300 resize-none wheel-scroll leading-relaxed shadow-inner" placeholder="Nhập danh sách vào đây...&#10;Mỗi tên nằm trên một dòng nhé!"></textarea>
+                        </div>
+
+                        <div id="tab-content-results" class="p-4 hidden">
+                            <div id="wheel-results-list" class="h-[400px] lg:h-[450px] overflow-y-auto wheel-scroll bg-slate-50/50 border border-slate-200 rounded-2xl p-2 shadow-inner">
                             </div>
                         </div>
+
                     </div>
-                    <canvas id="wheel-canvas" width="1000" height="1000" class="w-full h-full relative z-0"></canvas>
-                </div>
-
-                <button type="button" id="btn-spin-center" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-amber-200 to-amber-500 rounded-full w-[22%] h-[22%] shadow-[0_8px_20px_rgba(0,0,0,0.5),_inset_0_-5px_10px_rgba(180,83,9,0.5),_inset_0_5px_10px_rgba(255,255,255,0.8)] font-black text-amber-900 border-[5px] border-white flex flex-col items-center justify-center active:scale-90 transition-transform z-30 cursor-pointer select-none btn-spin-pulse text-lg md:text-xl tracking-widest uppercase">
-                    QUAY
-                </button>
-            </div>
-
-            <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white overflow-hidden flex flex-col">
-                
-                <div class="flex gap-2 p-3 md:p-4 bg-slate-50/80 border-b border-slate-200/60">
-                    <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap">
-                        🗑️ Xóa sạch
-                    </button>
-                    <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
-                        🔀 Tráo đổi
-                    </button>
-                    <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
-                        ↕️ Sắp xếp
-                    </button>
-                </div>
-
-                <div class="flex border-b border-slate-200/60 bg-white">
-                    <button type="button" id="tab-btn-list" class="flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors">
-                        Mục (<span id="wheel-count">0</span>)
-                    </button>
-                    <button type="button" id="tab-btn-results" class="flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors">
-                        Các kết quả (<span id="wheel-result-count">0</span>)
-                    </button>
-                </div>
-
-                <div id="tab-content-list" class="p-4 block">
-                    <textarea id="wheel-input" class="w-full h-[650px] bg-slate-50/50 border border-slate-200 rounded-2xl p-4 text-sm font-semibold text-slate-700 outline-none focus:ring-2 ring-indigo-300 resize-none wheel-scroll leading-relaxed shadow-inner" placeholder="Nhập danh sách vào đây...&#10;Mỗi tên nằm trên một dòng nhé!"></textarea>
-                </div>
-
-                <div id="tab-content-results" class="p-4 hidden">
-                    <div id="wheel-results-list" class="h-[650px] overflow-y-auto wheel-scroll bg-slate-50/50 border border-slate-200 rounded-2xl p-2 shadow-inner">
-                        </div>
                 </div>
 
             </div>
@@ -178,11 +185,15 @@ export function setupTool() {
         } catch(e) {} 
     }
 
+    // ==========================================
+    // 💡 KHỞI TẠO DỮ LIỆU HOẶC DÙNG 4 TÊN MẶC ĐỊNH
+    // ==========================================
     const savedData = safeGet('wheel_names');
-    if (savedData !== null) {
+    if (savedData !== null && savedData.trim() !== "") {
         inputArea.value = savedData;
     } else {
-        inputArea.value = ""; 
+        // Nếu không có dữ liệu lưu thì hiển thị 4 tên ví dụ mặc định
+        inputArea.value = "Chó\nMèo\nHeo\nGái"; 
     }
 
     // --- TABS CHUYỂN ĐỔI ---
