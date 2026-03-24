@@ -16,9 +16,14 @@ export function setupTool() {
           '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Công thức & Thực tế</span>' +
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
           '</div>' +
-          '<div class="max-w-md mx-auto space-y-6 pb-10">' +
+          
+          // BỌC GIAO DIỆN CHÍNH: Thay đổi để hỗ trợ hiển thị 2 cột trên màn hình ngang (lg)
+          '<div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">' +
+          '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
 
-          '' +
+          // ================= CỘT TRÁI =================
+          '<div class="w-full max-w-md mx-auto space-y-6">' +
+
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-orange-100 space-y-5">' +
           '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-700 text-sm uppercase">Tính thời gian đa chiều</h3></div>' +
           '<p class="text-[10px] text-slate-500 italic mt-0">Mẹo: Nhập dữ liệu đã biết, BỎ TRỐNG các ô cần tìm bằng cách xóa số hoặc bấm nút (#). Tính theo công thức quy ước 1 tháng 30 ngày.</p>' +
@@ -89,6 +94,11 @@ export function setupTool() {
           '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
           '<div id="mod2-dynamic-res" class="w-full"></div>' +
           '</div></div>' +
+          
+          '</div>' + // KẾT THÚC CỘT TRÁI
+
+          // ================= CỘT PHẢI =================
+          '<div class="w-full max-w-md mx-auto space-y-6">' +
 
           '' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
@@ -149,7 +159,12 @@ export function setupTool() {
           '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100">XÓA LỊCH SỬ</button>' +
           '</div>' +
           '<div id="tc-history-list" class="space-y-2 max-h-[650px] overflow-y-auto custom-scrollbar pr-1"></div>' +
-          '</div></div>';
+          '</div>' + 
+          
+          '</div>' + // KẾT THÚC CỘT PHẢI
+
+          '</div>' + // KẾT THÚC DÒNG FLEX CONTAINER
+          '</div>';  // KẾT THÚC BỌC NGOÀI CÙNG
 
     document.getElementById('app-container').appendChild(panel);
 
