@@ -14,123 +14,143 @@ export function setupTool() {
             <p class="text-sm text-gray-500 mt-2 italic">Nhập 2 ô bất kỳ, ô còn lại sẽ tự động tính!</p>
         </div>
 
-        <div class="space-y-6">
-            
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400">
-                <div class="flex items-start space-x-3 mb-5">
-                    <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">%</div>
-                    <div><h3 class="font-bold text-gray-800">X phần trăm của Y là bao nhiêu?</h3></div>
-                </div>
-                <div class="flex flex-wrap items-end gap-2 md:gap-4">
-                    <div class="flex-1 min-w-[100px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phần trăm</label>
-                        <input type="number" id="c1-p" placeholder="30" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-sm">% của</div>
-                    <div class="flex-1 min-w-[120px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị</label>
-                        <input type="number" id="c1-v" placeholder="250000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
-                    <div class="flex-1 min-w-[120px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Kết quả</label>
-                        <input type="number" id="c1-res" placeholder="75000" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
-                    </div>
-                </div>
-                <div class="text-right mt-4 flex justify-end space-x-4">
-                    <button id="c1-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-3 py-1 bg-blue-50 rounded-full">💾 Lưu KQ</button>
-                    <button id="c1-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
-                </div>
-            </div>
-
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400">
-                <div class="flex items-start space-x-3 mb-5">
-                    <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">÷</div>
-                    <div><h3 class="font-bold text-gray-800">X là bao nhiêu phần trăm của Y?</h3></div>
-                </div>
-                <div class="flex flex-wrap items-end gap-2 md:gap-4">
-                    <div class="flex-1 min-w-[100px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị X</label>
-                        <input type="number" id="c2-x" placeholder="45000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-xs text-center">là % của</div>
-                    <div class="flex-1 min-w-[100px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị Y</label>
-                        <input type="number" id="c2-y" placeholder="180000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
-                    <div class="flex-[0.8] min-w-[80px] flex items-end">
-                        <div class="w-full">
-                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phần trăm</label>
-                            <input type="number" id="c2-res" placeholder="25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
+        <div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">
+            <div class="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
+                
+                <div class="w-full max-w-md mx-auto space-y-6">
+                    
+                    <div class="glass-card bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
+                        
+                        <div class="flex bg-slate-100 p-1.5 rounded-xl w-full mb-6">
+                            <button id="mode-1-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-orange-500 shadow-sm transition">X% của Y</button>
+                            <button id="mode-2-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 transition">X là % của Y</button>
+                            <button id="mode-3-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 transition">Tăng/Giảm</button>
                         </div>
-                        <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
-                    </div>
-                </div>
-                <div class="text-right mt-4 flex justify-end space-x-4">
-                    <button id="c2-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-3 py-1 bg-blue-50 rounded-full">💾 Lưu KQ</button>
-                    <button id="c2-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
-                </div>
-            </div>
 
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400">
-                <div class="flex items-start space-x-3 mb-5">
-                    <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">↕</div>
-                    <div><h3 class="font-bold text-gray-800">Thay đổi phần trăm giữa hai giá trị</h3></div>
-                </div>
-                <div class="flex flex-wrap items-end gap-2 md:gap-4">
-                    <div class="flex-1 min-w-[110px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá cũ / gốc</label>
-                        <input type="number" id="c3-old" placeholder="200000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-sm">→</div>
-                    <div class="flex-1 min-w-[110px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá mới</label>
-                        <input type="number" id="c3-new" placeholder="150000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
-                    <div class="flex-[0.8] min-w-[80px] flex items-end">
-                        <div class="w-full">
-                            <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Tăng/Giảm</label>
-                            <input type="number" id="c3-res" placeholder="-25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
+                        <div id="calc-mode-1" class="block animate-[fadeIn_0.3s_ease]">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">%</span>
+                                <h3 class="font-bold text-gray-700 text-sm">X phần trăm của Y là bao nhiêu?</h3>
+                            </div>
+                            <div class="flex flex-wrap items-end gap-2 md:gap-4">
+                                <div class="flex-1 min-w-[100px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phần trăm</label>
+                                    <input type="number" id="c1-p" placeholder="30" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                                </div>
+                                <div class="pb-3 font-bold text-gray-400 text-sm">% của</div>
+                                <div class="flex-1 min-w-[120px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị</label>
+                                    <input type="number" id="c1-v" placeholder="250000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                                </div>
+                                <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
+                                <div class="flex-1 min-w-[120px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Kết quả</label>
+                                    <input type="number" id="c1-res" placeholder="75000" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
+                                </div>
+                            </div>
+                            <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
+                                <button id="c1-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
+                                <button id="c1-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                            </div>
                         </div>
-                        <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
-                    </div>
-                </div>
-                <div class="text-right mt-4 flex justify-end space-x-4">
-                    <button id="c3-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-3 py-1 bg-blue-50 rounded-full">💾 Lưu KQ</button>
-                    <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
-                </div>
-            </div>
-            <div class="glass-card p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 mt-6">
-                <div class="flex items-start space-x-3 mb-5">
-                    <div class="bg-orange-500 text-white w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0">🏛️</div>
-                    <div><h3 class="font-bold text-gray-800">Chuyển đổi Số La Mã (1 - 3999)</h3></div>
-                </div>
-                <div class="flex flex-wrap items-end gap-2 md:gap-4">
-                    <div class="flex-1 min-w-[140px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số Thường (Ả Rập)</label>
-                        <input type="number" id="ro-arabic" placeholder="2026" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
-                    </div>
-                    <div class="pb-3 font-bold text-gray-400 text-xl text-center flex items-center">↔</div>
-                    <div class="flex-1 min-w-[140px]">
-                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số La Mã</label>
-                        <input type="text" id="ro-roman" placeholder="MMXXVI" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500 uppercase">
-                    </div>
-                </div>
-                <div class="text-right mt-4 flex justify-end space-x-4">
-                    <button id="ro-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-3 py-1 bg-blue-50 rounded-full">💾 Lưu KQ</button>
-                    <button id="ro-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition">⟲ Xoá ô</button>
-                </div>
-            </div>
 
-            <div class="mt-8 bg-white/60 backdrop-blur-md p-6 rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/50">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-gray-800 flex items-center gap-2"><span>🕒</span> Lịch sử tính toán</h3>
-                    <button id="clear-history" class="text-xs font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded-full transition">🗑️ Xoá lịch sử</button>
+                        <div id="calc-mode-2" class="hidden animate-[fadeIn_0.3s_ease]">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">÷</span>
+                                <h3 class="font-bold text-gray-700 text-sm">X là bao nhiêu phần trăm của Y?</h3>
+                            </div>
+                            <div class="flex flex-wrap items-end gap-2 md:gap-4">
+                                <div class="flex-1 min-w-[100px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị X</label>
+                                    <input type="number" id="c2-x" placeholder="45000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                                </div>
+                                <div class="pb-3 font-bold text-gray-400 text-xs text-center">là % của</div>
+                                <div class="flex-1 min-w-[100px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá trị Y</label>
+                                    <input type="number" id="c2-y" placeholder="180000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                                </div>
+                                <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
+                                <div class="flex-[0.8] min-w-[80px] flex items-end">
+                                    <div class="w-full">
+                                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phần trăm</label>
+                                        <input type="number" id="c2-res" placeholder="25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
+                                    </div>
+                                    <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
+                                </div>
+                            </div>
+                            <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
+                                <button id="c2-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
+                                <button id="c2-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                            </div>
+                        </div>
+
+                        <div id="calc-mode-3" class="hidden animate-[fadeIn_0.3s_ease]">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">↕</span>
+                                <h3 class="font-bold text-gray-700 text-sm">Thay đổi phần trăm giữa hai giá trị</h3>
+                            </div>
+                            <div class="flex flex-wrap items-end gap-2 md:gap-4">
+                                <div class="flex-1 min-w-[110px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá cũ / gốc</label>
+                                    <input type="number" id="c3-old" placeholder="200000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                                </div>
+                                <div class="pb-3 font-bold text-gray-400 text-sm">→</div>
+                                <div class="flex-1 min-w-[110px]">
+                                    <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Giá mới</label>
+                                    <input type="number" id="c3-new" placeholder="150000" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                                </div>
+                                <div class="pb-3 font-bold text-gray-400 text-sm">=</div>
+                                <div class="flex-[0.8] min-w-[80px] flex items-end">
+                                    <div class="w-full">
+                                        <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Tăng/Giảm</label>
+                                        <input type="number" id="c3-res" placeholder="-25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
+                                    </div>
+                                    <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
+                                </div>
+                            </div>
+                            <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
+                                <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
+                                <button id="c3-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="glass-card bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
+                        <div class="flex items-center gap-2 mb-5">
+                            <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">🏛️</span>
+                            <h3 class="font-bold text-gray-700 text-sm">Chuyển đổi Số La Mã (1 - 3999)</h3>
+                        </div>
+                        <div class="flex flex-wrap items-end gap-2 md:gap-4">
+                            <div class="flex-1 min-w-[140px]">
+                                <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số Thường (Ả Rập)</label>
+                                <input type="number" id="ro-arabic" placeholder="2026" class="w-full bg-orange-50/50 border border-orange-100 rounded-xl p-3 outline-none focus:ring-2 ring-orange-200 text-center font-semibold text-orange-600">
+                            </div>
+                            <div class="pb-3 font-bold text-gray-400 text-xl text-center flex items-center">↔</div>
+                            <div class="flex-1 min-w-[140px]">
+                                <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số La Mã</label>
+                                <input type="text" id="ro-roman" placeholder="MMXXVI" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500 uppercase">
+                            </div>
+                        </div>
+                        <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
+                            <button id="ro-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
+                            <button id="ro-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                        </div>
+                    </div>
+
                 </div>
-                <ul id="history-list" class="space-y-3 text-sm text-gray-600 max-h-60 overflow-y-auto pr-2">
-                    </ul>
+
+                <div class="w-full max-w-md mx-auto">
+                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/50">
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b border-orange-50">
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2 text-sm uppercase tracking-wider text-slate-600"><span>🕒</span> Lịch sử tính toán</h3>
+                            <button id="clear-history" class="text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg transition uppercase tracking-widest border border-red-100">🗑️ Xoá sạch</button>
+                        </div>
+                        <ul id="history-list" class="space-y-3 text-sm text-gray-600 h-[380px] lg:h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
     `;
@@ -138,6 +158,34 @@ export function setupTool() {
     document.getElementById('app-container').appendChild(panel);
 
     // --- BẮT ĐẦU LOGIC ---
+
+    // Chuyển đổi Tab (Modes)
+    const btnM1 = document.getElementById('mode-1-btn');
+    const btnM2 = document.getElementById('mode-2-btn');
+    const btnM3 = document.getElementById('mode-3-btn');
+    
+    const secM1 = document.getElementById('calc-mode-1');
+    const secM2 = document.getElementById('calc-mode-2');
+    const secM3 = document.getElementById('calc-mode-3');
+
+    const activeClass = "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-orange-500 shadow-sm transition";
+    const inactiveClass = "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-white/50 transition";
+
+    const switchMode = (mode) => {
+        btnM1.className = mode === 1 ? activeClass : inactiveClass;
+        btnM2.className = mode === 2 ? activeClass : inactiveClass;
+        btnM3.className = mode === 3 ? activeClass : inactiveClass;
+
+        secM1.classList.toggle('hidden', mode !== 1);
+        secM2.classList.toggle('hidden', mode !== 2);
+        secM3.classList.toggle('hidden', mode !== 3);
+    };
+
+    btnM1.onclick = () => switchMode(1);
+    btnM2.onclick = () => switchMode(2);
+    btnM3.onclick = () => switchMode(3);
+
+    // Tính toán Logic
     const fmt = (num) => Number.isInteger(num) ? num.toLocaleString('vi-VN') : Number(num.toFixed(2)).toLocaleString('vi-VN');
     const clean = (num) => parseFloat(num.toFixed(2));
 
@@ -198,12 +246,12 @@ export function setupTool() {
         if (historyArr.length > 0) {
             historyArr.forEach(item => {
                 const li = document.createElement('li');
-                li.className = 'bg-white p-3 rounded-xl border border-orange-50 shadow-sm flex items-center before:content-["✓"] before:text-green-500 before:mr-2 before:font-bold text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
+                li.className = 'bg-slate-50/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["✓"] before:text-green-500 before:mr-2 before:font-bold text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
                 li.innerHTML = item;
                 historyList.appendChild(li); 
             });
         } else {
-            historyList.innerHTML = '<li class="italic text-gray-400 text-center py-4 empty-msg">Chưa có lịch sử nào. Hãy bấm "Lưu KQ" ở các bảng tính!</li>';
+            historyList.innerHTML = '<li class="italic text-gray-400 text-center py-10 empty-msg text-xs">Chưa có lịch sử nào.<br>Hãy bấm "Lưu KQ" ở các bảng tính!</li>';
         }
     };
 
@@ -213,7 +261,7 @@ export function setupTool() {
         
         historyArr.unshift(textHTML); 
         
-        if (historyArr.length > 20) {
+        if (historyArr.length > 30) {
             historyArr.pop(); 
         }
 
@@ -240,8 +288,10 @@ export function setupTool() {
     document.getElementById('c3-clear').onclick = () => { c3Old.value = c3New.value = c3Res.value = ""; c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0; };
 
     document.getElementById('clear-history').onclick = () => {
-        localStorage.removeItem(STORAGE_KEY); 
-        loadHistory(); 
+        if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
+            localStorage.removeItem(STORAGE_KEY); 
+            loadHistory(); 
+        }
     };
 
     const inArabic = document.getElementById('ro-arabic');

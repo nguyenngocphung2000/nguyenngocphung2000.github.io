@@ -13,14 +13,17 @@ export function setupTool() {
           '<div class="text-center mb-6">' +
           '<span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>' +
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>' +
-             '<p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
+          '<p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
           '</div>' +
-
-          '<div class="max-w-md mx-auto space-y-5 pb-10">' +
 
           '<div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">Đang kết nối dữ liệu Thiên Văn... ⏳</div>' +
 
-          '<div id="cal-widget" class="hidden space-y-5">' +
+          // BỌC GIAO DIỆN CHÍNH: Hỗ trợ 2 cột trên màn hình ngang
+          '<div id="cal-widget" class="hidden max-w-5xl mx-auto pb-10 px-2 lg:px-4">' +
+          '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
+
+          // ================= CỘT TRÁI (HIỂN THỊ CHI TIẾT & TRA CỨU) =================
+          '<div class="w-full max-w-md mx-auto space-y-5">' +
           
           '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">' +
           '<div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>' +
@@ -58,8 +61,12 @@ export function setupTool() {
           '<button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">🔍 TÌM NGÀY</button>' +
           '</div>' +
 
+          '</div>' + // KẾT THÚC CỘT TRÁI
+
+          // ================= CỘT PHẢI (LỊCH THÁNG & LỄ HỘI) =================
+          '<div class="w-full max-w-md mx-auto space-y-5">' +
+
           '<div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100">' +
-          
           '<div class="flex justify-center items-center gap-2 mb-4">' +
           '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">THÁNG</span>' +
           '<div class="relative">' +
@@ -72,7 +79,6 @@ export function setupTool() {
           '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
           '</div>' +
           '</div>' +
-          
           '<div class="grid grid-cols-7 gap-1 text-center mb-2 pb-2 border-b border-slate-100">' +
           '<div class="text-[10px] font-bold text-slate-400">T2</div><div class="text-[10px] font-bold text-slate-400">T3</div><div class="text-[10px] font-bold text-slate-400">T4</div><div class="text-[10px] font-bold text-slate-400">T5</div><div class="text-[10px] font-bold text-slate-400">T6</div><div class="text-[10px] font-bold text-orange-400">T7</div><div class="text-[10px] font-bold text-orange-500">CN</div>' +
           '</div>' +
@@ -84,7 +90,9 @@ export function setupTool() {
           '<div id="res-events" class="space-y-2 mt-2"></div>' +
           '</div>' +
 
-          '</div></div>';
+          '</div>' + // KẾT THÚC CỘT PHẢI
+
+          '</div></div>'; // KẾT THÚC FLEX & WIDGET WRAPPER
 
     document.getElementById('app-container').appendChild(panel);
 
