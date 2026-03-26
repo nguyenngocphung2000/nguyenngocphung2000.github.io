@@ -54,7 +54,7 @@ export function setupTool() {
                                 <div style="transform: scale(0.65); white-space: nowrap;">
                                     <div class="flex items-center space-x-2">
                                         <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm">NOTHING</div>
-                                        <span class="font-bold text-white drop-shadow-md uppercase text-[10px] tracking-widest mt-1">BUT SOMETHING</span>
+                                        <span class="font-bold text-white drop-shadow-md uppercase text-[10px] tracking-widest mt-1">YET EVERYTHING</span>
                                     </div>
                                 </div>
                             </div>
