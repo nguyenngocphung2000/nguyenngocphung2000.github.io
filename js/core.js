@@ -2,7 +2,7 @@
    LÕI HỆ THỐNG (CORE.JS) - BẢN FIX TRIỆT ĐỂ (CHẠY TRỰC TIẾP)
 ========================================================== */
 
-// --- 1. BẢN ĐỒ MENU (13 TOOLS) ---
+// --- 1. BẢN ĐỒ MENU (9 TOOLS) ---
 const menuConfig = [
     { id: 'tab-home', name: 'Trang Chủ', icon: '🏠' },
     { id: 'tab-calc', name: 'Tính Toán', icon: '🧮' },
@@ -13,9 +13,7 @@ const menuConfig = [
     { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
     { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
     { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' }
-
-]
-   ;
+];
 
 // --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
 const toolMap = {
@@ -28,8 +26,6 @@ const toolMap = {
     'tab-xiangqi': './tools/07-xiangqi.js',
     'tab-wheel' : './tools/08-wheel.js',
     'tab-html-runner': './tools/09-html-runner.js',
-
-
 };
 
 // --- 3. KHAI BÁO CÁC PHẦN TỬ GIAO DIỆN ---
@@ -102,13 +98,15 @@ window.switchTab = async function(tabId) {
     }
 }
 
-// --- 6. HÀM CHUYỂN ĐỔI DARK MODE ---
-window.toggleDarkMode = () => {
-    document.documentElement.classList.toggle('dark');
-    document.body.classList.toggle('dark-mode');
-    
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('nothing_dark_mode', isDark);
+// --- 6. HÀM CHUYỂN ĐỔI VÀ ĐỒNG BỘ DARK MODE ---
+function applyTheme(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark-mode');
+    } else {
+        document.documentElement.classList.remove('dark');
+        document.body.classList.remove('dark-mode');
+    }
     
     const iconSun = document.getElementById('icon-sun');
     const iconMoon = document.getElementById('icon-moon');
@@ -121,6 +119,12 @@ window.toggleDarkMode = () => {
             iconMoon.classList.remove('hidden');
         }
     }
+}
+
+window.toggleDarkMode = () => {
+    const willBeDark = !document.body.classList.contains('dark-mode');
+    applyTheme(willBeDark);
+    localStorage.setItem('nothing_dark_mode', willBeDark);
 };
 
 // ==========================================================
@@ -169,17 +173,26 @@ if (darkModeBtn) {
     darkModeBtn.removeAttribute('onclick');
 }
 
-// 4. Khôi phục trạng thái Dark Mode khi load trang
-if (localStorage.getItem('nothing_dark_mode') === 'true') {
-    document.documentElement.classList.add('dark');
-    document.body.classList.add('dark-mode');
-    const iconSun = document.getElementById('icon-sun');
-    const iconMoon = document.getElementById('icon-moon');
-    if (iconSun && iconMoon) {
-        iconSun.classList.remove('hidden');
-        iconMoon.classList.add('hidden');
-    }
+// 4. Khôi phục & Đồng bộ Dark Mode theo thiết bị
+const savedTheme = localStorage.getItem('nothing_dark_mode');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+// Áp dụng ngay khi load trang
+if (savedTheme !== null) {
+    // Nếu đã từng bấm nút -> Tôn trọng lựa chọn của người dùng
+    applyTheme(savedTheme === 'true');
+} else {
+    // Nếu vào lần đầu -> Dựa theo hệ thống
+    applyTheme(systemPrefersDark.matches);
 }
+
+// Lắng nghe sự thay đổi từ thiết bị (khi người dùng đổi giao diện hệ thống)
+systemPrefersDark.addEventListener('change', (e) => {
+    // Chỉ tự đổi nếu người dùng CHƯA từng can thiệp bấm nút thủ công
+    if (localStorage.getItem('nothing_dark_mode') === null) {
+        applyTheme(e.matches);
+    }
+});
 
 // 5. Chống zoom 2 ngón tay trên iOS
 document.addEventListener('touchmove', function(event) {
@@ -197,6 +210,7 @@ if (window.location.hash) {
     if (toolMap[hashTab]) initialTab = hashTab;
 }
 switchTab(initialTab);
+
 // =========================================
 // HIỆU ỨNG BẦU TRỜI SAO TỰ ĐỘNG
 // =========================================
