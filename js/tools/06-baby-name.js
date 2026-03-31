@@ -5,8 +5,6 @@ export function setupTool() {
     const panel = document.createElement('div');
     panel.id = tabId;
     panel.className = 'tab-panel active';
-
-    // Cấu trúc HTML chia 3 cột tràn viền, loại bỏ toàn bộ icon
     panel.innerHTML = '<style>' +
           'body.dark-mode .bn-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .bn-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; } ' +

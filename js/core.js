@@ -1,8 +1,8 @@
 /* ==========================================================
-   LÕI HỆ THỐNG (CORE.JS) - BẢN FIX TRIỆT ĐỂ (CHẠY TRỰC TIẾP)
+   LÕI HỆ THỐNG
 ========================================================== */
 
-// --- 1. BẢN ĐỒ MENU (10 TOOLS) - ĐÃ DỌN SẠCH ICON ---
+// --- 1. BẢN ĐỒ MENU ---
 const menuConfig = [
     { id: 'tab-home', name: 'Trang Chủ' },
     { id: 'tab-calc', name: 'Tính Toán' },
@@ -41,19 +41,17 @@ if (mobileMenu) {
     mobileMenu.classList.add('max-h-[70vh]', 'overflow-y-auto', 'custom-scrollbar');
 }
 
-// --- 4. HÀM TẠO MENU (KHÔNG ICON, TỐI ƯU TYPOGRAPHY) ---
+// --- 4. HÀM TẠO MENU ---
 if (desktopNav && mobileNav) {
     desktopNav.innerHTML = '';
     mobileNav.innerHTML = '';
     menuConfig.forEach(tool => {
-        // Nút Desktop: In hoa, giãn chữ, chữ nhỏ gọn thanh lịch
         desktopNav.innerHTML += `
             <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
                 class="nav-btn flex items-center px-4 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50 text-[12px] font-bold uppercase tracking-wider">
                 <span>${tool.name}</span>
             </button>`;
-        
-        // Nút Mobile: In hoa, giãn chữ mạnh hơn, không gian rộng rãi dễ bấm
+
         mobileNav.innerHTML += `
             <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
                 class="mobile-nav-btn block w-full px-6 py-4 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500 text-[13px] font-bold uppercase tracking-widest">
@@ -131,10 +129,9 @@ window.toggleDarkMode = () => {
 };
 
 // ==========================================================
-// GẮN SỰ KIỆN TRỰC TIẾP (KHÔNG CHỜ DOMContentLoaded NỮA)
+// GẮN SỰ KIỆN TRỰC TIẾP
 // ==========================================================
 
-// 1. Gắn sự kiện Logo bay khi cuộn trang
 if (mainHeader) {
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -145,7 +142,6 @@ if (mainHeader) {
     });
 }
 
-// 2. Gắn sự kiện mở Menu Mobile và đóng khi nhấp ra ngoài
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 if (mobileMenuBtn && mobileMenu) {
     mobileMenuBtn.addEventListener('click', () => {
@@ -163,14 +159,13 @@ if (mobileMenuBtn && mobileMenu) {
     });
 }
 
-// 3. Gắn sự kiện cho nút Dark Mode (Tìm bằng id hoặc class)
 const darkModeBtn = document.getElementById('dark-mode-btn') || document.querySelector('[onclick="toggleDarkMode()"]');
 if (darkModeBtn) {
     darkModeBtn.addEventListener('click', window.toggleDarkMode);
     darkModeBtn.removeAttribute('onclick');
 }
 
-// 4. Khôi phục & Đồng bộ Dark Mode theo thiết bị
+
 const savedTheme = localStorage.getItem('nothing_dark_mode');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -186,7 +181,6 @@ systemPrefersDark.addEventListener('change', (e) => {
     }
 });
 
-// 5. Chống zoom 2 ngón tay trên iOS
 document.addEventListener('touchmove', function(event) {
     if (event.scale !== 1 && event.scale !== undefined) event.preventDefault();
 }, { passive: false });
@@ -194,7 +188,6 @@ document.addEventListener('gesturestart', function(event) {
     event.preventDefault();
 });
 
-// 6. Luôn mở Trang chủ khi reload (xóa lịch sử cũ)
 localStorage.removeItem('my_active_tab');
 let initialTab = 'tab-home';
 if (window.location.hash) {
