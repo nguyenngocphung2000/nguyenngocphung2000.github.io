@@ -11,99 +11,28 @@ export function setupTool() {
           'body.dark-mode .tc-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .tc-inner-card { background-color: rgba(15, 23, 42, 0.6) !important; border-color: rgba(45, 212, 191, 0.2) !important; } ' +
           'body.dark-mode .tc-history-item { background-color: rgba(30, 41, 59, 0.8) !important; border-color: rgba(255, 255, 255, 0.05) !important; }' +
+          'body.dark-mode select, body.dark-mode input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; }' +
+          'body.dark-mode span.text-slate-300 { color: #475569 !important; }' +
+          'body.dark-mode #tc-result .tc-card, body.dark-mode #mod2-result { background-color: rgba(15, 23, 42, 0.4) !important; border-color: #334155 !important; }' +
           '</style>' +
-          '<div class="text-center mb-6">' +
+          
+          '<div class="text-center mb-8">' +
           '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Công thức & Thực tế</span>' +
-          '<h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span> ⏳</h2>' +
+          '<h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span></h2>' +
+          '<p class="text-[11px] text-slate-500 italic mt-2 max-w-2xl mx-auto px-4">Công cụ hỗ trợ tính toán thời gian đa chiều và khoảng cách chính xác giữa 2 mốc ngày.</p>' +
           '</div>' +
           
-          // BỌC GIAO DIỆN CHÍNH: Thay đổi để hỗ trợ hiển thị 2 cột trên màn hình ngang (lg)
-          '<div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">' +
-          '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
+          // BỌC GIAO DIỆN 3 CỘT TRÀN VIỀN
+          '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
+          '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
 
-          // ================= CỘT TRÁI =================
-          '<div class="w-full max-w-md mx-auto space-y-6">' +
-
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-orange-100 space-y-5">' +
-          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-orange-500 text-lg">🎯</span><h3 class="font-bold text-slate-700 text-sm uppercase">Tính thời gian đa chiều</h3></div>' +
-          '<p class="text-[10px] text-slate-500 italic mt-0">Mẹo: Nhập dữ liệu đã biết, BỎ TRỐNG các ô cần tìm bằng cách xóa số hoặc bấm nút (#). Tính theo công thức quy ước 1 tháng 30 ngày.</p>' +
+          // ================= CỘT 1: KHOẢNG CÁCH 2 MỐC NGÀY (CƠ BẢN) =================
+          '<div class="w-full h-full">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-teal-100 h-full flex flex-col tc-card">' +
           
-          '' +
-          '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">1. Ngày Bắt Đầu (Bắt buộc)</label>' +
-          '<div class="flex justify-center items-center gap-2 w-full">' +
-          '<select id="m2-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
-          '</div></div>' +
-
-          '' +
-          '<div>' +
-          '<div class="flex justify-between items-end mb-2">' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">2. Ngày Đích Đến</label>' +
-          '<button id="m2-btn-clear-end" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-2 py-1 rounded font-bold transition shadow-sm border border-slate-200">XÓA TRỐNG (#)</button>' +
-          '</div>' +
-          '<div class="flex justify-center items-center gap-2 w-full">' +
-          '<select id="m2-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-end-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
-          '<span class="text-slate-300 font-black">/</span>' +
-          '<select id="m2-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
-          '</div></div>' +
-
-          '' +
-          '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">3. Tổng Thời Gian</label>' +
-          '<div class="flex justify-center items-center gap-2 w-full">' +
-          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-y" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Năm</span></div>' +
-          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-m" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Tháng</span></div>' +
-          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-d" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Ngày</span></div>' +
-          '</div></div>' +
-
-          '' +
-          '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">4. Tỷ Lệ</label>' +
-          '<div class="flex flex-wrap justify-center gap-1.5 mb-3 px-1">' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="5">1/5</button>' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="4">1/4</button>' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="3">1/3</button>' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="2">1/2</button>' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="2" data-den="3">2/3</button>' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="3" data-den="4">3/4</button>' +
-          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="2" data-den="5">2/5</button>' +
-          '</div>' +
-          '<div class="flex justify-center items-center gap-3 w-full px-16">' +
-          '<input id="m2-ratio-num" type="number" placeholder="Tử" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
-          '<span class="text-xl font-black text-slate-300">/</span>' +
-          '<input id="m2-ratio-den" type="number" placeholder="Mẫu" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
-          '</div></div>' +
-
-          '<div class="flex gap-2 w-full mt-2">' +
-          '<button id="mod2-btn-reset" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 text-[11px] uppercase">' +
-          '🔄 Làm Mới' +
-          '</button>' +
-          '<button id="mod2-btn-calc" class="w-2/3 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm">' +
-          '🚀 TÍNH TOÁN' +
-          '</button>' +
-          '</div>' +
-
-          '' +
-          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
-          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
-          '<div id="mod2-dynamic-res" class="w-full"></div>' +
-          '</div></div>' +
+          '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Khoảng cách 2 mốc ngày</h3></div>' +
           
-          '</div>' + // KẾT THÚC CỘT TRÁI
-
-          // ================= CỘT PHẢI =================
-          '<div class="w-full max-w-md mx-auto space-y-6">' +
-
-          '' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-5">' +
-          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-teal-500 text-lg">📏</span><h3 class="font-bold text-slate-600 text-sm uppercase">Khoảng cách 2 mốc ngày</h3></div>' +
-          
+          '<div class="mt-4 space-y-5 flex-1">' +
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Từ ngày (Bắt đầu)</label>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
@@ -123,48 +52,131 @@ export function setupTool() {
           '<span class="text-slate-300 font-black">/</span>' +
           '<select id="tc-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 cursor-pointer"></select>' +
           '</div></div>' +
+          '</div>' + // Kết thúc form Inputs
           
-          '<div class="flex gap-2 w-full mt-2">' +
+          '<div class="mt-4 flex gap-2 w-full shrink-0">' +
           '<button id="tc-btn-conv" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
-          '<span class="text-sm">🧮 CÔNG THỨC</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30 ngày)</span></button>' +
+          '<span class="text-sm uppercase tracking-wide">CÔNG THỨC</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30 ngày)</span></button>' +
           '<button id="tc-btn-real" class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
-          '<span class="text-sm">📅 THEO LỊCH</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Thực tế)</span></button>' +
-          '</div></div>' +
+          '<span class="text-sm uppercase tracking-wide">THEO LỊCH</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Thực tế)</span></button>' +
+          '</div>' +
 
-          '<div id="tc-result" class="hidden space-y-4">' +
-          '<div class="tc-card bg-[#e0f2fe] rounded-[2rem] p-6 md:p-8 shadow-sm border border-white relative overflow-hidden">' +
-          '<div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-4">' +
+          // Khu vực Kết quả Cột 1
+          '<div id="tc-result" class="hidden mt-4 shrink-0">' +
+          '<div class="tc-card bg-[#e0f2fe] rounded-[1.5rem] p-5 shadow-sm border border-white relative overflow-hidden">' +
+          '<div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-3">' +
           '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ</div>' +
           '<div id="tc-res-type" class="text-[10px] font-bold text-teal-700/60 uppercase bg-teal-50/50 px-2 py-0.5 rounded border border-teal-100">--</div>' +
           '</div>' +
-          '<div class="space-y-3">' +
-          '<div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">' +
+          '<div class="space-y-2">' +
+          '<div class="tc-inner-card bg-white/70 p-3 rounded-xl border border-teal-200 shadow-sm flex flex-col">' +
           '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Chuẩn Năm - Tháng - Ngày</span>' +
-          '<span class="text-xl font-black text-slate-800" id="tc-res-1">--</span></div>' +
-          '<div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">' +
+          '<span class="text-base font-black text-slate-800" id="tc-res-1">--</span></div>' +
+          '<div class="tc-inner-card bg-white/70 p-3 rounded-xl border border-teal-200 shadow-sm flex flex-col">' +
           '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Tổng Quý (1 Quý = 3 Tháng)</span>' +
-          '<span class="text-lg font-bold text-slate-700" id="tc-res-2">--</span></div>' +
-          '<div class="tc-inner-card bg-white/70 p-4 rounded-2xl border border-teal-200 shadow-sm flex flex-col">' +
+          '<span class="text-sm font-bold text-slate-700" id="tc-res-2">--</span></div>' +
+          '<div class="tc-inner-card bg-white/70 p-3 rounded-xl border border-teal-200 shadow-sm flex flex-col">' +
           '<span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">Tổng Tháng</span>' +
-          '<span class="text-lg font-bold text-slate-700" id="tc-res-3">--</span></div>' +
-          '<div class="tc-inner-card bg-teal-500 p-4 rounded-2xl border border-teal-600 shadow-md flex flex-col">' +
+          '<span class="text-sm font-bold text-slate-700" id="tc-res-3">--</span></div>' +
+          '<div class="tc-inner-card bg-teal-500 p-3 rounded-xl border border-teal-600 shadow-md flex flex-col">' +
           '<span class="text-[9px] text-teal-100 font-bold uppercase tracking-wider mb-1">Tổng Ngày Tuyệt Đối</span>' +
-          '<span class="text-2xl font-black text-white" id="tc-res-4">--</span></div>' +
+          '<span class="text-xl font-black text-white" id="tc-res-4">--</span></div>' +
           '</div></div></div>' +
 
-          '' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-[2rem] shadow-sm border border-slate-100">' +
-          '<div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">' +
-          '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2"><span>📚</span> Lịch sử tính toán</h3>' +
-          '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100">XÓA LỊCH SỬ</button>' +
           '</div>' +
-          '<div id="tc-history-list" class="space-y-2 max-h-[650px] overflow-y-auto custom-scrollbar pr-1"></div>' +
-          '</div>' + 
-          
-          '</div>' + // KẾT THÚC CỘT PHẢI
+          '</div>' + // KẾT THÚC CỘT 1
 
-          '</div>' + // KẾT THÚC DÒNG FLEX CONTAINER
-          '</div>';  // KẾT THÚC BỌC NGOÀI CÙNG
+          // ================= CỘT 2: TÍNH THỜI GIAN ĐA CHIỀU (NÂNG CAO) =================
+          '<div class="w-full h-full">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-orange-100 h-full flex flex-col tc-card">' +
+          
+          '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Tính thời gian đa chiều</h3></div>' +
+          '<p class="text-[10px] text-slate-500 italic mt-3 mb-1 shrink-0">Mẹo: Nhập dữ liệu đã biết, BỎ TRỐNG các ô cần tìm bằng nút (#). Tính theo chuẩn 1 tháng = 30 ngày.</p>' +
+          
+          '<div class="mt-2 space-y-4 flex-1">' +
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">1. Ngày Bắt Đầu (Bắt buộc)</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="m2-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-start-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-start-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
+          '</div></div>' +
+
+          '<div>' +
+          '<div class="flex justify-between items-end mb-2">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">2. Ngày Đích Đến</label>' +
+          '<button id="m2-btn-clear-end" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-2 py-1 rounded font-bold transition shadow-sm border border-slate-200">XÓA TRỐNG (#)</button>' +
+          '</div>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<select id="m2-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-end-m" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
+          '<span class="text-slate-300 font-black">/</span>' +
+          '<select id="m2-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
+          '</div></div>' +
+
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">3. Tổng Thời Gian</label>' +
+          '<div class="flex justify-center items-center gap-2 w-full">' +
+          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-y" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Năm</span></div>' +
+          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-m" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Tháng</span></div>' +
+          '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-d" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Ngày</span></div>' +
+          '</div></div>' +
+
+          '<div>' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">4. Tỷ Lệ</label>' +
+          '<div class="flex flex-wrap justify-center gap-1.5 mb-3 px-1">' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="5">1/5</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="4">1/4</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="3">1/3</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="2">1/2</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="2" data-den="3">2/3</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="3" data-den="4">3/4</button>' +
+          '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="2" data-den="5">2/5</button>' +
+          '</div>' +
+          '<div class="flex justify-center items-center gap-3 w-full px-16">' +
+          '<input id="m2-ratio-num" type="number" placeholder="Tử" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
+          '<span class="text-xl font-black text-slate-300">/</span>' +
+          '<input id="m2-ratio-den" type="number" placeholder="Mẫu" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
+          '</div></div>' +
+          '</div>' + // Kết thúc form Inputs
+          
+          '<div class="flex gap-2 w-full shrink-0 mt-4">' +
+          '<button id="mod2-btn-reset" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 text-[11px] uppercase">' +
+          'LÀM MỚI' +
+          '</button>' +
+          '<button id="mod2-btn-calc" class="w-2/3 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide">' +
+          'TÍNH TOÁN' +
+          '</button>' +
+          '</div>' +
+
+          // Khu vực Kết quả Cột 2
+          '<div id="mod2-result" class="hidden shrink-0 tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
+          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
+          '<div id="mod2-dynamic-res" class="w-full"></div>' +
+          '</div>' +
+
+          '</div>' +
+          '</div>' + // KẾT THÚC CỘT 2
+
+          // ================= CỘT 3: LỊCH SỬ TÍNH TOÁN =================
+          '<div class="w-full h-full">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col tc-card">' +
+          
+          '<div class="flex justify-between items-center border-b border-slate-200 pb-3 shrink-0">' +
+          '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Lịch sử tính toán</h3>' +
+          '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100 uppercase tracking-wider">XÓA LỊCH SỬ</button>' +
+          '</div>' +
+          
+          '<div id="tc-history-list" class="mt-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar pr-1 max-h-[600px]"></div>' +
+          
+          '</div>' +
+          '</div>' + // KẾT THÚC CỘT 3
+
+          '</div>' + // KẾT THÚC LƯỚI GRID
+          '</div>';  // KẾT THÚC BỌC TRÀN VIỀN
 
     document.getElementById('app-container').appendChild(panel);
 
@@ -327,7 +339,7 @@ export function setupTool() {
 
     var makeRow = function(label, value, isHighlight) {
         if(isHighlight) {
-            return '<div class="flex flex-col items-center bg-orange-500 p-4 mt-2 rounded-xl border border-orange-600 shadow-md"><span class="text-[10px] font-bold text-orange-100 uppercase tracking-wider mb-1">' + label + '</span><span class="font-black text-white text-2xl text-center">' + value + '</span></div>';
+            return '<div class="flex flex-col items-center bg-orange-500 p-4 mt-2 rounded-xl border border-orange-600 shadow-md"><span class="text-[10px] font-bold text-orange-100 uppercase tracking-wider mb-1">' + label + '</span><span class="font-black text-white text-xl md:text-2xl text-center">' + value + '</span></div>';
         }
         return '<div class="flex flex-col bg-white/70 p-3 rounded-lg border border-orange-100 shadow-sm mt-3"><span class="text-[9px] font-bold text-slate-500 uppercase">' + label + '</span><span class="font-black text-slate-700 text-sm mt-0.5">' + value + '</span></div>';
     };

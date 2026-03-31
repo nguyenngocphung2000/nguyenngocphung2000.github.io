@@ -35,14 +35,14 @@ export function setupTool() {
 
         <div class="text-center mb-6">
             <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">Tiện ích</span>
-            <h2 class="text-3xl font-black mt-2 text-gray-800 tracking-tight">Vòng Quay <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">May Mắn</span> 🎡</h2>
+            <h2 class="text-3xl font-black mt-2 text-gray-800 tracking-tight">Vòng Quay <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">May Mắn</span></h2>
         </div>
 
-        <div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">
-            <div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">
+        <div class="max-w-6xl mx-auto pb-10 px-2 lg:px-6">
+            <div class="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 lg:gap-12">
                 
-                <div class="w-full max-w-md mx-auto flex flex-col items-center pt-2">
-                    <div class="relative w-full aspect-square max-w-[360px] mx-auto mt-2">
+                <div class="w-full lg:w-3/5 flex flex-col items-center pt-2">
+                    <div class="relative w-full aspect-square max-w-[360px] md:max-w-[450px] lg:max-w-[550px] mx-auto mt-2">
                         <div class="absolute top-1/2 right-[-25px] transform -translate-y-1/2 z-40 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
                             <svg width="55" height="55" viewBox="0 0 24 24" fill="#fbbf24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M4 12L22 2L17 12L22 22L4 12Z" stroke="#78350f" stroke-width="2" stroke-linejoin="round"/>
@@ -67,27 +67,27 @@ export function setupTool() {
                     </div>
                 </div>
 
-                <div class="w-full max-w-md mx-auto">
+                <div class="w-full lg:w-2/5 max-w-md mx-auto">
                     <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white overflow-hidden flex flex-col">
                         
                         <div class="flex gap-2 p-3 md:p-4 bg-slate-50/80 border-b border-slate-200/60">
-                            <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap">
-                                🗑️ Xóa sạch
+                            <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider">
+                                XÓA SẠCH
                             </button>
-                            <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
-                                🔀 Tráo đổi
+                            <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap uppercase tracking-wider">
+                                TRÁO ĐỔI
                             </button>
-                            <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap">
-                                ↕️ Sắp xếp
+                            <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap uppercase tracking-wider">
+                                SẮP XẾP
                             </button>
                         </div>
 
                         <div class="flex border-b border-slate-200/60 bg-white">
-                            <button type="button" id="tab-btn-list" class="flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors">
-                                Mục (<span id="wheel-count">0</span>)
+                            <button type="button" id="tab-btn-list" class="flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide">
+                                MỤC (<span id="wheel-count">0</span>)
                             </button>
-                            <button type="button" id="tab-btn-results" class="flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors">
-                                Các kết quả (<span id="wheel-result-count">0</span>)
+                            <button type="button" id="tab-btn-results" class="flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors uppercase tracking-wide">
+                                KẾT QUẢ (<span id="wheel-result-count">0</span>)
                             </button>
                         </div>
 
@@ -108,21 +108,20 @@ export function setupTool() {
 
         <div id="wheel-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md px-4">
             <div id="wheel-modal-content" class="bg-white rounded-[2rem] w-full max-w-sm overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform scale-0">
-                <div class="bg-gradient-to-r from-amber-400 to-orange-500 p-6 text-center relative overflow-hidden flex flex-col items-center justify-center">
+                <div class="bg-gradient-to-r from-amber-400 to-orange-500 py-8 px-6 text-center relative overflow-hidden flex flex-col items-center justify-center">
                     <div class="sunburst"></div>
-                    <span class="text-4xl relative z-10 mb-2 drop-shadow-md">🏆</span>
-                    <h3 class="font-black text-white text-lg relative z-10 drop-shadow-md">Chúng ta có người chiến thắng!</h3>
+                    <h3 class="font-black text-white text-xl relative z-10 drop-shadow-md uppercase tracking-wider">Người chiến thắng!</h3>
                 </div>
                 <div class="p-8 text-center bg-white relative">
                     <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#f59e0b 2px, transparent 2px), radial-gradient(#3b82f6 2px, transparent 2px); background-size: 30px 30px; background-position: 0 0, 15px 15px;"></div>
                     <p id="wheel-winner-name" class="text-4xl font-black text-slate-800 break-words drop-shadow-sm relative z-10"></p>
                 </div>
                 <div class="p-4 bg-slate-50 flex justify-between gap-3 border-t border-slate-100">
-                    <button type="button" id="btn-modal-close" class="flex-1 py-3.5 font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-100 transition active:scale-95 text-sm shadow-sm">
-                        Đóng
+                    <button type="button" id="btn-modal-close" class="flex-1 py-3.5 font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-100 transition active:scale-95 text-[13px] shadow-sm uppercase tracking-wider">
+                        ĐÓNG
                     </button>
-                    <button type="button" id="btn-modal-remove" class="flex-1 py-3.5 font-bold text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl hover:from-blue-600 hover:to-indigo-700 shadow-md transition active:scale-95 text-sm border border-transparent">
-                        Xóa tên này
+                    <button type="button" id="btn-modal-remove" class="flex-1 py-3.5 font-bold text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl hover:from-blue-600 hover:to-indigo-700 shadow-md transition active:scale-95 text-[13px] border border-transparent uppercase tracking-wider">
+                        XÓA TÊN NÀY
                     </button>
                 </div>
             </div>
@@ -177,7 +176,7 @@ export function setupTool() {
         try { 
             let parsed = JSON.parse(savedResults);
             if(parsed.length > 0 && typeof parsed[0] === 'string') {
-                results = parsed.map((name, idx) => ({ text: name, label: 'Lần ' + (parsed.length - idx) }));
+                results = parsed.map((name, idx) => ({ text: name, label: 'LẦN ' + (parsed.length - idx) }));
             } else {
                 results = parsed;
             }
@@ -186,27 +185,26 @@ export function setupTool() {
     }
 
     // ==========================================
-    // 💡 KHỞI TẠO DỮ LIỆU HOẶC DÙNG 4 TÊN MẶC ĐỊNH
+    // 💡 KHỞI TẠO DỮ LIỆU HOẶC DÙNG TÊN MẶC ĐỊNH
     // ==========================================
     const savedData = safeGet('wheel_names');
     if (savedData !== null && savedData.trim() !== "") {
         inputArea.value = savedData;
     } else {
-        // Nếu không có dữ liệu lưu thì hiển thị 4 tên ví dụ mặc định
-        inputArea.value = "Chó\nMèo\nHeo\nGái"; 
+        inputArea.value = "Hà Nội\nHồ Chí Minh\nĐà Nẵng\nCần Thơ"; 
     }
 
     // --- TABS CHUYỂN ĐỔI ---
     tabListBtn.addEventListener('click', () => {
-        tabListBtn.className = 'flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors';
-        tabResBtn.className = 'flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors';
+        tabListBtn.className = 'flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide';
+        tabResBtn.className = 'flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors uppercase tracking-wide';
         tabListContent.classList.remove('hidden');
         tabResContent.classList.add('hidden');
     });
     
     tabResBtn.addEventListener('click', () => {
-        tabResBtn.className = 'flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors';
-        tabListBtn.className = 'flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors';
+        tabResBtn.className = 'flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide';
+        tabListBtn.className = 'flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors uppercase tracking-wide';
         tabResContent.classList.remove('hidden');
         tabListContent.classList.add('hidden');
         renderResults();
@@ -224,13 +222,13 @@ export function setupTool() {
     const renderResults = () => {
         resultCountDisplay.innerText = results.length;
         if (results.length === 0) {
-            resultListDiv.innerHTML = '<div class="text-center text-slate-400 text-sm font-medium py-10">Chưa có kết quả nào</div>';
+            resultListDiv.innerHTML = '<div class="text-center text-slate-400 text-sm font-medium py-10 uppercase tracking-widest">Chưa có kết quả</div>';
             return;
         }
         resultListDiv.innerHTML = results.map(res => `
             <div class="flex items-center justify-between p-2 border-b border-slate-100 bg-white mb-0.5 rounded shadow-sm hover:bg-slate-50 transition">
                 <span class="font-bold text-slate-700 text-xs truncate max-w-[80%] pl-1">${res.text}</span>
-                <span class="text-[9px] font-bold text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded whitespace-nowrap">${res.label}</span>
+                <span class="text-[9px] font-bold text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded whitespace-nowrap uppercase">${res.label}</span>
             </div>
         `).join('');
     };
@@ -363,7 +361,7 @@ export function setupTool() {
         totalSpinsCounter++;
         safeSave('wheel_spins', totalSpinsCounter);
         
-        results.unshift({ text: currentWinner, label: 'Lần ' + totalSpinsCounter });
+        results.unshift({ text: currentWinner, label: 'LẦN ' + totalSpinsCounter });
         safeSave('wheel_results', JSON.stringify(results));
         renderResults(); 
         
@@ -435,32 +433,26 @@ export function setupTool() {
     btnResetAll.addEventListener('click', function(e) {
         e.preventDefault();
         
-        // Không có dữ liệu thì không làm gì
         if (names.length === 0 && results.length === 0 && inputArea.value.trim() === '') return;
 
-        // Nếu chưa được bấm lần 1 -> Đổi màu cảnh báo
         if (btnResetAll.dataset.confirm !== "true") {
             btnResetAll.dataset.confirm = "true";
-            btnResetAll.innerHTML = "⚠️ Chắc chưa?";
-            btnResetAll.className = "flex-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-md transition-colors flex justify-center items-center gap-1 active:scale-95 whitespace-nowrap";
+            btnResetAll.innerHTML = "CHẮC CHƯA?";
+            btnResetAll.className = "flex-1 bg-red-500 text-white text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-md transition-colors flex justify-center items-center gap-1 active:scale-95 whitespace-nowrap uppercase tracking-wider";
             
-            // Tự động quay về bình thường sau 3 giây nếu không bấm tiếp
             resetTimeout = setTimeout(() => {
                 btnResetAll.dataset.confirm = "false";
-                btnResetAll.innerHTML = "🗑️ Xóa sạch";
-                btnResetAll.className = "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap";
+                btnResetAll.innerHTML = "XÓA SẠCH";
+                btnResetAll.className = "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider";
             }, 3000);
         } 
-        // Bấm lần 2 -> Tiến hành tiêu diệt dữ liệu
         else {
             clearTimeout(resetTimeout);
             
-            // Trả nút về hình dáng cũ
             btnResetAll.dataset.confirm = "false";
-            btnResetAll.innerHTML = "🗑️ Xóa sạch";
-            btnResetAll.className = "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-xs font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap";
+            btnResetAll.innerHTML = "XÓA SẠCH";
+            btnResetAll.className = "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider";
 
-            // Xóa sách sành sanh
             inputArea.value = "";
             names = [];
             results = [];

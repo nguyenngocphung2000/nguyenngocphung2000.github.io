@@ -6,7 +6,7 @@ export function setupTool() {
     panel.id = tabId;
     panel.className = 'tab-panel active';
 
-    // Đã cập nhật cấu trúc HTML chia 2 cột cho màn hình lớn
+    // Cấu trúc HTML chia 3 cột tràn viền, loại bỏ toàn bộ icon
     panel.innerHTML = '<style>' +
           'body.dark-mode .bn-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .bn-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; } ' +
@@ -14,21 +14,25 @@ export function setupTool() {
           'body.dark-mode .bn-name-nu { background-color: rgba(131, 24, 67, 0.4) !important; border-color: rgba(236, 72, 153, 0.3) !important; color: #fbcfe8 !important; } ' +
           'body.dark-mode .filter-card { background-color: rgba(30, 41, 59, 0.6) !important; border-color: rgba(99, 102, 241, 0.2) !important; }' +
           '</style>' +
-          '<div class="text-center mb-6">' +
+          
+          '<div class="text-center mb-8">' +
           '<span class="bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-pink-200">Kho dữ liệu vô tận</span>' +
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Đặt Tên Cho <span class="text-pink-500">Bé Yêu</span></h2>' +
+          '<p class="text-[11px] text-slate-500 italic mt-2 max-w-2xl mx-auto px-4">Đề xuất tên theo thuật toán ngẫu nhiên hoặc xử lý danh sách tên có sẵn.</p>' +
           '</div>' +
           
-          // BỌC GIAO DIỆN CHÍNH: Hỗ trợ hiển thị 2 cột trên màn hình ngang (lg)
-          '<div class="max-w-5xl mx-auto pb-10 px-2 lg:px-4">' +
-          '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
+          // BỌC GIAO DIỆN 3 CỘT TRÀN VIỀN
+          '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
+          '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
 
-          // ================= CỘT TRÁI =================
-          '<div class="w-full max-w-md mx-auto space-y-6">' +
-
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4">' +
-          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-pink-500 text-lg">⚙️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Bộ lọc tùy chỉnh</h3></div>' +
-          '<p class="text-[10.5px] text-slate-500 italic mt-0 leading-relaxed font-medium">💡 Mẹo: Bỏ trống ô nào thì máy sẽ tự động tìm từ hay nhất đắp vào ô đó.</p>' +
+          // ================= CỘT 1: BỘ LỌC TÙY CHỈNH (CẤU HÌNH) =================
+          '<div class="w-full h-full">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col bn-card">' +
+          
+          '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Bộ lọc tùy chỉnh</h3></div>' +
+          '<p class="text-[10px] text-slate-500 italic mt-3 mb-1 shrink-0">Mẹo: Bỏ trống ô nào thì máy sẽ tự động tìm từ hay nhất đắp vào ô đó.</p>' +
+          
+          '<div class="mt-2 space-y-4 flex-1">' +
           '<div class="flex gap-3">' +
           '<div class="flex-1">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Giới tính</label>' +
@@ -43,6 +47,7 @@ export function setupTool() {
           '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200">' +
           '</div>' +
           '</div>' +
+          
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Độ dài tên</label>' +
           '<select id="bn-length" style="text-align-last: center;" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
@@ -53,6 +58,7 @@ export function setupTool() {
           '<option value="5">5 Chữ</option>' +
           '</select>' +
           '</div>' +
+          
           '<div class="flex gap-2">' +
           '<div class="w-1/3">' +
           '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Họ</label>' +
@@ -67,68 +73,81 @@ export function setupTool() {
           '<input id="bn-ten" type="text" placeholder="Tâm..." class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-3 text-center font-bold text-slate-700 outline-none focus:ring-2 ring-pink-200">' +
           '</div>' +
           '</div>' +
-          '<div class="flex gap-2 w-full mt-4">' +
-          '<button id="bn-btn-copy-gen" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-4 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 flex justify-center items-center gap-1 text-[11px] uppercase tracking-wide">' +
-          '📋 Copy' +
+          '</div>' + // Kết thúc form Inputs
+          
+          '<div class="flex gap-2 w-full mt-4 shrink-0">' +
+          '<button id="bn-btn-copy-gen" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-4 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 flex justify-center items-center text-[11px] uppercase tracking-wide">' +
+          'COPY' +
           '</button>' +
-          '<button id="bn-btn-gen" class="w-2/3 bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
-          '✨ Đề Xuất Tên' +
+          '<button id="bn-btn-gen" class="w-2/3 bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide">' +
+          'ĐỀ XUẤT TÊN' +
           '</button>' +
-          '</div>' +
           '</div>' +
           
-          '<div id="bn-result" class="hidden bn-card bg-slate-50 rounded-[1.5rem] p-5 shadow-sm border border-slate-200">' +
-          '<div class="flex justify-between items-center border-b border-pink-200/50 pb-2 mb-3">' +
-          '<div class="text-pink-600 font-bold text-[10px] tracking-widest uppercase">DANH SÁCH TÊN GỢI Ý</div>' +
-          '<button id="bn-btn-toggle" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition">Thu gọn</button>' +
           '</div>' +
-          '<div id="bn-res-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 transition-all duration-300"></div>' +
+          '</div>' + // KẾT THÚC CỘT 1
+
+          // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý (KẾT QUẢ) =================
+          '<div class="w-full h-full">' +
+          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card">' +
+          
+          '<div class="flex justify-between items-center border-b border-pink-200/50 pb-3 shrink-0">' +
+          '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
+          '<button id="bn-btn-toggle" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg font-bold shadow-sm transition uppercase">THU GỌN</button>' +
           '</div>' +
           
-          '</div>' + // KẾT THÚC CỘT TRÁI
+          '<div id="bn-res-list" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1 overflow-y-auto custom-scrollbar pr-1 max-h-[600px] content-start">' +
+          '<div class="col-span-full text-center text-slate-400 italic py-10 text-xs">Chưa có dữ liệu. Hãy bấm "Đề xuất tên"!</div>' +
+          '</div>' +
+          
+          '</div>' +
+          '</div>' + // KẾT THÚC CỘT 2
 
-          // ================= CỘT PHẢI =================
-          '<div class="w-full max-w-md mx-auto space-y-6">' +
-
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 space-y-4 filter-card">' +
-          '<div class="flex items-center gap-2 border-b border-slate-100 pb-2 mb-2"><span class="text-indigo-500 text-lg">🛠️</span><h3 class="font-bold text-slate-600 text-sm uppercase">Trạm xử lý danh sách</h3></div>' +
+          // ================= CỘT 3: TRẠM XỬ LÝ DANH SÁCH (CÔNG CỤ PHỤ) =================
+          '<div class="w-full h-full">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-indigo-100 h-full flex flex-col filter-card">' +
+          
+          '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Trạm xử lý danh sách</h3></div>' +
+          
+          '<div class="mt-3 flex flex-col flex-1 space-y-4">' +
           '<div>' +
-          '<div class="flex justify-between items-end mb-1">' +
+          '<div class="flex justify-between items-end mb-1.5">' +
           '<div class="flex items-center gap-2">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Nhập danh sách</label>' +
-          '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">Dòng: <span id="flt-cnt-in">0</span></span>' +
+          '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">DÒNG: <span id="flt-cnt-in">0</span></span>' +
           '</div>' +
-          '<button id="flt-btn-paste" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95">📋 Dán</button>' +
+          '<button id="flt-btn-paste" class="text-[9px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase">DÁN</button>' +
           '</div>' +
-          '<textarea id="flt-input" class="bn-input w-full h-32 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
+          '<textarea id="flt-input" class="bn-input w-full h-24 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
           '</div>' +
-          '<div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3 bn-input">' +
+          
+          '<div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-3 bn-input">' +
           '<div class="grid grid-cols-2 gap-3">' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xóa dòng trống</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Chuẩn hóa dấu cách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Dấu cách chuẩn</label>' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-rem-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ số thứ tự cũ</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Thêm số thứ tự mới</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Thêm số thứ tự</label>' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-dup" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Lọc trùng lặp</label>' +
           '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-accent" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ dấu Tiếng Việt</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Đảo ngược danh sách</label>' +
-          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn danh sách</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Đảo ngược</label>' +
+          '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn</label>' +
           '</div>' +
-          '<div class="grid grid-cols-1 gap-3 border-t border-slate-200 pt-3">' +
-          '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+          '<div class="grid grid-cols-1 gap-2 border-t border-slate-200 pt-2">' +
+          '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
           '<option value="none">A/a (Không can thiệp HOA/thường)</option>' +
           '<option value="title" selected>Aa (Viết hoa chữ đầu mỗi từ)</option>' +
           '<option value="lower">aa (Viết thường toàn bộ)</option>' +
           '<option value="upper">AA (Viết HOA toàn bộ)</option>' +
           '</select>' +
-          '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+          '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
           '<option value="none">Không sắp xếp bảng chữ cái</option>' +
           '<option value="asc">Sắp xếp A-Z</option>' +
           '<option value="desc">Sắp xếp Z-A</option>' +
           '</select>' +
           '</div>' +
-          '<div class="flex items-center gap-2 border-t border-slate-200 pt-3">' +
+          '<div class="flex items-center gap-2 border-t border-slate-200 pt-2">' +
           '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer focus:ring-indigo-500">' +
-          '<span class="text-[11px] font-bold text-slate-600">Lọc theo số từ:</span>' +
+          '<span class="text-[11px] font-bold text-slate-600">Lọc theo từ:</span>' +
           '<select id="sel-wc-op" class="bg-white border border-slate-200 rounded p-1 text-[11px] font-bold text-slate-700 outline-none">' +
           '<option value="less">&lt;</option>' +
           '<option value="eq" selected>=</option>' +
@@ -138,33 +157,37 @@ export function setupTool() {
           '<span class="text-[11px] font-bold text-slate-500">từ/dòng</span>' +
           '</div>' +
           '</div>' +
-          '<div class="w-full">' +
-          '<button id="flt-btn-process" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide">' +
+          
+          '<div class="w-full shrink-0">' +
+          '<button id="flt-btn-process" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide">' +
           'XỬ LÝ' +
           '</button>' +
           '</div>' +
-          '<div>' +
-          '<div class="flex justify-between items-end mb-1">' +
+          
+          '<div class="flex-1 flex flex-col">' +
+          '<div class="flex justify-between items-end mb-1.5">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Kết quả đầu ra</label>' +
-          '<span class="text-[10px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-md border border-green-100">Dòng: <span id="flt-cnt-out">0</span></span>' +
+          '<span class="text-[9px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-md border border-green-100">DÒNG: <span id="flt-cnt-out">0</span></span>' +
           '</div>' +
-          '<textarea id="flt-output" readonly class="bn-input w-full h-32 bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-700 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
+          '<textarea id="flt-output" readonly class="bn-input w-full flex-1 min-h-[80px] bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-700 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
           '</div>' +
-          '<div class="flex gap-2">' +
-          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">🗑️ Xóa</button>' +
-          '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">📋 Copy Kết Quả</button>' +
-          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">⬇️ Tải Txt</button>' +
-          '</div>' +
+          '</div>' + // Kết thúc vùng chứa nội dung chính Cột 3
+          
+          '<div class="flex gap-2 shrink-0 mt-4">' +
+          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3.5 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">XÓA</button>' +
+          '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3.5 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">COPY KẾT QUẢ</button>' +
+          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">TẢI TXT</button>' +
           '</div>' +
           
-          '</div>' + // KẾT THÚC CỘT PHẢI
+          '</div>' +
+          '</div>' + // KẾT THÚC CỘT 3
 
-          '</div>' + // KẾT THÚC DÒNG FLEX CONTAINER
-          '</div>';  // KẾT THÚC BỌC NGOÀI CÙNG
+          '</div>' + // KẾT THÚC LƯỚI GRID
+          '</div>';  // KẾT THÚC BỌC TRÀN VIỀN
 
     document.getElementById('app-container').appendChild(panel);
 
-    // --- LOGIC ĐÃ ĐƯỢC NÂNG CẤP ĐỂ DÙNG FETCH JSON ---
+    // --- LOGIC ĐÃ ĐƯỢC NÂNG CẤP ĐỂ DÙNG FETCH JSON & XÓA EMOJI TRONG THÔNG BÁO ---
     var capitalize = function(str) {
         return str.trim().replace(/\s+/g, ' ').split(' ').map(function(word) {
             if(!word) return '';
@@ -197,17 +220,16 @@ export function setupTool() {
     var btnGen = document.getElementById('bn-btn-gen');
     var btnCopyGen = document.getElementById('bn-btn-copy-gen');
     var btnToggle = document.getElementById('bn-btn-toggle');
-    var resDiv = document.getElementById('bn-result');
     var resList = document.getElementById('bn-res-list');
     var currentResults = []; 
 
     btnToggle.onclick = function() {
         if (resList.classList.contains('hidden')) {
             resList.classList.remove('hidden');
-            btnToggle.innerText = 'Thu gọn';
+            btnToggle.innerText = 'THU GỌN';
         } else {
             resList.classList.add('hidden');
-            btnToggle.innerText = 'Mở rộng';
+            btnToggle.innerText = 'MỞ RỘNG';
         }
     };
 
@@ -216,7 +238,7 @@ export function setupTool() {
         var textToCopy = currentResults.join('\n');
         navigator.clipboard.writeText(textToCopy).then(function() {
             var oldHtml = btnCopyGen.innerHTML;
-            btnCopyGen.innerHTML = '✅ Đã Copy';
+            btnCopyGen.innerHTML = 'ĐÃ COPY';
             btnCopyGen.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
             setTimeout(function() { 
                 btnCopyGen.innerHTML = oldHtml; 
@@ -225,12 +247,10 @@ export function setupTool() {
         });
     };
 
-    // Nâng cấp thành hàm async để fetch dữ liệu từ JSON
     btnGen.onclick = async function() {
         if (!window.nameParsed) {
-            btnGen.innerHTML = '⏳ ĐANG TẢI DỮ LIỆU...';
+            btnGen.innerHTML = 'ĐANG TẢI DỮ LIỆU...';
             try {
-                // Tự động tìm và tải file nam.json và nu.json trong thư mục data/
                 const [resNam, resNu] = await Promise.all([
                     fetch('data/nam.json'),
                     fetch('data/nu.json')
@@ -267,10 +287,10 @@ export function setupTool() {
                 parsePool(namDataArr, 'nam');
                 parsePool(nuDataArr, 'nu');
                 window.nameParsed = true;
-                btnGen.innerHTML = '✨ Đề Xuất Tên';
+                btnGen.innerHTML = 'ĐỀ XUẤT TÊN';
             } catch (error) {
                 alert("Lỗi: Không tìm thấy file dữ liệu (data/nam.json hoặc data/nu.json). Hãy kiểm tra lại cấu trúc thư mục!");
-                btnGen.innerHTML = '✨ Đề Xuất Tên';
+                btnGen.innerHTML = 'ĐỀ XUẤT TÊN';
                 return;
             }
         }
@@ -373,8 +393,7 @@ export function setupTool() {
 
         resList.innerHTML = generatedHTML;
         resList.classList.remove('hidden');
-        btnToggle.innerText = 'Thu gọn';
-        resDiv.classList.remove('hidden');
+        btnToggle.innerText = 'THU GỌN';
     };
 
     var inputArea = document.getElementById('flt-input');
@@ -392,7 +411,7 @@ export function setupTool() {
                     inputArea.dispatchEvent(new Event('input')); 
                     
                     var oldHtml = btnPaste.innerHTML;
-                    btnPaste.innerHTML = '✅ Đã dán';
+                    btnPaste.innerHTML = 'ĐÃ DÁN';
                     setTimeout(function() { btnPaste.innerHTML = oldHtml; }, 2000);
                 }
             }).catch(function(err) {
@@ -485,7 +504,7 @@ export function setupTool() {
         navigator.clipboard.writeText(outText).then(function() {
             var btn = document.getElementById('flt-btn-copy');
             var oldHtml = btn.innerHTML;
-            btn.innerHTML = '✅ Đã Copy';
+            btn.innerHTML = 'ĐÃ COPY';
             btn.classList.add('bg-green-100', 'text-green-600', 'border-green-200');
             btn.classList.remove('bg-indigo-50', 'text-indigo-600', 'border-indigo-200');
             setTimeout(function() { 

@@ -10,7 +10,7 @@ export function setupTool() {
     panel.innerHTML = `
         <div class="text-center mb-8">
             <span class="bg-yellow-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase text-yellow-900">Công cụ tính toán</span>
-            <h2 class="text-4xl font-bold mt-3 text-gray-800">Tính <span class="text-red-500">Phần Trăm</span> 🧮</h2>
+            <h2 class="text-4xl font-bold mt-3 text-gray-800">Tính <span class="text-red-500">Phần Trăm</span></h2>
             <p class="text-sm text-gray-500 mt-2 italic">Nhập 2 ô bất kỳ, ô còn lại sẽ tự động tính!</p>
         </div>
 
@@ -29,7 +29,6 @@ export function setupTool() {
 
                         <div id="calc-mode-1" class="block animate-[fadeIn_0.3s_ease]">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">%</span>
                                 <h3 class="font-bold text-gray-700 text-sm">X phần trăm của Y là bao nhiêu?</h3>
                             </div>
                             <div class="flex flex-wrap items-end gap-2 md:gap-4">
@@ -49,14 +48,13 @@ export function setupTool() {
                                 </div>
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
-                                <button id="c1-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
-                                <button id="c1-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                                <button id="c1-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
+                                <button id="c1-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full">Lưu KQ</button>
                             </div>
                         </div>
 
                         <div id="calc-mode-2" class="hidden animate-[fadeIn_0.3s_ease]">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">÷</span>
                                 <h3 class="font-bold text-gray-700 text-sm">X là bao nhiêu phần trăm của Y?</h3>
                             </div>
                             <div class="flex flex-wrap items-end gap-2 md:gap-4">
@@ -79,14 +77,13 @@ export function setupTool() {
                                 </div>
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
-                                <button id="c2-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
-                                <button id="c2-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                                <button id="c2-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
+                                <button id="c2-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full">Lưu KQ</button>
                             </div>
                         </div>
 
                         <div id="calc-mode-3" class="hidden animate-[fadeIn_0.3s_ease]">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">↕</span>
                                 <h3 class="font-bold text-gray-700 text-sm">Thay đổi phần trăm giữa hai giá trị</h3>
                             </div>
                             <div class="flex flex-wrap items-end gap-2 md:gap-4">
@@ -109,8 +106,8 @@ export function setupTool() {
                                 </div>
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
-                                <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
-                                <button id="c3-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                                <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
+                                <button id="c3-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full">Lưu KQ</button>
                             </div>
                         </div>
 
@@ -118,7 +115,6 @@ export function setupTool() {
 
                     <div class="glass-card bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
                         <div class="flex items-center gap-2 mb-5">
-                            <span class="bg-orange-500 text-white w-6 h-6 rounded flex items-center justify-center font-bold text-xs">🏛️</span>
                             <h3 class="font-bold text-gray-700 text-sm">Chuyển đổi Số La Mã (1 - 3999)</h3>
                         </div>
                         <div class="flex flex-wrap items-end gap-2 md:gap-4">
@@ -133,8 +129,8 @@ export function setupTool() {
                             </div>
                         </div>
                         <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
-                            <button id="ro-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition flex items-center gap-1">⟲ Xoá ô</button>
-                            <button id="ro-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full flex items-center gap-1">💾 Lưu KQ</button>
+                            <button id="ro-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
+                            <button id="ro-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-full">Lưu KQ</button>
                         </div>
                     </div>
 
@@ -143,8 +139,8 @@ export function setupTool() {
                 <div class="w-full max-w-md mx-auto">
                     <div class="bg-white/90 backdrop-blur-md p-6 rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/50">
                         <div class="flex justify-between items-center mb-4 pb-3 border-b border-orange-50">
-                            <h3 class="font-bold text-gray-800 flex items-center gap-2 text-sm uppercase tracking-wider text-slate-600"><span>🕒</span> Lịch sử tính toán</h3>
-                            <button id="clear-history" class="text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg transition uppercase tracking-widest border border-red-100">🗑️ Xoá sạch</button>
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2 text-sm uppercase tracking-wider text-slate-600">Lịch sử tính toán</h3>
+                            <button id="clear-history" class="text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg transition uppercase tracking-widest border border-red-100">Xoá sạch</button>
                         </div>
                         <ul id="history-list" class="space-y-3 text-sm text-gray-600 h-[380px] lg:h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                         </ul>
@@ -246,7 +242,8 @@ export function setupTool() {
         if (historyArr.length > 0) {
             historyArr.forEach(item => {
                 const li = document.createElement('li');
-                li.className = 'bg-slate-50/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["✓"] before:text-green-500 before:mr-2 before:font-bold text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
+                // Thay dấu tick (✓) bằng chấm tròn (•) cho tối giản
+                li.className = 'bg-slate-50/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["•"] before:text-orange-500 before:mr-2 before:font-bold before:text-lg text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
                 li.innerHTML = item;
                 historyList.appendChild(li); 
             });
