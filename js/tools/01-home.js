@@ -24,6 +24,10 @@ export function setupTool() {
             }
 
             /* BỘ QUY TẮC DARK MODE ĐỒNG BỘ CHO TAB HOME */
+            body.dark-mode .bio-box {
+            background-image: linear-gradient(to right, rgba(249, 115, 22, 0.05), transparent) !important;
+            border-left-color: #f97316 !important;
+        }
             body.dark-mode .glass-card { background-color: rgba(30, 41, 59, 0.8) !important; border-color: #334155 !important; }
             body.dark-mode .glass-card h1, body.dark-mode .glass-card h2, body.dark-mode .glass-card strong { color: #f8fafc !important; }
             body.dark-mode .glass-card p.text-gray-700, body.dark-mode .glass-card p.text-gray-600 { color: #cbd5e1 !important; }
@@ -60,8 +64,8 @@ export function setupTool() {
                 
                 <div class="glass-card p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center md:items-start gap-6 lg:gap-8 border border-orange-100 bg-white/80 backdrop-blur-xl relative overflow-hidden shadow-lg shadow-orange-100/50 transition-colors duration-300">
                     
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-orange-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
-                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-[60px] opacity-20 translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-orange-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-10 -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-[60px] opacity-10 translate-y-1/2 -translate-x-1/2"></div>
                     
                     <div class="relative w-28 h-28 md:w-36 md:h-36 shrink-0 z-10 group cursor-default">
                         <div class="absolute inset-0 bg-gradient-to-tr from-orange-400 to-yellow-300 rounded-full blur-md opacity-40 group-hover:opacity-80 transition duration-500"></div>
@@ -88,7 +92,7 @@ export function setupTool() {
                             Hi I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Nothing</span>
                         </h1>
                         
-                        <div class="mb-6 relative border-l-4 border-orange-400 bg-gradient-to-r from-orange-50/80 to-transparent rounded-r-2xl p-4 md:p-5">
+                        <div class="mb-6 relative border-l-4 border-orange-400 bg-gradient-to-r from-orange-50/20 to-transparent rounded-r-2xl p-4 md:p-5">
                             <p lang="en" class="text-gray-700 leading-relaxed text-[14px] md:text-[15px] font-medium perfect-justify">
                                 <strong class="text-orange-600 tracking-tight block mb-1.5 uppercase text-xs md:text-sm">Nothing yet Everything</strong> 
                                 Xin chào! Chào mừng đến với góc nhỏ của tôi. Kho lưu trữ này là nơi tập hợp vài món đồ chơi được tôi "vibe coding" ra 😂, cùng với đủ loại mẹo vặt hay ho. Mấy công cụ này vốn được sinh ra để tự cứu lấy mình, nhưng giờ tôi quyết định mở bát chia sẻ cho tất cả mọi người. Cứ tự nhiên vọc vạch nhé, và nếu có bắt gặp bug nào... hãy nhắn tôi để tôi "vibe" ra bản vá lỗi, thông tin liên hệ ở ngay bên dưới!
