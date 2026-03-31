@@ -12,7 +12,9 @@ const menuConfig = [
     { id: 'tab-baby-name', name: 'Đặt Tên Con', icon: '👶' },
     { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
     { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
-    { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' }
+    { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' },
+    { id: 'tab-image-to-svg', icon: '🏞️', name: 'Tạo ảnh .SVG' }
+    
 ];
 
 // --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
@@ -26,6 +28,7 @@ const toolMap = {
     'tab-xiangqi': './tools/07-xiangqi.js',
     'tab-wheel' : './tools/08-wheel.js',
     'tab-html-runner': './tools/09-html-runner.js',
+   'tab-image-to-svg': './tools/10-image-to-svg.js',
 };
 
 // --- 3. KHAI BÁO CÁC PHẦN TỬ GIAO DIỆN ---
