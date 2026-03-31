@@ -13,8 +13,7 @@ const menuConfig = [
     { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
     { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
     { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' },
-    { id: 'tab-image-to-svg', icon: '🏞️', name: 'Tạo ảnh .SVG' }
-    
+    { id: 'tab-image-to-svg', icon: '🏞️', name: 'Tạo ảnh SVG' },
 ];
 
 // --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
