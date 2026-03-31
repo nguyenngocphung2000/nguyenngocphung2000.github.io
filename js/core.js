@@ -2,18 +2,18 @@
    LÕI HỆ THỐNG (CORE.JS) - BẢN FIX TRIỆT ĐỂ (CHẠY TRỰC TIẾP)
 ========================================================== */
 
-// --- 1. BẢN ĐỒ MENU (9 TOOLS) ---
+// --- 1. BẢN ĐỒ MENU (10 TOOLS) - ĐÃ DỌN SẠCH ICON ---
 const menuConfig = [
-    { id: 'tab-home', name: 'Trang Chủ', icon: '🏠' },
-    { id: 'tab-calc', name: 'Tính Toán', icon: '🧮' },
-    { id: 'tab-finance', name: 'Lãi Suất', icon: '💰' },
-    { id: 'tab-calendar', name: 'Lịch Vạn Niên', icon: '📅' },
-    { id: 'tab-time-calc', name: 'Thời Gian', icon: '⏳' },
-    { id: 'tab-baby-name', name: 'Đặt Tên Con', icon: '👶' },
-    { id: 'tab-xiangqi', name: 'Cờ Tướng', icon: '⚔️' },
-    { id: 'tab-wheel', name: 'Quay ngẫu nhiên', icon: '🎲' },
-    { id: 'tab-html-runner', icon: '💻', name: 'HTML Runner' },
-    { id: 'tab-image-to-svg', icon: '🏞️', name: 'Tạo ảnh SVG' },
+    { id: 'tab-home', name: 'Trang Chủ' },
+    { id: 'tab-calc', name: 'Tính Toán' },
+    { id: 'tab-finance', name: 'Lãi Suất' },
+    { id: 'tab-calendar', name: 'Lịch Vạn Niên' },
+    { id: 'tab-time-calc', name: 'Thời Gian' },
+    { id: 'tab-baby-name', name: 'Đặt Tên Con' },
+    { id: 'tab-xiangqi', name: 'Cờ Tướng' },
+    { id: 'tab-wheel', name: 'Quay ngẫu nhiên' },
+    { id: 'tab-html-runner', name: 'HTML Runner' },
+    { id: 'tab-image-to-svg', name: 'Tạo ảnh SVG' },
 ];
 
 // --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
@@ -27,7 +27,7 @@ const toolMap = {
     'tab-xiangqi': './tools/07-xiangqi.js',
     'tab-wheel' : './tools/08-wheel.js',
     'tab-html-runner': './tools/09-html-runner.js',
-   'tab-image-to-svg': './tools/10-image-to-svg.js',
+    'tab-image-to-svg': './tools/10-image-to-svg.js',
 };
 
 // --- 3. KHAI BÁO CÁC PHẦN TỬ GIAO DIỆN ---
@@ -41,22 +41,23 @@ if (mobileMenu) {
     mobileMenu.classList.add('max-h-[70vh]', 'overflow-y-auto', 'custom-scrollbar');
 }
 
-// --- 4. HÀM TẠO MENU ---
+// --- 4. HÀM TẠO MENU (KHÔNG ICON, TỐI ƯU TYPOGRAPHY) ---
 if (desktopNav && mobileNav) {
     desktopNav.innerHTML = '';
     mobileNav.innerHTML = '';
     menuConfig.forEach(tool => {
+        // Nút Desktop: In hoa, giãn chữ, chữ nhỏ gọn thanh lịch
         desktopNav.innerHTML += `
             <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
-                class="nav-btn flex items-center space-x-2 px-3 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50">
-                <span class="text-xl">${tool.icon}</span>
-                <span class="text-sm font-semibold">${tool.name}</span>
+                class="nav-btn flex items-center px-4 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50 text-[12px] font-bold uppercase tracking-wider">
+                <span>${tool.name}</span>
             </button>`;
+        
+        // Nút Mobile: In hoa, giãn chữ mạnh hơn, không gian rộng rãi dễ bấm
         mobileNav.innerHTML += `
             <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
-                class="mobile-nav-btn flex items-center space-x-3 w-full px-4 py-3 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500">
-                <span class="text-xl">${tool.icon}</span>
-                <span class="font-semibold">${tool.name}</span>
+                class="mobile-nav-btn block w-full px-6 py-4 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500 text-[13px] font-bold uppercase tracking-widest">
+                ${tool.name}
             </button>`;
     });
 }
@@ -147,20 +148,16 @@ if (mainHeader) {
 // 2. Gắn sự kiện mở Menu Mobile và đóng khi nhấp ra ngoài
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 if (mobileMenuBtn && mobileMenu) {
-    // Sự kiện bấm nút để mở/đóng
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
 
-    // Sự kiện theo dõi nhấp chuột trên toàn màn hình
     document.addEventListener('click', function(event) {
-        // Kiểm tra xem menu có đang mở hay không
         const isMenuOpen = !mobileMenu.classList.contains('hidden');
         
         if (isMenuOpen) {
-            // Nếu click không nằm trong menu VÀ không nằm trên nút mở
             if (!mobileMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
-                mobileMenu.classList.add('hidden'); // Thu gọn menu
+                mobileMenu.classList.add('hidden'); 
             }
         }
     });
@@ -169,9 +166,7 @@ if (mobileMenuBtn && mobileMenu) {
 // 3. Gắn sự kiện cho nút Dark Mode (Tìm bằng id hoặc class)
 const darkModeBtn = document.getElementById('dark-mode-btn') || document.querySelector('[onclick="toggleDarkMode()"]');
 if (darkModeBtn) {
-    // Ép cứng sự kiện click, tránh lỗi HTML quên khai báo
     darkModeBtn.addEventListener('click', window.toggleDarkMode);
-    // Xóa onclick cũ trên HTML nếu có để tránh chạy 2 lần
     darkModeBtn.removeAttribute('onclick');
 }
 
@@ -179,18 +174,13 @@ if (darkModeBtn) {
 const savedTheme = localStorage.getItem('nothing_dark_mode');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-// Áp dụng ngay khi load trang
 if (savedTheme !== null) {
-    // Nếu đã từng bấm nút -> Tôn trọng lựa chọn của người dùng
     applyTheme(savedTheme === 'true');
 } else {
-    // Nếu vào lần đầu -> Dựa theo hệ thống
     applyTheme(systemPrefersDark.matches);
 }
 
-// Lắng nghe sự thay đổi từ thiết bị (khi người dùng đổi giao diện hệ thống)
 systemPrefersDark.addEventListener('change', (e) => {
-    // Chỉ tự đổi nếu người dùng CHƯA từng can thiệp bấm nút thủ công
     if (localStorage.getItem('nothing_dark_mode') === null) {
         applyTheme(e.matches);
     }
@@ -217,40 +207,31 @@ switchTab(initialTab);
 // HIỆU ỨNG BẦU TRỜI SAO TỰ ĐỘNG
 // =========================================
 function initGlobalStars() {
-    // Tránh tạo trùng lặp nếu hàm bị gọi nhiều lần
     if (document.getElementById('global-star-bg')) return;
     
-    // Tạo lớp màng chứa sao
     const starContainer = document.createElement('div');
     starContainer.id = 'global-star-bg';
     
-    // Rải khoảng 70 ngôi sao khắp màn hình (Không nên để quá nhiều gây nặng máy)
     const starCount = 70;
     
     for (let i = 0; i < starCount; i++) {
         let star = document.createElement('div');
         star.className = 'global-star';
         
-        // Kích thước sao ngẫu nhiên (từ siêu nhỏ 1px đến 2.5px)
         let size = Math.random() * 1.5 + 1;
         star.style.width = size + 'px';
         star.style.height = size + 'px';
         
-        // Vị trí rải rác ngẫu nhiên trên toàn bộ view màn hình
         star.style.top = Math.random() * 100 + 'vh';
         star.style.left = Math.random() * 100 + 'vw';
         
-        // Nhấp nháy không đồng đều để tạo cảm giác tự nhiên
         star.style.animationDelay = (Math.random() * 5) + 's';
-        // Chu kỳ nhấp nháy chậm hơn một chút để làm nền tĩnh lặng, không làm rối mắt
         star.style.animationDuration = (Math.random() * 4 + 3) + 's';
         
         starContainer.appendChild(star);
     }
     
-    // Chèn lớp màng vào thẳng thẻ body
     document.body.appendChild(starContainer);
 }
 
-// Chạy hàm tạo sao khi trang web vừa load xong
 document.addEventListener('DOMContentLoaded', initGlobalStars);
