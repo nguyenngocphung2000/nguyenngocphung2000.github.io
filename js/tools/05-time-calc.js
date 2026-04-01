@@ -19,20 +19,21 @@ export function setupTool() {
           '<div class="text-center mb-8">' +
           '<span class="bg-teal-100 text-teal-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-teal-200">Công thức & Thực tế</span>' +
           '<h2 class="text-3xl font-bold mt-2 text-slate-800">Tính Khoảng Cách <span class="text-teal-500">Thời Gian</span></h2>' +
-          '<p class="text-[11px] text-slate-500 italic mt-2 max-w-2xl mx-auto px-4">Công cụ hỗ trợ tính toán thời gian đa chiều và khoảng cách chính xác giữa 2 mốc ngày.</p>' +
+          '<p class="text-[11px] text-slate-500 italic mt-2 max-w-2xl mx-auto px-4">Công cụ hỗ trợ tính toán thời gian đa chiều và khoảng cách chính xác.</p>' +
           '</div>' +
           
           // BỌC GIAO DIỆN 3 CỘT TRÀN VIỀN
           '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
           '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
 
-          // ================= CỘT 1: KHOẢNG CÁCH 2 MỐC NGÀY (CƠ BẢN) =================
-          '<div class="w-full h-full">' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-teal-100 h-full flex flex-col tc-card">' +
+          // ================= CỘT 1 (CỘT TRỤ - QUYẾT ĐỊNH CHIỀU CAO TOÀN LƯỚI) =================
+          '<div class="w-full flex flex-col gap-6">' +
           
-          '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Khoảng cách 2 mốc ngày</h3></div>' +
+          // Thẻ 1.1: Nhập liệu
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-teal-100 flex flex-col tc-card shrink-0">' +
+          '<div class="border-b border-slate-200 pb-3"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Khoảng cách 2 mốc ngày</h3></div>' +
           
-          '<div class="mt-4 space-y-5 flex-1">' +
+          '<div class="mt-4 space-y-5">' + 
           '<div>' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">Từ ngày (Bắt đầu)</label>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
@@ -52,20 +53,24 @@ export function setupTool() {
           '<span class="text-slate-300 font-black">/</span>' +
           '<select id="tc-end-y" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-teal-200 cursor-pointer"></select>' +
           '</div></div>' +
-          '</div>' + // Kết thúc form Inputs
+          '</div>' + 
           
-          '<div class="mt-4 flex gap-2 w-full shrink-0">' +
+          '<div class="mt-4 flex gap-2 w-full">' + 
           '<button id="tc-btn-conv" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
           '<span class="text-sm uppercase tracking-wide">CÔNG THỨC</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Quy ước 30 ngày)</span></button>' +
           '<button id="tc-btn-real" class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex flex-col items-center justify-center">' +
           '<span class="text-sm uppercase tracking-wide">THEO LỊCH</span><span class="text-[9px] font-medium opacity-90 mt-0.5">(Thực tế)</span></button>' +
           '</div>' +
+          '</div>' + 
 
-          // Khu vực Kết quả Cột 1
-          '<div id="tc-result" class="hidden mt-4 shrink-0">' +
-          '<div class="tc-card bg-[#e0f2fe] rounded-[1.5rem] p-5 shadow-sm border border-white relative overflow-hidden">' +
+          // Thẻ 1.2: Kết quả (Tự giãn để đẩy thẻ dưới bằng Cột 2 & 3 nếu cần)
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-200 flex flex-col tc-card flex-1">' +
+          '<div class="border-b border-slate-200 pb-3"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Kết quả mốc ngày</h3></div>' +
+          '<div id="tc-empty-state" class="flex-1 flex items-center justify-center text-[11px] text-slate-400 italic text-center py-6">Kết quả tính toán sẽ hiển thị tại đây...</div>' +
+          
+          '<div id="tc-result" class="hidden mt-4 tc-card bg-[#e0f2fe] rounded-[1.5rem] p-5 shadow-sm border border-white relative overflow-hidden">' +
           '<div class="flex justify-between items-end border-b border-teal-200/50 pb-2 mb-3">' +
-          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KẾT QUẢ</div>' +
+          '<div class="text-teal-600 font-bold text-xs tracking-widest uppercase">KHOẢNG CÁCH</div>' +
           '<div id="tc-res-type" class="text-[10px] font-bold text-teal-700/60 uppercase bg-teal-50/50 px-2 py-0.5 rounded border border-teal-100">--</div>' +
           '</div>' +
           '<div class="space-y-2">' +
@@ -81,21 +86,23 @@ export function setupTool() {
           '<div class="tc-inner-card bg-teal-500 p-3 rounded-xl border border-teal-600 shadow-md flex flex-col">' +
           '<span class="text-[9px] text-teal-100 font-bold uppercase tracking-wider mb-1">Tổng Ngày Tuyệt Đối</span>' +
           '<span class="text-xl font-black text-white" id="tc-res-4">--</span></div>' +
-          '</div></div></div>' +
-
+          '</div></div>' +
           '</div>' +
+
           '</div>' + // KẾT THÚC CỘT 1
 
-          // ================= CỘT 2: TÍNH THỜI GIAN ĐA CHIỀU (NÂNG CAO) =================
-          '<div class="w-full h-full">' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-orange-100 h-full flex flex-col tc-card">' +
+          // ================= CỘT 2: TÍNH THỜI GIAN ĐA CHIỀU =================
+          '<div class="w-full flex flex-col h-full">' +
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-orange-100 flex flex-col flex-1 tc-card h-full">' + 
           
           '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Tính thời gian đa chiều</h3></div>' +
-          '<p class="text-[10px] text-slate-500 italic mt-3 mb-1 shrink-0">Mẹo: Nhập dữ liệu đã biết, BỎ TRỐNG các ô cần tìm bằng nút (#). Tính theo chuẩn 1 tháng = 30 ngày.</p>' +
           
-          '<div class="mt-2 space-y-4 flex-1">' +
+          '<div class="mt-4 space-y-4 shrink-0">' + // Bao bọc phần nhập liệu cố định
           '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">1. Ngày Bắt Đầu (Bắt buộc)</label>' +
+          '<div class="flex justify-between items-end mb-1.5">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">1. Ngày Bắt Đầu</label>' +
+          '<button id="m2-btn-clear-start" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-3 py-1 rounded font-bold transition shadow-sm border border-slate-200 tracking-wider">XÓA</button>' +
+          '</div>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
           '<select id="m2-start-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 cursor-pointer"></select>' +
           '<span class="text-slate-300 font-black">/</span>' +
@@ -105,9 +112,9 @@ export function setupTool() {
           '</div></div>' +
 
           '<div>' +
-          '<div class="flex justify-between items-end mb-2">' +
+          '<div class="flex justify-between items-end mb-1.5">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">2. Ngày Đích Đến</label>' +
-          '<button id="m2-btn-clear-end" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-2 py-1 rounded font-bold transition shadow-sm border border-slate-200">XÓA TRỐNG (#)</button>' +
+          '<button id="m2-btn-clear-end" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-3 py-1 rounded font-bold transition shadow-sm border border-slate-200 tracking-wider">XÓA</button>' +
           '</div>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
           '<select id="m2-end-d" style="text-align-last: center; direction: ltr;" class="w-1/3 bg-orange-50 border border-orange-200 rounded-xl text-center font-bold text-orange-600 py-3 outline-none focus:ring-2 ring-orange-400 cursor-pointer"></select>' +
@@ -118,7 +125,10 @@ export function setupTool() {
           '</div></div>' +
 
           '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-2 block ml-1">3. Tổng Thời Gian</label>' +
+          '<div class="flex justify-between items-end mb-1.5">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">3. Tổng Thời Gian</label>' +
+          '<button id="m2-btn-clear-wait" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-3 py-1 rounded font-bold transition shadow-sm border border-slate-200 tracking-wider">XÓA</button>' +
+          '</div>' +
           '<div class="flex justify-center items-center gap-2 w-full">' +
           '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-y" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Năm</span></div>' +
           '<div class="flex-1 flex flex-col items-center"><input id="m2-wait-m" type="number" min="0" placeholder="#" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-2.5 outline-none focus:ring-2 ring-orange-200"><span class="text-[9px] font-bold text-slate-400 mt-1 uppercase">Tháng</span></div>' +
@@ -126,7 +136,10 @@ export function setupTool() {
           '</div></div>' +
 
           '<div>' +
-          '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">4. Tỷ Lệ</label>' +
+          '<div class="flex justify-between items-end mb-1.5">' +
+          '<label class="text-[10px] font-bold text-slate-400 uppercase block ml-1">4. Tỷ Lệ</label>' +
+          '<button id="m2-btn-clear-ratio" class="text-[9px] bg-slate-100 text-slate-500 hover:bg-slate-200 px-3 py-1 rounded font-bold transition shadow-sm border border-slate-200 tracking-wider">XÓA</button>' +
+          '</div>' +
           '<div class="flex flex-wrap justify-center gap-1.5 mb-3 px-1">' +
           '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="5">1/5</button>' +
           '<button class="m2-quick-ratio text-[10px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 px-2.5 py-1.5 rounded-lg transition shadow-sm active:scale-95" data-num="1" data-den="4">1/4</button>' +
@@ -141,9 +154,9 @@ export function setupTool() {
           '<span class="text-xl font-black text-slate-300">/</span>' +
           '<input id="m2-ratio-den" type="number" placeholder="Mẫu" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-black text-slate-700 text-base py-2 outline-none focus:ring-2 ring-orange-200">' +
           '</div></div>' +
-          '</div>' + // Kết thúc form Inputs
+          '</div>' + 
           
-          '<div class="flex gap-2 w-full shrink-0 mt-4">' +
+          '<div class="flex gap-2 w-full mt-4 shrink-0">' + 
           '<button id="mod2-btn-reset" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3.5 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 text-[11px] uppercase">' +
           'LÀM MỚI' +
           '</button>' +
@@ -152,29 +165,43 @@ export function setupTool() {
           '</button>' +
           '</div>' +
 
-          // Khu vực Kết quả Cột 2
-          '<div id="mod2-result" class="hidden shrink-0 tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
-          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">KẾT QUẢ TÍNH TOÁN</div>' +
-          '<div id="mod2-dynamic-res" class="w-full"></div>' +
+          // Phần Mẹo bọc Flex-1 hút trọn không gian trống để ép nút bấm sát lên trên
+          '<div class="mt-6 flex-1 bg-orange-50/50 rounded-2xl p-4 border border-orange-100/50 flex flex-col justify-center">' +
+          '<p class="text-[12px] text-slate-600 font-medium">Nhập dữ kiện <strong class="text-slate-700">đã biết</strong>, nhấn <strong class="text-orange-600">XÓA</strong> ở ô ẩn số cần tìm. Chuẩn 1 tháng = 30 ngày.</p>' +
           '</div>' +
 
-          '</div>' +
+          '</div>' + 
           '</div>' + // KẾT THÚC CỘT 2
 
-          // ================= CỘT 3: LỊCH SỬ TÍNH TOÁN =================
-          '<div class="w-full h-full">' +
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col tc-card">' +
+          // ================= CỘT 3: KẾT QUẢ ĐA CHIỀU + LỊCH SỬ =================
+          '<div class="w-full flex flex-col gap-6 h-full">' +
           
+          // Thẻ 3.1: Kết quả đa chiều
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-200 flex flex-col tc-card shrink-0">' +
+          '<div class="border-b border-slate-200 pb-3"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Kết quả đa chiều</h3></div>' +
+          
+          '<div id="mod2-empty-state" class="flex items-center justify-center text-[11px] text-slate-400 italic text-center py-6">Kết quả tính toán sẽ hiển thị tại đây...</div>' +
+
+          '<div id="mod2-result" class="hidden tc-card bg-[#fff7ed] rounded-[1.5rem] p-5 shadow-sm border border-orange-100 mt-4">' +
+          '<div class="text-orange-600 font-bold text-[10px] tracking-widest uppercase border-b border-orange-200/50 pb-2 mb-1">ĐA CHIỀU</div>' +
+          '<div id="mod2-dynamic-res" class="w-full"></div>' +
+          '</div>' +
+          '</div>' + 
+
+          // Thẻ 3.2: Lịch sử (Sử dụng absolute inset-0 để tự cuộn, không ép giãn Grid)
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col tc-card flex-1 min-h-[200px]">' +
           '<div class="flex justify-between items-center border-b border-slate-200 pb-3 shrink-0">' +
           '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Lịch sử tính toán</h3>' +
-          '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100 uppercase tracking-wider">XÓA LỊCH SỬ</button>' +
+          '<button id="tc-btn-clear" class="text-[9px] bg-red-50 text-red-500 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition shadow-sm border border-red-100 uppercase tracking-wider">XÓA</button>' +
           '</div>' +
           
-          '<div id="tc-history-list" class="mt-4 space-y-2 flex-1 overflow-y-auto custom-scrollbar pr-1 max-h-[600px]"></div>' +
-          
+          '<div class="relative flex-1 mt-4">' + // Khung bọc tương đối
+          '<div id="tc-history-list" class="absolute inset-0 overflow-y-auto custom-scrollbar pr-1 space-y-2"></div>' + // Danh sách tuyệt đối nội bộ
           '</div>' +
-          '</div>' + // KẾT THÚC CỘT 3
 
+          '</div>' +
+
+          '</div>' + // KẾT THÚC CỘT 3
           '</div>' + // KẾT THÚC LƯỚI GRID
           '</div>';  // KẾT THÚC BỌC TRÀN VIỀN
 
@@ -185,13 +212,18 @@ export function setupTool() {
     // ==========================================
     var sD = document.getElementById('tc-start-d'), sM = document.getElementById('tc-start-m'), sY = document.getElementById('tc-start-y');
     var eD = document.getElementById('tc-end-d'), eM = document.getElementById('tc-end-m'), eY = document.getElementById('tc-end-y');
-    var btnConv = document.getElementById('tc-btn-conv'), btnReal = document.getElementById('tc-btn-real'), resDiv1 = document.getElementById('tc-result');
-
+    var btnConv = document.getElementById('tc-btn-conv'), btnReal = document.getElementById('tc-btn-real');
+    
     var m2sD = document.getElementById('m2-start-d'), m2sM = document.getElementById('m2-start-m'), m2sY = document.getElementById('m2-start-y');
     var m2eD = document.getElementById('m2-end-d'), m2eM = document.getElementById('m2-end-m'), m2eY = document.getElementById('m2-end-y');
     var m2wY = document.getElementById('m2-wait-y'), m2wM = document.getElementById('m2-wait-m'), m2wD = document.getElementById('m2-wait-d');
     var m2rNum = document.getElementById('m2-ratio-num'), m2rDen = document.getElementById('m2-ratio-den');
-    var btnMod2 = document.getElementById('mod2-btn-calc'), resDiv2 = document.getElementById('mod2-result');
+    var btnMod2 = document.getElementById('mod2-btn-calc');
+
+    var tcEmptyState = document.getElementById('tc-empty-state');
+    var mod2EmptyState = document.getElementById('mod2-empty-state');
+    var resDiv1 = document.getElementById('tc-result');
+    var resDiv2 = document.getElementById('mod2-result');
 
     var btnClear = document.getElementById('tc-btn-clear'), historyList = document.getElementById('tc-history-list');
 
@@ -201,7 +233,7 @@ export function setupTool() {
 
     var renderHistory = function() {
         historyList.innerHTML = '';
-        if(tcHistory.length === 0) { historyList.innerHTML = '<div class="text-xs text-slate-400 italic text-center py-4">Chưa có lịch sử tính toán nào.</div>'; return; }
+        if(tcHistory.length === 0) { historyList.innerHTML = '<div class="text-[11px] text-slate-400 italic text-center py-4">Chưa có lịch sử tính toán nào.</div>'; return; }
         for(var i = 0; i < tcHistory.length; i++) {
             var h = tcHistory[i];
             var colorType = 'text-teal-600';
@@ -211,7 +243,7 @@ export function setupTool() {
             var itemHtml = '<div class="tc-history-item bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-1 shadow-sm">';
             itemHtml += '<div class="flex justify-between items-center"><div class="text-[10px] font-bold text-slate-500">' + h.dateStart + '</div><div class="text-[9px] font-bold ' + colorType + ' uppercase bg-white px-1.5 py-0.5 rounded border border-slate-200">' + h.typeLabel + '</div></div>';
             itemHtml += '<div class="text-sm font-black text-slate-700 mt-1">' + h.resText1 + '</div>';
-            itemHtml += '<div class="text-xs font-medium text-slate-500">' + h.resText4 + '</div></div>';
+            itemHtml += '<div class="text-[11px] font-medium text-slate-500">' + h.resText4 + '</div></div>';
             historyList.innerHTML += itemHtml;
         }
     };
@@ -230,19 +262,31 @@ export function setupTool() {
     };
 
     var mOpts = ''; for(var i = 1; i <= 12; i++) mOpts += '<option value="' + i + '">' + i + '</option>'; 
-    sM.innerHTML = mOpts; eM.innerHTML = mOpts; m2sM.innerHTML = mOpts;
+    sM.innerHTML = mOpts; eM.innerHTML = mOpts; 
     
     var yOpts = ''; var curY = new Date().getFullYear();
     for(var i = curY - 50; i <= curY + 50; i++) yOpts += '<option value="' + i + '">' + i + '</option>'; 
-    sY.innerHTML = yOpts; eY.innerHTML = yOpts; m2sY.innerHTML = yOpts;
+    sY.innerHTML = yOpts; eY.innerHTML = yOpts; 
+
+    // Hàm cập nhật ngày riêng cho Khối Đa Chiều (Cho phép rỗng)
+    var updateDaysM2Start = function() {
+        var currentD = m2sD.value; var m = parseInt(m2sM.value); var y = parseInt(m2sY.value);
+        var dOpts = '<option value=""># Ngày</option>'; 
+        var maxD = (!isNaN(m) && !isNaN(y)) ? new Date(y, m, 0).getDate() : 31;
+        for(var i = 1; i <= maxD; i++) dOpts += '<option value="' + i + '" ' + (i == currentD ? 'selected' : '') + '>' + i + '</option>';
+        m2sD.innerHTML = dOpts;
+    };
+    var mOptsM2S = '<option value=""># Tháng</option>'; for(var i = 1; i <= 12; i++) mOptsM2S += '<option value="' + i + '">' + i + '</option>'; m2sM.innerHTML = mOptsM2S;
+    var yOptsM2S = '<option value=""># Năm</option>'; for(var i = curY - 50; i <= curY + 50; i++) yOptsM2S += '<option value="' + i + '">' + i + '</option>'; m2sY.innerHTML = yOptsM2S;
 
     var setupDateListeners = function(d, m, y) { m.addEventListener('change', function() { updateDays(d, m, y); }); y.addEventListener('change', function() { updateDays(d, m, y); }); };
-    setupDateListeners(sD, sM, sY); setupDateListeners(eD, eM, eY); setupDateListeners(m2sD, m2sM, m2sY);
+    setupDateListeners(sD, sM, sY); setupDateListeners(eD, eM, eY); 
+    m2sM.addEventListener('change', updateDaysM2Start); m2sY.addEventListener('change', updateDaysM2Start);
 
     var today = new Date();
     sM.value = today.getMonth() + 1; sY.value = today.getFullYear(); updateDays(sD, sM, sY); sD.value = today.getDate();
     eM.value = today.getMonth() + 1; eY.value = today.getFullYear(); updateDays(eD, eM, eY); eD.value = today.getDate();
-    m2sM.value = today.getMonth() + 1; m2sY.value = today.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = today.getDate();
+    m2sM.value = today.getMonth() + 1; m2sY.value = today.getFullYear(); updateDaysM2Start(); m2sD.value = today.getDate();
 
     var updateEndDays = function() {
         var currentD = m2eD.value; var m = parseInt(m2eM.value); var y = parseInt(m2eY.value);
@@ -261,18 +305,21 @@ export function setupTool() {
     updateEndDays();
     m2eD.value = today.getDate();
 
-    document.getElementById('m2-btn-clear-end').onclick = function() {
-        m2eD.value = ""; m2eM.value = ""; m2eY.value = "";
-        updateEndDays();
-    };
+    // Các tính năng nút XÓA
+    document.getElementById('m2-btn-clear-start').onclick = function() { m2sD.value = ""; m2sM.value = ""; m2sY.value = ""; updateDaysM2Start(); };
+    document.getElementById('m2-btn-clear-end').onclick = function() { m2eD.value = ""; m2eM.value = ""; m2eY.value = ""; updateEndDays(); };
+    document.getElementById('m2-btn-clear-wait').onclick = function() { m2wY.value = ""; m2wM.value = ""; m2wD.value = ""; };
+    document.getElementById('m2-btn-clear-ratio').onclick = function() { m2rNum.value = ""; m2rDen.value = ""; };
 
     document.getElementById('mod2-btn-reset').onclick = function() {
         var td = new Date();
-        m2sM.value = td.getMonth() + 1; m2sY.value = td.getFullYear(); updateDays(m2sD, m2sM, m2sY); m2sD.value = td.getDate();
+        m2sM.value = td.getMonth() + 1; m2sY.value = td.getFullYear(); updateDaysM2Start(); m2sD.value = td.getDate();
         m2eM.value = td.getMonth() + 1; m2eY.value = td.getFullYear(); updateEndDays(); m2eD.value = td.getDate();
         m2wY.value = ""; m2wM.value = ""; m2wD.value = "";
         m2rNum.value = ""; m2rDen.value = "";
+        
         resDiv2.classList.add('hidden');
+        mod2EmptyState.classList.remove('hidden');
     };
 
     var ratioBtns = document.querySelectorAll('.m2-quick-ratio');
@@ -320,6 +367,8 @@ export function setupTool() {
         document.getElementById('tc-res-1').innerText = str1; document.getElementById('tc-res-2').innerText = str2;
         document.getElementById('tc-res-3').innerText = str3; document.getElementById('tc-res-4').innerText = str4;
         document.getElementById('tc-res-type').innerText = typeLabel;
+        
+        tcEmptyState.classList.add('hidden');
         resDiv1.classList.remove('hidden');
 
         var startStr = ('0'+d1).slice(-2)+'/'+('0'+m1).slice(-2)+'/'+y1; var endStr = ('0'+d2).slice(-2)+'/'+('0'+m2).slice(-2)+'/'+y2;
@@ -346,8 +395,12 @@ export function setupTool() {
 
     btnMod2.onclick = function() {
         var sD = parseInt(m2sD.value), sM = parseInt(m2sM.value), sY = parseInt(m2sY.value);
+        if (isNaN(sD) || isNaN(sM) || isNaN(sY)) {
+            alert("Lỗi: Vui lòng nhập đầy đủ Ngày Bắt Đầu (Được dùng làm mốc quy chiếu).");
+            return;
+        }
+
         var eD = m2eD.value, eM = m2eM.value, eY = m2eY.value;
-        
         var wYv = parseInt(m2wY.value)||0, wMv = parseInt(m2wM.value)||0, wDv = parseInt(m2wD.value)||0;
         var rNv = parseInt(m2rNum.value)||0, rDv = parseInt(m2rDen.value)||0;
 
@@ -415,11 +468,13 @@ export function setupTool() {
             historyMain = "Đã qua: " + resPassed; historySub = "Số liệu đầy đủ";
         }
         else {
-            alert("Bạn cần cung cấp các dữ liệu phù hợp (VD: Chỉ cần Ngày Bắt Đầu + Đích, HOẶC cung cấp ít nhất 2 trong 3 khối dữ liệu để tìm ẩn số còn lại).");
+            alert("Vui lòng cung cấp đủ thông tin. VD: (Ngày Bắt Đầu + Đích) HOẶC (2 trong 3 dữ kiện còn lại).");
             return;
         }
 
         document.getElementById('mod2-dynamic-res').innerHTML = dynamicHtml;
+        
+        mod2EmptyState.classList.add('hidden');
         resDiv2.classList.remove('hidden');
 
         var resStart = ('0'+sD).slice(-2) + "/" + ('0'+sM).slice(-2) + "/" + sY;
