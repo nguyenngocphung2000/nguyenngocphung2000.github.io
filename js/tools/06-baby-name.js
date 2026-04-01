@@ -94,7 +94,7 @@ export function setupTool() {
 
           // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý =================
           '<div class="w-full h-full flex flex-col min-h-0">' +
-          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' + // Sửa lỗi chiều cao trên Mobile
+          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' + 
           
           '<div class="flex justify-between items-center border-b border-pink-200/50 pb-3 shrink-0">' +
           '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
@@ -102,7 +102,7 @@ export function setupTool() {
           '</div>' +
           
           // Khung chứa list kết quả, tự động tạo thanh cuộn nếu quá dài
-          '<div class="relative flex-1 mt-4 min-h-[300px] lg:min-h-0">' + // Bổ sung bảo hiểm chiều cao cho mobile
+          '<div class="relative flex-1 mt-4 min-h-[300px] lg:min-h-0">' + 
           '<div id="bn-res-list" class="absolute inset-0 overflow-y-auto custom-scrollbar pr-1 grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">' +
           '<div class="col-span-full text-center text-slate-400 italic py-10 text-[11px]">Chưa có dữ liệu. Hãy bấm "Đề xuất tên"!</div>' +
           '</div>' +
@@ -124,7 +124,7 @@ export function setupTool() {
           '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Nhập danh sách</label>' +
           '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">DÒNG: <span id="flt-cnt-in">0</span></span>' +
           '</div>' +
-          '<div class="flex gap-1.5">' + // Thêm cụm nút XÓA và DÁN
+          '<div class="flex gap-1.5">' + 
           '<button id="flt-btn-clear-in" class="text-[9px] bg-red-50 border border-red-100 text-red-500 hover:bg-red-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">XÓA</button>' +
           '<button id="flt-btn-paste" class="text-[9px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">DÁN</button>' +
           '</div>' +
@@ -247,19 +247,20 @@ export function setupTool() {
         });
     };
 
+    // ===============================================
+    // CẬP NHẬT LOGIC TẢI FILE TỪ GỘP TỪ name.json
+    // ===============================================
     btnGen.onclick = async function() {
         if (!window.nameParsed) {
             btnGen.innerHTML = 'ĐANG TẢI DỮ LIỆU...';
             try {
-                const [resNam, resNu] = await Promise.all([
-                    fetch('data/nam.json'),
-                    fetch('data/nu.json')
-                ]);
+                const response = await fetch('data/name.json'); // Sửa đường dẫn sang file gộp
+                if (!response.ok) throw new Error("Không thể tải file dữ liệu.");
                 
-                if (!resNam.ok || !resNu.ok) throw new Error("Không thể tải file dữ liệu.");
+                const allData = await response.json(); // Phân tích file gộp
                 
-                const namDataArr = await resNam.json();
-                const nuDataArr = await resNu.json();
+                const namDataArr = allData.nam || []; // Lấy mảng nam
+                const nuDataArr = allData.nu || [];   // Lấy mảng nữ
 
                 window.nameData = { nam: { ho: [], demFull: [], demWords: [], ten: [] }, nu: { ho: [], demFull: [], demWords: [], ten: [] } };
                 
@@ -289,7 +290,7 @@ export function setupTool() {
                 window.nameParsed = true;
                 btnGen.innerHTML = 'ĐỀ XUẤT TÊN';
             } catch (error) {
-                alert("Lỗi: Không tìm thấy file dữ liệu (data/nam.json hoặc data/nu.json). Hãy kiểm tra lại cấu trúc thư mục!");
+                alert("Lỗi: Không tìm thấy file dữ liệu (data/name.json). Hãy kiểm tra lại cấu trúc thư mục và tên file!");
                 btnGen.innerHTML = 'ĐỀ XUẤT TÊN';
                 return;
             }
