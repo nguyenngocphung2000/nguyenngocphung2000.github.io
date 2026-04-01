@@ -10,6 +10,7 @@ export function setupTool() {
           'body.dark-mode .svg-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; } ' +
           'body.dark-mode .svg-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; } ' +
           'body.dark-mode .svg-preview-box { background-color: rgba(15, 23, 42, 0.4) !important; border-color: #334155 !important; } ' +
+          '.is-round .cropper-view-box, .is-round .cropper-face { border-radius: 50%; } ' +
           '</style>' +
           
           '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />' +
@@ -23,15 +24,11 @@ export function setupTool() {
           '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
           '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
 
-          // ================= CỘT 1: TẢI & CẮT ẢNH =================
           '<div class="w-full h-full">' + 
-          // Đổi p-6 thành p-5 và bỏ space-y-4
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 svg-card h-full flex flex-col">' +
           
-          // Tiêu đề căn đều, sát mí
           '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Tải Lên & Cắt Ảnh</h3></div>' +
           
-          // Thêm mt-4 để cách đều tiêu đề
           '<div class="mt-4 relative overflow-hidden w-full bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold py-3.5 rounded-xl border border-slate-200 transition active:scale-95 flex justify-center items-center gap-2 text-[12px] uppercase tracking-wide cursor-pointer svg-input shrink-0">' +
           '<span>Tải ảnh lên (JPG, PNG)</span>' +
           '<input type="file" id="svg-tool-input" accept="image/png, image/jpeg" class="absolute inset-0 opacity-0 cursor-pointer" />' +
@@ -40,6 +37,7 @@ export function setupTool() {
           '<div class="mt-3 flex gap-2 shrink-0">' +
           '<button class="svg-tool-ratio w-full bg-blue-500 text-white border border-blue-500 py-2.5 rounded-lg font-bold shadow-sm transition active:scale-95 text-[10px] uppercase" data-ratio="NaN">Tự do</button>' +
           '<button class="svg-tool-ratio w-full bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 py-2.5 rounded-lg font-bold shadow-sm transition active:scale-95 text-[10px] uppercase svg-input" data-ratio="1">1:1</button>' +
+          '<button class="svg-tool-ratio w-full bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 py-2.5 rounded-lg font-bold shadow-sm transition active:scale-95 text-[10px] uppercase svg-input" data-ratio="1" data-round="true">Tròn</button>' +
           '<button class="svg-tool-ratio w-full bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 py-2.5 rounded-lg font-bold shadow-sm transition active:scale-95 text-[10px] uppercase svg-input" data-ratio="1.33333333">4:3</button>' +
           '<button class="svg-tool-ratio w-full bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 py-2.5 rounded-lg font-bold shadow-sm transition active:scale-95 text-[10px] uppercase svg-input" data-ratio="1.77777778">16:9</button>' +
           '</div>' +
@@ -51,7 +49,6 @@ export function setupTool() {
           '</div>' +
           '</div>' + 
 
-          // ================= CỘT 2: CẤU HÌNH BIẾN ĐỔI =================
           '<div class="w-full h-full">' + 
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 svg-card h-full flex flex-col">' +
           
@@ -88,11 +85,9 @@ export function setupTool() {
           '</div>' +
           '</div>' + 
 
-          // ================= CỘT 3: KẾT QUẢ =================
           '<div class="w-full h-full">' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 relative svg-card h-full flex flex-col">' +
           
-          // Tiêu đề LUÔN NẰM TRÊN CÙNG
           '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Kết Quả Đầu Ra</h3></div>' +
           
           '<div class="mt-4 w-full min-h-[220px] bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-2 flex items-center justify-center overflow-hidden svg-preview-box shrink-0">' +
@@ -112,7 +107,6 @@ export function setupTool() {
           '</button>' +
           '</div>' +
           
-          // Màn hình loading chuyển xuống cuối cùng, nó đè lên toàn bộ thẻ nên không ảnh hưởng vị trí code!
           '<div id="svg-tool-loading" class="absolute inset-0 bg-white/90 backdrop-blur-sm z-10 rounded-3xl hidden flex-col items-center justify-center">' +
           '<div class="w-10 h-10 border-4 border-slate-200 border-t-blue-500 rounded-full animate-spin mb-3"></div>' +
           '<h3 class="font-bold text-blue-500 text-sm uppercase tracking-wide">Đang Xử Lý Vector...</h3>' +
@@ -127,7 +121,6 @@ export function setupTool() {
 
     document.getElementById('app-container').appendChild(panel);
 
-    // Load thư viện CDN
     function loadExternalScripts(callback) {
         let loaded = 0;
         const scripts = [
@@ -152,7 +145,6 @@ export function setupTool() {
         });
     }
 
-    // Logic xử lý
     loadExternalScripts(function() {
         const inputImg = document.getElementById('svg-tool-input');
         const imgWorkspace = document.getElementById('svg-tool-image');
@@ -210,9 +202,19 @@ export function setupTool() {
                     placeholderWorkspace.style.display = 'none';
 
                     let activeRatio = NaN;
+                    let isRound = false;
                     ratioBtns.forEach(b => {
-                        if (b.classList.contains('bg-blue-500')) activeRatio = parseFloat(b.dataset.ratio);
+                        if (b.classList.contains('bg-blue-500')) {
+                            activeRatio = parseFloat(b.dataset.ratio);
+                            if (b.dataset.round === 'true') isRound = true;
+                        }
                     });
+
+                    if (isRound) {
+                        imgWorkspace.parentElement.classList.add('is-round');
+                    } else {
+                        imgWorkspace.parentElement.classList.remove('is-round');
+                    }
 
                     cropper = new Cropper(imgWorkspace, {
                         aspectRatio: activeRatio,
@@ -240,6 +242,12 @@ export function setupTool() {
             btn.addEventListener('click', function() {
                 updateActiveRatioBtn(this);
                 if (cropper) cropper.setAspectRatio(parseFloat(this.dataset.ratio));
+                
+                if (this.dataset.round === 'true') {
+                    imgWorkspace.parentElement.classList.add('is-round');
+                } else {
+                    imgWorkspace.parentElement.classList.remove('is-round');
+                }
             });
         });
 
@@ -252,7 +260,6 @@ export function setupTool() {
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     const originalCanvas = cropper.getCroppedCanvas({
-                        fillColor: '#fff',
                         imageSmoothingEnabled: true,
                         imageSmoothingQuality: 'high'
                     });
@@ -272,6 +279,20 @@ export function setupTool() {
                     resizedCanvas.height = height;
                     const ctx = resizedCanvas.getContext('2d');
                     
+                    let isRound = false;
+                    ratioBtns.forEach(b => {
+                        if (b.classList.contains('bg-blue-500') && b.dataset.round === 'true') isRound = true;
+                    });
+
+                    if (isRound) {
+                        ctx.beginPath();
+                        ctx.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI);
+                        ctx.clip();
+                    } else {
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(0, 0, width, height);
+                    }
+
                     ctx.drawImage(originalCanvas, 0, 0, width, height);
                     const processDataUrl = resizedCanvas.toDataURL('image/png');
 
