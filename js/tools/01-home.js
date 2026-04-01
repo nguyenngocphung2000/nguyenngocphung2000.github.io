@@ -9,7 +9,6 @@ export function setupTool() {
     
     panel.innerHTML = `
         <style>
-            /* ĐỈNH CAO TYPOGRAPHY - CĂN ĐỀU KHÔNG LỖ HỔNG DÀNH CHO MOBILE */
             .perfect-justify {
                 text-align: justify !important;
                 text-justify: inter-word;
@@ -23,7 +22,6 @@ export function setupTool() {
                 overflow-wrap: break-word; 
             }
 
-            /* BỘ QUY TẮC DARK MODE ĐỒNG BỘ CHO TAB HOME */
             body.dark-mode .bio-box {
                 background-image: linear-gradient(to right, rgba(249, 115, 22, 0.05), transparent) !important;
                 border-left-color: #f97316 !important;
@@ -145,6 +143,7 @@ export function setupTool() {
     const manifest = [
         { title: "Contact me", date: "Nothing", path: "posts/contact.md" },
         { title: "Tạo Bot Telegram quản lý tài chính với Google Sheet", date: "Nothing", path: "posts/bot-telegram.md" },
+        { title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia", date: "Nothing", path: "posts/guide-use-ai.md" },
         { title: "Chặn quảng cáo Web, App, Zalo bằng NextDNS", date: "Thủ thuật IOS", path: "posts/nextdns.md" },
         { title: "Cài Lịch Âm & Bộ gõ tiếng Việt trên macOS, các ứng dụng khác", date: "Thủ thuật Mac", path: "posts/mac-apps.md" },
         { title: "Tổng hợp tài liệu học lập trình và công nghệ thông tin từ Freetuts", date: "Tài liệu học tập", path: "posts/tong-hop-tai-lieu-freetuts.md" },
