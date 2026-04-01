@@ -11,45 +11,49 @@ export function setupTool() {
         <style>
             .cobalt-ui-wrapper {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-                background-color: #f4f4f5; 
-                border-radius: 1.5rem;
+                background-color: transparent; 
                 color: #18181b;
-                overflow: hidden;
-                transition: background-color 0.3s, color 0.3s;
+                transition: color 0.3s;
             }
 
             .cb-btn {
                 background-color: #e4e4e7;
                 border: none;
                 border-radius: 0.75rem;
-                padding: 0.75rem 0.5rem;
+                padding: 0.5rem 1rem;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 gap: 0.4rem;
                 cursor: pointer;
                 transition: background 0.2s, transform 0.1s;
                 color: #18181b;
+                font-weight: 600;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
             .cb-btn:active { background-color: #d4d4d8; transform: scale(0.96); }
-            .cb-btn svg { width: 22px; height: 22px; stroke-width: 1.5; }
-            .cb-btn span { font-size: 0.85rem; font-weight: 500; letter-spacing: -0.3px; }
+            .cb-btn svg { width: 18px; height: 18px; stroke-width: 2; }
 
             .cb-btn-black {
                 background-color: #000000;
                 color: #ffffff;
-                width: 100%;
                 border: none;
                 border-radius: 0.75rem;
-                padding: 1rem;
-                font-size: 1.1rem;
-                font-weight: 600;
+                padding: 0.5rem 1.5rem;
+                font-size: 0.9rem;
+                font-weight: 700;
                 cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
                 transition: transform 0.1s, background-color 0.3s, color 0.3s;
-                letter-spacing: -0.3px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
-            .cb-btn-black:active { transform: scale(0.98); }
+            .cb-btn-black:active { transform: scale(0.96); }
 
             .cb-editor-box {
                 display: flex;
@@ -57,24 +61,24 @@ export function setupTool() {
                 border: 1px solid #e4e4e7;
                 border-radius: 1rem;
                 overflow: hidden;
-                height: 400px;
+                height: 600px; /* Tăng chiều cao để code thoải mái hơn */
                 position: relative;
-                margin: 1rem 0;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
                 transition: background-color 0.3s, border-color 0.3s;
             }
 
             .cb-lines {
-                width: 40px;
+                width: 45px;
                 background-color: #f8fafc;
                 border-right: 1px solid #f1f5f9;
                 text-align: right;
-                padding-right: 8px;
+                padding-right: 12px;
                 color: #94a3b8;
                 font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-                font-size: 13px;
-                line-height: 22px;
-                padding-top: 12px;
-                padding-bottom: 12px;
+                font-size: 14px;
+                line-height: 24px;
+                padding-top: 16px;
+                padding-bottom: 16px;
                 overflow: hidden;
                 user-select: none;
                 transition: background-color 0.3s, border-color 0.3s;
@@ -86,106 +90,76 @@ export function setupTool() {
                 overflow: hidden;
             }
 
-            .cb-textarea, .cb-highlight {
+            .cb-textarea {
                 position: absolute;
                 top: 0; left: 0;
                 width: 100%; height: 100%;
                 margin: 0;
-                padding: 12px;
+                padding: 16px;
                 border: none;
                 font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-                font-size: 13px;
-                line-height: 22px;
+                font-size: 14px;
+                line-height: 24px;
                 white-space: pre;
                 overflow: auto;
                 tab-size: 4;
-            }
-
-            .cb-textarea {
-                color: transparent !important;
-                background: transparent !important;
-                caret-color: #000; 
+                color: #1e293b;
+                background: transparent;
                 resize: none;
                 outline: none;
-                z-index: 2;
             }
-            .cb-textarea::selection { background: rgba(0, 100, 255, 0.2); color: transparent; }
+            
+            .cb-textarea::selection { background: rgba(0, 100, 255, 0.2); }
 
-            .cb-highlight {
-                color: #24292e;
-                background: transparent; 
-                z-index: 1;
-                pointer-events: none; 
-            }
+            .scroll-hide::-webkit-scrollbar { width: 6px; height: 6px; }
+            .scroll-hide::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
 
-            /* MÀU CÚ PHÁP BAN NGÀY */
-            .syn-tag { color: #d73a49; }       
-            .syn-attr { color: #6f42c1; }      
-            .syn-str { color: #032f62; }       
-            .syn-kw { color: #d73a49; font-weight: 600; }  
-            .syn-func { color: #005cc5; font-weight: 600; } 
-            .syn-num { color: #005cc5; }       
-            .syn-css { color: #005cc5; }       
-            .syn-cmt { color: #6a737d; font-style: italic; } 
-
-            .scroll-hide::-webkit-scrollbar { width: 4px; height: 4px; }
-            .scroll-hide::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-
-            /* MÀU CÚ PHÁP BAN ĐÊM & DARK MODE GIAO DIỆN */
-            html.dark .cobalt-ui-wrapper, body.dark .cobalt-ui-wrapper { background-color: #18181b; color: #f4f4f5; }
+            /* DARK MODE */
+            html.dark .cobalt-ui-wrapper, body.dark .cobalt-ui-wrapper { color: #f4f4f5; }
             html.dark .cb-btn, body.dark .cb-btn { background-color: #27272a; color: #e4e4e7; }
             html.dark .cb-btn:active, body.dark .cb-btn:active { background-color: #3f3f46; }
-            html.dark .cb-btn-black, body.dark .cb-btn-black { background-color: #ffffff; color: #000000; }
+            html.dark .cb-btn-black, body.dark .cb-btn-black { background-color: #3b82f6; color: #ffffff; }
             html.dark .cb-editor-box, body.dark .cb-editor-box { background-color: #0d1117; border-color: #30363d; }
             html.dark .cb-lines, body.dark .cb-lines { background-color: #0d1117; border-color: #30363d; color: #6e7681; }
-            html.dark .cb-highlight, body.dark .cb-highlight { color: #c9d1d9; }
-            html.dark .cb-textarea, body.dark .cb-textarea { caret-color: #ffffff; }
+            html.dark .cb-textarea, body.dark .cb-textarea { color: #c9d1d9; caret-color: #ffffff; }
             html.dark .cb-textarea::selection, body.dark .cb-textarea::selection { background: rgba(255, 255, 255, 0.2); }
             html.dark .scroll-hide::-webkit-scrollbar-thumb, body.dark .scroll-hide::-webkit-scrollbar-thumb { background: #3f3f46; }
-
-            html.dark .syn-tag, body.dark .syn-tag { color: #7ee787; }      
-            html.dark .syn-attr, body.dark .syn-attr { color: #d2a8ff; }    
-            html.dark .syn-str, body.dark .syn-str { color: #a5d6ff; }      
-            html.dark .syn-kw, body.dark .syn-kw { color: #ff7b72; font-weight: 600;}  
-            html.dark .syn-func, body.dark .syn-func { color: #d2a8ff; font-weight: 600;} 
-            html.dark .syn-num, body.dark .syn-num { color: #79c0ff; }      
-            html.dark .syn-css, body.dark .syn-css { color: #79c0ff; }      
-            html.dark .syn-cmt, body.dark .syn-cmt { color: #8b949e; }      
         </style>
 
-        <div class="cobalt-ui-wrapper w-full max-w-3xl mx-auto p-3 sm:p-5 shadow-md relative z-10">
+        <div class="cobalt-ui-wrapper w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12 pt-6">
             
-            <div class="flex items-center gap-2 mb-4 px-1">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                <h2 class="font-bold text-lg tracking-tight">html runner</h2>
-            </div>
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <h2 class="font-black text-2xl tracking-tight uppercase text-slate-800 dark:text-slate-100">HTML RUNNER</h2>
+                </div>
 
-            <div class="grid grid-cols-3 gap-2 sm:gap-3">
-                <button class="cb-btn" id="cb-clear">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    <span>clear</span>
-                </button>
-                <button class="cb-btn" id="cb-copy">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>copy</span>
-                </button>
-                <button class="cb-btn" id="cb-paste">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                    <span>paste</span>
-                </button>
+                <div class="flex flex-wrap lg:flex-nowrap gap-2 w-full lg:w-auto">
+                    <button class="cb-btn flex-1 lg:flex-none" id="cb-clear">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        <span>Xóa</span>
+                    </button>
+                    <button class="cb-btn flex-1 lg:flex-none" id="cb-copy">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span>Copy</span>
+                    </button>
+                    <button class="cb-btn flex-1 lg:flex-none" id="cb-paste">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                        <span>Dán</span>
+                    </button>
+                    <button class="cb-btn-black flex-[2] lg:flex-none ml-0 lg:ml-2 shadow-md shadow-blue-500/20" id="cb-run">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Chạy Code
+                    </button>
+                </div>
             </div>
 
             <div class="cb-editor-box">
                 <div class="cb-lines" id="cb-lines">1</div>
                 <div class="cb-code-area">
                     <textarea class="cb-textarea scroll-hide" id="cb-input" spellcheck="false" wrap="off"></textarea>
-                    <pre class="cb-highlight" id="cb-highlight" aria-hidden="true"></pre>
                 </div>
             </div>
-
-            <button class="cb-btn-black" id="cb-run">
-                run in new tab
-            </button>
 
         </div>
     `;
@@ -193,28 +167,12 @@ export function setupTool() {
     document.getElementById('app-container').appendChild(panel);
     
     const codeInput = document.getElementById('cb-input');
-    const codeHighlight = document.getElementById('cb-highlight');
     const lineNumbers = document.getElementById('cb-lines');
     
     const runBtn = document.getElementById('cb-run');
     const clearBtn = document.getElementById('cb-clear');
     const copyBtn = document.getElementById('cb-copy');
     const pasteBtn = document.getElementById('cb-paste');
-
-    function highlightCode(code) {
-        let html = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        html = html.replace(/(&quot;.*?&quot;|'.*?'|`.*?`)/g, '<span class="syn-str">$1</span>');
-        html = html.replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="syn-cmt">$1</span>');
-        html = html.replace(/(?<!:)(\/\/.*$)/gm, '<span class="syn-cmt">$1</span>');
-        html = html.replace(/(&lt;\/?)([a-zA-Z0-9-]+)/g, '$1<span class="syn-tag">$2</span>');
-        html = html.replace(/([a-zA-Z0-9_-]+)(?==<span class="syn-str">)/g, '<span class="syn-attr">$1</span>');
-        html = html.replace(/([a-zA-Z0-9_-]+)(?=: )/g, '<span class="syn-css">$1</span>');
-        html = html.replace(/\b([a-zA-Z0-9_]+)(?=\()/g, '<span class="syn-func">$1</span>');
-        html = html.replace(/\b(\d+(\.\d+)?)\b(?![^<]*>)/g, '<span class="syn-num">$1</span>');
-        const keywords = /\b(function|const|let|var|return|if|else|for|while|document|window|console|import|export|true|false|new|class|await|async)\b(?![^<]*>)/g;
-        html = html.replace(keywords, '<span class="syn-kw">$1</span>');
-        return html;
-    }
 
     function updateLineNumbers() {
         const linesCount = codeInput.value.split('\n').length;
@@ -226,13 +184,10 @@ export function setupTool() {
     }
 
     codeInput.addEventListener('input', () => {
-        codeHighlight.innerHTML = highlightCode(codeInput.value);
         updateLineNumbers();
     });
 
     codeInput.addEventListener('scroll', () => {
-        codeHighlight.scrollTop = codeInput.scrollTop;
-        codeHighlight.scrollLeft = codeInput.scrollLeft;
         lineNumbers.scrollTop = codeInput.scrollTop;
     });
 
@@ -246,8 +201,12 @@ export function setupTool() {
         if (!codeInput.value) return;
         navigator.clipboard.writeText(codeInput.value);
         const originalText = copyBtn.querySelector('span').innerText;
-        copyBtn.querySelector('span').innerText = 'copied!';
-        setTimeout(() => copyBtn.querySelector('span').innerText = originalText, 1500);
+        copyBtn.querySelector('span').innerText = 'ĐÃ COPY';
+        copyBtn.classList.add('text-green-600');
+        setTimeout(() => {
+            copyBtn.querySelector('span').innerText = originalText;
+            copyBtn.classList.remove('text-green-600');
+        }, 1500);
     });
 
     pasteBtn.addEventListener('click', async () => {
@@ -266,7 +225,7 @@ export function setupTool() {
         }
     });
 
-    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE (Đã sửa lỗi F5 và Logo) ---
+    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE ---
     runBtn.addEventListener('click', function() {
         const code = codeInput.value;
         if (!code.trim()) {
@@ -300,12 +259,11 @@ export function setupTool() {
         <script>
             let isExp = true;
 
-            // Hàm kích hoạt hiệu ứng Thu gọn / Mở rộng (Đã bắt đúng Logo)
             function _toggleConsole() {
                 const cbUI = document.getElementById('sys-console-ui');
                 const cbBody = document.getElementById('sys-console-body');
                 const cbToggle = document.getElementById('sys-console-toggle');
-                const wmLogo = document.getElementById('nothing-watermark'); // Lấy element ngay lúc click để không bị null
+                const wmLogo = document.getElementById('nothing-watermark');
                 
                 isExp = !isExp;
                 if(isExp) {
@@ -313,13 +271,13 @@ export function setupTool() {
                     cbUI.style.minHeight = '160px';
                     cbBody.style.display = 'block';
                     cbToggle.innerText = '▼ Thu gọn';
-                    if(wmLogo) wmLogo.style.bottom = 'calc(22vh + 15px)'; // Logo nhảy lên
+                    if(wmLogo) wmLogo.style.bottom = 'calc(22vh + 15px)';
                 } else {
-                    cbUI.style.height = '35px'; // Chỉ giữ lại thanh Header
+                    cbUI.style.height = '35px';
                     cbUI.style.minHeight = '0';
                     cbBody.style.display = 'none';
                     cbToggle.innerText = '▲ Mở rộng';
-                    if(wmLogo) wmLogo.style.bottom = '45px'; // Logo rơi xuống
+                    if(wmLogo) wmLogo.style.bottom = '45px';
                 }
             }
             
@@ -334,10 +292,8 @@ export function setupTool() {
                 if(cbBodyStatic) cbBodyStatic.appendChild(d);
             }
             
-            // In ra những log đã bắt được trong lúc code vừa chạy
             window.__devLogs.forEach(_printUI);
             
-            // Ghi đè lại lần nữa để in trực tiếp nếu User bấm nút trên Web
             console.log = function() { ogLog.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'log'}); if(cbBodyStatic) cbBodyStatic.scrollTop = cbBodyStatic.scrollHeight; };
             console.error = function() { ogErr.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'err'}); if(cbBodyStatic) cbBodyStatic.scrollTop = cbBodyStatic.scrollHeight; };
             console.warn = function() { ogWarn.apply(console, arguments); _printUI({msg: _fmtArgs(arguments), type: 'warn'}); if(cbBodyStatic) cbBodyStatic.scrollTop = cbBodyStatic.scrollHeight; };
@@ -350,7 +306,6 @@ export function setupTool() {
                 <span style="font-size: 16px; filter: drop-shadow(0 2px 4px rgba(249,115,22,0.4));">🧑‍💻</span>
             </div>
         `;
-        
 
         const fullHTML = prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark;
         const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
@@ -381,7 +336,7 @@ export function setupTool() {
 </head>
 <body>
   <div class="box">
-    <h2>🎰 Random Spinner</h2>
+    <h2>Random Spinner</h2>
     <div id="cb-num-display">00</div>
     <div class="cb-btn-group">
       <button class="btn-spin" onclick="spinNumber()">Quay Số</button>
@@ -389,7 +344,6 @@ export function setupTool() {
   </div>
   
   <script>
-   
     function spinNumber() {
       console.log("Đang quay số ngẫu nhiên...");
       const display = document.getElementById('cb-num-display');

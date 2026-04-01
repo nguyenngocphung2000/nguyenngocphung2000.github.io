@@ -36,12 +36,11 @@ const mobileNav = document.getElementById('mobile-nav');
 const mobileMenu = document.getElementById('mobile-menu');
 const mainHeader = document.getElementById('main-header');
 
-// Thêm thanh cuộn cho Menu Mobile
 if (mobileMenu) {
     mobileMenu.classList.add('max-h-[70vh]', 'overflow-y-auto', 'custom-scrollbar');
 }
 
-// --- 4. HÀM TẠO MENU ---
+// --- 4. HÀM TẠO MENU (KHÔNG ICON, TỐI ƯU TYPOGRAPHY) ---
 if (desktopNav && mobileNav) {
     desktopNav.innerHTML = '';
     mobileNav.innerHTML = '';
@@ -51,7 +50,7 @@ if (desktopNav && mobileNav) {
                 class="nav-btn flex items-center px-4 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50 text-[12px] font-bold uppercase tracking-wider">
                 <span>${tool.name}</span>
             </button>`;
-
+        
         mobileNav.innerHTML += `
             <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
                 class="mobile-nav-btn block w-full px-6 py-4 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500 text-[13px] font-bold uppercase tracking-widest">
@@ -60,7 +59,7 @@ if (desktopNav && mobileNav) {
     });
 }
 
-// --- 5. HÀM CHUYỂN TAB ---
+// --- 5. HÀM CHUYỂN TAB (ĐÃ FIX LỖI KẸT LINK ?POST) ---
 window.switchTab = async function(tabId) {
     document.querySelectorAll('.tab-panel').forEach(p => {
         p.classList.remove('active');
@@ -95,7 +94,15 @@ window.switchTab = async function(tabId) {
         targetPanel.style.display = 'block';
         
         document.querySelectorAll(`[data-target="${tabId}"]`).forEach(b => b.classList.add('active'));
-        window.history.replaceState(null, null, '#' + tabId);
+        
+        // --- XỬ LÝ LÀM SẠCH URL TẠI ĐÂY ---
+        const newUrl = new URL(window.location);
+        if (tabId !== 'tab-home') {
+            // Nếu nhảy sang tab khác, tự động xóa đuôi ?post= đi
+            newUrl.searchParams.delete('post');
+        }
+        newUrl.hash = tabId;
+        window.history.replaceState(null, null, newUrl);
     }
 }
 
@@ -164,7 +171,6 @@ if (darkModeBtn) {
     darkModeBtn.addEventListener('click', window.toggleDarkMode);
     darkModeBtn.removeAttribute('onclick');
 }
-
 
 const savedTheme = localStorage.getItem('nothing_dark_mode');
 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
