@@ -94,7 +94,7 @@ export function setupTool() {
 
           // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý =================
           '<div class="w-full h-full flex flex-col min-h-0">' +
-          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-0">' +
+          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' + // Sửa lỗi chiều cao trên Mobile
           
           '<div class="flex justify-between items-center border-b border-pink-200/50 pb-3 shrink-0">' +
           '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
@@ -102,7 +102,7 @@ export function setupTool() {
           '</div>' +
           
           // Khung chứa list kết quả, tự động tạo thanh cuộn nếu quá dài
-          '<div class="relative flex-1 mt-4">' +
+          '<div class="relative flex-1 mt-4 min-h-[300px] lg:min-h-0">' + // Bổ sung bảo hiểm chiều cao cho mobile
           '<div id="bn-res-list" class="absolute inset-0 overflow-y-auto custom-scrollbar pr-1 grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">' +
           '<div class="col-span-full text-center text-slate-400 italic py-10 text-[11px]">Chưa có dữ liệu. Hãy bấm "Đề xuất tên"!</div>' +
           '</div>' +
@@ -124,7 +124,10 @@ export function setupTool() {
           '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Nhập danh sách</label>' +
           '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">DÒNG: <span id="flt-cnt-in">0</span></span>' +
           '</div>' +
-          '<button id="flt-btn-paste" class="text-[9px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase">DÁN</button>' +
+          '<div class="flex gap-1.5">' + // Thêm cụm nút XÓA và DÁN
+          '<button id="flt-btn-clear-in" class="text-[9px] bg-red-50 border border-red-100 text-red-500 hover:bg-red-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">XÓA</button>' +
+          '<button id="flt-btn-paste" class="text-[9px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">DÁN</button>' +
+          '</div>' +
           '</div>' +
           '<textarea id="flt-input" class="bn-input w-full h-24 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
           '</div>' +
@@ -182,9 +185,9 @@ export function setupTool() {
           '</div>' + 
           
           '<div class="flex gap-2 shrink-0 mt-4">' +
-          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3.5 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">XÓA</button>' +
+          '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3.5 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center tracking-wider">XÓA</button>' +
           '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3.5 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">COPY KẾT QUẢ</button>' +
-          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">TẢI TXT</button>' +
+          '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center tracking-wider">TẢI TXT</button>' +
           '</div>' +
           
           '</div>' +
@@ -412,6 +415,14 @@ export function setupTool() {
             }).catch(function(err) {
                 alert("Trình duyệt chặn quyền truy cập Clipboard hoặc không hỗ trợ tự động dán!");
             });
+        };
+    }
+
+    var btnClearIn = document.getElementById('flt-btn-clear-in');
+    if (btnClearIn) {
+        btnClearIn.onclick = function() {
+            inputArea.value = '';
+            document.getElementById('flt-cnt-in').innerText = '0';
         };
     }
 
