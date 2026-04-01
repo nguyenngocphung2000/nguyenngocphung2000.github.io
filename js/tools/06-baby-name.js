@@ -23,14 +23,14 @@ export function setupTool() {
           '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
           '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
 
-          // ================= CỘT 1: BỘ LỌC TÙY CHỈNH (CẤU HÌNH) =================
-          '<div class="w-full h-full">' +
+          // ================= CỘT 1: BỘ LỌC TÙY CHỈNH =================
+          '<div class="w-full h-full flex flex-col">' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col bn-card">' +
           
           '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Bộ lọc tùy chỉnh</h3></div>' +
-          '<p class="text-[10px] text-slate-500 italic mt-3 mb-1 shrink-0">Mẹo: Bỏ trống ô nào thì máy sẽ tự động tìm từ hay nhất đắp vào ô đó.</p>' +
           
-          '<div class="mt-2 space-y-4 flex-1">' +
+          // Khung nhập liệu (Cố định ở trên)
+          '<div class="mt-4 space-y-4 shrink-0">' +
           '<div class="flex gap-3">' +
           '<div class="flex-1">' +
           '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Giới tính</label>' +
@@ -71,38 +71,48 @@ export function setupTool() {
           '<input id="bn-ten" type="text" placeholder="Tâm..." class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-3 text-center font-bold text-slate-700 outline-none focus:ring-2 ring-pink-200">' +
           '</div>' +
           '</div>' +
-          '</div>' + // Kết thúc form Inputs
-          
-          '<div class="flex gap-2 w-full mt-4 shrink-0">' +
-          '<button id="bn-btn-copy-gen" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-4 rounded-xl shadow-sm border border-slate-200 transition active:scale-95 flex justify-center items-center text-[11px] uppercase tracking-wide">' +
-          'COPY' +
-          '</button>' +
-          '<button id="bn-btn-gen" class="w-2/3 bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide">' +
+
+          // Nút Đề Xuất Tên ngay dưới form nhập liệu
+          '<button id="bn-btn-gen" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide mt-2">' +
           'ĐỀ XUẤT TÊN' +
           '</button>' +
+          '</div>' + 
+          
+          // Mẹo đặt tên (Sử dụng flex-1 để lấp đầy khoảng trống, cân bằng với cột 3)
+          '<div class="mt-6 flex-1 bg-pink-50/50 rounded-2xl p-4 border border-pink-100/50 flex flex-col min-h-[150px]">' +
+          '<h4 class="text-[11px] font-bold text-pink-600 uppercase mb-3 text-center md:text-left">Mẹo Đặt Tên Hay & Ý Nghĩa</h4>' +
+          '<div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 text-[11.5px] text-slate-600 leading-relaxed">' +
+          '<p><strong class="text-slate-700">1. Quy luật Âm - Dương:</strong> Một cái tên hài hòa nên có sự kết hợp đan xen giữa thanh bằng (ngang, huyền) và thanh trắc (sắc, hỏi, ngã, nặng) để tạo ra nhịp điệu dễ đọc, dễ nghe.</p>' +
+          '<p><strong class="text-slate-700">2. Độ dài lý tưởng:</strong> Tên có 3 hoặc 4 chữ thường cân đối nhất. Việc ghép Họ Cha và Họ Mẹ (ví dụ: Nguyễn Trần...) đang là xu hướng hiện đại, mang ý nghĩa trọn vẹn của gia đình.</p>' +
+          '<p><strong class="text-slate-700">3. Cẩn trọng từ đồng âm:</strong> Hãy đọc lướt nhanh hoặc thử nói lái tên dự định đặt để tránh trường hợp tên bị biến tấu thành những ý nghĩa không mong muốn.</p>' +
+          '<p><strong class="text-slate-700">4. Phát huy tối đa bộ lọc:</strong> Hãy mạnh dạn bỏ trống các ô bạn chưa nghĩ ra ý tưởng. Thuật toán của chúng tôi sẽ tự động phân tích và lấp đầy bằng những chữ lót, tên chính hay nhất từ kho dữ liệu.</p>' +
+          '</div>' +
           '</div>' +
           
           '</div>' +
           '</div>' + // KẾT THÚC CỘT 1
 
-          // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý (KẾT QUẢ) =================
-          '<div class="w-full h-full">' +
-          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card">' +
+          // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý =================
+          '<div class="w-full h-full flex flex-col min-h-0">' +
+          '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-0">' +
           
           '<div class="flex justify-between items-center border-b border-pink-200/50 pb-3 shrink-0">' +
           '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
-          '<button id="bn-btn-toggle" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg font-bold shadow-sm transition uppercase">THU GỌN</button>' +
+          '<button id="bn-btn-copy-gen" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-4 py-1.5 rounded-lg font-bold shadow-sm transition uppercase tracking-wider">COPY</button>' +
           '</div>' +
           
-          '<div id="bn-res-list" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1 overflow-y-auto custom-scrollbar pr-1 max-h-[600px] content-start">' +
-          '<div class="col-span-full text-center text-slate-400 italic py-10 text-xs">Chưa có dữ liệu. Hãy bấm "Đề xuất tên"!</div>' +
+          // Khung chứa list kết quả, tự động tạo thanh cuộn nếu quá dài
+          '<div class="relative flex-1 mt-4">' +
+          '<div id="bn-res-list" class="absolute inset-0 overflow-y-auto custom-scrollbar pr-1 grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">' +
+          '<div class="col-span-full text-center text-slate-400 italic py-10 text-[11px]">Chưa có dữ liệu. Hãy bấm "Đề xuất tên"!</div>' +
+          '</div>' +
           '</div>' +
           
           '</div>' +
           '</div>' + // KẾT THÚC CỘT 2
 
-          // ================= CỘT 3: TRẠM XỬ LÝ DANH SÁCH (CÔNG CỤ PHỤ) =================
-          '<div class="w-full h-full">' +
+          // ================= CỘT 3: TRẠM XỬ LÝ DANH SÁCH =================
+          '<div class="w-full h-full flex flex-col">' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-indigo-100 h-full flex flex-col filter-card">' +
           
           '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Trạm xử lý danh sách</h3></div>' +
@@ -169,7 +179,7 @@ export function setupTool() {
           '</div>' +
           '<textarea id="flt-output" readonly class="bn-input w-full flex-1 min-h-[80px] bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-700 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
           '</div>' +
-          '</div>' + // Kết thúc vùng chứa nội dung chính Cột 3
+          '</div>' + 
           
           '<div class="flex gap-2 shrink-0 mt-4">' +
           '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3.5 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center">XÓA</button>' +
@@ -185,7 +195,7 @@ export function setupTool() {
 
     document.getElementById('app-container').appendChild(panel);
 
-    // --- LOGIC ĐÃ ĐƯỢC NÂNG CẤP ĐỂ DÙNG FETCH JSON & XÓA EMOJI TRONG THÔNG BÁO ---
+    // --- LOGIC XỬ LÝ DỮ LIỆU TÊN VÀ TRẠM LỌC ---
     var capitalize = function(str) {
         return str.trim().replace(/\s+/g, ' ').split(' ').map(function(word) {
             if(!word) return '';
@@ -217,19 +227,8 @@ export function setupTool() {
 
     var btnGen = document.getElementById('bn-btn-gen');
     var btnCopyGen = document.getElementById('bn-btn-copy-gen');
-    var btnToggle = document.getElementById('bn-btn-toggle');
     var resList = document.getElementById('bn-res-list');
     var currentResults = []; 
-
-    btnToggle.onclick = function() {
-        if (resList.classList.contains('hidden')) {
-            resList.classList.remove('hidden');
-            btnToggle.innerText = 'THU GỌN';
-        } else {
-            resList.classList.add('hidden');
-            btnToggle.innerText = 'MỞ RỘNG';
-        }
-    };
 
     btnCopyGen.onclick = function() {
         if (currentResults.length === 0) { alert("Chưa có danh sách tên nào để Copy!"); return; }
@@ -386,12 +385,10 @@ export function setupTool() {
         });
 
         if (resultsMap.size === 0) {
-            generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4">Không tìm thấy tổ hợp tên nào phù hợp!</div>';
+            generatedHTML = '<div class="col-span-1 sm:col-span-2 text-center text-slate-500 italic py-4 text-[11px]">Không tìm thấy tổ hợp tên nào phù hợp!</div>';
         }
 
         resList.innerHTML = generatedHTML;
-        resList.classList.remove('hidden');
-        btnToggle.innerText = 'THU GỌN';
     };
 
     var inputArea = document.getElementById('flt-input');
