@@ -13,6 +13,8 @@
 - [jQuery](http://freetuts.net/hoc-jquery)
 - [jQuery Mobile](http://freetuts.net/hoc-jquery-mobile)
 
+---
+
 ## 2. Lập trình Back-end, Framework và Ngôn ngữ khác
 
 - [NodeJS](http://freetuts.net/hoc-nodejs)
@@ -22,15 +24,21 @@
 - [Phalcon](http://freetuts.net/hoc-phalcon)
 - [Python](http://freetuts.net/hoc-python)
 
+---
+
 ## 3. Cơ sở dữ liệu và Định dạng dữ liệu
 
 - [MySQL](http://freetuts.net/hoc-mysql)
 - [MongoDB](http://freetuts.net/hoc-mongodb)
 
+---
+
 ## 4. Quản trị hệ thống và Máy chủ
 
 - [Linux căn bản](http://freetuts.net/hoc-linux/linux-can-ban)
 - [Thủ thuật Linux](http://freetuts.net/hoc-linux/thu-thuat-linux)
+
+---
 
 ## 5. Tài nguyên bổ trợ
 
@@ -38,4 +46,5 @@
 - [Kho tài nguyên](http://freetuts.net/tai-nguyen)
 
 ---
+
 > **Ghi chú:** Một số chuyên mục hiện được đánh dấu "Nội dung đang cập nhật" do tác giả trên hệ thống trang web chưa hoàn thiện toàn bộ tài liệu.

@@ -2,14 +2,14 @@
 
 **NextDNS** là dịch vụ phân giải tên miền (DNS) thông minh giúp bảo vệ thiết bị khỏi quảng cáo, mã độc và các trang web lừa đảo. 
 
-**🌟 Ưu điểm nổi bật:**
+** Ưu điểm nổi bật:**
 * **Tốc độ cao:** Hỗ trợ máy chủ định tuyến ngay tại Việt Nam.
 * **Bảo mật tối đa:** Mã hóa toàn bộ truy vấn DNS của thiết bị.
 * **Bảo vệ cục bộ:** Tích hợp các bộ lọc chuyên chặn trang mã độc/lừa đảo nhắm vào người dùng Việt Nam.
 
 ---
 
-## 🛠 Phần 1: Các Bước Cài Đặt Cơ Bản
+## Phần 1: Các Bước Cài Đặt Cơ Bản
 
 ### 1. Khởi tạo tài khoản
 1. Truy cập trang chủ [NextDNS](https://nextdns.io).
@@ -31,11 +31,11 @@
 1. Trở về thẻ **Setup**.
 
 2. Kéo xuống phần **Setup Guide** và làm theo hướng dẫn tương ứng với hệ điều hành thiết bị của bạn (Windows, macOS, Android, Router...).
-3. 🍎 **Dành riêng cho thiết bị Apple (iOS/macOS):** Truy cập nhanh vào [apple.nextdns.io](https://apple.nextdns.io/) để tự động tạo và tải hồ sơ cấu hình.
+3. **Dành riêng cho thiết bị Apple (iOS/macOS):** Truy cập nhanh vào [apple.nextdns.io](https://apple.nextdns.io/) để tự động tạo và tải hồ sơ cấu hình.
 
 ---
 
-## ⚙️ Phần 2: Cấu Hình Nâng Cao (Tùy Chọn)
+## Phần 2: Cấu Hình Nâng Cao (Tùy Chọn)
 
 Để tối ưu hóa trải nghiệm cá nhân và gia đình, bạn có thể thiết lập thêm các tính năng sau:
 
@@ -55,11 +55,11 @@
 
 ---
 
-## 🚫 Phần 3: Chuyên Đề - Chặn Quảng Cáo Ứng Dụng Zalo
+## Phần 3: Chuyên Đề - Chặn Quảng Cáo Ứng Dụng Zalo
 
 Zalo thường hiển thị quảng cáo ở mục "Khám phá" và "Nhật ký". Bạn có thể chặn triệt để bằng cách đưa các máy chủ quảng cáo của Zalo vào danh sách đen.
 
-> **⚠️ LƯU Ý QUAN TRỌNG:**
+> **LƯU Ý QUAN TRỌNG:**
 > Việc chặn các tên miền này có thể làm **vô hiệu hóa tính năng chuyển khoản nhanh** trong Zalo chat. Hãy cân nhắc kỹ trước khi áp dụng.
 
 **Cách thực hiện:**
@@ -96,7 +96,7 @@ Zalo thường hiển thị quảng cáo ở mục "Khám phá" và "Nhật ký"
 
 ---
 
-## 📌 Thông Tin Bổ Sung
+## Thông Tin Bổ Sung
 
 * **Giới hạn miễn phí:** 300.000 truy vấn/tháng (Hoàn toàn đủ dùng cho cá nhân với 1-2 thiết bị).
 * **Tài liệu tham khảo chuyên sâu:** Tham khảo Wiki của dự án hostsVN tại [Github hostsVN/NextDNS](https://github.com/bigdargon/hostsVN/wiki/NextDNS).
