@@ -8,4 +8,4 @@ Dự án sử dụng **Bot Telegram** kết hợp với **Google Sheets** để 
 * **Ưu điểm:** Ghi chép nhanh chóng mọi lúc mọi nơi, thao tác ngay trên khung chat quen thuộc, không cần cài thêm app phụ và dữ liệu được đồng bộ an toàn, các câu lệnh thân thiện quen tay.
 
 ## Mã nguồn & Hướng dẫn sử dụng
-🔗 **[Xem mã nguồn và Hướng dẫn cài đặt chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**
+**[Xem mã nguồn và Hướng dẫn cài đặt chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**

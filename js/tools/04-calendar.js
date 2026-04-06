@@ -23,6 +23,7 @@ export function setupTool() {
           '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
 
           // ================= CỘT TRÁI (HIỂN THỊ CHI TIẾT & TRA CỨU) =================
+          
           '<div class="w-full max-w-md mx-auto space-y-5">' +
           
           '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">' +
@@ -41,7 +42,12 @@ export function setupTool() {
           '</div>' +
           '<div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>' +
           '</div></div></div>' +
-
+          // THẺ THÔNG ĐIỆP NGÀY HÔM NAY NẰM Ở CỘT TRÁI
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col">' +
+          '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
+          '<div id="res-quote-text" class="text-[13.5px] text-slate-600 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
+          '<div id="res-quote-author" class="text-right text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider"></div>' +
+          '</div>' +
           '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">' +
           '<div class="text-center w-full pb-3 border-b border-slate-100">' +
           '<div id="live-clock" class="text-3xl font-black text-slate-700 font-mono tracking-tight">00:00:00</div>' +
@@ -59,13 +65,6 @@ export function setupTool() {
           '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label><select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
           '</div>' +
           '<button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">🔍 TÌM NGÀY</button>' +
-          '</div>' +
-
-          // THẺ THÔNG ĐIỆP NGÀY HÔM NAY NẰM Ở CỘT TRÁI
-          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col">' +
-          '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
-          '<div id="res-quote-text" class="text-[13.5px] text-slate-600 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
-          '<div id="res-quote-author" class="text-right text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider"></div>' +
           '</div>' +
 
           '</div>' + // KẾT THÚC CỘT TRÁI
