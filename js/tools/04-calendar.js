@@ -61,6 +61,13 @@ export function setupTool() {
           '<button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">🔍 TÌM NGÀY</button>' +
           '</div>' +
 
+          // THẺ THÔNG ĐIỆP NGÀY HÔM NAY NẰM Ở CỘT TRÁI
+          '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col">' +
+          '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
+          '<div id="res-quote-text" class="text-[13.5px] text-slate-600 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
+          '<div id="res-quote-author" class="text-right text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider"></div>' +
+          '</div>' +
+
           '</div>' + // KẾT THÚC CỘT TRÁI
 
           // ================= CỘT PHẢI (LỊCH THÁNG & LỄ HỘI) =================
@@ -270,6 +277,33 @@ var evLunar = {
         updateDays();
         selD.value = new Date().getDate();
 
+        // HIỂN THỊ THÔNG ĐIỆP
+        var renderQuote = function() {
+            if (window.quotesData && window.quotesData.length > 0) {
+                var q = window.quotesData[Math.floor(Math.random() * window.quotesData.length)];
+                document.getElementById('res-quote-text').innerText = '“' + q.quote + '”';
+                document.getElementById('res-quote-author').innerText = '- ' + q.author;
+            }
+        };
+
+        // TẢI DỮ LIỆU THÔNG ĐIỆP (Lưu cache để dùng lại)
+        if (!window.quotesParsed) {
+            fetch('data/sent-to-you.json')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    window.quotesData = data;
+                    window.quotesParsed = true;
+                    renderQuote();
+                })
+                .catch(function(e) {
+                    window.quotesData = [
+                        { quote: "Đừng cảm thấy tiếc vì bụi hoa hồng có gai, mà hãy vui vì trong bụi gai có hoa hồng.", author: "Abraham Lincoln" }
+                    ];
+                    window.quotesParsed = true;
+                    renderQuote();
+                });
+        }
+
         btnL.onclick = function() {
             if(!isSolarMode) return;
             var d = parseInt(selD.value), m = parseInt(selM.value), y = parseInt(selY.value);
@@ -447,6 +481,7 @@ var evLunar = {
                     var solar = lunar.getSolar();
                     renderWidget(solar, lunar);
                 }
+                if (window.quotesParsed) renderQuote(); // Đổi thông điệp mỗi lần tra cứu
             } catch(e) {}
         };
 
