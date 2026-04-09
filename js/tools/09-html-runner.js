@@ -1,13 +1,13 @@
 export function setupTool() {
-    const tabId = 'tab-html-runner';
-    
-    if (document.getElementById(tabId)) return;
-    
-    const panel = document.createElement('div');
-    panel.id = tabId;
-    panel.className = 'tab-panel active';
+  const tabId = "tab-html-runner";
 
-    panel.innerHTML = `
+  if (document.getElementById(tabId)) return;
+
+  const panel = document.createElement("div");
+  panel.id = tabId;
+  panel.className = "tab-panel active";
+
+  panel.innerHTML = `
         <style>
             .cobalt-ui-wrapper {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -163,77 +163,82 @@ export function setupTool() {
 
         </div>
     `;
-    
-    document.getElementById('app-container').appendChild(panel);
-    
-    const codeInput = document.getElementById('cb-input');
-    const lineNumbers = document.getElementById('cb-lines');
-    
-    const runBtn = document.getElementById('cb-run');
-    const clearBtn = document.getElementById('cb-clear');
-    const copyBtn = document.getElementById('cb-copy');
-    const pasteBtn = document.getElementById('cb-paste');
 
-    function updateLineNumbers() {
-        const linesCount = codeInput.value.split('\n').length;
-        let numbersHTML = '';
-        for (let i = 1; i <= linesCount; i++) {
-            numbersHTML += i + '<br>';
-        }
-        lineNumbers.innerHTML = numbersHTML;
+  document.getElementById("app-container").appendChild(panel);
+
+  const codeInput = document.getElementById("cb-input");
+  const lineNumbers = document.getElementById("cb-lines");
+
+  const runBtn = document.getElementById("cb-run");
+  const clearBtn = document.getElementById("cb-clear");
+  const copyBtn = document.getElementById("cb-copy");
+  const pasteBtn = document.getElementById("cb-paste");
+
+  function updateLineNumbers() {
+    const linesCount = codeInput.value.split("\n").length;
+    let numbersHTML = "";
+    for (let i = 1; i <= linesCount; i++) {
+      numbersHTML += i + "<br>";
+    }
+    lineNumbers.innerHTML = numbersHTML;
+  }
+
+  codeInput.addEventListener("input", () => {
+    updateLineNumbers();
+  });
+
+  codeInput.addEventListener("scroll", () => {
+    lineNumbers.scrollTop = codeInput.scrollTop;
+  });
+
+  clearBtn.addEventListener("click", () => {
+    codeInput.value = "";
+    codeInput.dispatchEvent(new Event("input"));
+    codeInput.focus();
+  });
+
+  copyBtn.addEventListener("click", () => {
+    if (!codeInput.value) return;
+    navigator.clipboard.writeText(codeInput.value);
+    const originalText = copyBtn.querySelector("span").innerText;
+    copyBtn.querySelector("span").innerText = "ĐÃ COPY";
+    copyBtn.classList.add("text-green-600");
+    setTimeout(() => {
+      copyBtn.querySelector("span").innerText = originalText;
+      copyBtn.classList.remove("text-green-600");
+    }, 1500);
+  });
+
+  pasteBtn.addEventListener("click", async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) {
+        const start = codeInput.selectionStart;
+        const end = codeInput.selectionEnd;
+        codeInput.value =
+          codeInput.value.substring(0, start) +
+          text +
+          codeInput.value.substring(end);
+        codeInput.selectionStart = codeInput.selectionEnd = start + text.length;
+        codeInput.dispatchEvent(new Event("input"));
+      }
+      codeInput.focus();
+    } catch (err) {
+      alert(
+        "Trình duyệt chặn Clipboard. Dùng Ctrl+V hoặc Nhấn Giữ -> Dán nhé!",
+      );
+    }
+  });
+
+  // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE ---
+  runBtn.addEventListener("click", function () {
+    const code = codeInput.value;
+    if (!code.trim()) {
+      alert("Vui lòng gõ mã code trước khi chạy nhé bạn yêu!");
+      return;
     }
 
-    codeInput.addEventListener('input', () => {
-        updateLineNumbers();
-    });
-
-    codeInput.addEventListener('scroll', () => {
-        lineNumbers.scrollTop = codeInput.scrollTop;
-    });
-
-    clearBtn.addEventListener('click', () => {
-        codeInput.value = '';
-        codeInput.dispatchEvent(new Event('input')); 
-        codeInput.focus();
-    });
-
-    copyBtn.addEventListener('click', () => {
-        if (!codeInput.value) return;
-        navigator.clipboard.writeText(codeInput.value);
-        const originalText = copyBtn.querySelector('span').innerText;
-        copyBtn.querySelector('span').innerText = 'ĐÃ COPY';
-        copyBtn.classList.add('text-green-600');
-        setTimeout(() => {
-            copyBtn.querySelector('span').innerText = originalText;
-            copyBtn.classList.remove('text-green-600');
-        }, 1500);
-    });
-
-    pasteBtn.addEventListener('click', async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            if (text) {
-                const start = codeInput.selectionStart;
-                const end = codeInput.selectionEnd;
-                codeInput.value = codeInput.value.substring(0, start) + text + codeInput.value.substring(end);
-                codeInput.selectionStart = codeInput.selectionEnd = start + text.length;
-                codeInput.dispatchEvent(new Event('input')); 
-            }
-            codeInput.focus();
-        } catch (err) {
-            alert('Trình duyệt chặn Clipboard. Dùng Ctrl+V hoặc Nhấn Giữ -> Dán nhé!');
-        }
-    });
-
-    // --- LOGIC XUẤT CODE + CHÈN MINI CONSOLE ---
-    runBtn.addEventListener('click', function() {
-        const code = codeInput.value;
-        if (!code.trim()) {
-            alert('Vui lòng gõ mã code trước khi chạy nhé bạn yêu!');
-            return;
-        }
-
-        const prependConsoleLogic = `
+    const prependConsoleLogic = `
         <script>
             window.__devLogs = [];
             const ogLog = console.log, ogErr = console.error, ogWarn = console.warn;
@@ -245,7 +250,7 @@ export function setupTool() {
         <\/script>
         `;
 
-        const appendConsoleUI = `
+    const appendConsoleUI = `
         <div id="sys-console-ui" style="position:fixed; bottom:0; left:0; width:100%; height:22vh; min-height:160px; background:rgba(24,24,27,0.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid #3f3f46; color:#e4e4e7; font-family:monospace; z-index:2147483645; display:flex; flex-direction:column; box-shadow: 0 -10px 30px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
             <div style="background:#27272a; padding:8px 15px; font-size:12px; font-weight:bold; color:#a1a1aa; border-bottom:1px solid #3f3f46; display:flex; justify-content:space-between; align-items:center; font-family:-apple-system, sans-serif; text-transform:uppercase;">
                 <span style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:8px; height:8px; background-color:#10b981; border-radius:50%;"></span> Terminal Logs</span>
@@ -300,21 +305,22 @@ export function setupTool() {
         <\/script>
         `;
 
-        const orangeLogoWatermark = `
+    const orangeLogoWatermark = `
             <div id="nothing-watermark" style="position: fixed; bottom: calc(22vh + 15px); right: 20px; z-index: 2147483647; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 999px; box-shadow: 0 10px 25px rgba(249, 115, 22, 0.25); border: 1.5px solid rgba(249, 115, 22, 0.3); font-family: sans-serif; pointer-events: none; transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
                 <span style="background: linear-gradient(90deg, #f97316, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; font-size: 14px; letter-spacing: 1px;">NOTHING</span>
                 <span style="font-size: 16px; filter: drop-shadow(0 2px 4px rgba(249,115,22,0.4));">🧑‍💻</span>
             </div>
         `;
 
-        const fullHTML = prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark;
-        const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
-        const blobUrl = URL.createObjectURL(blob);
-        
-        window.open(blobUrl, '_blank');
-    });
+    const fullHTML =
+      prependConsoleLogic + code + appendConsoleUI + orangeLogoWatermark;
+    const blob = new Blob([fullHTML], { type: "text/html;charset=utf-8" });
+    const blobUrl = URL.createObjectURL(blob);
 
-    codeInput.value = `<!DOCTYPE html>
+    window.open(blobUrl, "_blank");
+  });
+
+  codeInput.value = `<!DOCTYPE html>
 <html>
 <head>
   <style>
@@ -359,6 +365,5 @@ export function setupTool() {
   </script>
 </body>
 </html>`;
-    codeInput.dispatchEvent(new Event('input')); 
-
+  codeInput.dispatchEvent(new Event("input"));
 }

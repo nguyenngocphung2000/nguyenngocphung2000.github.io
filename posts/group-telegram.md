@@ -4,10 +4,10 @@ Tài liệu này tổng hợp danh sách các kênh và nhóm trên nền tảng
 
 ---
 
-##  **1. Nền tảng Android (.apk)**
+## **1. Nền tảng Android (.apk)**
 
 - [@CongDongReVanced](https://t.me/CongDongReVanced) :
-Chuyên cung cấp các ứng dụng Modded application
+  Chuyên cung cấp các ứng dụng Modded application
 
 - [@Alexey070315](https://t.me/Alexey070315): Chuyên cung cấp các ứng dụng phiên bản cao cấp (Premium/VIP).
 - [@APPS_FULL](https://t.me/APPS_FULL): Kênh phân phối các ứng dụng đã qua chỉnh sửa (Modded applications).
@@ -36,4 +36,3 @@ Chuyên cung cấp các ứng dụng Modded application
 
 - [@iOS_TrollStore](https://t.me/iOS_TrollStore): Cộng đồng hỗ trợ và cung cấp tệp cài đặt qua công cụ TrollStore.
 - [@qswapp](https://t.me/qswapp): Nguồn tài nguyên ứng dụng tương thích với TrollStore.
-

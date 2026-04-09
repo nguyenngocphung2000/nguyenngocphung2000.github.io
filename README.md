@@ -1,62 +1,69 @@
-# Hi there, I'm Nothing 
+# NOTHING YET EVERYTHING
+**Hi there, I'm Nothing.**
 
-### NOTHING BUT SOMETHING
+*Welcome to my little corner.*
 
-> *Hello there! Welcome to my little corner.*
+This repository is a sophisticated stash of AI-powered tools, along with a curated collection of techniques and tricks I've gathered. Initially built to optimize my own workflows, it is now open to the public to explore and utilize.
 
-This is a small stash containing some little toys that I personally... **asked AI to code for me** 😂, along with a basket of cool tricks and tips I picked up or came up with myself. 
-
-Initially, these things were created just to "save" my own life, but out of the goodness of my overflowing heart, I decided to bring them all out here to share with everyone. 
-
-Make yourself at home, feel free to tinker around. If there are any bugs... let me know so I can ask AI to fix them! 
+Everything you witness here was constructed through "Vibe Coding" with AI assistance. Feel free to explore the modules. If you encounter bugs, do not hesitate to contact me so that I can instruct an AI to resolve them.
 
 ---
 
-### Tech Stack & Libraries
-This project is built on the core foundation of pure **HTML5, CSS3, and Vanilla JavaScript**, utilizing modern **ES Modules** (Lazy Load) to ensure lightning-fast page loads. The UI is completely styled with **Tailwind CSS** (via CDN) for that sleek glassmorphism look and seamless Dark Mode. 
+## Architecture & Technology Stack
 
-Additionally, a few super-lightweight JS libraries are integrated to power specific tools: 
-* `marked.min.js`: Parses Markdown directly into HTML.
-* `html2pdf.js`: Exports crisp PDF files.
-* `lunar-javascript`: Handles complex Lunar calendar calculations.
+The project relies explicitly on pure **HTML5, CSS3, and Vanilla JavaScript**, leveraging modern **ES Modules** for an efficient "Lazy Load" architecture that ensures lightning-fast initialization times. 
 
----
+**UI / UX Philosophy:**
+- No standard icon sets are used. Every interactive UI element is crafted entirely via precise Typography or native CSS structures.
+- **Tailwind CSS** (via CDN) forms the backbone of the utility-first structural design.
+- Custom pure-CSS algorithms are applied to handle Glassmorphism and the Global Dark Mode synchronization.
 
-### Expansion Guide (Adding Tools & Posts)
-
-**1. How to add a new Markdown post (Tips & Tricks):**
-* Create a `.md` file (e.g., `install-windows.md`) and drop it into the `posts/` folder.
-* Open `js/tools/01-home.js`, locate the `const manifest = [...]` array, and add your new file like this:
-
-```javascript
-const manifest = [
-    // ... previous posts ...
-    { title: "How to install Windows", date: "IT Tips", path: "posts/install-windows.md" }
-];
-```
-
-**2. How to integrate a new Tool (e.g., Tool #14):**
-* Create a new JS file in the `js/tools/` folder (e.g., `14-note.js`). All the HTML and Logic for this tool MUST be wrapped inside this exported function: `export function setupTool() { ... }`.
-* Open `js/core.js` and do these 2 simple configurations:
-   * **Add a navigation button** to the `menuConfig` array:
-     ```javascript
-     const menuConfig = [
-         // ... existing 13 tools ...
-         { id: 'tab-note', name: 'Notepad', icon: '📝' }
-     ];
-     ```
-   * **Add the file path** to the `toolMap` list:
-     ```javascript
-     const toolMap = {
-         // ... existing 13 paths ...
-         'tab-note': './tools/14-note.js'
-     };
-     ```
+**Third-Party Libraries:**
+- `marked.min.js`: Parses Markdown directly into HTML for dynamic content delivery.
+- `html2pdf.js`: Compiles data into crisp PDF exports.
+- `lunar-javascript`: Performs high-precision Lunar calendar computation.
 
 ---
 
-### Get in touch
-Don't hesitate to ping me if you need help, want to report bugs, or simply want to team up for something cool:
+## Expansion Guide
 
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/nothing3272)
-[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr)
+### 1. Publishing a new Post (Markdown)
+To document a new tutorial or trick:
+1. Create a `.md` file, such as `new-tutorial.md`, and place it in the `posts/` directory.
+2. Register the post inside `js/tools/01-home.js` by appending to the `manifest` array:
+   ```javascript
+   const manifest = [
+       // ...
+       { title: "Your Modern Tutorial", date: "Guide", path: "posts/new-tutorial.md" }
+   ];
+   ```
+
+### 2. Integrating a new Tool Module
+To implement a standalone tool with its own logic:
+1. Create a modular JS script in `js/tools/`, e.g., `11-converter.js`.
+2. Encapsulate all View (HTML) and Controller logic in the `export function setupTool() { ... }`.
+3. Open `js/core.js` and edit the two routing variables:
+   
+   **Append Navigation Item:**
+   ```javascript
+   const menuConfig = [
+       // ...
+       { id: 'tab-converter', name: 'Trình chuyển đổi' }
+   ];
+   ```
+   **Map Router Path:**
+   ```javascript
+   const toolMap = {
+       // ...
+       'tab-converter': './tools/11-converter.js'
+   };
+   ```
+
+---
+
+## Get In Touch
+
+Should you need assistance, wish to report functional anomalies, or propose collaborations, reach out through the following channels:
+
+* **Telegram**: `https://t.me/nothing3272`
+* **Facebook**: `https://www.facebook.com/share/1Ayyxg5kjH/?mibextid=wwXIfr`

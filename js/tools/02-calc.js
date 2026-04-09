@@ -1,13 +1,13 @@
 export function setupTool() {
-    const tabId = 'tab-calc';
+  const tabId = "tab-calc";
 
-    if (document.getElementById(tabId)) return;
+  if (document.getElementById(tabId)) return;
 
-    const panel = document.createElement('div');
-    panel.id = tabId;
-    panel.className = 'tab-panel active';
+  const panel = document.createElement("div");
+  panel.id = tabId;
+  panel.className = "tab-panel active";
 
-    panel.innerHTML = `
+  panel.innerHTML = `
         <div class="text-center mb-8">
             <span class="bg-yellow-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase text-yellow-900">Công cụ tính toán</span>
             <h2 class="text-4xl font-bold mt-3 text-gray-800">Tính <span class="text-red-500">Phần Trăm</span></h2>
@@ -151,202 +151,269 @@ export function setupTool() {
         </div>
     `;
 
-    document.getElementById('app-container').appendChild(panel);
+  document.getElementById("app-container").appendChild(panel);
 
-    // --- BẮT ĐẦU LOGIC ---
+  // --- BẮT ĐẦU LOGIC ---
 
-    // Chuyển đổi Tab (Modes)
-    const btnM1 = document.getElementById('mode-1-btn');
-    const btnM2 = document.getElementById('mode-2-btn');
-    const btnM3 = document.getElementById('mode-3-btn');
-    
-    const secM1 = document.getElementById('calc-mode-1');
-    const secM2 = document.getElementById('calc-mode-2');
-    const secM3 = document.getElementById('calc-mode-3');
+  // Chuyển đổi Tab (Modes)
+  const btnM1 = document.getElementById("mode-1-btn");
+  const btnM2 = document.getElementById("mode-2-btn");
+  const btnM3 = document.getElementById("mode-3-btn");
 
-    const activeClass = "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-orange-500 shadow-sm transition";
-    const inactiveClass = "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-white/50 transition";
+  const secM1 = document.getElementById("calc-mode-1");
+  const secM2 = document.getElementById("calc-mode-2");
+  const secM3 = document.getElementById("calc-mode-3");
 
-    const switchMode = (mode) => {
-        btnM1.className = mode === 1 ? activeClass : inactiveClass;
-        btnM2.className = mode === 2 ? activeClass : inactiveClass;
-        btnM3.className = mode === 3 ? activeClass : inactiveClass;
+  const activeClass =
+    "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-orange-500 shadow-sm transition";
+  const inactiveClass =
+    "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-white/50 transition";
 
-        secM1.classList.toggle('hidden', mode !== 1);
-        secM2.classList.toggle('hidden', mode !== 2);
-        secM3.classList.toggle('hidden', mode !== 3);
-    };
+  const switchMode = (mode) => {
+    btnM1.className = mode === 1 ? activeClass : inactiveClass;
+    btnM2.className = mode === 2 ? activeClass : inactiveClass;
+    btnM3.className = mode === 3 ? activeClass : inactiveClass;
 
-    btnM1.onclick = () => switchMode(1);
-    btnM2.onclick = () => switchMode(2);
-    btnM3.onclick = () => switchMode(3);
+    secM1.classList.toggle("hidden", mode !== 1);
+    secM2.classList.toggle("hidden", mode !== 2);
+    secM3.classList.toggle("hidden", mode !== 3);
+  };
 
-    // Tính toán Logic
-    const fmt = (num) => Number.isInteger(num) ? num.toLocaleString('vi-VN') : Number(num.toFixed(2)).toLocaleString('vi-VN');
-    const clean = (num) => parseFloat(num.toFixed(2));
+  btnM1.onclick = () => switchMode(1);
+  btnM2.onclick = () => switchMode(2);
+  btnM3.onclick = () => switchMode(3);
 
-    const getTarget = (i1, i2, i3) => {
-        const arr = [i1, i2, i3].map(el => ({ el, time: parseInt(el.dataset.last || 0) }));
-        arr.sort((a, b) => a.time - b.time);
-        return arr[0].el;
-    };
+  // Tính toán Logic
+  const fmt = (num) =>
+    Number.isInteger(num)
+      ? num.toLocaleString("vi-VN")
+      : Number(num.toFixed(2)).toLocaleString("vi-VN");
+  const clean = (num) => parseFloat(num.toFixed(2));
 
-    const attachLogic = (inputs, calcFunc) => {
-        inputs.forEach(input => {
-            input.addEventListener('input', (e) => {
-                e.target.dataset.last = Date.now();
-                calcFunc();
-            });
-        });
-    };
+  const getTarget = (i1, i2, i3) => {
+    const arr = [i1, i2, i3].map((el) => ({
+      el,
+      time: parseInt(el.dataset.last || 0),
+    }));
+    arr.sort((a, b) => a.time - b.time);
+    return arr[0].el;
+  };
 
-    const c1P = document.getElementById('c1-p'), c1V = document.getElementById('c1-v'), c1Res = document.getElementById('c1-res');
-    const calc1 = () => {
-        const target = getTarget(c1P, c1V, c1Res);
-        const p = parseFloat(c1P.value), v = parseFloat(c1V.value), r = parseFloat(c1Res.value);
-        if (target === c1Res && !isNaN(p) && !isNaN(v)) c1Res.value = clean((p * v) / 100);
-        else if (target === c1V && !isNaN(p) && !isNaN(r) && p !== 0) c1V.value = clean((r * 100) / p);
-        else if (target === c1P && !isNaN(v) && !isNaN(r) && v !== 0) c1P.value = clean((r / v) * 100);
-    };
-    attachLogic([c1P, c1V, c1Res], calc1);
-
-    const c2X = document.getElementById('c2-x'), c2Y = document.getElementById('c2-y'), c2Res = document.getElementById('c2-res');
-    const calc2 = () => {
-        const target = getTarget(c2X, c2Y, c2Res);
-        const x = parseFloat(c2X.value), y = parseFloat(c2Y.value), r = parseFloat(c2Res.value);
-        if (target === c2Res && !isNaN(x) && !isNaN(y) && y !== 0) c2Res.value = clean((x / y) * 100);
-        else if (target === c2X && !isNaN(r) && !isNaN(y)) c2X.value = clean((r * y) / 100);
-        else if (target === c2Y && !isNaN(x) && !isNaN(r) && r !== 0) c2Y.value = clean((x / r) * 100);
-    };
-    attachLogic([c2X, c2Y, c2Res], calc2);
-
-    const c3Old = document.getElementById('c3-old'), c3New = document.getElementById('c3-new'), c3Res = document.getElementById('c3-res');
-    const calc3 = () => {
-        const target = getTarget(c3Old, c3New, c3Res);
-        const o = parseFloat(c3Old.value), n = parseFloat(c3New.value), r = parseFloat(c3Res.value);
-        if (target === c3Res && !isNaN(o) && !isNaN(n) && o !== 0) c3Res.value = clean(((n - o) / o) * 100);
-        else if (target === c3New && !isNaN(o) && !isNaN(r)) c3New.value = clean(o * (1 + r / 100));
-        else if (target === c3Old && !isNaN(n) && !isNaN(r) && r !== -100) c3Old.value = clean(n / (1 + r / 100));
-    };
-    attachLogic([c3Old, c3New, c3Res], calc3);
-
-    const historyList = document.getElementById('history-list');
-    const STORAGE_KEY = 'my_calc_history'; 
-
-    const loadHistory = () => {
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        let historyArr = savedData ? JSON.parse(savedData) : [];
-        
-        historyList.innerHTML = ''; 
-        
-        if (historyArr.length > 0) {
-            historyArr.forEach(item => {
-                const li = document.createElement('li');
-                // Thay dấu tick (✓) bằng chấm tròn (•) cho tối giản
-                li.className = 'bg-slate-50/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["•"] before:text-orange-500 before:mr-2 before:font-bold before:text-lg text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
-                li.innerHTML = item;
-                historyList.appendChild(li); 
-            });
-        } else {
-            historyList.innerHTML = '<li class="italic text-gray-400 text-center py-10 empty-msg text-xs">Chưa có lịch sử nào.<br>Hãy bấm "Lưu KQ" ở các bảng tính!</li>';
-        }
-    };
-
-    const addHistory = (textHTML) => {
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        let historyArr = savedData ? JSON.parse(savedData) : [];
-        
-        historyArr.unshift(textHTML); 
-        
-        if (historyArr.length > 30) {
-            historyArr.pop(); 
-        }
-
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArr)); 
-        loadHistory(); 
-    };
-    
-    document.getElementById('c1-save').onclick = () => {
-        if(c1P.value && c1V.value && c1Res.value) addHistory(`<span class="text-orange-500">${fmt(parseFloat(c1P.value))}%</span> của ${fmt(parseFloat(c1V.value))} = <span class="text-red-500">${fmt(parseFloat(c1Res.value))}</span>`);
-    };
-    document.getElementById('c2-save').onclick = () => {
-        if(c2X.value && c2Y.value && c2Res.value) addHistory(`${fmt(parseFloat(c2X.value))} là <span class="text-orange-500">${fmt(parseFloat(c2Res.value))}%</span> của ${fmt(parseFloat(c2Y.value))}`);
-    };
-    document.getElementById('c3-save').onclick = () => {
-        if(c3Old.value && c3New.value && c3Res.value) {
-            const r = parseFloat(c3Res.value);
-            const txt = r > 0 ? 'Tăng' : 'Giảm';
-            addHistory(`Từ ${fmt(parseFloat(c3Old.value))} → ${fmt(parseFloat(c3New.value))} là <span class="text-${r>0?'green':'red'}-500">${txt} ${fmt(Math.abs(r))}%</span>`);
-        }
-    };
-
-    document.getElementById('c1-clear').onclick = () => { c1P.value = c1V.value = c1Res.value = ""; c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0; };
-    document.getElementById('c2-clear').onclick = () => { c2X.value = c2Y.value = c2Res.value = ""; c2X.dataset.last = c2Y.dataset.last = c2Res.dataset.last = 0; };
-    document.getElementById('c3-clear').onclick = () => { c3Old.value = c3New.value = c3Res.value = ""; c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0; };
-
-    document.getElementById('clear-history').onclick = () => {
-        if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
-            localStorage.removeItem(STORAGE_KEY); 
-            loadHistory(); 
-        }
-    };
-
-    const inArabic = document.getElementById('ro-arabic');
-    const inRoman = document.getElementById('ro-roman');
-
-    const romanMap = {M:1000, CM:900, D:500, CD:400, C:100, XC:90, L:50, XL:40, X:10, IX:9, V:5, IV:4, I:1};
-    
-    const toRoman = (num) => {
-        if (num < 1 || num > 3999) return "LỖI";
-        let str = '';
-        for (let i of Object.keys(romanMap)) {
-            let q = Math.floor(num / romanMap[i]);
-            num -= q * romanMap[i];
-            str += i.repeat(q);
-        }
-        return str;
-    };
-
-    const toArabic = (str) => {
-        str = str.toUpperCase();
-        let num = 0;
-        if (!/^[IVXLCDM]+$/.test(str)) return NaN; 
-        for (let i of Object.keys(romanMap)) {
-            while (str.indexOf(i) === 0) {
-                num += romanMap[i];
-                str = str.replace(i, '');
-            }
-        }
-        return num;
-    };
-
-    inArabic.addEventListener('input', () => {
-        const val = parseInt(inArabic.value);
-        if (!isNaN(val)) {
-            const result = toRoman(val);
-            inRoman.value = result === "LỖI" ? "" : result;
-        } else {
-            inRoman.value = "";
-        }
+  const attachLogic = (inputs, calcFunc) => {
+    inputs.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        e.target.dataset.last = Date.now();
+        calcFunc();
+      });
     });
+  };
 
-    inRoman.addEventListener('input', () => {
-        const val = inRoman.value.trim().toUpperCase();
-        if (val) {
-            const result = toArabic(val);
-            inArabic.value = isNaN(result) ? "" : result;
-        } else {
-            inArabic.value = "";
-        }
-    });
+  const c1P = document.getElementById("c1-p"),
+    c1V = document.getElementById("c1-v"),
+    c1Res = document.getElementById("c1-res");
+  const calc1 = () => {
+    const target = getTarget(c1P, c1V, c1Res);
+    const p = parseFloat(c1P.value),
+      v = parseFloat(c1V.value),
+      r = parseFloat(c1Res.value);
+    if (target === c1Res && !isNaN(p) && !isNaN(v))
+      c1Res.value = clean((p * v) / 100);
+    else if (target === c1V && !isNaN(p) && !isNaN(r) && p !== 0)
+      c1V.value = clean((r * 100) / p);
+    else if (target === c1P && !isNaN(v) && !isNaN(r) && v !== 0)
+      c1P.value = clean((r / v) * 100);
+  };
+  attachLogic([c1P, c1V, c1Res], calc1);
 
-    document.getElementById('ro-save').onclick = () => {
-        if(inArabic.value && inRoman.value && inRoman.value !== "LỖI") {
-            addHistory(`Số <span class="text-orange-500 font-bold">${inArabic.value}</span> = La Mã <span class="text-red-500 font-bold">${inRoman.value}</span>`);
-        }
-    };
-    
-    document.getElementById('ro-clear').onclick = () => { inArabic.value = ""; inRoman.value = ""; };
+  const c2X = document.getElementById("c2-x"),
+    c2Y = document.getElementById("c2-y"),
+    c2Res = document.getElementById("c2-res");
+  const calc2 = () => {
+    const target = getTarget(c2X, c2Y, c2Res);
+    const x = parseFloat(c2X.value),
+      y = parseFloat(c2Y.value),
+      r = parseFloat(c2Res.value);
+    if (target === c2Res && !isNaN(x) && !isNaN(y) && y !== 0)
+      c2Res.value = clean((x / y) * 100);
+    else if (target === c2X && !isNaN(r) && !isNaN(y))
+      c2X.value = clean((r * y) / 100);
+    else if (target === c2Y && !isNaN(x) && !isNaN(r) && r !== 0)
+      c2Y.value = clean((x / r) * 100);
+  };
+  attachLogic([c2X, c2Y, c2Res], calc2);
 
+  const c3Old = document.getElementById("c3-old"),
+    c3New = document.getElementById("c3-new"),
+    c3Res = document.getElementById("c3-res");
+  const calc3 = () => {
+    const target = getTarget(c3Old, c3New, c3Res);
+    const o = parseFloat(c3Old.value),
+      n = parseFloat(c3New.value),
+      r = parseFloat(c3Res.value);
+    if (target === c3Res && !isNaN(o) && !isNaN(n) && o !== 0)
+      c3Res.value = clean(((n - o) / o) * 100);
+    else if (target === c3New && !isNaN(o) && !isNaN(r))
+      c3New.value = clean(o * (1 + r / 100));
+    else if (target === c3Old && !isNaN(n) && !isNaN(r) && r !== -100)
+      c3Old.value = clean(n / (1 + r / 100));
+  };
+  attachLogic([c3Old, c3New, c3Res], calc3);
+
+  const historyList = document.getElementById("history-list");
+  const STORAGE_KEY = "my_calc_history";
+
+  const loadHistory = () => {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    let historyArr = savedData ? JSON.parse(savedData) : [];
+
+    historyList.innerHTML = "";
+
+    if (historyArr.length > 0) {
+      historyArr.forEach((item) => {
+        const li = document.createElement("li");
+        // Thay dấu tick (✓) bằng chấm tròn (•) cho tối giản
+        li.className =
+          'bg-slate-50/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["•"] before:text-orange-500 before:mr-2 before:font-bold before:text-lg text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
+        li.innerHTML = item;
+        historyList.appendChild(li);
+      });
+    } else {
+      historyList.innerHTML =
+        '<li class="italic text-gray-400 text-center py-10 empty-msg text-xs">Chưa có lịch sử nào.<br>Hãy bấm "Lưu KQ" ở các bảng tính!</li>';
+    }
+  };
+
+  const addHistory = (textHTML) => {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    let historyArr = savedData ? JSON.parse(savedData) : [];
+
+    historyArr.unshift(textHTML);
+
+    if (historyArr.length > 30) {
+      historyArr.pop();
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArr));
     loadHistory();
+  };
+
+  document.getElementById("c1-save").onclick = () => {
+    if (c1P.value && c1V.value && c1Res.value)
+      addHistory(
+        `<span class="text-orange-500">${fmt(parseFloat(c1P.value))}%</span> của ${fmt(parseFloat(c1V.value))} = <span class="text-red-500">${fmt(parseFloat(c1Res.value))}</span>`,
+      );
+  };
+  document.getElementById("c2-save").onclick = () => {
+    if (c2X.value && c2Y.value && c2Res.value)
+      addHistory(
+        `${fmt(parseFloat(c2X.value))} là <span class="text-orange-500">${fmt(parseFloat(c2Res.value))}%</span> của ${fmt(parseFloat(c2Y.value))}`,
+      );
+  };
+  document.getElementById("c3-save").onclick = () => {
+    if (c3Old.value && c3New.value && c3Res.value) {
+      const r = parseFloat(c3Res.value);
+      const txt = r > 0 ? "Tăng" : "Giảm";
+      addHistory(
+        `Từ ${fmt(parseFloat(c3Old.value))} → ${fmt(parseFloat(c3New.value))} là <span class="text-${r > 0 ? "green" : "red"}-500">${txt} ${fmt(Math.abs(r))}%</span>`,
+      );
+    }
+  };
+
+  document.getElementById("c1-clear").onclick = () => {
+    c1P.value = c1V.value = c1Res.value = "";
+    c1P.dataset.last = c1V.dataset.last = c1Res.dataset.last = 0;
+  };
+  document.getElementById("c2-clear").onclick = () => {
+    c2X.value = c2Y.value = c2Res.value = "";
+    c2X.dataset.last = c2Y.dataset.last = c2Res.dataset.last = 0;
+  };
+  document.getElementById("c3-clear").onclick = () => {
+    c3Old.value = c3New.value = c3Res.value = "";
+    c3Old.dataset.last = c3New.dataset.last = c3Res.dataset.last = 0;
+  };
+
+  document.getElementById("clear-history").onclick = () => {
+    if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      loadHistory();
+    }
+  };
+
+  const inArabic = document.getElementById("ro-arabic");
+  const inRoman = document.getElementById("ro-roman");
+
+  const romanMap = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  };
+
+  const toRoman = (num) => {
+    if (num < 1 || num > 3999) return "LỖI";
+    let str = "";
+    for (let i of Object.keys(romanMap)) {
+      let q = Math.floor(num / romanMap[i]);
+      num -= q * romanMap[i];
+      str += i.repeat(q);
+    }
+    return str;
+  };
+
+  const toArabic = (str) => {
+    str = str.toUpperCase();
+    let num = 0;
+    if (!/^[IVXLCDM]+$/.test(str)) return NaN;
+    for (let i of Object.keys(romanMap)) {
+      while (str.indexOf(i) === 0) {
+        num += romanMap[i];
+        str = str.replace(i, "");
+      }
+    }
+    return num;
+  };
+
+  inArabic.addEventListener("input", () => {
+    const val = parseInt(inArabic.value);
+    if (!isNaN(val)) {
+      const result = toRoman(val);
+      inRoman.value = result === "LỖI" ? "" : result;
+    } else {
+      inRoman.value = "";
+    }
+  });
+
+  inRoman.addEventListener("input", () => {
+    const val = inRoman.value.trim().toUpperCase();
+    if (val) {
+      const result = toArabic(val);
+      inArabic.value = isNaN(result) ? "" : result;
+    } else {
+      inArabic.value = "";
+    }
+  });
+
+  document.getElementById("ro-save").onclick = () => {
+    if (inArabic.value && inRoman.value && inRoman.value !== "LỖI") {
+      addHistory(
+        `Số <span class="text-orange-500 font-bold">${inArabic.value}</span> = La Mã <span class="text-red-500 font-bold">${inRoman.value}</span>`,
+      );
+    }
+  };
+
+  document.getElementById("ro-clear").onclick = () => {
+    inArabic.value = "";
+    inRoman.value = "";
+  };
+
+  loadHistory();
 }

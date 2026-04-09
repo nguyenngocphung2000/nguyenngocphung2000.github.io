@@ -6,9 +6,9 @@ Ngữ cảnh (Context) là tập hợp các thông tin nền được cung cấp
 
 **Tầm quan trọng:**
 
-* **Tối ưu hóa độ chính xác:** Đảm bảo kết quả phản hồi đúng đối tượng và mục tiêu cụ thể.
-* **Hạn chế sai lệch nội dung:** Ngăn chặn tình trạng AI đưa ra các thông tin không phù hợp với mục đích sử dụng thực tế.
-* **Cá nhân hóa kết quả:** Điều chỉnh nội dung tương thích hoàn toàn với nhu cầu người dùng.
+- **Tối ưu hóa độ chính xác:** Đảm bảo kết quả phản hồi đúng đối tượng và mục tiêu cụ thể.
+- **Hạn chế sai lệch nội dung:** Ngăn chặn tình trạng AI đưa ra các thông tin không phù hợp với mục đích sử dụng thực tế.
+- **Cá nhân hóa kết quả:** Điều chỉnh nội dung tương thích hoàn toàn với nhu cầu người dùng.
 
 ---
 
@@ -16,34 +16,30 @@ Ngữ cảnh (Context) là tập hợp các thông tin nền được cung cấp
 
 Để tăng cường tính thực thi của prompt, cần áp dụng 04 phương pháp sau:
 
-* **Xác định đối tượng mục tiêu:** Chỉ định rõ chủ thể tiếp nhận nội dung (Ví dụ: học sinh, chuyên viên, khách hàng).
-* **Mô tả môi trường ứng dụng:** Làm rõ nền tảng hoặc tình huống sử dụng kết quả (Ví dụ: bài đăng mạng xã hội, thư tín thương mại).
-* **Cung cấp dữ liệu nền liên quan:** Bổ sung các chi tiết về thời gian, địa điểm hoặc sự kiện cụ thể.
-* **Đồng nhất ngữ cảnh với nhiệm vụ:** Liên kết các yếu tố tình huống với yêu cầu thực thi cụ thể (viết, liệt kê, phân tích).
+- **Xác định đối tượng mục tiêu:** Chỉ định rõ chủ thể tiếp nhận nội dung (Ví dụ: học sinh, chuyên viên, khách hàng).
+- **Mô tả môi trường ứng dụng:** Làm rõ nền tảng hoặc tình huống sử dụng kết quả (Ví dụ: bài đăng mạng xã hội, thư tín thương mại).
+- **Cung cấp dữ liệu nền liên quan:** Bổ sung các chi tiết về thời gian, địa điểm hoặc sự kiện cụ thể.
+- **Đồng nhất ngữ cảnh với nhiệm vụ:** Liên kết các yếu tố tình huống với yêu cầu thực thi cụ thể (viết, liệt kê, phân tích).
 
 ---
 
 ## 3. Phân tích đối chiếu thực nghiệm
 
-* **Tình huống 1: Lập kế hoạch**
+- **Tình huống 1: Lập kế hoạch**
+  - _Prompt thiếu ngữ cảnh (Hạn chế):_ Viết kế hoạch học tập.
+  - _Prompt có ngữ cảnh (Tối ưu):_ Liệt kê kế hoạch học tập trong 03 ngày, 02 giờ/ngày, cho học sinh lớp 8 ôn thi học kỳ môn Toán và Anh văn.
 
-  * *Prompt thiếu ngữ cảnh (Hạn chế):* Viết kế hoạch học tập.
-  * *Prompt có ngữ cảnh (Tối ưu):* Liệt kê kế hoạch học tập trong 03 ngày, 02 giờ/ngày, cho học sinh lớp 8 ôn thi học kỳ môn Toán và Anh văn.
+- **Tình huống 2: Quảng cáo**
+  - _Prompt thiếu ngữ cảnh (Hạn chế):_ Viết quảng cáo quán ăn.
+  - _Prompt có ngữ cảnh (Tối ưu):_ Viết nội dung quảng cáo dưới 50 từ cho quán phở, đăng trên Instagram, đối tượng học sinh, tiêu chí giá rẻ, văn phong thân thiện.
 
-* **Tình huống 2: Quảng cáo**
+- **Tình huống 3: Sáng tác**
+  - _Prompt thiếu ngữ cảnh (Hạn chế):_ Viết thơ về mưa.
+  - _Prompt có ngữ cảnh (Tối ưu):_ Soạn bài thơ 04 câu về cảnh mưa và trẻ em, phù hợp trình độ học sinh lớp 6, mục đích giáo dục.
 
-  * *Prompt thiếu ngữ cảnh (Hạn chế):* Viết quảng cáo quán ăn.
-  * *Prompt có ngữ cảnh (Tối ưu):* Viết nội dung quảng cáo dưới 50 từ cho quán phở, đăng trên Instagram, đối tượng học sinh, tiêu chí giá rẻ, văn phong thân thiện.
-
-* **Tình huống 3: Sáng tác**
-
-  * *Prompt thiếu ngữ cảnh (Hạn chế):* Viết thơ về mưa.
-  * *Prompt có ngữ cảnh (Tối ưu):* Soạn bài thơ 04 câu về cảnh mưa và trẻ em, phù hợp trình độ học sinh lớp 6, mục đích giáo dục.
-
-* **Tình huống 4: Thư tín**
-
-  * *Prompt thiếu ngữ cảnh (Hạn chế):* Viết email cảm ơn.
-  * *Prompt có ngữ cảnh (Tối ưu):* Soạn email cảm ơn sau phỏng vấn (dưới 100 từ) gửi nhà tuyển dụng công ty công nghệ, văn phong lịch sự, thể hiện sự cầu thị.
+- **Tình huống 4: Thư tín**
+  - _Prompt thiếu ngữ cảnh (Hạn chế):_ Viết email cảm ơn.
+  - _Prompt có ngữ cảnh (Tối ưu):_ Soạn email cảm ơn sau phỏng vấn (dưới 100 từ) gửi nhà tuyển dụng công ty công nghệ, văn phong lịch sự, thể hiện sự cầu thị.
 
 ---
 
@@ -57,10 +53,11 @@ Ngữ cảnh (Context) là tập hợp các thông tin nền được cung cấp
 
 ## 5. Thực hành ứng dụng
 
-Người dùng thực hiện khởi tạo prompt theo cấu trúc: 
+Người dùng thực hiện khởi tạo prompt theo cấu trúc:
+
 > **[Nhiệm vụ] + [Ngữ cảnh cụ thể về đối tượng/thời điểm] + [Định dạng đầu ra].**
 
-**Ví dụ:** *"Liệt kê 03 phương pháp học môn Ngữ văn cho học sinh lớp 9 trong giai đoạn ôn thi chuyển cấp, định dạng danh sách, văn phong khích lệ."*
+**Ví dụ:** _"Liệt kê 03 phương pháp học môn Ngữ văn cho học sinh lớp 9 trong giai đoạn ôn thi chuyển cấp, định dạng danh sách, văn phong khích lệ."_
 
 ---
 
@@ -71,21 +68,22 @@ Kỹ thuật Prompt tổng hợp là phương pháp tích hợp đa yếu tố v
 ### 6.1. Công thức thiết lập Prompt tổng hợp
 
 Để AI hoạt động như một chuyên gia hoạch định thực thụ, cấu trúc truy vấn cần tuân thủ công thức mở rộng sau:
+
 > **[Vai trò của AI] + [Nhiệm vụ cốt lõi] + [Ngữ cảnh chi tiết] + [Ràng buộc/Điều kiện] + [Định dạng đầu ra]**
 
 ### 6.2. Phân tích Tình huống Ứng dụng Thực tế
 
 **Tình huống 1: Thiết lập kế hoạch học tập**
 
-* **Prompt tối ưu:** *"Đóng vai chuyên gia giáo dục. Lập lộ trình tự học ngoại ngữ trong 30 ngày cho người bắt đầu từ con số 0, mục tiêu giao tiếp cơ bản. Ràng buộc: Quỹ thời gian 45 phút/ngày, tập trung vào kỹ năng Nghe và Nói. Trình bày dưới dạng bảng phân chia theo tuần, kèm phương pháp tự kiểm tra đánh giá."*
+- **Prompt tối ưu:** _"Đóng vai chuyên gia giáo dục. Lập lộ trình tự học ngoại ngữ trong 30 ngày cho người bắt đầu từ con số 0, mục tiêu giao tiếp cơ bản. Ràng buộc: Quỹ thời gian 45 phút/ngày, tập trung vào kỹ năng Nghe và Nói. Trình bày dưới dạng bảng phân chia theo tuần, kèm phương pháp tự kiểm tra đánh giá."_
 
-* **Hiệu quả:** AI xác định chính xác năng lực hiện tại, phương pháp trọng tâm (nghe - nói), phân bổ thời lượng hợp lý (45 phút) và xuất dữ liệu dạng bảng trực quan, dễ theo dõi tiến độ.
+- **Hiệu quả:** AI xác định chính xác năng lực hiện tại, phương pháp trọng tâm (nghe - nói), phân bổ thời lượng hợp lý (45 phút) và xuất dữ liệu dạng bảng trực quan, dễ theo dõi tiến độ.
 
 **Tình huống 2: Thiết lập kế hoạch làm việc (Dự án kỹ thuật/Chuyên môn)**
 
-* **Prompt tối ưu:** *"Đóng vai quản lý dự án (Project Manager) cấp cao. Lập kế hoạch Sprint 1 tuần cho một lập trình viên đang phát triển ứng dụng web tích hợp tính năng lưu trữ đám mây. Ràng buộc: Thời gian làm việc 8 giờ/ngày (Thứ 2 - Thứ 6). Cần phân bổ thời gian cụ thể cho các tác vụ: nghiên cứu tài liệu/API, viết code tính năng cốt lõi, kiểm thử (testing) và xử lý lỗi (fix bug). Định dạng kết quả theo dạng danh sách Timeline chi tiết từng ngày."*
+- **Prompt tối ưu:** _"Đóng vai quản lý dự án (Project Manager) cấp cao. Lập kế hoạch Sprint 1 tuần cho một lập trình viên đang phát triển ứng dụng web tích hợp tính năng lưu trữ đám mây. Ràng buộc: Thời gian làm việc 8 giờ/ngày (Thứ 2 - Thứ 6). Cần phân bổ thời gian cụ thể cho các tác vụ: nghiên cứu tài liệu/API, viết code tính năng cốt lõi, kiểm thử (testing) và xử lý lỗi (fix bug). Định dạng kết quả theo dạng danh sách Timeline chi tiết từng ngày."_
 
-* **Hiệu quả:** Bối cảnh công việc đặc thù và các tác vụ chuyên môn được làm rõ, giúp AI phân chia luồng công việc logic, tuân thủ đúng quy trình làm việc thực tế thay vì đưa ra các đầu mục chung chung.
+- **Hiệu quả:** Bối cảnh công việc đặc thù và các tác vụ chuyên môn được làm rõ, giúp AI phân chia luồng công việc logic, tuân thủ đúng quy trình làm việc thực tế thay vì đưa ra các đầu mục chung chung.
 
 ### 6.3. Nguyên tắc tối ưu hóa kế hoạch do AI tạo ra
 
@@ -97,7 +95,7 @@ Kỹ thuật Prompt tổng hợp là phương pháp tích hợp đa yếu tố v
 
 ---
 
-*Thông qua việc cung cấp ngữ cảnh sắc bén và kết hợp phương pháp lập lệnh tổng hợp, trí tuệ nhân tạo sẽ vượt ra khỏi giới hạn của một công cụ truy vấn thông tin, trở thành trợ lý đắc lực giúp tối ưu hóa hiệu suất học tập và làm việc của bạn.*
+_Thông qua việc cung cấp ngữ cảnh sắc bén và kết hợp phương pháp lập lệnh tổng hợp, trí tuệ nhân tạo sẽ vượt ra khỏi giới hạn của một công cụ truy vấn thông tin, trở thành trợ lý đắc lực giúp tối ưu hóa hiệu suất học tập và làm việc của bạn._
 
 ---
 
