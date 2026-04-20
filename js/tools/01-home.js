@@ -77,7 +77,6 @@ export function setupTool() {
   let cachedContent = {};
 
   const manifest = [
-    { title: "Contact me", date: "Nothing", path: "posts/contact.md" },
     {
       title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
       date: "Nothing",
