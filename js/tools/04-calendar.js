@@ -12,8 +12,8 @@ export function setupTool() {
     "body.dark-mode .cal-grid-sel { background-color: rgba(30, 41, 59, 0.8) !important; color: #f97316 !important; border-color: #334155 !important; }" +
     "</style>" +
     '<div class="text-center mb-6">' +
-    '<span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-200">Tra Cứu</span>' +
-    '<h2 class="text-3xl font-bold mt-2 text-slate-800">Lịch <span class="text-orange-500">Vạn Niên</span></h2>' +
+    '<span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-600/50">Tra Cứu</span>' +
+    '<h2 class="text-3xl font-bold mt-2 text-slate-200">Lịch <span class="text-orange-500">Vạn Niên</span></h2>' +
     '<p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
     "</div>" +
     '<div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">Đang kết nối dữ liệu Thiên Văn... ⏳</div>' +
@@ -23,15 +23,15 @@ export function setupTool() {
     // ================= CỘT TRÁI (HIỂN THỊ CHI TIẾT & TRA CỨU) =================
 
     '<div class="w-full max-w-md mx-auto space-y-5">' +
-    '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-white relative overflow-hidden">' +
+    '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-slate-600/50 relative overflow-hidden">' +
     '<div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>' +
     '<div class="flex justify-between items-start">' +
     '<div class="flex-1 pr-2 overflow-hidden">' +
-    '<div class="text-6xl md:text-7xl font-black text-slate-800 tracking-tighter leading-none mb-2" id="res-main-d">--</div>' +
-    '<div class="text-lg font-bold text-slate-600 mt-2" id="res-main-my">Tháng --, ----</div>' +
+    '<div class="text-6xl md:text-7xl font-black text-slate-200 tracking-tighter leading-none mb-2" id="res-main-d">--</div>' +
+    '<div class="text-lg font-bold text-slate-300 mt-2" id="res-main-my">Tháng --, ----</div>' +
     '<div class="mt-4 flex items-center gap-2.5 w-full">' +
     '<div class="shrink-0 bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 flex items-center justify-center">Âm Lịch</div>' +
-    '<div id="res-sub-date" class="text-[13px] md:text-[14px] font-bold text-slate-600 whitespace-nowrap tracking-tight translate-y-[1px]">--/--/----</div>' +
+    '<div id="res-sub-date" class="text-[13px] md:text-[14px] font-bold text-slate-300 whitespace-nowrap tracking-tight translate-y-[1px]">--/--/----</div>' +
     "</div></div>" +
     '<div class="text-center pt-2 relative z-10 shrink-0">' +
     '<div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">' +
@@ -40,42 +40,42 @@ export function setupTool() {
     '<div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>' +
     "</div></div></div>" +
     // THẺ THÔNG ĐIỆP NGÀY HÔM NAY NẰM Ở CỘT TRÁI
-    '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col">' +
+    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col">' +
     '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
-    '<div id="res-quote-text" class="text-[13.5px] text-slate-600 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
+    '<div id="res-quote-text" class="text-[13.5px] text-slate-300 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
     '<div id="res-quote-author" class="text-right text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider"></div>' +
     "</div>" +
-    '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">' +
+    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">' +
     '<div class="text-center w-full pb-3 border-b border-slate-100">' +
-    '<div id="live-clock" class="text-3xl font-black text-slate-700 font-mono tracking-tight">00:00:00</div>' +
+    '<div id="live-clock" class="text-3xl font-black text-slate-200 font-mono tracking-tight">00:00:00</div>' +
     '<div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>' +
     "</div>" +
-    '<div class="flex bg-slate-100 p-1 rounded-xl w-full">' +
-    '<button id="cal-mode-solar" class="flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition">Dương Lịch</button>' +
+    '<div class="flex bg-slate-700/50 p-1 rounded-xl w-full">' +
+    '<button id="cal-mode-solar" class="flex-1 py-1.5 rounded-lg text-sm font-bold bg-slate-800/50 text-orange-500 shadow-sm transition">Dương Lịch</button>' +
     '<button id="cal-mode-lunar" class="flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition">Âm Lịch</button>' +
     "</div>" +
     '<div class="flex justify-center items-center gap-2 w-full">' +
-    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label><select id="sel-d" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label><select id="sel-d" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
     '<span class="text-slate-300 font-black mt-4">/</span>' +
-    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label><select id="sel-m" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label><select id="sel-m" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
     '<span class="text-slate-300 font-black mt-4">/</span>' +
-    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label><select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label><select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
     "</div>" +
     '<button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">🔍 TÌM NGÀY</button>' +
     "</div>" +
     "</div>" + // KẾT THÚC CỘT TRÁI
     // ================= CỘT PHẢI (LỊCH THÁNG & LỄ HỘI) =================
     '<div class="w-full max-w-md mx-auto space-y-5">' +
-    '<div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100">' +
+    '<div class="bg-slate-800/50 rounded-[2rem] p-5 shadow-sm border border-slate-100">' +
     '<div class="flex justify-center items-center gap-2 mb-4">' +
     '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">THÁNG</span>' +
     '<div class="relative">' +
-    '<select id="grid-sel-m" class="cal-grid-sel appearance-none bg-slate-50 border border-slate-200 hover:bg-slate-100 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
+    '<select id="grid-sel-m" class="cal-grid-sel appearance-none bg-slate-800/40 border border-slate-600/50 hover:bg-slate-700/50 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
     '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
     "</div>" +
     '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">-</span>' +
     '<div class="relative">' +
-    '<select id="grid-sel-y" class="cal-grid-sel appearance-none bg-slate-50 border border-slate-200 hover:bg-slate-100 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
+    '<select id="grid-sel-y" class="cal-grid-sel appearance-none bg-slate-800/40 border border-slate-600/50 hover:bg-slate-700/50 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
     '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
     "</div>" +
     "</div>" +
@@ -84,7 +84,7 @@ export function setupTool() {
     "</div>" +
     '<div id="cal-grid" class="grid grid-cols-7 gap-1 text-center"></div>' +
     "</div>" +
-    '<div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">' +
+    '<div class="bg-slate-800/50 p-5 rounded-[2rem] border border-slate-100 shadow-sm">' +
     '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam</h3>' +
     '<div id="res-events" class="space-y-2 mt-2"></div>' +
     "</div>" +
@@ -353,7 +353,7 @@ export function setupTool() {
       } catch (e) {}
 
       btnL.className =
-        "flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition";
+        "flex-1 py-1.5 rounded-lg text-sm font-bold bg-slate-800/50 text-orange-500 shadow-sm transition";
       btnS.className =
         "flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition";
       document.getElementById("btn-lookup").click();
@@ -375,7 +375,7 @@ export function setupTool() {
       } catch (e) {}
 
       btnS.className =
-        "flex-1 py-1.5 rounded-lg text-sm font-bold bg-white text-orange-500 shadow-sm transition";
+        "flex-1 py-1.5 rounded-lg text-sm font-bold bg-slate-800/50 text-orange-500 shadow-sm transition";
       btnL.className =
         "flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition";
       document.getElementById("btn-lookup").click();
@@ -453,8 +453,8 @@ export function setupTool() {
 
         var bgClass = isSelected
           ? "bg-orange-100 border border-orange-200 shadow-sm"
-          : "border border-transparent hover:bg-slate-50 dark:hover:bg-slate-800";
-        var sColor = isWeekend ? "text-orange-500" : "text-slate-700";
+          : "border border-transparent hover:bg-slate-800/40 dark:hover:bg-slate-800";
+        var sColor = isWeekend ? "text-orange-500" : "text-slate-200";
         if (isSelected) sColor = "text-orange-600";
 
         var dayEvents = getEventsForDate(i, m, lDay, lMonth);
@@ -548,7 +548,7 @@ export function setupTool() {
       } else {
         todaysEvents.forEach(function (e) {
           evContainer.innerHTML +=
-            '<div class="bg-slate-50 p-3 rounded-xl flex gap-3 items-start border border-slate-100 shadow-sm"><span class="text-orange-500 mt-0.5">📌</span><span class="font-bold text-slate-700 text-xs leading-relaxed">' +
+            '<div class="bg-slate-800/40 p-3 rounded-xl flex gap-3 items-start border border-slate-100 shadow-sm"><span class="text-orange-500 mt-0.5">📌</span><span class="font-bold text-slate-200 text-xs leading-relaxed">' +
             e +
             "</span></div>";
         });

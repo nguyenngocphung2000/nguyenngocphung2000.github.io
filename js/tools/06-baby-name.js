@@ -15,7 +15,7 @@ export function setupTool() {
     "</style>" +
     '<div class="text-center mb-8">' +
     '<span class="bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-pink-200">Kho dữ liệu vô tận</span>' +
-    '<h2 class="text-3xl font-bold mt-2 text-slate-800">Đặt Tên Cho <span class="text-pink-500">Bé Yêu</span></h2>' +
+    '<h2 class="text-3xl font-bold mt-2 text-slate-200">Đặt Tên Cho <span class="text-pink-500">Bé Yêu</span></h2>' +
     '<p class="text-[11px] text-slate-500 italic mt-2 max-w-2xl mx-auto px-4">Đề xuất tên theo thuật toán ngẫu nhiên hoặc xử lý danh sách tên có sẵn.</p>' +
     "</div>" +
     // BỌC GIAO DIỆN 3 CỘT TRÀN VIỀN
@@ -23,14 +23,14 @@ export function setupTool() {
     '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
     // ================= CỘT 1: BỘ LỌC TÙY CHỈNH =================
     '<div class="w-full h-full flex flex-col">' +
-    '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col bn-card">' +
-    '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Bộ lọc tùy chỉnh</h3></div>' +
+    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col bn-card">' +
+    '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Bộ lọc tùy chỉnh</h3></div>' +
     // Khung nhập liệu (Cố định ở trên)
     '<div class="mt-4 space-y-4 shrink-0">' +
     '<div class="flex gap-3">' +
     '<div class="flex-1">' +
     '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Giới tính</label>' +
-    '<select id="bn-gender" style="text-align-last: center;" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
+    '<select id="bn-gender" style="text-align-last: center;" class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
     '<option value="all">Tất cả</option>' +
     '<option value="nam">Nam</option>' +
     '<option value="nu">Nữ</option>' +
@@ -38,12 +38,12 @@ export function setupTool() {
     "</div>" +
     '<div class="flex-1">' +
     '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Số lượng</label>' +
-    '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl text-center font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-pink-200">' +
     "</div>" +
     "</div>" +
     "<div>" +
     '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Độ dài tên</label>' +
-    '<select id="bn-length" style="text-align-last: center;" class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
+    '<select id="bn-length" style="text-align-last: center;" class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
     '<option value="all">Ngẫu nhiên</option>' +
     '<option value="2">2 Chữ</option>' +
     '<option value="3">3 Chữ</option>' +
@@ -54,15 +54,15 @@ export function setupTool() {
     '<div class="flex gap-2">' +
     '<div class="w-1/3">' +
     '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Họ</label>' +
-    '<input id="bn-ho" type="text" placeholder="Nguyễn..." class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-3 text-center font-bold text-slate-700 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-ho" type="text" placeholder="Nguyễn..." class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl px-2 py-3 text-center font-bold text-slate-200 outline-none focus:ring-2 ring-pink-200">' +
     "</div>" +
     '<div class="w-1/3">' +
     '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Chữ lót</label>' +
-    '<input id="bn-dem" type="text" placeholder="Thị, Văn..." class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-3 text-center font-bold text-slate-700 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-dem" type="text" placeholder="Thị, Văn..." class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl px-2 py-3 text-center font-bold text-slate-200 outline-none focus:ring-2 ring-pink-200">' +
     "</div>" +
     '<div class="w-1/3">' +
     '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Tên chính</label>' +
-    '<input id="bn-ten" type="text" placeholder="Tâm..." class="bn-input w-full bg-slate-50 border border-slate-200 rounded-xl px-2 py-3 text-center font-bold text-slate-700 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-ten" type="text" placeholder="Tâm..." class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl px-2 py-3 text-center font-bold text-slate-200 outline-none focus:ring-2 ring-pink-200">' +
     "</div>" +
     "</div>" +
     // Nút Đề Xuất Tên ngay dưới form nhập liệu
@@ -73,21 +73,21 @@ export function setupTool() {
     // Mẹo đặt tên (Sử dụng flex-1 để lấp đầy khoảng trống, cân bằng với cột 3)
     '<div class="mt-6 flex-1 bg-pink-50/50 rounded-2xl p-4 border border-pink-100/50 flex flex-col min-h-[150px]">' +
     '<h4 class="text-[11px] font-bold text-pink-600 uppercase mb-3 text-center md:text-left">Mẹo Đặt Tên Hay & Ý Nghĩa</h4>' +
-    '<div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 text-[11.5px] text-slate-600 leading-relaxed">' +
-    '<p><strong class="text-slate-700">1. Quy luật Âm - Dương:</strong> Một cái tên hài hòa nên có sự kết hợp đan xen giữa thanh bằng (ngang, huyền) và thanh trắc (sắc, hỏi, ngã, nặng) để tạo ra nhịp điệu dễ đọc, dễ nghe.</p>' +
-    '<p><strong class="text-slate-700">2. Độ dài lý tưởng:</strong> Tên có 3 hoặc 4 chữ thường cân đối nhất. Việc ghép Họ Cha và Họ Mẹ (ví dụ: Nguyễn Trần...) đang là xu hướng hiện đại, mang ý nghĩa trọn vẹn của gia đình.</p>' +
-    '<p><strong class="text-slate-700">3. Cẩn trọng từ đồng âm:</strong> Hãy đọc lướt nhanh hoặc thử nói lái tên dự định đặt để tránh trường hợp tên bị biến tấu thành những ý nghĩa không mong muốn.</p>' +
-    '<p><strong class="text-slate-700">4. Phát huy tối đa bộ lọc:</strong> Hãy mạnh dạn bỏ trống các ô bạn chưa nghĩ ra ý tưởng. Thuật toán của chúng tôi sẽ tự động phân tích và lấp đầy bằng những chữ lót, tên chính hay nhất từ kho dữ liệu.</p>' +
+    '<div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 text-[11.5px] text-slate-300 leading-relaxed">' +
+    '<p><strong class="text-slate-200">1. Quy luật Âm - Dương:</strong> Một cái tên hài hòa nên có sự kết hợp đan xen giữa thanh bằng (ngang, huyền) và thanh trắc (sắc, hỏi, ngã, nặng) để tạo ra nhịp điệu dễ đọc, dễ nghe.</p>' +
+    '<p><strong class="text-slate-200">2. Độ dài lý tưởng:</strong> Tên có 3 hoặc 4 chữ thường cân đối nhất. Việc ghép Họ Cha và Họ Mẹ (ví dụ: Nguyễn Trần...) đang là xu hướng hiện đại, mang ý nghĩa trọn vẹn của gia đình.</p>' +
+    '<p><strong class="text-slate-200">3. Cẩn trọng từ đồng âm:</strong> Hãy đọc lướt nhanh hoặc thử nói lái tên dự định đặt để tránh trường hợp tên bị biến tấu thành những ý nghĩa không mong muốn.</p>' +
+    '<p><strong class="text-slate-200">4. Phát huy tối đa bộ lọc:</strong> Hãy mạnh dạn bỏ trống các ô bạn chưa nghĩ ra ý tưởng. Thuật toán của chúng tôi sẽ tự động phân tích và lấp đầy bằng những chữ lót, tên chính hay nhất từ kho dữ liệu.</p>' +
     "</div>" +
     "</div>" +
     "</div>" +
     "</div>" + // KẾT THÚC CỘT 1
     // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý =================
     '<div class="w-full h-full flex flex-col min-h-0">' +
-    '<div id="bn-result" class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' +
+    '<div id="bn-result" class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' +
     '<div class="flex justify-between items-center border-b border-pink-200/50 pb-3 shrink-0">' +
-    '<h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
-    '<button id="bn-btn-copy-gen" class="text-[10px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-4 py-1.5 rounded-lg font-bold shadow-sm transition uppercase tracking-wider">COPY</button>' +
+    '<h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
+    '<button id="bn-btn-copy-gen" class="text-[10px] bg-slate-800/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/50 px-4 py-1.5 rounded-lg font-bold shadow-sm transition uppercase tracking-wider">COPY</button>' +
     "</div>" +
     // Khung chứa list kết quả, tự động tạo thanh cuộn nếu quá dài
     '<div class="relative flex-1 mt-4 min-h-[300px] lg:min-h-0">' +
@@ -99,8 +99,8 @@ export function setupTool() {
     "</div>" + // KẾT THÚC CỘT 2
     // ================= CỘT 3: TRẠM XỬ LÝ DANH SÁCH =================
     '<div class="w-full h-full flex flex-col">' +
-    '<div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-indigo-100 h-full flex flex-col filter-card">' +
-    '<div class="border-b border-slate-200 pb-3 shrink-0"><h3 class="font-bold text-slate-700 text-[13px] uppercase text-center md:text-left">Trạm xử lý danh sách</h3></div>' +
+    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-indigo-100 h-full flex flex-col filter-card">' +
+    '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Trạm xử lý danh sách</h3></div>' +
     '<div class="mt-3 flex flex-col flex-1 space-y-4">' +
     "<div>" +
     '<div class="flex justify-between items-end mb-1.5">' +
@@ -110,44 +110,44 @@ export function setupTool() {
     "</div>" +
     '<div class="flex gap-1.5">' +
     '<button id="flt-btn-clear-in" class="text-[9px] bg-red-50 border border-red-100 text-red-500 hover:bg-red-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">XÓA</button>' +
-    '<button id="flt-btn-paste" class="text-[9px] bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">DÁN</button>' +
+    '<button id="flt-btn-paste" class="text-[9px] bg-slate-800/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/50 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">DÁN</button>' +
     "</div>" +
     "</div>" +
-    '<textarea id="flt-input" class="bn-input w-full h-24 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
+    '<textarea id="flt-input" class="bn-input w-full h-24 bg-slate-800/40 border border-slate-600/50 rounded-xl p-3 text-sm font-medium text-slate-200 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
     "</div>" +
-    '<div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-3 bn-input">' +
+    '<div class="bg-slate-800/40 rounded-xl p-3 border border-slate-600/50 space-y-3 bn-input">' +
     '<div class="grid grid-cols-2 gap-3">' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xóa dòng trống</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Dấu cách chuẩn</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-rem-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ số thứ tự cũ</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Thêm số thứ tự</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-dup" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Lọc trùng lặp</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-accent" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ dấu Tiếng Việt</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Đảo ngược</label>' +
-    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-empty" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xóa dòng trống</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-space" checked class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Dấu cách chuẩn</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-rem-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ số thứ tự cũ</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-add-num" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Thêm số thứ tự</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-dup" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Lọc trùng lặp</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-accent" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Bỏ dấu Tiếng Việt</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-reverse" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Đảo ngược</label>' +
+    '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn</label>' +
     "</div>" +
-    '<div class="grid grid-cols-1 gap-2 border-t border-slate-200 pt-2">' +
-    '<select id="sel-case" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+    '<div class="grid grid-cols-1 gap-2 border-t border-slate-600/50 pt-2">' +
+    '<select id="sel-case" class="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg p-2 text-[11px] font-bold text-slate-200 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
     '<option value="none">A/a (Không can thiệp HOA/thường)</option>' +
     '<option value="title" selected>Aa (Viết hoa chữ đầu mỗi từ)</option>' +
     '<option value="lower">aa (Viết thường toàn bộ)</option>' +
     '<option value="upper">AA (Viết HOA toàn bộ)</option>' +
     "</select>" +
-    '<select id="sel-sort" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-[11px] font-bold text-slate-700 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+    '<select id="sel-sort" class="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg p-2 text-[11px] font-bold text-slate-200 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
     '<option value="none">Không sắp xếp bảng chữ cái</option>' +
     '<option value="asc">Sắp xếp A-Z</option>' +
     '<option value="desc">Sắp xếp Z-A</option>' +
     "</select>" +
     "</div>" +
-    '<div class="flex items-center gap-2 border-t border-slate-200 pt-2">' +
+    '<div class="flex items-center gap-2 border-t border-slate-600/50 pt-2">' +
     '<input type="checkbox" id="chk-wc" class="w-4 h-4 text-indigo-500 rounded cursor-pointer focus:ring-indigo-500">' +
-    '<span class="text-[11px] font-bold text-slate-600">Lọc theo từ:</span>' +
-    '<select id="sel-wc-op" class="bg-white border border-slate-200 rounded p-1 text-[11px] font-bold text-slate-700 outline-none">' +
+    '<span class="text-[11px] font-bold text-slate-300">Lọc theo từ:</span>' +
+    '<select id="sel-wc-op" class="bg-slate-800/50 border border-slate-600/50 rounded p-1 text-[11px] font-bold text-slate-200 outline-none">' +
     '<option value="less">&lt;</option>' +
     '<option value="eq" selected>=</option>' +
     '<option value="greater">&gt;</option>' +
     "</select>" +
-    '<input type="number" id="inp-wc-num" value="3" class="w-12 bg-white border border-slate-200 rounded p-1 text-center text-[11px] font-bold text-slate-700 outline-none">' +
+    '<input type="number" id="inp-wc-num" value="3" class="w-12 bg-slate-800/50 border border-slate-600/50 rounded p-1 text-center text-[11px] font-bold text-slate-200 outline-none">' +
     '<span class="text-[11px] font-bold text-slate-500">từ/dòng</span>' +
     "</div>" +
     "</div>" +
@@ -161,7 +161,7 @@ export function setupTool() {
     '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Kết quả đầu ra</label>' +
     '<span class="text-[9px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-md border border-green-100">DÒNG: <span id="flt-cnt-out">0</span></span>' +
     "</div>" +
-    '<textarea id="flt-output" readonly class="bn-input w-full flex-1 min-h-[80px] bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-700 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
+    '<textarea id="flt-output" readonly class="bn-input w-full flex-1 min-h-[80px] bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-200 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
     "</div>" +
     "</div>" +
     '<div class="flex gap-2 shrink-0 mt-4">' +

@@ -10,7 +10,7 @@ export function setupTool() {
   panel.innerHTML = `
         <div class="text-center mb-6">
             <span class="bg-cyan-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Tài chính</span>
-            <h2 class="text-3xl font-bold mt-2 text-gray-800">Tính Lãi <span class="text-cyan-500">Ngân Hàng</span> 💰</h2>
+            <h2 class="text-3xl font-bold mt-2 text-slate-200">Tính Lãi <span class="text-cyan-500">Ngân Hàng</span> 💰</h2>
             <p class="text-sm text-gray-500 mt-2 italic">Tính toán chi tiết lãi gửi tiết kiệm và khoản vay.</p>
         </div>
 
@@ -18,7 +18,7 @@ export function setupTool() {
             
             <div class="flex justify-center mb-6">
                 <div class="bg-gray-100 p-1 rounded-2xl inline-flex shadow-inner">
-                    <button id="btn-mode-saving" class="px-6 py-2 rounded-xl text-sm font-bold bg-white text-cyan-600 shadow-sm transition">Gửi Tiết Kiệm</button>
+                    <button id="btn-mode-saving" class="px-6 py-2 rounded-xl text-sm font-bold bg-slate-800/50 text-cyan-600 shadow-sm transition">Gửi Tiết Kiệm</button>
                     <button id="btn-mode-loan" class="px-6 py-2 rounded-xl text-sm font-bold text-gray-500 hover:text-cyan-600 transition">Vay Vốn</button>
                 </div>
             </div>
@@ -54,7 +54,7 @@ export function setupTool() {
                 
                 <button id="btn-calc-sav" class="w-full mt-6 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 rounded-xl transition shadow-md active:scale-95">TÍNH TOÁN TIỀN LỜI</button>
 
-                <div id="sav-result" class="mt-6 hidden bg-white p-4 rounded-xl border border-cyan-100 shadow-sm text-center">
+                <div id="sav-result" class="mt-6 hidden bg-slate-800/50 p-4 rounded-xl border border-cyan-100 shadow-sm text-center">
                     <div class="text-sm text-gray-500 font-medium">Tổng tiền lãi nhận được</div>
                     <div id="sav-res-interest" class="text-3xl font-black text-green-500 mt-1 mb-2">0 ₫</div>
                     <div class="text-sm text-gray-500 font-medium">Tổng gốc + Lãi</div>
@@ -92,14 +92,14 @@ export function setupTool() {
                 
                 <button id="btn-calc-loan" class="w-full mt-6 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold py-3 rounded-xl transition shadow-md active:scale-95">TÍNH TOÁN KHOẢN VAY</button>
 
-                <div id="loan-result" class="mt-6 hidden bg-white p-4 rounded-xl border border-red-100 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div id="loan-result" class="mt-6 hidden bg-slate-800/50 p-4 rounded-xl border border-red-100 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                     <div>
                         <div class="text-xs text-gray-400 font-bold uppercase">Tổng lãi phải trả</div>
                         <div id="loan-res-interest" class="text-xl font-black text-red-500 mt-1">0 ₫</div>
                     </div>
                     <div>
                         <div class="text-xs text-gray-400 font-bold uppercase">Tổng gốc + Lãi</div>
-                        <div id="loan-res-total" class="text-xl font-bold text-gray-800 mt-1">0 ₫</div>
+                        <div id="loan-res-total" class="text-xl font-bold text-slate-200 mt-1">0 ₫</div>
                     </div>
                     <div>
                         <div class="text-xs text-gray-400 font-bold uppercase">Tháng cao nhất trả</div>
@@ -108,7 +108,7 @@ export function setupTool() {
                 </div>
 
                 <div id="loan-schedule-container" class="mt-6 hidden">
-                    <h4 class="font-bold text-gray-800 mb-2 flex items-center gap-2"><span>📅</span> Lịch trả nợ chi tiết</h4>
+                    <h4 class="font-bold text-slate-200 mb-2 flex items-center gap-2"><span>📅</span> Lịch trả nợ chi tiết</h4>
                     <div class="overflow-x-auto max-h-80 custom-scrollbar rounded-xl border border-gray-100 shadow-inner">
                         <table class="w-full text-sm text-left">
                             <thead class="bg-gray-50 text-gray-500 sticky top-0 text-xs uppercase">
@@ -120,7 +120,7 @@ export function setupTool() {
                                     <th class="px-4 py-3 font-bold">Gốc Còn Lại</th>
                                 </tr>
                             </thead>
-                            <tbody id="loan-schedule-body" class="bg-white divide-y divide-gray-100">
+                            <tbody id="loan-schedule-body" class="bg-slate-800/50 divide-y divide-gray-100">
                                 </tbody>
                         </table>
                     </div>
@@ -149,7 +149,7 @@ export function setupTool() {
 
   btnSav.addEventListener("click", () => {
     btnSav.className =
-      "px-6 py-2 rounded-xl text-sm font-bold bg-white text-cyan-600 shadow-sm transition";
+      "px-6 py-2 rounded-xl text-sm font-bold bg-slate-800/50 text-cyan-600 shadow-sm transition";
     btnLoan.className =
       "px-6 py-2 rounded-xl text-sm font-bold text-gray-500 hover:text-cyan-600 transition";
     modeSav.classList.remove("hidden");
@@ -158,7 +158,7 @@ export function setupTool() {
 
   btnLoan.addEventListener("click", () => {
     btnLoan.className =
-      "px-6 py-2 rounded-xl text-sm font-bold bg-white text-red-600 shadow-sm transition";
+      "px-6 py-2 rounded-xl text-sm font-bold bg-slate-800/50 text-red-600 shadow-sm transition";
     btnSav.className =
       "px-6 py-2 rounded-xl text-sm font-bold text-gray-500 hover:text-cyan-600 transition";
     modeLoan.classList.remove("hidden");
@@ -239,7 +239,7 @@ export function setupTool() {
                         <td class="px-4 py-2 font-bold">${i}</td>
                         <td class="px-4 py-2 text-gray-600">${fmt(monthlyPrincipal)}</td>
                         <td class="px-4 py-2 text-red-500">${fmt(monthlyInterest)}</td>
-                        <td class="px-4 py-2 font-bold text-gray-800">${fmt(maxMonthly)}</td>
+                        <td class="px-4 py-2 font-bold text-slate-200">${fmt(maxMonthly)}</td>
                         <td class="px-4 py-2 text-gray-500">${fmt(Math.max(0, remaining))}</td>
                     </tr>`;
       }
@@ -258,7 +258,7 @@ export function setupTool() {
                         <td class="px-4 py-2 font-bold">${i}</td>
                         <td class="px-4 py-2 text-gray-600">${fmt(monthlyPrincipal)}</td>
                         <td class="px-4 py-2 text-red-500">${fmt(interest)}</td>
-                        <td class="px-4 py-2 font-bold text-gray-800">${fmt(payment)}</td>
+                        <td class="px-4 py-2 font-bold text-slate-200">${fmt(payment)}</td>
                         <td class="px-4 py-2 text-gray-500">${fmt(Math.max(0, remaining))}</td>
                     </tr>`;
       }
@@ -279,7 +279,7 @@ export function setupTool() {
                         <td class="px-4 py-2 font-bold">${i}</td>
                         <td class="px-4 py-2 text-gray-600">${fmt(principal)}</td>
                         <td class="px-4 py-2 text-red-500">${fmt(interest)}</td>
-                        <td class="px-4 py-2 font-bold text-gray-800">${fmt(pmt)}</td>
+                        <td class="px-4 py-2 font-bold text-slate-200">${fmt(pmt)}</td>
                         <td class="px-4 py-2 text-gray-500">${fmt(Math.max(0, remaining))}</td>
                     </tr>`;
       }

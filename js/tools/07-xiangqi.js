@@ -10,18 +10,18 @@ export function setupTool() {
   panel.innerHTML =
     "<style>" +
     "#xq-board-wrapper { width: 100%; max-width: 450px; margin: 0 auto; position: relative; font-family: system-ui, -apple-system, sans-serif; }" +
-    "#xq-board-container { width: 100%; position: relative; aspect-ratio: 9/10; border: 2px solid #cbd5e1; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25), inset 0 0 30px rgba(0,0,0,0.1); background: linear-gradient(135deg, #f8fafc, #e2e8f0); overflow: hidden; }" +
+    "#xq-board-container { width: 100%; position: relative; aspect-ratio: 9/10; border: 2px solid rgba(249,115,22,0.3); border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.1); background: linear-gradient(135deg, #1e293b, #0f172a); overflow: hidden; }" +
     ".xq-svg-board { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }" +
     "#xq-pieces-layer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 10; }" +
-    '.xq-piece { position: absolute; width: 9.5%; aspect-ratio: 1/1; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; font-family: "KaiTi", "Georgia", serif; font-weight: 900; font-size: clamp(16px, 5.5vw, 26px); border-radius: 50%; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); user-select: none; background: radial-gradient(circle at 30% 30%, #ffffff, #f8fafc); z-index: 20; border: 1.5px solid #e2e8f0; }' +
-    ".xq-piece.red { color: #dc2626; border-color: #fecaca; box-shadow: 0 8px 15px -2px rgba(220,38,38,0.3), inset -2px -4px 6px rgba(0,0,0,0.06), inset 2px 2px 4px rgba(255,255,255,1); }" +
-    ".xq-piece.black { color: #0f172a; border-color: #cbd5e1; box-shadow: 0 8px 15px -2px rgba(15,23,42,0.3), inset -2px -4px 6px rgba(0,0,0,0.06), inset 2px 2px 4px rgba(255,255,255,1); }" +
+    '.xq-piece { position: absolute; width: 9.5%; aspect-ratio: 1/1; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; font-family: "KaiTi", "Georgia", serif; font-weight: 900; font-size: clamp(16px, 5.5vw, 26px); border-radius: 50%; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); user-select: none; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); z-index: 20; border: 1.5px solid #475569; }' +
+    ".xq-piece.red { color: #f87171; border-color: #ef4444; box-shadow: 0 8px 15px -2px rgba(239,68,68,0.3), inset 2px 2px 4px rgba(255,255,255,0.1); text-shadow: 0 0 8px rgba(239,68,68,0.5); }" +
+    ".xq-piece.black { color: #94a3b8; border-color: #cbd5e1; box-shadow: 0 8px 15px -2px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.1); }" +
     ".xq-piece.rotated { transform: translate(-50%, -50%) rotate(180deg); }" +
     ".xq-piece.selected { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14,165,233,0.4), 0 15px 25px rgba(14,165,233,0.5), inset -2px -4px 6px rgba(0,0,0,0.05) !important; z-index: 30; transform: translate(-50%, -50%) scale(1.18); color: #0ea5e9; text-shadow: 0 0 8px rgba(14,165,233,0.4); }" +
     ".xq-piece.selected.rotated { transform: translate(-50%, -50%) rotate(180deg) scale(1.18); }" +
     ".xq-dot { position: absolute; width: 3.5%; aspect-ratio: 1/1; background: #0ea5e9; border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer; z-index: 15; opacity: 0.6; box-shadow: 0 0 10px #0ea5e9; transition: all 0.2s; }" +
     ".xq-dot:hover { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }" +
-    "#xq-overlay { position: absolute; inset: 0; background: rgba(248,250,252,0.6); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); transition: opacity 0.3s; }" +
+    "#xq-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.85); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(15px); transition: opacity 0.3s; }" +
     "#xq-check-alert { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; font-weight: 800; background: rgba(220, 38, 38, 0.95); color: white; padding: 12px 35px; border-radius: 9999px; box-shadow: 0 10px 30px rgba(220,38,38,0.4); backdrop-filter: blur(5px); pointer-events: none; opacity: 0; transition: opacity 0.3s, transform 0.3s; letter-spacing: 3px; white-space: nowrap; display: flex; align-items: center; justify-content: center; }" +
     ".xq-anim-check { animation: xqPop 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }" +
     "@keyframes xqPop { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } 10% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 20% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 80% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } }" +
@@ -43,21 +43,22 @@ export function setupTool() {
     '    <div id="xq-pieces-layer"></div>' +
     '    <div id="xq-check-alert" class="text-base md:text-lg uppercase">CHIẾU TƯỚNG!</div>' +
     '    <div id="xq-overlay">' +
-    '      <h2 id="xq-winner-msg" class="text-indigo-600 text-lg font-bold mb-4 hidden text-center px-4"></h2>' +
-    '      <h3 class="text-slate-800 text-lg font-black mb-4 uppercase tracking-widest drop-shadow-sm">Cài đặt ván đấu</h3>' +
-    '      <div class="flex items-center gap-3 bg-white/80 p-3 rounded-2xl shadow-sm border border-white">' +
-    '        <span class="text-slate-600 font-bold text-sm pl-2">Thời gian:</span>' +
-    '        <input id="xq-time-input" type="number" value="10" min="1" max="90" class="w-16 bg-white border border-slate-200 rounded-xl py-2 text-center font-black text-indigo-600 outline-none focus:ring-2 ring-indigo-300 shadow-inner">' +
-    '        <span class="text-slate-600 font-bold text-sm pr-2">Phút</span>' +
-    "      </div>" +
-    '      <button id="xq-btn-start" class="mt-6 bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm uppercase tracking-widest px-10 py-4 rounded-2xl shadow-xl transition active:scale-95">Bắt Đầu Chơi</button>' +
+    '      <h2 id="xq-winner-msg" class="text-orange-500 text-lg md:text-xl xl:text-2xl font-bold mb-6 hidden text-center px-4 drop-shadow-[0_0_15px_rgba(249,115,22,0.8)] z-[200]"></h2>' +
+    '      <div class="glass-card flex flex-col items-center justify-center p-8 rounded-3xl w-11/12 max-w-[300px]">' +
+    '         <h3 class="text-slate-200 text-base md:text-lg font-black mb-6 uppercase tracking-widest text-center shadow-orange-500">Cài Đặt Thời Gian</h3>' +
+    '         <div class="flex items-center justify-center gap-3 bg-slate-800/80 p-4 rounded-xl border border-orange-500/30 w-full mb-6">' +
+    '           <input id="xq-time-input" type="number" value="10" min="1" max="90" class="w-16 bg-slate-900 border border-slate-600/50 rounded-xl py-2 text-center font-black text-orange-400 outline-none focus:ring-2 ring-orange-500/50 shadow-inner">' +
+    '           <span class="text-slate-300 font-bold text-sm">Phút / Người</span>' +
+    '         </div>' +
+    '         <button id="xq-btn-start" class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm uppercase tracking-widest px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.4)] transition active:scale-95 border border-orange-400">Bắt Đầu Chơi</button>' +
+    '      </div>' +
     "    </div>" +
     "  </div>" +
     "</div>" +
     '<div id="xq-bottom-panel" class="mt-3 transition-all duration-300"></div>' +
     '<div class="flex gap-3 mt-4">' +
-    '  <button id="xq-btn-reset" class="flex-1 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Làm mới tỷ số</button>' +
-    '  <button id="xq-btn-flip" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Đảo bàn cờ</button>' +
+    '  <button id="xq-btn-reset" class="flex-1 bg-slate-800/50 hover:bg-slate-800/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Làm mới tỷ số</button>' +
+    '  <button id="xq-btn-flip" class="flex-1 bg-slate-700/50 hover:bg-slate-200 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Đảo bàn cờ</button>' +
     "</div>" +
     "</div>";
 
@@ -195,10 +196,10 @@ export function setupTool() {
       const isRed = color === "red";
       const name = isRed ? "Phe Đỏ" : "Phe Đen";
       const bgCls = isRed
-        ? "bg-gradient-to-r from-red-50 to-rose-100 border-red-200"
-        : "bg-gradient-to-r from-slate-50 to-slate-200 border-slate-300";
-      const txtColor = isRed ? "text-red-600" : "text-slate-800";
-      const scoreColor = isRed ? "text-red-700" : "text-slate-900";
+        ? "bg-slate-800/80 border-orange-500/30"
+        : "bg-slate-900/80 border-slate-600/50";
+      const txtColor = isRed ? "text-orange-400" : "text-slate-300";
+      const scoreColor = isRed ? "text-orange-500" : "text-slate-100";
       const rotCls = isTop ? "rotate-180" : "";
       const playerName = isTop ? `${name} (Đối diện)` : `${name} (Bạn)`;
 
@@ -211,18 +212,18 @@ export function setupTool() {
                   <div class="flex items-center gap-3">
                     ${
                       isTop
-                        ? `<button onclick="window.xqToggleSurrender('${color}', true)" class="bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold px-3 py-2 rounded-xl shadow-sm transition active:scale-95">Đầu hàng</button>
+                        ? `<button onclick="window.xqToggleSurrender('${color}', true)" class="bg-slate-800/50 hover:bg-slate-800/40 border border-slate-600/50 text-slate-300 text-[10px] font-bold px-3 py-2 rounded-xl shadow-sm transition active:scale-95">Đầu hàng</button>
                                <div id="xq-time-${color}" class="text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 xq-timer">${formatTime(times[color])}</div>`
                         : `<div id="xq-time-${color}" class="text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 xq-timer">${formatTime(times[color])}</div>
-                               <button onclick="window.xqToggleSurrender('${color}', true)" class="bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-bold px-3 py-2 rounded-xl shadow-sm transition active:scale-95">Đầu hàng</button>`
+                               <button onclick="window.xqToggleSurrender('${color}', true)" class="bg-slate-800/50 hover:bg-slate-800/40 border border-slate-600/50 text-slate-300 text-[10px] font-bold px-3 py-2 rounded-xl shadow-sm transition active:scale-95">Đầu hàng</button>`
                     }
                   </div>
 
-                  <div id="xq-surrender-box-${color}" class="absolute inset-0 bg-white/90 backdrop-blur-md flex items-center justify-between px-5 opacity-0 scale-95 pointer-events-none transition-all duration-200 z-20">
-                      <span class="text-sm font-bold text-slate-800">Xác nhận đầu hàng?</span>
+                  <div id="xq-surrender-box-${color}" class="absolute inset-0 bg-slate-800/50/90 backdrop-blur-md flex items-center justify-between px-5 opacity-0 scale-95 pointer-events-none transition-all duration-200 z-20">
+                      <span class="text-sm font-bold text-slate-200">Xác nhận đầu hàng?</span>
                       <div class="flex gap-2">
-                          <button onclick="window.xqToggleSurrender('${color}', false)" class="px-4 py-2 bg-slate-100 text-slate-600 text-xs font-bold rounded-xl active:scale-95">Hủy</button>
-                          <button onclick="window.xqConfirmSurrender('${color}')" class="px-4 py-2 bg-red-500 text-white text-xs font-bold rounded-xl active:scale-95 shadow-md border border-red-600">Đồng ý</button>
+                          <button onclick="window.xqToggleSurrender('${color}', false)" class="px-4 py-2 bg-slate-700 text-slate-300 text-xs font-bold rounded-xl active:scale-95">Hủy</button>
+                          <button onclick="window.xqConfirmSurrender('${color}')" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl active:scale-95 shadow-md border border-red-700">Đồng ý</button>
                       </div>
                   </div>
                 </div>
@@ -247,17 +248,16 @@ export function setupTool() {
     const tb = document.getElementById("xq-time-black");
 
     if (tr)
-      tr.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-white/60 text-red-400 border border-red-200 shadow-inner`;
+      tr.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-slate-800/50/60 text-red-400 border border-red-200 shadow-inner`;
     if (tb)
-      tb.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-white/60 text-slate-400 border border-slate-300 shadow-inner`;
+      tb.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-slate-800/50/60 text-slate-400 border border-slate-300 shadow-inner`;
 
     if (gameState === "PLAYING") {
       const active = document.getElementById(`xq-time-${turn}`);
       if (active) {
-        if (turn === "red") {
-          active.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-red-500 text-white border border-red-600 shadow-[0_0_15px_rgba(239,68,68,0.5)] xq-timer-active`;
+          active.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-orange-600 text-white border border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.8)] xq-timer-active`;
         } else {
-          active.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-slate-700 text-white border border-slate-800 shadow-[0_0_15px_rgba(51,65,85,0.5)] xq-timer-active`;
+          active.className = `text-2xl font-mono font-bold px-3 py-1.5 rounded-xl w-24 text-center transition-all duration-300 bg-slate-600 text-white border border-slate-500 shadow-[0_0_15px_rgba(100,116,139,0.8)] xq-timer-active`;
         }
       }
     }

@@ -35,7 +35,7 @@ export function setupTool() {
 
         <div class="text-center mb-6">
             <span class="bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-md">Tiện ích</span>
-            <h2 class="text-3xl font-black mt-2 text-gray-800 tracking-tight">Vòng Quay <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">May Mắn</span></h2>
+            <h2 class="text-3xl font-black mt-2 text-slate-200 tracking-tight">Vòng Quay <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">May Mắn</span></h2>
         </div>
 
         <div class="max-w-6xl mx-auto pb-10 px-2 lg:px-6">
@@ -61,42 +61,42 @@ export function setupTool() {
                             <canvas id="wheel-canvas" width="1000" height="1000" class="w-full h-full relative z-0"></canvas>
                         </div>
 
-                        <button type="button" id="btn-spin-center" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-amber-200 to-amber-500 rounded-full w-[22%] h-[22%] shadow-[0_8px_20px_rgba(0,0,0,0.5),_inset_0_-5px_10px_rgba(180,83,9,0.5),_inset_0_5px_10px_rgba(255,255,255,0.8)] font-black text-amber-900 border-[5px] border-white flex flex-col items-center justify-center active:scale-90 transition-transform z-30 cursor-pointer select-none btn-spin-pulse text-lg md:text-xl tracking-widest uppercase">
+                        <button type="button" id="btn-spin-center" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-amber-200 to-amber-500 rounded-full w-[22%] h-[22%] shadow-[0_8px_20px_rgba(0,0,0,0.5),_inset_0_-5px_10px_rgba(180,83,9,0.5),_inset_0_5px_10px_rgba(255,255,255,0.8)] font-black text-amber-900 border-[5px] border-slate-600/50 flex flex-col items-center justify-center active:scale-90 transition-transform z-30 cursor-pointer select-none btn-spin-pulse text-lg md:text-xl tracking-widest uppercase">
                             QUAY
                         </button>
                     </div>
                 </div>
 
                 <div class="w-full lg:w-2/5 max-w-md mx-auto">
-                    <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white overflow-hidden flex flex-col">
+                    <div class="bg-slate-800/50/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-600/50 overflow-hidden flex flex-col">
                         
-                        <div class="flex gap-2 p-3 md:p-4 bg-slate-50/80 border-b border-slate-200/60">
-                            <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider">
+                        <div class="flex gap-2 p-3 md:p-4 bg-slate-800/40/80 border-b border-slate-600/50/60">
+                            <button type="button" id="btn-wheel-reset-all" data-confirm="false" class="flex-1 bg-slate-800/50 hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider">
                                 XÓA SẠCH
                             </button>
-                            <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap uppercase tracking-wider">
+                            <button type="button" id="btn-wheel-shuffle" class="flex-1 bg-slate-800/50 hover:bg-slate-700/50 text-slate-200 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-600/50 whitespace-nowrap uppercase tracking-wider">
                                 TRÁO ĐỔI
                             </button>
-                            <button type="button" id="btn-wheel-sort" class="flex-1 bg-white hover:bg-slate-100 text-slate-700 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-200 whitespace-nowrap uppercase tracking-wider">
+                            <button type="button" id="btn-wheel-sort" class="flex-1 bg-slate-800/50 hover:bg-slate-700/50 text-slate-200 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-slate-600/50 whitespace-nowrap uppercase tracking-wider">
                                 SẮP XẾP
                             </button>
                         </div>
 
-                        <div class="flex border-b border-slate-200/60 bg-white">
+                        <div class="flex border-b border-slate-600/50/60 bg-slate-800/50">
                             <button type="button" id="tab-btn-list" class="flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide">
                                 MỤC (<span id="wheel-count">0</span>)
                             </button>
-                            <button type="button" id="tab-btn-results" class="flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors uppercase tracking-wide">
+                            <button type="button" id="tab-btn-results" class="flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-800/40 transition-colors uppercase tracking-wide">
                                 KẾT QUẢ (<span id="wheel-result-count">0</span>)
                             </button>
                         </div>
 
                         <div id="tab-content-list" class="p-4 block">
-                            <textarea id="wheel-input" class="w-full h-[400px] lg:h-[450px] bg-slate-50/50 border border-slate-200 rounded-2xl p-4 text-sm font-semibold text-slate-700 outline-none focus:ring-2 ring-indigo-300 resize-none wheel-scroll leading-relaxed shadow-inner" placeholder="Nhập danh sách vào đây...&#10;Mỗi tên nằm trên một dòng nhé!"></textarea>
+                            <textarea id="wheel-input" class="w-full h-[400px] lg:h-[450px] bg-slate-800/40/50 border border-slate-600/50 rounded-2xl p-4 text-sm font-semibold text-slate-200 outline-none focus:ring-2 ring-indigo-300 resize-none wheel-scroll leading-relaxed shadow-inner" placeholder="Nhập danh sách vào đây...&#10;Mỗi tên nằm trên một dòng nhé!"></textarea>
                         </div>
 
                         <div id="tab-content-results" class="p-4 hidden">
-                            <div id="wheel-results-list" class="h-[400px] lg:h-[450px] overflow-y-auto wheel-scroll bg-slate-50/50 border border-slate-200 rounded-2xl p-2 shadow-inner">
+                            <div id="wheel-results-list" class="h-[400px] lg:h-[450px] overflow-y-auto wheel-scroll bg-slate-800/40/50 border border-slate-600/50 rounded-2xl p-2 shadow-inner">
                             </div>
                         </div>
 
@@ -107,17 +107,17 @@ export function setupTool() {
         </div>
 
         <div id="wheel-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md px-4">
-            <div id="wheel-modal-content" class="bg-white rounded-[2rem] w-full max-w-sm overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform scale-0">
+            <div id="wheel-modal-content" class="bg-slate-800/50 rounded-[2rem] w-full max-w-sm overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform scale-0">
                 <div class="bg-gradient-to-r from-amber-400 to-orange-500 py-8 px-6 text-center relative overflow-hidden flex flex-col items-center justify-center">
                     <div class="sunburst"></div>
                     <h3 class="font-black text-white text-xl relative z-10 drop-shadow-md uppercase tracking-wider">Người chiến thắng!</h3>
                 </div>
-                <div class="p-8 text-center bg-white relative">
+                <div class="p-8 text-center bg-slate-800/50 relative">
                     <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#f59e0b 2px, transparent 2px), radial-gradient(#3b82f6 2px, transparent 2px); background-size: 30px 30px; background-position: 0 0, 15px 15px;"></div>
-                    <p id="wheel-winner-name" class="text-4xl font-black text-slate-800 break-words drop-shadow-sm relative z-10"></p>
+                    <p id="wheel-winner-name" class="text-4xl font-black text-slate-200 break-words drop-shadow-sm relative z-10"></p>
                 </div>
-                <div class="p-4 bg-slate-50 flex justify-between gap-3 border-t border-slate-100">
-                    <button type="button" id="btn-modal-close" class="flex-1 py-3.5 font-bold text-slate-600 bg-white border border-slate-300 rounded-xl hover:bg-slate-100 transition active:scale-95 text-[13px] shadow-sm uppercase tracking-wider">
+                <div class="p-4 bg-slate-800/40 flex justify-between gap-3 border-t border-slate-100">
+                    <button type="button" id="btn-modal-close" class="flex-1 py-3.5 font-bold text-slate-300 bg-slate-800/50 border border-slate-300 rounded-xl hover:bg-slate-700/50 transition active:scale-95 text-[13px] shadow-sm uppercase tracking-wider">
                         ĐÓNG
                     </button>
                     <button type="button" id="btn-modal-remove" class="flex-1 py-3.5 font-bold text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl hover:from-blue-600 hover:to-indigo-700 shadow-md transition active:scale-95 text-[13px] border border-transparent uppercase tracking-wider">
@@ -225,7 +225,7 @@ export function setupTool() {
     tabListBtn.className =
       "flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide";
     tabResBtn.className =
-      "flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors uppercase tracking-wide";
+      "flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-800/40 transition-colors uppercase tracking-wide";
     tabListContent.classList.remove("hidden");
     tabResContent.classList.add("hidden");
   });
@@ -234,7 +234,7 @@ export function setupTool() {
     tabResBtn.className =
       "flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide";
     tabListBtn.className =
-      "flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-50 transition-colors uppercase tracking-wide";
+      "flex-1 py-4 text-sm font-bold text-slate-500 border-b-2 border-transparent hover:bg-slate-800/40 transition-colors uppercase tracking-wide";
     tabResContent.classList.remove("hidden");
     tabListContent.classList.add("hidden");
     renderResults();
@@ -262,9 +262,9 @@ export function setupTool() {
     resultListDiv.innerHTML = results
       .map(
         (res) => `
-            <div class="flex items-center justify-between p-2 border-b border-slate-100 bg-white mb-0.5 rounded shadow-sm hover:bg-slate-50 transition">
-                <span class="font-bold text-slate-700 text-xs truncate max-w-[80%] pl-1">${res.text}</span>
-                <span class="text-[9px] font-bold text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded whitespace-nowrap uppercase">${res.label}</span>
+            <div class="flex items-center justify-between p-2 border-b border-slate-100 bg-slate-800/50 mb-0.5 rounded shadow-sm hover:bg-slate-800/40 transition">
+                <span class="font-bold text-slate-200 text-xs truncate max-w-[80%] pl-1">${res.text}</span>
+                <span class="text-[9px] font-bold text-slate-400 bg-slate-700/50 border border-slate-600/50 px-1.5 py-0.5 rounded whitespace-nowrap uppercase">${res.label}</span>
             </div>
         `,
       )
@@ -491,7 +491,7 @@ export function setupTool() {
         btnResetAll.dataset.confirm = "false";
         btnResetAll.innerHTML = "XÓA SẠCH";
         btnResetAll.className =
-          "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider";
+          "flex-1 bg-slate-800/50 hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider";
       }, 3000);
     } else {
       clearTimeout(resetTimeout);
@@ -499,7 +499,7 @@ export function setupTool() {
       btnResetAll.dataset.confirm = "false";
       btnResetAll.innerHTML = "XÓA SẠCH";
       btnResetAll.className =
-        "flex-1 bg-white hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider";
+        "flex-1 bg-slate-800/50 hover:bg-red-50 text-red-600 text-[10px] sm:text-[11px] font-bold py-3 rounded-xl shadow-sm transition-colors flex justify-center items-center gap-1 active:scale-95 border border-red-200 whitespace-nowrap uppercase tracking-wider";
 
       inputArea.value = "";
       names = [];

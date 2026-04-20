@@ -10,7 +10,7 @@ export function setupTool() {
   panel.innerHTML = `
         <div class="text-center mb-8">
             <span class="bg-yellow-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase text-yellow-900">Công cụ tính toán</span>
-            <h2 class="text-4xl font-bold mt-3 text-gray-800">Tính <span class="text-red-500">Phần Trăm</span></h2>
+            <h2 class="text-4xl font-bold mt-3 text-slate-200">Tính <span class="text-red-500">Phần Trăm</span></h2>
             <p class="text-sm text-gray-500 mt-2 italic">Nhập 2 ô bất kỳ, ô còn lại sẽ tự động tính!</p>
         </div>
 
@@ -19,17 +19,17 @@ export function setupTool() {
                 
                 <div class="w-full max-w-md mx-auto space-y-6">
                     
-                    <div class="glass-card bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
+                    <div class="glass-card bg-slate-800/50/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
                         
-                        <div class="flex bg-slate-100 p-1.5 rounded-xl w-full mb-6">
-                            <button id="mode-1-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-orange-500 shadow-sm transition">X% của Y</button>
+                        <div class="flex bg-slate-700/50 p-1.5 rounded-xl w-full mb-6">
+                            <button id="mode-1-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-slate-800/50 text-orange-500 shadow-sm transition">X% của Y</button>
                             <button id="mode-2-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 transition">X là % của Y</button>
                             <button id="mode-3-btn" class="flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 transition">Tăng/Giảm</button>
                         </div>
 
                         <div id="calc-mode-1" class="block animate-[fadeIn_0.3s_ease]">
                             <div class="flex items-center gap-2 mb-4">
-                                <h3 class="font-bold text-gray-700 text-sm">X phần trăm của Y là bao nhiêu?</h3>
+                                <h3 class="font-bold text-slate-200 text-sm">X phần trăm của Y là bao nhiêu?</h3>
                             </div>
                             <div class="flex flex-wrap items-end gap-2 md:gap-4">
                                 <div class="flex-1 min-w-[100px]">
@@ -55,7 +55,7 @@ export function setupTool() {
 
                         <div id="calc-mode-2" class="hidden animate-[fadeIn_0.3s_ease]">
                             <div class="flex items-center gap-2 mb-4">
-                                <h3 class="font-bold text-gray-700 text-sm">X là bao nhiêu phần trăm của Y?</h3>
+                                <h3 class="font-bold text-slate-200 text-sm">X là bao nhiêu phần trăm của Y?</h3>
                             </div>
                             <div class="flex flex-wrap items-end gap-2 md:gap-4">
                                 <div class="flex-1 min-w-[100px]">
@@ -73,7 +73,7 @@ export function setupTool() {
                                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phần trăm</label>
                                         <input type="number" id="c2-res" placeholder="25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
                                     </div>
-                                    <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
+                                    <span class="ml-2 pb-3 font-bold text-slate-200">%</span>
                                 </div>
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
@@ -84,7 +84,7 @@ export function setupTool() {
 
                         <div id="calc-mode-3" class="hidden animate-[fadeIn_0.3s_ease]">
                             <div class="flex items-center gap-2 mb-4">
-                                <h3 class="font-bold text-gray-700 text-sm">Thay đổi phần trăm giữa hai giá trị</h3>
+                                <h3 class="font-bold text-slate-200 text-sm">Thay đổi phần trăm giữa hai giá trị</h3>
                             </div>
                             <div class="flex flex-wrap items-end gap-2 md:gap-4">
                                 <div class="flex-1 min-w-[110px]">
@@ -102,7 +102,7 @@ export function setupTool() {
                                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Tăng/Giảm</label>
                                         <input type="number" id="c3-res" placeholder="-25" class="w-full bg-red-50 border border-red-100 rounded-xl p-3 outline-none focus:ring-2 ring-red-200 text-center font-bold text-red-500">
                                     </div>
-                                    <span class="ml-2 pb-3 font-bold text-gray-800">%</span>
+                                    <span class="ml-2 pb-3 font-bold text-slate-200">%</span>
                                 </div>
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-100">
@@ -113,9 +113,9 @@ export function setupTool() {
 
                     </div>
 
-                    <div class="glass-card bg-white/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
+                    <div class="glass-card bg-slate-800/50/90 backdrop-blur-md p-6 md:p-8 rounded-[2rem] relative border-l-4 border-l-orange-400 shadow-sm border border-orange-50">
                         <div class="flex items-center gap-2 mb-5">
-                            <h3 class="font-bold text-gray-700 text-sm">Chuyển đổi Số La Mã (1 - 3999)</h3>
+                            <h3 class="font-bold text-slate-200 text-sm">Chuyển đổi Số La Mã (1 - 3999)</h3>
                         </div>
                         <div class="flex flex-wrap items-end gap-2 md:gap-4">
                             <div class="flex-1 min-w-[140px]">
@@ -137,9 +137,9 @@ export function setupTool() {
                 </div>
 
                 <div class="w-full max-w-md mx-auto">
-                    <div class="bg-white/90 backdrop-blur-md p-6 rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/50">
+                    <div class="bg-slate-800/50/90 backdrop-blur-md p-6 rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/50">
                         <div class="flex justify-between items-center mb-4 pb-3 border-b border-orange-50">
-                            <h3 class="font-bold text-gray-800 flex items-center gap-2 text-sm uppercase tracking-wider text-slate-600">Lịch sử tính toán</h3>
+                            <h3 class="font-bold text-slate-200 flex items-center gap-2 text-sm uppercase tracking-wider text-slate-300">Lịch sử tính toán</h3>
                             <button id="clear-history" class="text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg transition uppercase tracking-widest border border-red-100">Xoá sạch</button>
                         </div>
                         <ul id="history-list" class="space-y-3 text-sm text-gray-600 h-[380px] lg:h-[500px] overflow-y-auto pr-2 custom-scrollbar">
@@ -165,9 +165,9 @@ export function setupTool() {
   const secM3 = document.getElementById("calc-mode-3");
 
   const activeClass =
-    "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-orange-500 shadow-sm transition";
+    "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-slate-800/50 text-orange-500 shadow-sm transition";
   const inactiveClass =
-    "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-white/50 transition";
+    "flex-1 py-2 rounded-lg text-[10px] sm:text-xs font-bold text-slate-500 hover:text-orange-500 hover:bg-slate-800/50/50 transition";
 
   const switchMode = (mode) => {
     btnM1.className = mode === 1 ? activeClass : inactiveClass;
@@ -273,7 +273,7 @@ export function setupTool() {
         const li = document.createElement("li");
         // Thay dấu tick (✓) bằng chấm tròn (•) cho tối giản
         li.className =
-          'bg-slate-50/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["•"] before:text-orange-500 before:mr-2 before:font-bold before:text-lg text-gray-700 font-medium animate-[fadeIn_0.3s_ease]';
+          'bg-slate-800/40/80 p-3 rounded-xl border border-slate-100 shadow-sm flex items-center before:content-["•"] before:text-orange-500 before:mr-2 before:font-bold before:text-lg text-slate-200 font-medium animate-[fadeIn_0.3s_ease]';
         li.innerHTML = item;
         historyList.appendChild(li);
       });
