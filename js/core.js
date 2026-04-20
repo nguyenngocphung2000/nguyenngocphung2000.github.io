@@ -1,6 +1,5 @@
 // Core Configuration
 const menuConfig = [
-  { id: "tab-home", name: "Trang Chủ" },
   { id: "tab-calc", name: "Tính Toán" },
   { id: "tab-finance", name: "Lãi Suất" },
   { id: "tab-calendar", name: "Lịch Vạn Niên" },
@@ -14,6 +13,8 @@ const menuConfig = [
 
 const toolMap = {
   "tab-home": "./tools/01-home.js",
+  "tab-contact": "./tools/11-contact.js",
+  "tab-about": "./tools/12-about.js",
   "tab-calc": "./tools/02-calc.js",
   "tab-finance": "./tools/03-finance.js",
   "tab-calendar": "./tools/04-calendar.js",
@@ -26,7 +27,8 @@ const toolMap = {
 };
 
 // UI Elements
-const desktopNav = document.getElementById("desktop-nav");
+// UI Elements
+const desktopProjectsMenu = document.getElementById("desktop-projects-menu");
 const mobileNav = document.getElementById("mobile-nav");
 const mobileMenu = document.getElementById("mobile-menu");
 const mainHeader = document.getElementById("main-header");
@@ -36,19 +38,19 @@ if (mobileMenu) {
 }
 
 // Generate Menu
-if (desktopNav && mobileNav) {
-  desktopNav.innerHTML = "";
+if (desktopProjectsMenu && mobileNav) {
+  desktopProjectsMenu.innerHTML = "";
   mobileNav.innerHTML = "";
   menuConfig.forEach((tool) => {
-    desktopNav.innerHTML += `
+    desktopProjectsMenu.innerHTML += `
       <button data-action="${tool.id}" data-target="${tool.id}" 
-          class="nav-btn flex items-center px-4 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50 text-[12px] font-bold uppercase tracking-wider">
-          <span>${tool.name}</span>
+          class="nav-btn w-full text-left px-4 py-2 hover:bg-orange-500/10 text-gray-400 hover:text-orange-500 transition text-[12px] font-bold uppercase tracking-wider border-l-2 border-transparent hover:border-orange-500">
+          ${tool.name}
       </button>`;
 
     mobileNav.innerHTML += `
       <button data-action="${tool.id}" data-target="${tool.id}" 
-          class="mobile-nav-btn block w-full px-6 py-4 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500 text-[13px] font-bold uppercase tracking-widest">
+          class="mobile-nav-btn block w-full px-4 py-2 text-left text-gray-300 hover:bg-orange-500/10 transition border-l-2 border-transparent hover:border-orange-500 text-[11px] font-bold uppercase tracking-widest rounded-r-xl">
           ${tool.name}
       </button>`;
   });
@@ -97,36 +99,11 @@ export async function switchTab(tabId) {
 
 window.exportSwitchTab = switchTab; // Allow external modules to use it securely if needed.
 
-// Theme Management
-function applyTheme(isDark) {
-  const op = isDark ? "add" : "remove";
-  document.documentElement.classList[op]("dark");
-  document.body.classList[op]("dark-mode");
-
-  const textSun = document.getElementById("text-sun");
-  const textMoon = document.getElementById("text-moon");
-  if (textSun && textMoon) {
-    textSun.classList[isDark ? "remove" : "add"]("hidden");
-    textMoon.classList[isDark ? "add" : "remove"]("hidden");
-  }
-}
-
-function toggleDarkMode() {
-  const willBeDark = !document.body.classList.contains("dark-mode");
-  applyTheme(willBeDark);
-  localStorage.setItem("nothing_dark_mode", willBeDark);
-}
-
 // Events
 document.addEventListener("click", (e) => {
   const tabAction = e.target.closest("[data-action]");
   if (tabAction) {
     switchTab(tabAction.getAttribute("data-action"));
-    return;
-  }
-  
-  if (e.target.closest("#dark-mode-btn")) {
-    toggleDarkMode();
     return;
   }
 });
@@ -146,15 +123,6 @@ if (mobileMenuBtn && mobileMenu) {
     }
   });
 }
-
-// Initialization Theme
-const savedTheme = localStorage.getItem("nothing_dark_mode");
-const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-applyTheme(savedTheme !== null ? savedTheme === "true" : systemPrefersDark.matches);
-
-systemPrefersDark.addEventListener("change", (e) => {
-  if (localStorage.getItem("nothing_dark_mode") === null) applyTheme(e.matches);
-});
 
 // Gesture Prevents iOS
 document.addEventListener("touchmove", (e) => {
