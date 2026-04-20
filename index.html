@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -34,7 +34,8 @@
 <link rel="apple-touch-icon-precomposed" href="favicon.svg">
 
 </head>
-<body class="dark-mode tracking-wide pb-20 selection:bg-orange-500/30 selection:text-orange-100">
+<body class="tracking-wide pb-20 selection:bg-orange-500/30 selection:text-orange-100">
+    <div id="global-star-bg"></div>
 
     <header class="sticky top-0 z-[100] bg-transparent border-none transition-all duration-300" id="main-header">
         <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between relative">
@@ -45,7 +46,6 @@
             </div>
             
             <nav id="desktop-nav" class="hidden md:flex flex-1 justify-end items-center space-x-8 text-[12px] font-bold tracking-widest uppercase text-gray-400 mr-2">
-                <button data-action="tab-home" class="hover:text-orange-500 transition">Portfolio</button>
                 
                 <div class="relative group">
                     <button class="flex items-center gap-1 hover:text-orange-500 transition focus:outline-none">
@@ -74,7 +74,6 @@
             <div class="flex flex-col p-4 w-full h-full">
                 <!-- Mobile Core Links -->
                 <div class="grid grid-cols-2 gap-2 mb-4 pb-4 border-b border-orange-500/10">
-                    <button data-action="tab-home" class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase tracking-widest">Portfolio</button>
                     <button data-action="tab-contact" class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase tracking-widest">Contact</button>
                     <button data-action="tab-about" class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase col-span-2 tracking-widest">About</button>
                 </div>

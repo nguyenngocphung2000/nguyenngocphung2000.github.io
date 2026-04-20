@@ -14,13 +14,11 @@ export function setupTool() {
     '<div class="text-center mb-6">' +
     '<span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-600/50">Tra Cứu</span>' +
     '<h2 class="text-3xl font-bold mt-2 text-slate-200">Lịch <span class="text-orange-500">Vạn Niên</span></h2>' +
-    '<p class="text-sm text-gray-500 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
+    '<p class="text-sm text-slate-400 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
     "</div>" +
-    '<div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">Đang kết nối dữ liệu Thiên Văn... ⏳</div>' +
-    // BỌC GIAO DIỆN CHÍNH: Hỗ trợ 2 cột trên màn hình ngang
+    '<div id="cal-loading" class="text-center py-10 text-slate-400 font-bold animate-pulse">Đang kết nối dữ liệu Thiên Văn... ⏳</div>' +
     '<div id="cal-widget" class="hidden max-w-5xl mx-auto pb-10 px-2 lg:px-4">' +
-    '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
-    // ================= CỘT TRÁI (HIỂN THỊ CHI TIẾT & TRA CỨU) =================
+    '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
 
     '<div class="w-full max-w-md mx-auto space-y-5">' +
     '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-slate-600/50 relative overflow-hidden">' +
@@ -30,7 +28,7 @@ export function setupTool() {
     '<div class="text-6xl md:text-7xl font-black text-slate-200 tracking-tighter leading-none mb-2" id="res-main-d">--</div>' +
     '<div class="text-lg font-bold text-slate-300 mt-2" id="res-main-my">Tháng --, ----</div>' +
     '<div class="mt-4 flex items-center gap-2.5 w-full">' +
-    '<div class="shrink-0 bg-slate-200/80 text-slate-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 flex items-center justify-center">Âm Lịch</div>' +
+    '<div class="shrink-0 bg-slate-700/80 text-slate-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-300/50 flex items-center justify-center">Âm Lịch</div>' +
     '<div id="res-sub-date" class="text-[13px] md:text-[14px] font-bold text-slate-300 whitespace-nowrap tracking-tight translate-y-[1px]">--/--/----</div>' +
     "</div></div>" +
     '<div class="text-center pt-2 relative z-10 shrink-0">' +
@@ -38,64 +36,58 @@ export function setupTool() {
     '<div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>' +
     "</div>" +
     '<div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>' +
-    "</div></div></div>" +
-    // THẺ THÔNG ĐIỆP NGÀY HÔM NAY NẰM Ở CỘT TRÁI
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col">' +
+    "</div></div></div>" +
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 flex flex-col">' +
     '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
     '<div id="res-quote-text" class="text-[13.5px] text-slate-300 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
     '<div id="res-quote-author" class="text-right text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider"></div>' +
     "</div>" +
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-4">' +
-    '<div class="text-center w-full pb-3 border-b border-slate-100">' +
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 flex flex-col items-center gap-4">' +
+    '<div class="text-center w-full pb-3 border-b border-slate-600/50">' +
     '<div id="live-clock" class="text-3xl font-black text-slate-200 font-mono tracking-tight">00:00:00</div>' +
     '<div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>' +
     "</div>" +
     '<div class="flex bg-slate-700/50 p-1 rounded-xl w-full">' +
-    '<button id="cal-mode-solar" class="flex-1 py-1.5 rounded-lg text-sm font-bold bg-slate-800/50 text-orange-500 shadow-sm transition">Dương Lịch</button>' +
+    '<button id="cal-mode-solar" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">Dương Lịch</button>' +
     '<button id="cal-mode-lunar" class="flex-1 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:text-orange-500 transition">Âm Lịch</button>' +
     "</div>" +
     '<div class="flex justify-center items-center gap-2 w-full">' +
-    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label><select id="sel-d" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Ngày</label><select id="sel-d" style="text-align-last: center; direction: ltr;" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50"></select></div>' +
     '<span class="text-slate-300 font-black mt-4">/</span>' +
-    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label><select id="sel-m" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Tháng</label><select id="sel-m" style="text-align-last: center; direction: ltr;" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50"></select></div>' +
     '<span class="text-slate-300 font-black mt-4">/</span>' +
-    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label><select id="sel-y" style="text-align-last: center; direction: ltr;" class="w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-orange-200 appearance-none cursor-pointer"></select></div>' +
+    '<div class="flex-1"><label class="text-[9px] font-bold text-slate-400 uppercase mb-1 block text-center">Năm</label><select id="sel-y" style="text-align-last: center; direction: ltr;" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50"></select></div>' +
     "</div>" +
-    '<button id="btn-lookup" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-sm mt-1">🔍 TÌM NGÀY</button>' +
+    '<button id="btn-lookup" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 w-full hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">🔍 TÌM NGÀY</button>' +
     "</div>" +
-    "</div>" + // KẾT THÚC CỘT TRÁI
-    // ================= CỘT PHẢI (LỊCH THÁNG & LỄ HỘI) =================
+    "</div>" + // KẾT THÚC CỘT TRÁI
     '<div class="w-full max-w-md mx-auto space-y-5">' +
-    '<div class="bg-slate-800/50 rounded-[2rem] p-5 shadow-sm border border-slate-100">' +
+    '<div class="bg-slate-800/50 rounded-[2rem] p-5 shadow-sm border border-slate-600/50">' +
     '<div class="flex justify-center items-center gap-2 mb-4">' +
     '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">THÁNG</span>' +
     '<div class="relative">' +
-    '<select id="grid-sel-m" class="cal-grid-sel appearance-none bg-slate-800/40 border border-slate-600/50 hover:bg-slate-700/50 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
+    '<select id="grid-sel-m" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50"></select>' +
     '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
     "</div>" +
     '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">-</span>' +
     '<div class="relative">' +
-    '<select id="grid-sel-y" class="cal-grid-sel appearance-none bg-slate-800/40 border border-slate-600/50 hover:bg-slate-700/50 text-orange-500 font-black py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition text-sm"></select>' +
+    '<select id="grid-sel-y" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50"></select>' +
     '<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-orange-500 pointer-events-none">▼</span>' +
     "</div>" +
     "</div>" +
-    '<div class="grid grid-cols-7 gap-1 text-center mb-2 pb-2 border-b border-slate-100">' +
+    '<div class="grid grid-cols-7 gap-1 text-center mb-2 pb-2 border-b border-slate-600/50">' +
     '<div class="text-[10px] font-bold text-slate-400">T2</div><div class="text-[10px] font-bold text-slate-400">T3</div><div class="text-[10px] font-bold text-slate-400">T4</div><div class="text-[10px] font-bold text-slate-400">T5</div><div class="text-[10px] font-bold text-slate-400">T6</div><div class="text-[10px] font-bold text-orange-400">T7</div><div class="text-[10px] font-bold text-orange-500">CN</div>' +
     "</div>" +
     '<div id="cal-grid" class="grid grid-cols-7 gap-1 text-center"></div>' +
     "</div>" +
-    '<div class="bg-slate-800/50 p-5 rounded-[2rem] border border-slate-100 shadow-sm">' +
+    '<div class="bg-slate-800/50 p-5 rounded-[2rem] border border-slate-600/50 shadow-sm">' +
     '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam</h3>' +
     '<div id="res-events" class="space-y-2 mt-2"></div>' +
     "</div>" +
     "</div>" + // KẾT THÚC CỘT PHẢI
     "</div></div>"; // KẾT THÚC FLEX & WIDGET WRAPPER
 
-  document.getElementById("app-container").appendChild(panel);
-
-  // ==========================================
-  // LOGIC CHUYỂN ĐỔI SANG MODULE
-  // ==========================================
+  document.getElementById("app-container").appendChild(panel);
   var loading = document.getElementById("cal-loading");
   var widget = document.getElementById("cal-widget");
 
@@ -298,9 +290,7 @@ export function setupTool() {
     selM.value = new Date().getMonth() + 1;
     selY.value = curY;
     updateDays();
-    selD.value = new Date().getDate();
-
-    // HIỂN THỊ THÔNG ĐIỆP
+    selD.value = new Date().getDate();
     var renderQuote = function () {
       if (window.quotesData && window.quotesData.length > 0) {
         var q =
@@ -311,9 +301,7 @@ export function setupTool() {
           "“" + q.quote + "”";
         document.getElementById("res-quote-author").innerText = "- " + q.author;
       }
-    };
-
-    // TẢI DỮ LIỆU THÔNG ĐIỆP (Lưu cache để dùng lại)
+    };
     if (!window.quotesParsed) {
       fetch("data/sent-to-you.json")
         .then(function (res) {
@@ -452,7 +440,7 @@ export function setupTool() {
         var isWeekend = s.getWeek() === 0 || s.getWeek() === 6;
 
         var bgClass = isSelected
-          ? "bg-orange-100 border border-orange-200 shadow-sm"
+          ? "bg-slate-900/50 border border-orange-200 shadow-sm"
           : "border border-transparent hover:bg-slate-800/40 dark:hover:bg-slate-800";
         var sColor = isWeekend ? "text-orange-500" : "text-slate-200";
         if (isSelected) sColor = "text-orange-600";
@@ -548,7 +536,7 @@ export function setupTool() {
       } else {
         todaysEvents.forEach(function (e) {
           evContainer.innerHTML +=
-            '<div class="bg-slate-800/40 p-3 rounded-xl flex gap-3 items-start border border-slate-100 shadow-sm"><span class="text-orange-500 mt-0.5">📌</span><span class="font-bold text-slate-200 text-xs leading-relaxed">' +
+            '<div class="bg-slate-800/40 p-3 rounded-xl flex gap-3 items-start border border-slate-600/50 shadow-sm"><span class="text-orange-500 mt-0.5">📌</span><span class="font-bold text-slate-200 text-xs leading-relaxed">' +
             e +
             "</span></div>";
         });

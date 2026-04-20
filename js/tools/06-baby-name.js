@@ -17,20 +17,17 @@ export function setupTool() {
     '<span class="bg-pink-100 text-pink-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-pink-200">Kho dữ liệu vô tận</span>' +
     '<h2 class="text-3xl font-bold mt-2 text-slate-200">Đặt Tên Cho <span class="text-pink-500">Bé Yêu</span></h2>' +
     '<p class="text-[11px] text-slate-500 italic mt-2 max-w-2xl mx-auto px-4">Đề xuất tên theo thuật toán ngẫu nhiên hoặc xử lý danh sách tên có sẵn.</p>' +
-    "</div>" +
-    // BỌC GIAO DIỆN 3 CỘT TRÀN VIỀN
+    "</div>" +
     '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
-    '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
-    // ================= CỘT 1: BỘ LỌC TÙY CHỈNH =================
+    '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
     '<div class="w-full h-full flex flex-col">' +
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col bn-card">' +
-    '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Bộ lọc tùy chỉnh</h3></div>' +
-    // Khung nhập liệu (Cố định ở trên)
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 h-full flex flex-col bn-card">' +
+    '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Bộ lọc tùy chỉnh</h3></div>' +
     '<div class="mt-4 space-y-4 shrink-0">' +
     '<div class="flex gap-3">' +
     '<div class="flex-1">' +
     '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Giới tính</label>' +
-    '<select id="bn-gender" style="text-align-last: center;" class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
+    '<select id="bn-gender" style="text-align-last: center;" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     '<option value="all">Tất cả</option>' +
     '<option value="nam">Nam</option>' +
     '<option value="nu">Nữ</option>' +
@@ -38,12 +35,12 @@ export function setupTool() {
     "</div>" +
     '<div class="flex-1">' +
     '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Số lượng</label>' +
-    '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl text-center font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-count" type="number" placeholder="Mặc định: 100" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     "</div>" +
     "</div>" +
     "<div>" +
     '<label class="text-[10px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Độ dài tên</label>' +
-    '<select id="bn-length" style="text-align-last: center;" class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl font-bold text-slate-200 py-3 outline-none focus:ring-2 ring-pink-200 cursor-pointer">' +
+    '<select id="bn-length" style="text-align-last: center;" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     '<option value="all">Ngẫu nhiên</option>' +
     '<option value="2">2 Chữ</option>' +
     '<option value="3">3 Chữ</option>' +
@@ -54,23 +51,21 @@ export function setupTool() {
     '<div class="flex gap-2">' +
     '<div class="w-1/3">' +
     '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Họ</label>' +
-    '<input id="bn-ho" type="text" placeholder="Nguyễn..." class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl px-2 py-3 text-center font-bold text-slate-200 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-ho" type="text" placeholder="Nguyễn..." class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     "</div>" +
     '<div class="w-1/3">' +
     '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Chữ lót</label>' +
-    '<input id="bn-dem" type="text" placeholder="Thị, Văn..." class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl px-2 py-3 text-center font-bold text-slate-200 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-dem" type="text" placeholder="Thị, Văn..." class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     "</div>" +
     '<div class="w-1/3">' +
     '<label class="text-[9px] font-bold text-slate-400 uppercase mb-1.5 block ml-1 text-center">Tên chính</label>' +
-    '<input id="bn-ten" type="text" placeholder="Tâm..." class="bn-input w-full bg-slate-800/40 border border-slate-600/50 rounded-xl px-2 py-3 text-center font-bold text-slate-200 outline-none focus:ring-2 ring-pink-200">' +
+    '<input id="bn-ten" type="text" placeholder="Tâm..." class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     "</div>" +
-    "</div>" +
-    // Nút Đề Xuất Tên ngay dưới form nhập liệu
+    "</div>" +
     '<button id="bn-btn-gen" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide mt-2">' +
     "ĐỀ XUẤT TÊN" +
     "</button>" +
-    "</div>" +
-    // Mẹo đặt tên (Sử dụng flex-1 để lấp đầy khoảng trống, cân bằng với cột 3)
+    "</div>" +
     '<div class="mt-6 flex-1 bg-pink-50/50 rounded-2xl p-4 border border-pink-100/50 flex flex-col min-h-[150px]">' +
     '<h4 class="text-[11px] font-bold text-pink-600 uppercase mb-3 text-center md:text-left">Mẹo Đặt Tên Hay & Ý Nghĩa</h4>' +
     '<div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 text-[11.5px] text-slate-300 leading-relaxed">' +
@@ -81,39 +76,36 @@ export function setupTool() {
     "</div>" +
     "</div>" +
     "</div>" +
-    "</div>" + // KẾT THÚC CỘT 1
-    // ================= CỘT 2: DANH SÁCH TÊN GỢI Ý =================
+    "</div>" + // KẾT THÚC CỘT 1
     '<div class="w-full h-full flex flex-col min-h-0">' +
-    '<div id="bn-result" class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' +
+    '<div id="bn-result" class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-pink-100 h-full flex flex-col bn-card min-h-[400px] lg:min-h-0">' +
     '<div class="flex justify-between items-center border-b border-pink-200/50 pb-3 shrink-0">' +
     '<h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Danh sách tên gợi ý</h3>' +
     '<button id="bn-btn-copy-gen" class="text-[10px] bg-slate-800/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/50 px-4 py-1.5 rounded-lg font-bold shadow-sm transition uppercase tracking-wider">COPY</button>' +
-    "</div>" +
-    // Khung chứa list kết quả, tự động tạo thanh cuộn nếu quá dài
+    "</div>" +
     '<div class="relative flex-1 mt-4 min-h-[300px] lg:min-h-0">' +
     '<div id="bn-res-list" class="absolute inset-0 overflow-y-auto custom-scrollbar pr-1 grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">' +
     '<div class="col-span-full text-center text-slate-400 italic py-10 text-[11px]">Chưa có dữ liệu. Hãy bấm "Đề xuất tên"!</div>' +
     "</div>" +
     "</div>" +
     "</div>" +
-    "</div>" + // KẾT THÚC CỘT 2
-    // ================= CỘT 3: TRẠM XỬ LÝ DANH SÁCH =================
+    "</div>" + // KẾT THÚC CỘT 2
     '<div class="w-full h-full flex flex-col">' +
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-indigo-100 h-full flex flex-col filter-card">' +
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-indigo-500/30 h-full flex flex-col filter-card">' +
     '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Trạm xử lý danh sách</h3></div>' +
     '<div class="mt-3 flex flex-col flex-1 space-y-4">' +
     "<div>" +
     '<div class="flex justify-between items-end mb-1.5">' +
     '<div class="flex items-center gap-2">' +
     '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Nhập danh sách</label>' +
-    '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">DÒNG: <span id="flt-cnt-in">0</span></span>' +
+    '<span class="text-[9px] font-bold text-indigo-500 bg-indigo-900/20 px-2 py-0.5 rounded-md border border-indigo-500/30">DÒNG: <span id="flt-cnt-in">0</span></span>' +
     "</div>" +
     '<div class="flex gap-1.5">' +
-    '<button id="flt-btn-clear-in" class="text-[9px] bg-red-50 border border-red-100 text-red-500 hover:bg-red-100 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">XÓA</button>' +
-    '<button id="flt-btn-paste" class="text-[9px] bg-slate-800/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/50 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">DÁN</button>' +
+    '<button id="flt-btn-clear-in" class="text-[9px] bg-red-900/20 border border-red-500/30 text-red-500 hover:bg-red-900/20 px-3 py-1 rounded-lg font-bold shadow-sm transition active:scale-95 uppercase tracking-wider">XÓA</button>' +
+    '<button id="flt-btn-paste" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">DÁN</button>' +
     "</div>" +
     "</div>" +
-    '<textarea id="flt-input" class="bn-input w-full h-24 bg-slate-800/40 border border-slate-600/50 rounded-xl p-3 text-sm font-medium text-slate-200 outline-none focus:ring-2 ring-indigo-200 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
+    '<textarea id="flt-input" class="bn-input w-full h-24 bg-slate-800/40 border border-slate-600/50 rounded-xl p-3 text-sm font-medium text-slate-200 outline-none focus:ring-2 ring-indigo-500/50 resize-none custom-scrollbar" placeholder="Dán danh sách vào đây để xử lý..."></textarea>' +
     "</div>" +
     '<div class="bg-slate-800/40 rounded-xl p-3 border border-slate-600/50 space-y-3 bn-input">' +
     '<div class="grid grid-cols-2 gap-3">' +
@@ -127,13 +119,13 @@ export function setupTool() {
     '<label class="flex items-center gap-2 text-[11px] font-bold text-slate-300 cursor-pointer"><input type="checkbox" id="chk-shuffle" class="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"> Xáo trộn</label>' +
     "</div>" +
     '<div class="grid grid-cols-1 gap-2 border-t border-slate-600/50 pt-2">' +
-    '<select id="sel-case" class="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg p-2 text-[11px] font-bold text-slate-200 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+    '<select id="sel-case" class="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg p-2 text-[11px] font-bold text-slate-200 outline-none focus:ring-2 ring-indigo-500/50 cursor-pointer">' +
     '<option value="none">A/a (Không can thiệp HOA/thường)</option>' +
     '<option value="title" selected>Aa (Viết hoa chữ đầu mỗi từ)</option>' +
     '<option value="lower">aa (Viết thường toàn bộ)</option>' +
     '<option value="upper">AA (Viết HOA toàn bộ)</option>' +
     "</select>" +
-    '<select id="sel-sort" class="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg p-2 text-[11px] font-bold text-slate-200 outline-none focus:ring-2 ring-indigo-200 cursor-pointer">' +
+    '<select id="sel-sort" class="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg p-2 text-[11px] font-bold text-slate-200 outline-none focus:ring-2 ring-indigo-500/50 cursor-pointer">' +
     '<option value="none">Không sắp xếp bảng chữ cái</option>' +
     '<option value="asc">Sắp xếp A-Z</option>' +
     '<option value="desc">Sắp xếp Z-A</option>' +
@@ -152,7 +144,7 @@ export function setupTool() {
     "</div>" +
     "</div>" +
     '<div class="w-full shrink-0">' +
-    '<button id="flt-btn-process" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-black py-3 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide">' +
+    '<button id="flt-btn-process" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 w-full hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">' +
     "XỬ LÝ" +
     "</button>" +
     "</div>" +
@@ -161,13 +153,13 @@ export function setupTool() {
     '<label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Kết quả đầu ra</label>' +
     '<span class="text-[9px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-md border border-green-100">DÒNG: <span id="flt-cnt-out">0</span></span>' +
     "</div>" +
-    '<textarea id="flt-output" readonly class="bn-input w-full flex-1 min-h-[80px] bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 text-sm font-bold text-slate-200 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
+    '<textarea id="flt-output" readonly class="bn-input w-full flex-1 min-h-[80px] bg-indigo-900/50 border border-indigo-500/30 rounded-xl p-3 text-sm font-bold text-slate-200 outline-none custom-scrollbar" placeholder="Kết quả sẽ hiển thị ở đây..."></textarea>' +
     "</div>" +
     "</div>" +
     '<div class="flex gap-2 shrink-0 mt-4">' +
-    '<button id="flt-btn-clear" class="w-1/4 bg-red-50 hover:bg-red-100 text-red-500 font-bold py-3.5 rounded-xl shadow-sm border border-red-100 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center tracking-wider">XÓA</button>' +
-    '<button id="flt-btn-copy" class="w-2/4 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold py-3.5 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">COPY KẾT QUẢ</button>' +
-    '<button id="flt-btn-down" class="w-1/4 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3.5 rounded-xl shadow-md transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center tracking-wider">TẢI TXT</button>' +
+    '<button id="flt-btn-clear" class="w-1/4 bg-red-900/20 hover:bg-red-900/20 text-red-500 font-bold py-3.5 rounded-xl shadow-sm border border-red-500/30 transition active:scale-95 text-[10px] uppercase text-center flex items-center justify-center tracking-wider">XÓA</button>' +
+    '<button id="flt-btn-copy" class="w-2/4 bg-indigo-900/20 hover:bg-indigo-100 text-indigo-600 font-bold py-3.5 rounded-xl shadow-sm border border-indigo-200 transition active:scale-95 text-[11px] uppercase tracking-wide text-center flex items-center justify-center">COPY KẾT QUẢ</button>' +
+    '<button id="flt-btn-down" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 w-full hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">TẢI TXT</button>' +
     "</div>" +
     "</div>" +
     "</div>" + // KẾT THÚC CỘT 3
@@ -273,11 +265,7 @@ export function setupTool() {
         );
       }, 2000);
     });
-  };
-
-  // ===============================================
-  // CẬP NHẬT LOGIC TẢI FILE TỪ GỘP TỪ name.json
-  // ===============================================
+  };
   btnGen.onclick = async function () {
     if (!window.nameParsed) {
       btnGen.innerHTML = "ĐANG TẢI DỮ LIỆU...";
@@ -431,7 +419,7 @@ export function setupTool() {
       currentResults.push(finalName);
       var colorClass =
         g === "nam"
-          ? "bn-name-nam bg-blue-50 text-blue-800 border-blue-200"
+          ? "bn-name-nam bg-blue-900/20 text-blue-800 border-blue-200"
           : "bn-name-nu bg-pink-50 text-pink-800 border-pink-200";
       generatedHTML +=
         '<div class="p-3.5 rounded-xl border shadow-sm text-center ' +
@@ -606,7 +594,7 @@ export function setupTool() {
       btn.innerHTML = "ĐÃ COPY";
       btn.classList.add("bg-green-100", "text-green-600", "border-green-200");
       btn.classList.remove(
-        "bg-indigo-50",
+        "bg-indigo-900/20",
         "text-indigo-600",
         "border-indigo-200",
       );
@@ -618,7 +606,7 @@ export function setupTool() {
           "border-green-200",
         );
         btn.classList.add(
-          "bg-indigo-50",
+          "bg-indigo-900/20",
           "text-indigo-600",
           "border-indigo-200",
         );

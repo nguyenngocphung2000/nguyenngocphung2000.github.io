@@ -22,9 +22,9 @@ export function setupTool() {
     '<div class="w-full max-w-[1600px] mx-auto pb-10 px-4 lg:px-8 xl:px-12">' +
     '<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-6 lg:gap-8">' +
     '<div class="w-full h-full">' +
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 svg-card h-full flex flex-col">' +
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 svg-card h-full flex flex-col">' +
     '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Tải Lên & Cắt Ảnh</h3></div>' +
-    '<div class="mt-4 relative overflow-hidden w-full bg-slate-800/40 hover:bg-slate-700/50 text-slate-300 font-bold py-3.5 rounded-xl border border-slate-600/50 transition active:scale-95 flex justify-center items-center gap-2 text-[12px] uppercase tracking-wide cursor-pointer svg-input shrink-0">' +
+    '<div class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     "<span>Tải ảnh lên (JPG, PNG)</span>" +
     '<input type="file" id="svg-tool-input" accept="image/png, image/jpeg" class="absolute inset-0 opacity-0 cursor-pointer" />' +
     "</div>" +
@@ -42,12 +42,12 @@ export function setupTool() {
     "</div>" +
     "</div>" +
     '<div class="w-full h-full">' +
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 svg-card h-full flex flex-col">' +
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 svg-card h-full flex flex-col">' +
     '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Cấu Hình Biến Đổi</h3></div>' +
     '<div class="mt-4 bg-slate-800/40 rounded-xl p-5 border border-slate-600/50 svg-input flex-1 flex flex-col">' +
     '<div class="flex justify-between items-center mb-2">' +
     '<span class="text-[12px] font-bold text-slate-300">Mức độ chi tiết:</span>' +
-    '<span id="svg-tool-color-val" class="text-[12px] font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">16 màu</span>' +
+    '<span id="svg-tool-color-val" class="text-[12px] font-bold text-blue-500 bg-blue-900/20 px-2 py-0.5 rounded border border-blue-100">16 màu</span>' +
     "</div>" +
     '<input type="range" id="svg-tool-slider" min="2" max="64" value="16" step="2" class="w-full cursor-pointer accent-blue-500 mb-3">' +
     '<ul class="text-[11px] text-slate-300 space-y-1.5 list-disc pl-4 mb-4">' +
@@ -66,13 +66,13 @@ export function setupTool() {
     "</label>" +
     "</div>" +
     "</div>" +
-    '<button id="svg-tool-btn-convert" disabled class="mt-4 w-full bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[13px] uppercase tracking-wide shrink-0 mt-auto">' +
+    '<button id="svg-tool-btn-convert" disabled class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 w-full hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">' +
     "Cắt & Tạo SVG" +
     "</button>" +
     "</div>" +
     "</div>" +
     '<div class="w-full h-full">' +
-    '<div class="bg-slate-800/50/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-100 relative svg-card h-full flex flex-col">' +
+    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 relative svg-card h-full flex flex-col">' +
     '<div class="border-b border-slate-600/50 pb-3 shrink-0"><h3 class="font-bold text-slate-200 text-[13px] uppercase text-center md:text-left">Kết Quả Đầu Ra</h3></div>' +
     '<div class="mt-4 w-full min-h-[220px] bg-slate-800/40 border-2 border-dashed border-slate-600/50 rounded-xl p-2 flex items-center justify-center overflow-hidden svg-preview-box shrink-0">' +
     '<img id="svg-tool-preview-img" src="" style="display: none; width: 100%; height: 100%; object-fit: contain;" alt="SVG Preview" />' +
@@ -80,15 +80,15 @@ export function setupTool() {
     "</div>" +
     '<div class="mt-4 flex-1 flex flex-col min-h-[140px]">' +
     '<label class="text-[11px] font-bold text-slate-400 uppercase mb-1.5 block ml-1">Mã Source Code SVG</label>' +
-    '<textarea id="svg-tool-code" readonly class="svg-input w-full flex-1 bg-blue-50/50 border border-blue-100 rounded-xl p-3 text-[11px] font-mono text-slate-200 outline-none custom-scrollbar resize-none" placeholder="<svg>...</svg>"></textarea>' +
+    '<textarea id="svg-tool-code" readonly class="svg-input w-full flex-1 bg-blue-900/50 border border-blue-100 rounded-xl p-3 text-[11px] font-mono text-slate-200 outline-none custom-scrollbar resize-none" placeholder="<svg>...</svg>"></textarea>' +
     "</div>" +
     '<div class="mt-4 flex gap-2 shrink-0 mt-auto">' +
-    '<button id="svg-tool-btn-copy" disabled class="w-1/3 disabled:bg-slate-700/50 disabled:text-slate-400 disabled:border-slate-600/50 disabled:cursor-not-allowed bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold py-3.5 rounded-xl shadow-sm border border-blue-200 transition active:scale-95 text-[11px] uppercase text-center flex items-center justify-center">Copy</button>' +
+    '<button id="svg-tool-btn-copy" disabled class="w-1/3 disabled:bg-slate-700/50 disabled:text-slate-400 disabled:border-slate-600/50 disabled:cursor-not-allowed bg-blue-900/20 hover:bg-blue-900/30 text-blue-600 font-bold py-3.5 rounded-xl shadow-sm border border-blue-200 transition active:scale-95 text-[11px] uppercase text-center flex items-center justify-center">Copy</button>' +
     '<button id="svg-tool-btn-download" disabled class="w-2/3 disabled:bg-slate-300 disabled:cursor-not-allowed bg-green-500 hover:bg-green-600 text-white font-black py-3.5 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center gap-2 text-[12px] uppercase tracking-wide">' +
     '<span id="svg-tool-dl-text">Tải File SVG</span>' +
     "</button>" +
     "</div>" +
-    '<div id="svg-tool-loading" class="absolute inset-0 bg-slate-800/50/90 backdrop-blur-sm z-10 rounded-3xl hidden flex-col items-center justify-center">' +
+    '<div id="svg-tool-loading" class="absolute inset-0 bg-slate-800/90 backdrop-blur-sm z-10 rounded-3xl hidden flex-col items-center justify-center">' +
     '<div class="w-10 h-10 border-4 border-slate-600/50 border-t-blue-500 rounded-full animate-spin mb-3"></div>' +
     '<h3 class="font-bold text-blue-500 text-sm uppercase tracking-wide">Đang Xử Lý Vector...</h3>' +
     '<p class="text-[10px] text-slate-500 mt-1">Vui lòng đợi nhé!</p>' +
@@ -354,7 +354,7 @@ export function setupTool() {
           "border-green-200",
         );
         btnCopy.classList.remove(
-          "bg-blue-50",
+          "bg-blue-900/20",
           "text-blue-600",
           "border-blue-200",
         );
@@ -366,7 +366,7 @@ export function setupTool() {
             "border-green-200",
           );
           btnCopy.classList.add(
-            "bg-blue-50",
+            "bg-blue-900/20",
             "text-blue-600",
             "border-blue-200",
           );

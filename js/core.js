@@ -139,12 +139,17 @@ if (window.location.hash) {
 switchTab(initialTab);
 
 // Ambient Star Background
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("global-star-bg")) return;
-  const starContainer = document.createElement("div");
-  starContainer.id = "global-star-bg";
+(() => {
+  if (document.getElementById("global-star-bg") && document.getElementById("global-star-bg").children.length > 0) return;
   
-  for (let i = 0; i < 70; i++) {
+  let starContainer = document.getElementById("global-star-bg");
+  if (!starContainer) {
+      starContainer = document.createElement("div");
+      starContainer.id = "global-star-bg";
+      document.body.appendChild(starContainer);
+  }
+  
+  for (let i = 0; i < 35; i++) {
     let star = document.createElement("div");
     star.className = "global-star";
     let size = Math.random() * 1.5 + 1;
@@ -156,5 +161,4 @@ document.addEventListener("DOMContentLoaded", () => {
     star.style.animationDuration = Math.random() * 4 + 3 + "s";
     starContainer.appendChild(star);
   }
-  document.body.appendChild(starContainer);
-});
+})();
