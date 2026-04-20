@@ -62,7 +62,7 @@ export function setupTool() {
     '<input id="bn-ten" type="text" placeholder="Tâm..." class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">' +
     "</div>" +
     "</div>" +
-    '<button id="bn-btn-gen" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-xl shadow-md transition active:scale-95 flex justify-center items-center text-[13px] uppercase tracking-wide mt-2">' +
+    '<button id="bn-btn-gen" class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 hover:shadow-[0_0_25px_rgba(249,115,22,0.6)] flex justify-center items-center mt-2">' +
     "ĐỀ XUẤT TÊN" +
     "</button>" +
     "</div>" +

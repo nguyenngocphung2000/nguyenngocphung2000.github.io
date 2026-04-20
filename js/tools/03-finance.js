@@ -52,7 +52,7 @@ export function setupTool() {
                     </div>
                 </div>
                 
-                <button id="btn-calc-sav" class="w-full mt-6 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 rounded-xl transition shadow-md active:scale-95">TÍNH TOÁN TIỀN LỜI</button>
+                <button id="btn-calc-sav" class="w-full mt-6 bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">TÍNH TOÁN TIỀN LỜI</button>
 
                 <div id="sav-result" class="mt-6 hidden bg-slate-800/50 p-4 rounded-xl border border-cyan-100 shadow-sm text-center">
                     <div class="text-sm text-slate-400 font-medium">Tổng tiền lãi nhận được</div>
@@ -90,7 +90,7 @@ export function setupTool() {
                     ⚠️ <b>Cảnh báo:</b> Lãi suất trên dư nợ ban đầu thực chất tương đương với khoảng <b id="loan-real-rate">...</b>%/năm nếu tính theo dư nợ giảm dần. Đừng để con số biểu kiến đánh lừa bạn!
                 </div>
                 
-                <button id="btn-calc-loan" class="w-full mt-6 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-bold py-3 rounded-xl transition shadow-md active:scale-95">TÍNH TOÁN KHOẢN VAY</button>
+                <button id="btn-calc-loan" class="w-full mt-6 bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">TÍNH TOÁN KHOẢN VAY</button>
 
                 <div id="loan-result" class="mt-6 hidden bg-slate-800/50 p-4 rounded-xl border border-red-500/30 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                     <div>

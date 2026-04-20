@@ -49,7 +49,7 @@ export function setupTool() {
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-600/50">
                                 <button id="c1-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
-                                <button id="c1-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-900/20 hover:bg-blue-900/30 rounded-full">Lưu KQ</button>
+                                <button id="c1-save" class="text-[11px] font-bold text-orange-500 hover:text-orange-400 transition border border-orange-500/30 px-4 py-1.5 bg-orange-900/30 hover:bg-orange-900/50 rounded-full">Lưu KQ</button>
                             </div>
                         </div>
 
@@ -78,7 +78,7 @@ export function setupTool() {
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-600/50">
                                 <button id="c2-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
-                                <button id="c2-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-900/20 hover:bg-blue-900/30 rounded-full">Lưu KQ</button>
+                                <button id="c2-save" class="text-[11px] font-bold text-orange-500 hover:text-orange-400 transition border border-orange-500/30 px-4 py-1.5 bg-orange-900/30 hover:bg-orange-900/50 rounded-full">Lưu KQ</button>
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@ export function setupTool() {
                             </div>
                             <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-600/50">
                                 <button id="c3-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
-                                <button id="c3-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-900/20 hover:bg-blue-900/30 rounded-full">Lưu KQ</button>
+                                <button id="c3-save" class="text-[11px] font-bold text-orange-500 hover:text-orange-400 transition border border-orange-500/30 px-4 py-1.5 bg-orange-900/30 hover:bg-orange-900/50 rounded-full">Lưu KQ</button>
                             </div>
                         </div>
 
@@ -130,7 +130,7 @@ export function setupTool() {
                         </div>
                         <div class="text-right mt-5 flex justify-end space-x-4 pt-4 border-t border-slate-600/50">
                             <button id="ro-clear" class="text-[11px] font-bold text-gray-400 hover:text-orange-500 transition px-2 py-1.5">Xoá ô</button>
-                            <button id="ro-save" class="text-[11px] font-bold text-blue-500 hover:text-blue-700 transition px-4 py-1.5 bg-blue-900/20 hover:bg-blue-900/30 rounded-full">Lưu KQ</button>
+                            <button id="ro-save" class="text-[11px] font-bold text-orange-500 hover:text-orange-400 transition border border-orange-500/30 px-4 py-1.5 bg-orange-900/30 hover:bg-orange-900/50 rounded-full">Lưu KQ</button>
                         </div>
                     </div>
 

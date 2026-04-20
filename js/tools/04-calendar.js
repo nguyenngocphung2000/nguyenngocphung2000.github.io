@@ -12,7 +12,7 @@ export function setupTool() {
     "body.dark-mode .cal-grid-sel { background-color: rgba(30, 41, 59, 0.8) !important; color: #f97316 !important; border-color: #334155 !important; }" +
     "</style>" +
     '<div class="text-center mb-6">' +
-    '<span class="bg-[#eaf0f6] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-600/50">Tra Cứu</span>' +
+    '<span class="bg-slate-800/50 text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-slate-600/50">Tra Cứu</span>' +
     '<h2 class="text-3xl font-bold mt-2 text-slate-200">Lịch <span class="text-orange-500">Vạn Niên</span></h2>' +
     '<p class="text-sm text-slate-400 mt-2 italic">Tìm ngày âm dương, đắc đạo thành thánh!</p>' +
     "</div>" +
@@ -21,7 +21,7 @@ export function setupTool() {
     '<div class="flex flex-col lg:flex-row justify-center items-start gap-6 lg:gap-8">' +
 
     '<div class="w-full max-w-md mx-auto space-y-5">' +
-    '<div class="bg-[#e3eaf1] rounded-[2rem] p-6 shadow-sm border border-slate-600/50 relative overflow-hidden">' +
+    '<div class="bg-slate-900/80 rounded-[2rem] p-6 shadow-sm border border-slate-600/50 relative overflow-hidden">' +
     '<div class="text-orange-500 font-bold text-xs tracking-widest uppercase mb-1" id="res-weekday">THỨ ...</div>' +
     '<div class="flex justify-between items-start">' +
     '<div class="flex-1 pr-2 overflow-hidden">' +
@@ -33,16 +33,16 @@ export function setupTool() {
     "</div></div>" +
     '<div class="text-center pt-2 relative z-10 shrink-0">' +
     '<div class="w-12 h-12 rounded-full bg-orange-400 mx-auto relative overflow-hidden shadow-sm border border-orange-300">' +
-    '<div id="moon-shadow" class="absolute inset-0 bg-[#e3eaf1] rounded-full w-full h-full transition-transform duration-500"></div>' +
+    '<div id="moon-shadow" class="absolute inset-0 bg-slate-900/80 rounded-full w-full h-full transition-transform duration-500"></div>' +
     "</div>" +
     '<div class="text-[10px] font-bold text-slate-500 mt-2 uppercase" id="res-moon-text">Trăng...</div>' +
     "</div></div></div>" +
-    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 flex flex-col">' +
-    '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
+    '<div class="glass-card p-5 rounded-3xl shadow-sm border border-slate-600/50 flex flex-col">' +
+    '<h3 class="text-[10px] font-bold text-teal-600 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-600/50"><span>💌</span> Thông điệp ngày hôm nay</h3>' +
     '<div id="res-quote-text" class="text-[13.5px] text-slate-300 font-medium italic leading-relaxed text-justify">Đang kết nối...</div>' +
     '<div id="res-quote-author" class="text-right text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-wider"></div>' +
     "</div>" +
-    '<div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-3xl shadow-sm border border-slate-600/50 flex flex-col items-center gap-4">' +
+    '<div class="glass-card p-5 rounded-3xl shadow-sm border border-slate-600/50 flex flex-col items-center gap-4">' +
     '<div class="text-center w-full pb-3 border-b border-slate-600/50">' +
     '<div id="live-clock" class="text-3xl font-black text-slate-200 font-mono tracking-tight">00:00:00</div>' +
     '<div id="live-date" class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">Đang tải...</div>' +
@@ -62,7 +62,7 @@ export function setupTool() {
     "</div>" +
     "</div>" + // KẾT THÚC CỘT TRÁI
     '<div class="w-full max-w-md mx-auto space-y-5">' +
-    '<div class="bg-slate-800/50 rounded-[2rem] p-5 shadow-sm border border-slate-600/50">' +
+    '<div class="glass-card rounded-[2rem] p-5 shadow-sm border border-slate-600/50">' +
     '<div class="flex justify-center items-center gap-2 mb-4">' +
     '<span class="text-sm font-bold text-slate-500 uppercase tracking-widest">THÁNG</span>' +
     '<div class="relative">' +
@@ -81,7 +81,7 @@ export function setupTool() {
     '<div id="cal-grid" class="grid grid-cols-7 gap-1 text-center"></div>' +
     "</div>" +
     '<div class="bg-slate-800/50 p-5 rounded-[2rem] border border-slate-600/50 shadow-sm">' +
-    '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-50"><span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam</h3>' +
+    '<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-3 pb-2 border-b border-slate-600/50"><span>🇻🇳</span> Sự Kiện & Lễ Hội Việt Nam</h3>' +
     '<div id="res-events" class="space-y-2 mt-2"></div>' +
     "</div>" +
     "</div>" + // KẾT THÚC CỘT PHẢI
