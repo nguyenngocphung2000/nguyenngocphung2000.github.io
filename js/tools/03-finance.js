@@ -17,7 +17,7 @@ export function setupTool() {
         <div class="space-y-6 max-w-4xl mx-auto">
             
             <div class="flex justify-center mb-6">
-                <div class="bg-gray-100 p-1 rounded-2xl inline-flex shadow-inner">
+                <div class="bg-slate-800/50 p-1 rounded-2xl inline-flex shadow-inner">
                     <button id="btn-mode-saving" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-xl shadow-sm transition active:scale-95 text-xs text-[12px] uppercase tracking-wider flex-1 w-full text-center hover:border-orange-500/50">Gửi Tiết Kiệm</button>
                     <button id="btn-mode-loan" class="px-6 py-2 rounded-xl text-sm font-bold text-slate-400 hover:text-cyan-600 transition">Vay Vốn</button>
                 </div>
@@ -27,17 +27,17 @@ export function setupTool() {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số tiền gửi (VNĐ)</label>
-                        <input type="number" id="sav-principal" class="w-full bg-cyan-50/50 border border-cyan-100 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-200 text-cyan-700 font-bold" placeholder="VD: 100000000">
+                        <input type="number" id="sav-principal" class="w-full bg-slate-900/50 border border-cyan-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-500/50 text-cyan-400 font-bold" placeholder="VD: 100000000">
                     </div>
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Lãi suất (% / Năm)</label>
-                        <input type="number" id="sav-rate" class="w-full bg-cyan-50/50 border border-cyan-100 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-200 text-cyan-700 font-bold" placeholder="VD: 6.5">
+                        <input type="number" id="sav-rate" class="w-full bg-slate-900/50 border border-cyan-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-500/50 text-cyan-400 font-bold" placeholder="VD: 6.5">
                     </div>
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Kỳ hạn gửi</label>
                         <div class="flex gap-2">
-                            <input type="number" id="sav-time" class="w-2/3 bg-cyan-50/50 border border-cyan-100 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-200 text-cyan-700 font-bold" placeholder="VD: 12">
-                            <select id="sav-time-unit" class="w-1/3 bg-cyan-50 border border-cyan-100 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-200 text-cyan-700 font-bold">
+                            <input type="number" id="sav-time" class="w-2/3 bg-slate-900/50 border border-cyan-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-500/50 text-cyan-400 font-bold" placeholder="VD: 12">
+                            <select id="sav-time-unit" class="w-1/3 bg-slate-900/50 border border-cyan-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-500/50 text-cyan-400 font-bold">
                                 <option value="12">Tháng</option>
                                 <option value="1">Năm</option>
                             </select>
@@ -45,7 +45,7 @@ export function setupTool() {
                     </div>
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Hình thức tính lãi</label>
-                        <select id="sav-type" class="w-full bg-cyan-50 border border-cyan-100 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-200 text-cyan-700 font-bold">
+                        <select id="sav-type" class="w-full bg-slate-900/50 border border-cyan-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-cyan-500/50 text-cyan-400 font-bold">
                             <option value="simple">Lãi đơn (Cuối kỳ)</option>
                             <option value="compound">Lãi kép (Nhập gốc hàng tháng)</option>
                         </select>
@@ -54,11 +54,11 @@ export function setupTool() {
                 
                 <button id="btn-calc-sav" class="w-full mt-6 bg-orange-500 hover:bg-orange-400 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition active:scale-95 text-[13px] uppercase tracking-widest border border-orange-400 hover:shadow-[0_0_25px_rgba(249,115,22,0.6)]">TÍNH TOÁN TIỀN LỜI</button>
 
-                <div id="sav-result" class="mt-6 hidden bg-slate-800/50 p-4 rounded-xl border border-cyan-100 shadow-sm text-center">
+                <div id="sav-result" class="mt-6 hidden bg-slate-800/50 p-4 rounded-xl border border-cyan-500/30 shadow-sm text-center">
                     <div class="text-sm text-slate-400 font-medium">Tổng tiền lãi nhận được</div>
                     <div id="sav-res-interest" class="text-3xl font-black text-green-500 mt-1 mb-2">0 ₫</div>
                     <div class="text-sm text-slate-400 font-medium">Tổng gốc + Lãi</div>
-                    <div id="sav-res-total" class="text-xl font-bold text-cyan-700 mt-1">0 ₫</div>
+                    <div id="sav-res-total" class="text-xl font-bold text-cyan-400 mt-1">0 ₫</div>
                 </div>
             </div>
 
@@ -66,19 +66,19 @@ export function setupTool() {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Số tiền vay (VNĐ)</label>
-                        <input type="number" id="loan-principal" class="w-full bg-red-900/20 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-700 font-bold" placeholder="VD: 500000000">
+                        <input type="number" id="loan-principal" class="w-full bg-slate-900/50 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-400 font-bold" placeholder="VD: 500000000">
                     </div>
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Lãi suất (% / Năm)</label>
-                        <input type="number" id="loan-rate" class="w-full bg-red-900/20 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-700 font-bold" placeholder="VD: 10.5">
+                        <input type="number" id="loan-rate" class="w-full bg-slate-900/50 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-400 font-bold" placeholder="VD: 10.5">
                     </div>
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Thời gian vay (Tháng)</label>
-                        <input type="number" id="loan-time" class="w-full bg-red-900/20 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-700 font-bold" placeholder="VD: 36 (3 năm)">
+                        <input type="number" id="loan-time" class="w-full bg-slate-900/50 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-400 font-bold" placeholder="VD: 36 (3 năm)">
                     </div>
                     <div>
                         <label class="text-[10px] uppercase font-bold text-gray-400 ml-2">Phương thức tính lãi</label>
-                        <select id="loan-type" class="w-full bg-red-900/20 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-700 font-bold">
+                        <select id="loan-type" class="w-full bg-slate-900/50 border border-red-500/30 rounded-xl p-3 outline-none focus:ring-2 ring-red-500/50 text-red-400 font-bold">
                             <option value="declining">Dư nợ giảm dần (Thực tế)</option>
                             <option value="annuity">Trả góp đều (Dư nợ giảm dần cố định)</option>
                             <option value="flat">Dư nợ ban đầu (Flat Rate)</option>
@@ -86,7 +86,7 @@ export function setupTool() {
                     </div>
                 </div>
 
-                <div id="loan-warning" class="hidden mt-3 text-xs bg-slate-900/50 text-orange-700 p-3 rounded-xl border border-orange-200 font-medium">
+                <div id="loan-warning" class="hidden mt-3 text-xs bg-slate-900/50 text-orange-400 p-3 rounded-xl border border-orange-500/30 font-medium">
                     ⚠️ <b>Cảnh báo:</b> Lãi suất trên dư nợ ban đầu thực chất tương đương với khoảng <b id="loan-real-rate">...</b>%/năm nếu tính theo dư nợ giảm dần. Đừng để con số biểu kiến đánh lừa bạn!
                 </div>
                 
@@ -109,9 +109,9 @@ export function setupTool() {
 
                 <div id="loan-schedule-container" class="mt-6 hidden">
                     <h4 class="font-bold text-slate-200 mb-2 flex items-center gap-2"><span>📅</span> Lịch trả nợ chi tiết</h4>
-                    <div class="overflow-x-auto max-h-80 custom-scrollbar rounded-xl border border-gray-100 shadow-inner">
+                    <div class="overflow-x-auto max-h-80 custom-scrollbar rounded-xl border border-slate-700 shadow-inner">
                         <table class="w-full text-sm text-left">
-                            <thead class="bg-gray-50 text-slate-400 sticky top-0 text-xs uppercase">
+                            <thead class="bg-slate-900/80 text-slate-400 sticky top-0 text-xs uppercase">
                                 <tr>
                                     <th class="px-4 py-3 font-bold">Kỳ</th>
                                     <th class="px-4 py-3 font-bold">Tiền Gốc</th>
@@ -120,22 +120,23 @@ export function setupTool() {
                                     <th class="px-4 py-3 font-bold">Gốc Còn Lại</th>
                                 </tr>
                             </thead>
-                            <tbody id="loan-schedule-body" class="bg-slate-800/50 divide-y divide-gray-100">
+                            <tbody id="loan-schedule-body" class="bg-slate-800/50 divide-y divide-slate-700/50">
                                 </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-cyan-50/50 p-4 rounded-2xl border border-cyan-100 text-xs text-slate-400 leading-relaxed font-medium">
-                <span class="font-bold text-cyan-700">💡 Mẹo Tài Chính:</span> Sự khác biệt lớn nhất khi vay là phương pháp tính lãi. 
-                Vay 100 triệu, 10%/năm trong 12 tháng: Nếu tính theo <b class="text-green-600">Dư nợ giảm dần</b>, tiền lãi mỗi tháng sẽ ít dần đi vì gốc đã giảm. Nhưng nếu tính theo <b class="text-red-500">Dư nợ ban đầu (Flat rate)</b>, tháng nào bạn cũng phải đóng nguyên tiền lãi của 100 triệu dù gốc đã trả gần hết.
+            <div class="bg-slate-900/50 p-4 rounded-2xl border border-cyan-500/30 text-xs text-slate-400 leading-relaxed font-medium">
+                <span class="font-bold text-cyan-400">💡 Mẹo Tài Chính:</span> Sự khác biệt lớn nhất khi vay là phương pháp tính lãi. 
+                Vay 100 triệu, 10%/năm trong 12 tháng: Nếu tính theo <b class="text-green-500">Dư nợ giảm dần</b>, tiền lãi mỗi tháng sẽ ít dần đi vì gốc đã giảm. Nhưng nếu tính theo <b class="text-red-400">Dư nợ ban đầu (Flat rate)</b>, tháng nào bạn cũng phải đóng nguyên tiền lãi của 100 triệu dù gốc đã trả gần hết.
             </div>
 
         </div>
     `;
 
-  document.getElementById("app-container").appendChild(panel);
+  document.getElementById("app-container").appendChild(panel);
+
   const fmt = (num) => Math.round(num).toLocaleString("vi-VN") + " ₫";
 
   const btnSav = document.getElementById("btn-mode-saving");
@@ -231,10 +232,10 @@ export function setupTool() {
       for (let i = 1; i <= months; i++) {
         remaining -= monthlyPrincipal;
         scheduleHTML += `
-                    <tr class="hover:bg-red-900/20 transition">
+                    <tr class="hover:bg-slate-700/30 transition">
                         <td class="px-4 py-2 font-bold">${i}</td>
                         <td class="px-4 py-2 text-slate-400">${fmt(monthlyPrincipal)}</td>
-                        <td class="px-4 py-2 text-red-500">${fmt(monthlyInterest)}</td>
+                        <td class="px-4 py-2 text-red-400">${fmt(monthlyInterest)}</td>
                         <td class="px-4 py-2 font-bold text-slate-200">${fmt(maxMonthly)}</td>
                         <td class="px-4 py-2 text-slate-400">${fmt(Math.max(0, remaining))}</td>
                     </tr>`;
@@ -250,10 +251,10 @@ export function setupTool() {
         remaining -= monthlyPrincipal;
 
         scheduleHTML += `
-                    <tr class="hover:bg-red-900/20 transition">
+                    <tr class="hover:bg-slate-700/30 transition">
                         <td class="px-4 py-2 font-bold">${i}</td>
                         <td class="px-4 py-2 text-slate-400">${fmt(monthlyPrincipal)}</td>
-                        <td class="px-4 py-2 text-red-500">${fmt(interest)}</td>
+                        <td class="px-4 py-2 text-red-400">${fmt(interest)}</td>
                         <td class="px-4 py-2 font-bold text-slate-200">${fmt(payment)}</td>
                         <td class="px-4 py-2 text-slate-400">${fmt(Math.max(0, remaining))}</td>
                     </tr>`;
@@ -271,10 +272,10 @@ export function setupTool() {
         remaining -= principal;
 
         scheduleHTML += `
-                    <tr class="hover:bg-red-900/20 transition">
+                    <tr class="hover:bg-slate-700/30 transition">
                         <td class="px-4 py-2 font-bold">${i}</td>
                         <td class="px-4 py-2 text-slate-400">${fmt(principal)}</td>
-                        <td class="px-4 py-2 text-red-500">${fmt(interest)}</td>
+                        <td class="px-4 py-2 text-red-400">${fmt(interest)}</td>
                         <td class="px-4 py-2 font-bold text-slate-200">${fmt(pmt)}</td>
                         <td class="px-4 py-2 text-slate-400">${fmt(Math.max(0, remaining))}</td>
                     </tr>`;
