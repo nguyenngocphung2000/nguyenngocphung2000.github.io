@@ -63,7 +63,7 @@ export function setupTool() {
 
   document.getElementById("app-container").appendChild(panel);
 
-  // --- BẮT ĐẦU LOGIC CỜ TƯỚNG ---
+  // 
   const PIECES = {
     R_G: { label: "帥", color: "red" },
     R_A: { label: "仕", color: "red" },

@@ -220,7 +220,7 @@ export function setupTool() {
     inputArea.value = "Hà Nội\nHồ Chí Minh\nĐà Nẵng\nCần Thơ";
   }
 
-  // --- TABS CHUYỂN ĐỔI ---
+  // 
   tabListBtn.addEventListener("click", () => {
     tabListBtn.className =
       "flex-1 py-4 text-sm font-black text-indigo-600 border-b-2 border-indigo-500 transition-colors uppercase tracking-wide";
@@ -240,7 +240,7 @@ export function setupTool() {
     renderResults();
   });
 
-  // --- UPDATE & RENDER ---
+  // 
   const updateNames = () => {
     const rawText = inputArea.value;
     names = rawText

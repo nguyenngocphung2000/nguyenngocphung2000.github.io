@@ -153,7 +153,7 @@ export function setupTool() {
 
   document.getElementById("app-container").appendChild(panel);
 
-  // --- BẮT ĐẦU LOGIC ---
+  // 
 
   // Chuyển đổi Tab (Modes)
   const btnM1 = document.getElementById("mode-1-btn");

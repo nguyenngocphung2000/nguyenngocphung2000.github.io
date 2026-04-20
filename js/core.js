@@ -1,8 +1,4 @@
-/* ==========================================================
-   LÕI HỆ THỐNG
-========================================================== */
-
-// --- 1. BẢN ĐỒ MENU ---
+// Core Configuration
 const menuConfig = [
   { id: "tab-home", name: "Trang Chủ" },
   { id: "tab-calc", name: "Tính Toán" },
@@ -16,7 +12,6 @@ const menuConfig = [
   { id: "tab-image-to-svg", name: "Tạo ảnh SVG" },
 ];
 
-// --- 2. BỘ ĐỊNH TUYẾN (LAZY LOAD MAP) ---
 const toolMap = {
   "tab-home": "./tools/01-home.js",
   "tab-calc": "./tools/02-calc.js",
@@ -30,49 +25,42 @@ const toolMap = {
   "tab-image-to-svg": "./tools/10-image-to-svg.js",
 };
 
-// --- 3. KHAI BÁO CÁC PHẦN TỬ GIAO DIỆN ---
+// UI Elements
 const desktopNav = document.getElementById("desktop-nav");
 const mobileNav = document.getElementById("mobile-nav");
 const mobileMenu = document.getElementById("mobile-menu");
 const mainHeader = document.getElementById("main-header");
 
 if (mobileMenu) {
-  mobileMenu.classList.add(
-    "max-h-[70vh]",
-    "overflow-y-auto",
-    "custom-scrollbar",
-  );
+  mobileMenu.classList.add("max-h-[70vh]", "overflow-y-auto", "custom-scrollbar");
 }
 
-// --- 4. HÀM TẠO MENU (KHÔNG ICON, TỐI ƯU TYPOGRAPHY) ---
+// Generate Menu
 if (desktopNav && mobileNav) {
   desktopNav.innerHTML = "";
   mobileNav.innerHTML = "";
   menuConfig.forEach((tool) => {
     desktopNav.innerHTML += `
-            <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
-                class="nav-btn flex items-center px-4 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50 text-[12px] font-bold uppercase tracking-wider">
-                <span>${tool.name}</span>
-            </button>`;
+      <button data-action="${tool.id}" data-target="${tool.id}" 
+          class="nav-btn flex items-center px-4 py-2 text-gray-500 hover:text-orange-500 transition rounded-xl hover:bg-orange-50/50 text-[12px] font-bold uppercase tracking-wider">
+          <span>${tool.name}</span>
+      </button>`;
 
     mobileNav.innerHTML += `
-            <button onclick="switchTab('${tool.id}')" data-target="${tool.id}" 
-                class="mobile-nav-btn block w-full px-6 py-4 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500 text-[13px] font-bold uppercase tracking-widest">
-                ${tool.name}
-            </button>`;
+      <button data-action="${tool.id}" data-target="${tool.id}" 
+          class="mobile-nav-btn block w-full px-6 py-4 text-left text-gray-600 hover:bg-orange-50 transition border-l-4 border-transparent hover:border-orange-500 text-[13px] font-bold uppercase tracking-widest">
+          ${tool.name}
+      </button>`;
   });
 }
 
-// --- 5. HÀM CHUYỂN TAB (ĐÃ FIX LỖI KẸT LINK ?POST) ---
-window.switchTab = async function (tabId) {
+// Routing & Tab Switching
+export async function switchTab(tabId) {
   document.querySelectorAll(".tab-panel").forEach((p) => {
     p.classList.remove("active");
     p.style.display = "none";
   });
-  document
-    .querySelectorAll(".nav-btn, .mobile-nav-btn")
-    .forEach((b) => b.classList.remove("active"));
-
+  document.querySelectorAll(".nav-btn, .mobile-nav-btn").forEach((b) => b.classList.remove("active"));
   if (mobileMenu) mobileMenu.classList.add("hidden");
 
   let targetPanel = document.getElementById(tabId);
@@ -98,120 +86,83 @@ window.switchTab = async function (tabId) {
     });
     targetPanel.classList.add("active");
     targetPanel.style.display = "block";
+    document.querySelectorAll(`[data-target="${tabId}"]`).forEach((b) => b.classList.add("active"));
 
-    document
-      .querySelectorAll(`[data-target="${tabId}"]`)
-      .forEach((b) => b.classList.add("active"));
-
-    // --- XỬ LÝ LÀM SẠCH URL TẠI ĐÂY ---
     const newUrl = new URL(window.location);
-    if (tabId !== "tab-home") {
-      // Nếu nhảy sang tab khác, tự động xóa đuôi ?post= đi
-      newUrl.searchParams.delete("post");
-    }
+    if (tabId !== "tab-home") newUrl.searchParams.delete("post");
     newUrl.hash = tabId;
     window.history.replaceState(null, null, newUrl);
   }
-};
+}
 
-// --- 6. HÀM CHUYỂN ĐỔI VÀ ĐỒNG BỘ DARK MODE ---
+window.exportSwitchTab = switchTab; // Allow external modules to use it securely if needed.
+
+// Theme Management
 function applyTheme(isDark) {
-  if (isDark) {
-    document.documentElement.classList.add("dark");
-    document.body.classList.add("dark-mode");
-  } else {
-    document.documentElement.classList.remove("dark");
-    document.body.classList.remove("dark-mode");
-  }
+  const op = isDark ? "add" : "remove";
+  document.documentElement.classList[op]("dark");
+  document.body.classList[op]("dark-mode");
 
   const textSun = document.getElementById("text-sun");
   const textMoon = document.getElementById("text-moon");
   if (textSun && textMoon) {
-    if (isDark) {
-      textSun.classList.remove("hidden");
-      textMoon.classList.add("hidden");
-    } else {
-      textSun.classList.add("hidden");
-      textMoon.classList.remove("hidden");
-    }
+    textSun.classList[isDark ? "remove" : "add"]("hidden");
+    textMoon.classList[isDark ? "add" : "remove"]("hidden");
   }
 }
 
-window.toggleDarkMode = () => {
+function toggleDarkMode() {
   const willBeDark = !document.body.classList.contains("dark-mode");
   applyTheme(willBeDark);
   localStorage.setItem("nothing_dark_mode", willBeDark);
-};
+}
 
-// ==========================================================
-// GẮN SỰ KIỆN TRỰC TIẾP
-// ==========================================================
+// Events
+document.addEventListener("click", (e) => {
+  const tabAction = e.target.closest("[data-action]");
+  if (tabAction) {
+    switchTab(tabAction.getAttribute("data-action"));
+    return;
+  }
+  
+  if (e.target.closest("#dark-mode-btn")) {
+    toggleDarkMode();
+    return;
+  }
+});
 
 if (mainHeader) {
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      mainHeader.classList.add("header-scrolled");
-    } else {
-      mainHeader.classList.remove("header-scrolled");
-    }
+    mainHeader.classList.toggle("header-scrolled", window.scrollY > 50);
   });
 }
 
 const mobileMenuBtn = document.getElementById("mobile-menu-btn");
 if (mobileMenuBtn && mobileMenu) {
-  mobileMenuBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-  });
-
-  document.addEventListener("click", function (event) {
-    const isMenuOpen = !mobileMenu.classList.contains("hidden");
-
-    if (isMenuOpen) {
-      if (
-        !mobileMenu.contains(event.target) &&
-        !mobileMenuBtn.contains(event.target)
-      ) {
-        mobileMenu.classList.add("hidden");
-      }
+  mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+  document.addEventListener("click", (e) => {
+    if (!mobileMenu.classList.contains("hidden") && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+      mobileMenu.classList.add("hidden");
     }
   });
 }
 
-const darkModeBtn =
-  document.getElementById("dark-mode-btn") ||
-  document.querySelector('[onclick="toggleDarkMode()"]');
-if (darkModeBtn) {
-  darkModeBtn.addEventListener("click", window.toggleDarkMode);
-  darkModeBtn.removeAttribute("onclick");
-}
-
+// Initialization Theme
 const savedTheme = localStorage.getItem("nothing_dark_mode");
 const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-if (savedTheme !== null) {
-  applyTheme(savedTheme === "true");
-} else {
-  applyTheme(systemPrefersDark.matches);
-}
+applyTheme(savedTheme !== null ? savedTheme === "true" : systemPrefersDark.matches);
 
 systemPrefersDark.addEventListener("change", (e) => {
-  if (localStorage.getItem("nothing_dark_mode") === null) {
-    applyTheme(e.matches);
-  }
+  if (localStorage.getItem("nothing_dark_mode") === null) applyTheme(e.matches);
 });
 
-document.addEventListener(
-  "touchmove",
-  function (event) {
-    if (event.scale !== 1 && event.scale !== undefined) event.preventDefault();
-  },
-  { passive: false },
-);
-document.addEventListener("gesturestart", function (event) {
-  event.preventDefault();
-});
+// Gesture Prevents iOS
+document.addEventListener("touchmove", (e) => {
+  if (e.scale !== 1 && e.scale !== undefined) e.preventDefault();
+}, { passive: false });
+document.addEventListener("gesturestart", (e) => e.preventDefault());
 
-localStorage.removeItem("my_active_tab");
+// Init Tab
 let initialTab = "tab-home";
 if (window.location.hash) {
   const hashTab = window.location.hash.substring(1);
@@ -219,35 +170,23 @@ if (window.location.hash) {
 }
 switchTab(initialTab);
 
-// =========================================
-// HIỆU ỨNG BẦU TRỜI SAO TỰ ĐỘNG
-// =========================================
-function initGlobalStars() {
+// Ambient Star Background
+document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("global-star-bg")) return;
-
   const starContainer = document.createElement("div");
   starContainer.id = "global-star-bg";
-
-  const starCount = 70;
-
-  for (let i = 0; i < starCount; i++) {
+  
+  for (let i = 0; i < 70; i++) {
     let star = document.createElement("div");
     star.className = "global-star";
-
     let size = Math.random() * 1.5 + 1;
     star.style.width = size + "px";
     star.style.height = size + "px";
-
     star.style.top = Math.random() * 100 + "vh";
     star.style.left = Math.random() * 100 + "vw";
-
     star.style.animationDelay = Math.random() * 5 + "s";
     star.style.animationDuration = Math.random() * 4 + 3 + "s";
-
     starContainer.appendChild(star);
   }
-
   document.body.appendChild(starContainer);
-}
-
-document.addEventListener("DOMContentLoaded", initGlobalStars);
+});

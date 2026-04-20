@@ -176,7 +176,7 @@ export function setupTool() {
 
   document.getElementById("app-container").appendChild(panel);
 
-  // --- LOGIC XỬ LÝ DỮ LIỆU TÊN VÀ TRẠM LỌC ---
+  // 
   var capitalize = function (str) {
     return str
       .trim()

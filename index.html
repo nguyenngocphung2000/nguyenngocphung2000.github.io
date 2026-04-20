@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>NOTHING</title>
+    <!-- Primary Meta Tags -->
+    <title>NOTHING YET EVERYTHING</title>
+    <meta name="title" content="NOTHING YET EVERYTHING">
+    <meta name="description" content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nguyenngocphung2000.github.io/">
+    <meta property="og:title" content="NOTHING YET EVERYTHING">
+    <meta property="og:description" content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
+    <meta property="og:image" content="https://nguyenngocphung2000.github.io/img/banner.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nguyenngocphung2000.github.io/">
+    <meta property="twitter:title" content="NOTHING YET EVERYTHING">
+    <meta property="twitter:description" content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
+    <meta property="twitter:image" content="https://nguyenngocphung2000.github.io/img/banner.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
     
-  <script src="https://cdn.tailwindcss.com"></script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="css/style.css">    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
     
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" type="image/png" href="favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
 <link rel="apple-touch-icon-precomposed" href="favicon.svg">
 
@@ -25,7 +39,7 @@
     <header class="sticky top-0 z-[100] bg-transparent border-none transition-all duration-300" id="main-header">
         <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between relative">
             
-            <div id="main-logo-wrapper" class="flex items-center space-x-2 cursor-pointer logo-wrapper" onclick="switchTab('tab-home')" title="Về Trang Chủ">
+            <div id="main-logo-wrapper" class="flex items-center space-x-2 cursor-pointer logo-wrapper" data-action="tab-home" title="Về Trang Chủ">
                 <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm hover:bg-orange-600 transition">NOTHING</div>
                 <span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mt-1">YET EVERYTHING</span>
             </div>
@@ -33,7 +47,7 @@
             <nav id="desktop-nav" class="hidden"></nav>
 
             <div class="flex items-center gap-3 z-50">
-                <button onclick="toggleDarkMode()" class="px-4 py-1.5 rounded-full bg-slate-100 text-slate-500 hover:bg-orange-100 hover:text-orange-500 transition shadow-inner font-bold text-[11px] uppercase tracking-wider" id="dark-mode-btn" title="Giao diện Tối/Sáng">
+                <button class="px-4 py-1.5 rounded-full bg-slate-100 text-slate-500 hover:bg-orange-100 hover:text-orange-500 transition shadow-inner font-bold text-[11px] uppercase tracking-wider" id="dark-mode-btn" title="Giao diện Tối/Sáng">
                     <span id="text-sun" class="hidden">SÁNG</span>
                     <span id="text-moon" class="">TỐI</span>
                 </button>

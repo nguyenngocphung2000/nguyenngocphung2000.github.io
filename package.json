@@ -1,0 +1,12 @@
+{
+  "name": "nguyenngocphung2000.github.io",
+  "version": "1.0.0",
+  "description": "Nothing Yet Everything Portfolio",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/tailwind.css --minify",
+    "dev": "tailwindcss -i ./css/input.css -o ./css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

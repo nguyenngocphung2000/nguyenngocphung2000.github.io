@@ -6,38 +6,8 @@ export function setupTool() {
   panel.id = tabId;
   panel.className = "tab-panel active";
 
-  // ==========================================
-  // 1. GIAO DIỆN HTML & CSS LÕI
-  // ==========================================
+  // Render UI
   panel.innerHTML = `
-        <style>
-            /* CẤU HÌNH DARK MODE */
-            body.dark-mode .bio-box { background-image: linear-gradient(to right, rgba(249, 115, 22, 0.05), transparent) !important; border-left-color: #f97316 !important; }
-            body.dark-mode .glass-card { background-color: rgba(30, 41, 59, 0.8) !important; border-color: #334155 !important; }
-            body.dark-mode .glass-card h1, body.dark-mode .glass-card h2, body.dark-mode .glass-card strong { color: #f8fafc !important; }
-            body.dark-mode .glass-card p.text-gray-700, body.dark-mode .glass-card p.text-gray-600 { color: #cbd5e1 !important; }
-            body.dark-mode .glass-card span.bg-white { background-color: #1e293b !important; border-color: #334155 !important; color: #cbd5e1 !important; }
-            body.dark-mode .glass-card span.bg-orange-50 { background-color: rgba(249, 115, 22, 0.1) !important; border-color: rgba(249, 115, 22, 0.3) !important; color: #fb923c !important; }
-            body.dark-mode .glass-card span:hover { background-color: #f97316 !important; color: #fff !important; border-color: #f97316 !important; }
-            
-            body.dark-mode .guide-item { background-color: #1e293b !important; border-color: #334155 !important; }
-            body.dark-mode .guide-item h3 { color: #f8fafc !important; }
-            body.dark-mode .guide-item button:hover h3 { color: #f97316 !important; }
-            body.dark-mode .guide-item p.bg-orange-50 { background-color: rgba(249, 115, 22, 0.15) !important; border-color: rgba(249, 115, 22, 0.2) !important; color: #fb923c !important; }
-            
-            body.dark-mode .guide-item > div[id^="content-"] { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; }
-            body.dark-mode .prose-custom { color: #cbd5e1 !important; }
-            body.dark-mode .prose-custom h1, body.dark-mode .prose-custom h2, body.dark-mode .prose-custom h3, body.dark-mode .prose-custom h4, body.dark-mode .prose-custom strong { color: #f8fafc !important; }
-            body.dark-mode .prose-custom a { color: #fb923c !important; }
-            body.dark-mode .prose-custom code { background-color: #334155 !important; color: #f8fafc !important; border: 1px solid #475569; }
-            body.dark-mode .prose-custom pre { background-color: #0f172a !important; border: 1px solid #334155; }
-            body.dark-mode .prose-custom blockquote { border-left-color: #f97316 !important; color: #94a3b8 !important; background-color: rgba(249, 115, 22, 0.05); }
-            
-            body.dark-mode input#guide-search { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; }
-            body.dark-mode input#guide-search::placeholder { color: #64748b !important; }
-            body.dark-mode #guide-no-result { background-color: rgba(15, 23, 42, 0.4) !important; border-color: #334155 !important; }
-            body.dark-mode #guide-no-result p.text-gray-700 { color: #cbd5e1 !important; }
-        </style>
         
         <div class="w-full max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-6">
             <div class="space-y-6 md:space-y-8"> 
@@ -100,9 +70,7 @@ export function setupTool() {
 
   document.getElementById("app-container").appendChild(panel);
 
-  // ==========================================
-  // 2. DỮ LIỆU & BIẾN CỤC BỘ
-  // ==========================================
+  // State & Data
   const guideList = document.getElementById("guide-list");
   const searchInput = document.getElementById("guide-search");
   const noResult = document.getElementById("guide-no-result");
@@ -149,9 +117,7 @@ export function setupTool() {
     },
   ];
 
-  // ==========================================
-  // 3. RENDER DANH SÁCH BÀI VIẾT
-  // ==========================================
+  // Render List
   const renderGuideList = () => {
     guideList.innerHTML = "";
     manifest.forEach((guide, index) => {
@@ -178,9 +144,7 @@ export function setupTool() {
   };
   renderGuideList();
 
-  // ==========================================
-  // 4. LOGIC TÌM KIẾM (Tối ưu hiệu năng)
-  // ==========================================
+  // Search Logic
   searchInput.addEventListener("input", (e) => {
     const term = e.target.value.toLowerCase().trim();
     const items = document.querySelectorAll(".guide-item");
@@ -197,9 +161,7 @@ export function setupTool() {
     noResult.classList.toggle("hidden", hasVisible);
   });
 
-  // ==========================================
-  // 5. LOGIC MỞ BÀI VIẾT & DEEP LINKING
-  // ==========================================
+  // Handle Deep Linking / Post UI
   window.toggleGuide = async function (index, skipUrlUpdate = false) {
     const contentDiv = document.getElementById("content-" + index);
     const iconDiv = document.getElementById("icon-" + index);
@@ -295,9 +257,7 @@ export function setupTool() {
     }
   };
 
-  // ==========================================
-  // 6. KHỞI ĐỘNG TỰ ĐỘNG TÌM DEEP LINK
-  // ==========================================
+  // Check URL Hash For Launching UI
   const urlParams = new URLSearchParams(window.location.search);
   const postSlug = urlParams.get("post");
 
