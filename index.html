@@ -1,64 +1,78 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <!-- Primary Meta Tags -->
     <title>NOTHING YET EVERYTHING</title>
     <meta name="title" content="NOTHING YET EVERYTHING">
-    <meta name="description" content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
+    <meta name="description"
+        content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nguyenngocphung2000.github.io/">
     <meta property="og:title" content="NOTHING YET EVERYTHING">
-    <meta property="og:description" content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
+    <meta property="og:description"
+        content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
     <meta property="og:image" content="https://nguyenngocphung2000.github.io/img/banner.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://nguyenngocphung2000.github.io/">
     <meta property="twitter:title" content="NOTHING YET EVERYTHING">
-    <meta property="twitter:description" content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
+    <meta property="twitter:description"
+        content="Khám phá góc nhỏ tiện ích, mẹo vặt và các công cụ được thiết kế chuẩn Vibe Coding.">
     <meta property="twitter:image" content="https://nguyenngocphung2000.github.io/img/banner.png">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" async></script>
-    
+
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="apple-touch-icon-precomposed" href="img/favicon.svg">
 
-<link rel="apple-touch-icon-precomposed" href="img/favicon.svg">
-
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-navbutton-color" content="#0f172a">
 </head>
-<meta name="theme-color" content="#171A21">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <body class="tracking-wide pb-20 selection:bg-orange-500/30 selection:text-orange-100">
     <div id="global-star-bg"></div>
 
     <header class="sticky top-0 z-[100] bg-transparent border-none transition-all duration-300" id="main-header">
         <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between relative">
-            
-            <div id="main-logo-wrapper" class="flex items-center space-x-2 cursor-pointer logo-wrapper" data-action="tab-home" title="Về Trang Chủ">
-                <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-[0_0_15px_rgba(249,115,22,0.6)] hover:bg-orange-400 transition hover:shadow-[0_0_25px_rgba(249,115,22,0.8)]">NOTHING</div>
+
+            <div id="main-logo-wrapper" class="flex items-center space-x-2 cursor-pointer logo-wrapper"
+                data-action="tab-home" title="Về Trang Chủ">
+                <div
+                    class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-[0_0_15px_rgba(249,115,22,0.6)] hover:bg-orange-400 transition hover:shadow-[0_0_25px_rgba(249,115,22,0.8)]">
+                    NOTHING</div>
                 <span class="font-bold text-gray-400 uppercase text-[10px] tracking-widest mt-1">YET EVERYTHING</span>
             </div>
-            
-            <nav id="desktop-nav" class="hidden md:flex flex-1 justify-end items-center space-x-8 text-[12px] font-bold tracking-widest uppercase text-gray-400 mr-2">
-                
+
+            <nav id="desktop-nav"
+                class="hidden md:flex flex-1 justify-end items-center space-x-8 text-[12px] font-bold tracking-widest uppercase text-gray-400 mr-2">
+
                 <div class="relative group">
                     <button class="flex items-center gap-1 hover:text-orange-500 transition focus:outline-none">
                         Projects
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
                     </button>
                     <!-- Dropdown sẽ được JS đổ dữ liệu vào đây -->
-                    <div id="desktop-projects-menu" class="absolute top-full left-1/2 -translate-x-1/2 mt-6 w-56 rounded-xl bg-slate-900/95 backdrop-blur-xl border border-orange-500/20 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 z-50 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                    <div id="desktop-projects-menu"
+                        class="absolute top-full left-1/2 -translate-x-1/2 mt-6 w-56 rounded-xl bg-slate-900/95 backdrop-blur-xl border border-orange-500/20 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 z-50 max-h-[60vh] overflow-y-auto custom-scrollbar">
                     </div>
                 </div>
 
@@ -68,30 +82,39 @@
 
             <div class="flex items-center z-50 md:hidden">
                 <!-- Nút Hamburger Mobile -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full hover:bg-slate-800 text-gray-400 transition ml-2 border border-slate-700/50 bg-slate-800/50 focus:outline-none">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-full hover:bg-slate-800 text-gray-400 transition ml-2 border border-slate-700/50 bg-slate-800/50 focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Full Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-xl border border-orange-500/20 absolute right-4 left-4 top-[calc(100%+0.5rem)] rounded-2xl shadow-2xl overflow-hidden z-50">
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-slate-900/95 backdrop-blur-xl border border-orange-500/20 absolute right-4 left-4 top-[calc(100%+0.5rem)] rounded-2xl shadow-2xl overflow-hidden z-50">
             <div class="flex flex-col p-4 w-full h-full">
                 <!-- Mobile Core Links -->
                 <div class="grid grid-cols-2 gap-2 mb-4 pb-4 border-b border-orange-500/10">
-                    <button data-action="tab-contact" class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase tracking-widest">Contact</button>
-                    <button data-action="tab-about" class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase tracking-widest">About</button>
+                    <button data-action="tab-contact"
+                        class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase tracking-widest">Contact</button>
+                    <button data-action="tab-about"
+                        class="mobile-nav-btn block w-full px-4 py-3 text-center text-gray-300 hover:text-white hover:bg-orange-500/20 transition rounded-xl text-[12px] font-bold uppercase tracking-widest">About</button>
                 </div>
-                
-                <h3 class="text-[10px] font-bold uppercase tracking-widest text-orange-500/70 mb-2 px-2">Projects & Tools</h3>
+
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-orange-500/70 mb-2 px-2">Projects &
+                    Tools</h3>
                 <!-- Mobile Tools Menu (Dynamic) -->
                 <div id="mobile-nav" class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto custom-scrollbar"></div>
             </div>
         </div>
     </header>
 
-<main id="app-container" class="w-full mx-auto mt-8"></main>
+    <main id="app-container" class="w-full mx-auto mt-8"></main>
 
     <script type="module" src="js/core.js"></script>
 </body>
+
 </html>
