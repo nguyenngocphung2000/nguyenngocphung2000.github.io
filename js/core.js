@@ -77,7 +77,7 @@ if (desktopProjectsMenu && mobileNav) {
       'class="nav-btn w-full text-left px-4 py-2 hover:bg-orange-500/10 text-gray-400 ' +
       'hover:text-orange-500 transition text-[13px] font-bold tracking-wide border-l-2 ' +
       'border-transparent hover:border-orange-500">' + tool.name + '</button>';
-
+    
     mobileNav.innerHTML +=
       '<button data-action="' + tool.id + '" data-target="' + tool.id + '" ' +
       'class="mobile-nav-btn block w-full px-4 py-2 text-left text-gray-300 ' +
@@ -95,73 +95,69 @@ function _showLoading() {
   sk = document.createElement('div');
   sk.id = '_load-sk';
   sk.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:300px;padding:48px 24px;';
-  sk.innerHTML = '<div style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(249,115,22,.15);border-top-color:#f97316;animation:_ldspin .7s linear infinite"></div>'
-    + '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Loading...</p>'
-    + '<style>@keyframes _ldspin{to{transform:rotate(360deg)}}</style>';
+  sk.innerHTML = '<div style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(249,115,22,.15);border-top-color:#f97316;animation:_ldspin .7s linear infinite"></div>' +
+    '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Loading...</p>' +
+    '<style>@keyframes _ldspin{to{transform:rotate(360deg)}}</style>';
   app.appendChild(sk);
 }
+
 function _hideLoading() {
   const sk = document.getElementById('_load-sk');
   if (sk) sk.remove();
 }
 
 // Tab switching
-window.loadHomeTab = async function () { await switchTab('tab-home'); };
+window.loadHomeTab = async function() { await switchTab('tab-home'); };
 window.currentTab = null;
 
-export async function switchTab(tabId) {
+export async function switchTab(tabId, updateUrl = true) {
   window.currentTab = tabId;
-
+  
   document.querySelectorAll('.tab-panel').forEach((p) => {
     p.classList.remove('active');
     p.style.display = 'none';
   });
   document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach((b) => b.classList.remove('active'));
   if (mobileMenu) mobileMenu.classList.add('hidden');
-
+  
   let targetPanel = document.getElementById(tabId);
-
+  
   if (!targetPanel) {
-    // Show loading spinner while fetching
     _showLoading();
-
+    
     const toolDir = toolMap[tabId];
     if (!toolDir) { _hideLoading(); return; }
     try {
-      // Inject CSS (idempotent — may already be done by prefetch)
       _injectCSS(tabId, toolDir);
-
-      // Use prefetched HTML cache if available, otherwise fetch
+      
       let html;
       if (_htmlCache[tabId]) {
         html = _htmlCache[tabId];
       } else {
-        const res = await fetch(toolDir + '/index.html');
+        const res = await fetch('/' + toolDir + '/index.html');
         if (!res.ok) throw new Error('Cannot load HTML: ' + toolDir);
         html = await res.text();
       }
-
-      // Insert panel
+      
       targetPanel = document.createElement('div');
       targetPanel.id = tabId;
       targetPanel.className = 'tab-panel active';
       targetPanel.innerHTML = html;
       document.getElementById('app-container').appendChild(targetPanel);
-
-      // Import + init JS module
-      const mod = await import('../' + toolDir + '/script.js');
+      
+      const mod = await import('/' + toolDir + '/script.js');
       if (mod.init) mod.init();
-
+      
     } catch (err) {
       console.error('switchTab error:', err);
       const sk = document.getElementById('_load-sk');
       if (sk) sk.innerHTML = '<p style="color:#f87171;text-align:center;padding:24px;">Lỗi tải: ' + err.message + '</p>';
       return;
     }
-
+    
     _hideLoading();
   }
-
+  
   if (targetPanel) {
     document.querySelectorAll('.tab-panel').forEach((p) => {
       p.classList.remove('active');
@@ -170,11 +166,13 @@ export async function switchTab(tabId) {
     targetPanel.classList.add('active');
     targetPanel.style.display = 'block';
     document.querySelectorAll('[data-target="' + tabId + '"]').forEach((b) => b.classList.add('active'));
-
-    const url = new URL(window.location);
-    if (tabId !== 'tab-home') url.searchParams.delete('post');
-    url.hash = tabId;
-    window.history.replaceState(null, null, url);
+    
+    if (updateUrl) {
+      const newPath = tabId === 'tab-home' ? '/' : '/' + toolMap[tabId] + '/';
+      if (window.location.pathname !== newPath) {
+        window.history.pushState({ tabId }, '', newPath);
+      }
+    }
   }
 }
 
@@ -212,14 +210,22 @@ document.addEventListener('touchmove', (e) => {
 }, { passive: false });
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 
-// Initial tab from URL hash
-let initialTab = 'tab-home';
-if (window.location.hash) {
-  const h = window.location.hash.substring(1);
-  if (toolMap[h]) initialTab = h;
+// Routing logic
+function getTabFromPath(path) {
+  if (path === '/' || path === '/index.html') return 'tab-home';
+  const cleanPath = path.replace(/^\/|\/$/g, '');
+  for (const [id, dir] of Object.entries(toolMap)) {
+    if (dir === cleanPath) return id;
+  }
+  return 'tab-home';
 }
-// Load initial tab, then prefetch all others in background during idle time
-switchTab(initialTab).then(() => _prefetchAll(initialTab));
+
+window.addEventListener('popstate', () => {
+  switchTab(getTabFromPath(window.location.pathname), false);
+});
+
+const initialTab = getTabFromPath(window.location.pathname);
+switchTab(initialTab, false).then(() => _prefetchAll(initialTab));
 
 // Star background
 (() => {
