@@ -104,11 +104,52 @@ function _hideLoading() {
   if (sk) sk.remove();
 }
 
-// Tab switching — URL luôn ở /, không thay đổi, F5 luôn về trang chủ
+// --- Hash Routing ---
+// URL dùng hash: /#tab-calc, /#tab-xiangqi, v.v.
+// F5 luôn load index.html → JS đọc hash → đúng tab, không cần server routing.
+
+function _getTabFromHash() {
+  const hash = window.location.hash.replace('#', '').trim();
+  if (hash && toolMap[hash]) return hash;
+  return 'tab-home';
+}
+
+function _setHash(tabId) {
+  const newHash = tabId === 'tab-home' ? '#' : '#' + tabId;
+  if (window.location.hash !== newHash) {
+    window.location.hash = newHash;
+  }
+}
+
+// Dọn state post khi rời home tab
+function _cleanHomeState() {
+  // Đóng tất cả các post đang mở trong tab home
+  document.querySelectorAll('[id^="content-"]').forEach((el) => {
+    if (!el.classList.contains('hidden')) {
+      el.classList.add('hidden');
+    }
+  });
+  document.querySelectorAll('[id^="icon-"]').forEach((el) => {
+    el.innerText = 'XEM';
+    el.classList.remove('bg-orange-100', 'text-orange-500');
+    el.classList.add('bg-gray-50', 'text-gray-400');
+  });
+  // Xóa ?post= query param nếu có
+  if (window.location.search) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.hash);
+  }
+}
+
+// Tab switching
 window.loadHomeTab = async function() { await switchTab('tab-home'); };
 window.currentTab = null;
 
 async function switchTab(tabId) {
+  // Dọn home state khi rời khỏi home tab
+  if (window.currentTab === 'tab-home' && tabId !== 'tab-home') {
+    _cleanHomeState();
+  }
+
   window.currentTab = tabId;
 
   document.querySelectorAll('.tab-panel').forEach((p) => {
@@ -164,6 +205,9 @@ async function switchTab(tabId) {
     targetPanel.classList.add('active');
     targetPanel.style.display = 'block';
     document.querySelectorAll('[data-target="' + tabId + '"]').forEach((b) => b.classList.add('active'));
+
+    // Cập nhật hash URL (không reload trang)
+    _setHash(tabId);
   }
 }
 
@@ -171,6 +215,14 @@ async function switchTab(tabId) {
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-action]');
   if (btn) switchTab(btn.getAttribute('data-action'));
+});
+
+// Lắng nghe hash thay đổi (browser back/forward)
+window.addEventListener('hashchange', () => {
+  const tabId = _getTabFromHash();
+  if (tabId !== window.currentTab) {
+    switchTab(tabId);
+  }
 });
 
 // Header scroll effect
@@ -199,8 +251,8 @@ document.addEventListener('touchmove', (e) => {
 }, { passive: false });
 document.addEventListener('gesturestart', (e) => e.preventDefault());
 
-// Khởi động: luôn load trang chủ
-switchTab('tab-home').then(() => _prefetchAll('tab-home'));
+// Khởi động: đọc hash để load đúng tab ngay khi vào link
+switchTab(_getTabFromHash()).then(() => _prefetchAll(_getTabFromHash()));
 
 // Star background
 (() => {
