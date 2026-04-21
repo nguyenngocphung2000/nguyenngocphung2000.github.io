@@ -39,16 +39,6 @@ export function init() {
       title: "Tổng hợp các trang web chia sẻ tài nguyên ứng dụng trên Mac",
       date: "Thủ thuật Mac",
       path: "posts/mac-webs.md",
-    },
-    {
-      title: "Thông tin liên hệ thảo luận, chém gió",
-      date: "Contact",
-      path: "posts/contact.md",
-    },
-    {
-      title: "Vài lời luyên thuyên về bản thân",
-      date: "About",
-      path: "posts/about.md",
     }
   ];
 
@@ -99,8 +89,8 @@ export function init() {
   // Handle Deep Linking / Post UI
   window.toggleGuide = async function (index, skipUrlUpdate = false) {
     // Chỉ kích hoạt toggle nếu đang ở mục Home. Nếu ẩn (tab khác) thì thôi hoặc chuyển về home trước.
-    if(window.currentTab && window.currentTab !== "tab-home") {
-        await window.loadHomeTab();
+    if (window.currentTab && window.currentTab !== "tab-home") {
+      await window.loadHomeTab();
     }
 
     const contentDiv = document.getElementById("content-" + index);
@@ -199,7 +189,7 @@ export function init() {
   };
 
   // Mở post nếu có tham số
-  window.checkUrlPost = function() {
+  window.checkUrlPost = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const postSlug = urlParams.get("post");
 

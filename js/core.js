@@ -1,36 +1,36 @@
 // Core Configuration
 const menuConfig = [
-  { id: 'tab-calc',         name: 'Tính Toán' },
-  { id: 'tab-finance',      name: 'Lãi Suất' },
-  { id: 'tab-calendar',     name: 'Lịch Vạn Niên' },
-  { id: 'tab-time-calc',    name: 'Thời Gian' },
-  { id: 'tab-baby-name',    name: 'Đặt Tên Con' },
-  { id: 'tab-xiangqi',      name: 'Cờ Tướng' },
-  { id: 'tab-wheel',        name: 'Quay Ngẫu Nhiên' },
-  { id: 'tab-html-runner',  name: 'HTML Runner' },
-  { id: 'tab-image-to-svg', name: 'Tạo Ảnh SVG' },
+  { id: 'tab-calc', name: 'Tính toán' },
+  { id: 'tab-finance', name: 'Lãi suất' },
+  { id: 'tab-calendar', name: 'Lịch vạn niên' },
+  { id: 'tab-time-calc', name: 'Thời gian' },
+  { id: 'tab-baby-name', name: 'Đặt tên con' },
+  { id: 'tab-xiangqi', name: 'Cờ tướng' },
+  { id: 'tab-wheel', name: 'Quay ngẫu nhiên' },
+  { id: 'tab-html-runner', name: 'HTML runner' },
+  { id: 'tab-image-to-svg', name: 'Tạo ảnh SVG' },
 ];
 
 const toolMap = {
-  'tab-home':         'project/00-home',
-  'tab-calc':         'project/01-calc',
-  'tab-finance':      'project/02-finance',
-  'tab-calendar':     'project/03-calendar',
-  'tab-time-calc':    'project/04-time-calc',
-  'tab-baby-name':    'project/05-baby-name',
-  'tab-xiangqi':      'project/06-xiangqi',
-  'tab-wheel':        'project/07-wheel',
-  'tab-html-runner':  'project/08-html-runner',
+  'tab-home': 'project/00-home',
+  'tab-calc': 'project/01-calc',
+  'tab-finance': 'project/02-finance',
+  'tab-calendar': 'project/03-calendar',
+  'tab-time-calc': 'project/04-time-calc',
+  'tab-baby-name': 'project/05-baby-name',
+  'tab-xiangqi': 'project/06-xiangqi',
+  'tab-wheel': 'project/07-wheel',
+  'tab-html-runner': 'project/08-html-runner',
   'tab-image-to-svg': 'project/09-image-to-svg',
-  'tab-contact':      'project/10-contact',
-  'tab-about':        'project/11-about',
+  'tab-contact': 'project/contact',
+  'tab-about': 'project/about',
 };
 
 // UI Elements
 const desktopProjectsMenu = document.getElementById('desktop-projects-menu');
-const mobileNav           = document.getElementById('mobile-nav');
-const mobileMenu          = document.getElementById('mobile-menu');
-const mainHeader          = document.getElementById('main-header');
+const mobileNav = document.getElementById('mobile-nav');
+const mobileMenu = document.getElementById('mobile-menu');
+const mainHeader = document.getElementById('main-header');
 
 // Generate dropdown + mobile menu
 if (desktopProjectsMenu && mobileNav) {
@@ -61,7 +61,7 @@ function _showLoading() {
   sk.id = '_load-sk';
   sk.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:300px;padding:48px 24px;';
   sk.innerHTML = '<div style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(249,115,22,.15);border-top-color:#f97316;animation:_ldspin .7s linear infinite"></div>'
-    + '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Đang tải công cụ...</p>'
+    + '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Loading...</p>'
     + '<style>@keyframes _ldspin{to{transform:rotate(360deg)}}</style>';
   app.appendChild(sk);
 }
@@ -72,7 +72,7 @@ function _hideLoading() {
 
 // Tab switching
 window.loadHomeTab = async function () { await switchTab('tab-home'); };
-window.currentTab  = null;
+window.currentTab = null;
 
 export async function switchTab(tabId) {
   window.currentTab = tabId;
@@ -96,8 +96,8 @@ export async function switchTab(tabId) {
       // Inject CSS
       if (!document.querySelector('[data-tool="' + tabId + '"]')) {
         const link = document.createElement('link');
-        link.rel          = 'stylesheet';
-        link.href         = toolDir + '/style.css';
+        link.rel = 'stylesheet';
+        link.href = toolDir + '/style.css';
         link.dataset.tool = tabId;
         document.head.appendChild(link);
       }
@@ -109,7 +109,7 @@ export async function switchTab(tabId) {
 
       // Insert panel
       targetPanel = document.createElement('div');
-      targetPanel.id        = tabId;
+      targetPanel.id = tabId;
       targetPanel.className = 'tab-panel active';
       targetPanel.innerHTML = html;
       document.getElementById('app-container').appendChild(targetPanel);
@@ -165,8 +165,8 @@ if (mobileMenuBtn && mobileMenu) {
   mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
   document.addEventListener('click', (e) => {
     if (!mobileMenu.classList.contains('hidden') &&
-        !mobileMenu.contains(e.target) &&
-        !mobileMenuBtn.contains(e.target)) {
+      !mobileMenu.contains(e.target) &&
+      !mobileMenuBtn.contains(e.target)) {
       mobileMenu.classList.add('hidden');
     }
   });
@@ -199,11 +199,11 @@ switchTab(initialTab);
     const s = document.createElement('div');
     s.className = 'global-star';
     const sz = Math.random() * 1.5 + 1;
-    s.style.width             = sz + 'px';
-    s.style.height            = sz + 'px';
-    s.style.top               = Math.random() * 100 + 'vh';
-    s.style.left              = Math.random() * 100 + 'vw';
-    s.style.animationDelay    = Math.random() * 5 + 's';
+    s.style.width = sz + 'px';
+    s.style.height = sz + 'px';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDelay = Math.random() * 5 + 's';
     s.style.animationDuration = (Math.random() * 4 + 3) + 's';
     bg.appendChild(s);
   }
