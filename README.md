@@ -4,7 +4,7 @@
 
 Góc lưu trữ cá nhân — tập hợp các công cụ tiện ích và bài viết được xây dựng theo phong cách **Vibe Coding**.
 
-🔗 **Live:** [nguyenngocphung2000.github.io](https://nguyenngocphung2000.github.io)
+🔗 **Live:** [ngocphung.pages.dev](https://ngocphung.pages.dev/)
 
 ---
 
@@ -17,7 +17,6 @@ nguyenngocphung2000.github.io/
 ├── index.html              # Root layout: header, nav, <main id="app-container">
 ├── css/
 │   ├── input.css           # Tailwind source
-│   ├── tailwind.css        # Tailwind build output (đừng sửa tay)
 │   └── style.css           # Custom CSS toàn cục (glassmorphism, animations...)
 ├── js/
 │   └── core.js             # Bộ não điều hướng SPA: menuConfig, toolMap, switchTab()
@@ -32,13 +31,12 @@ nguyenngocphung2000.github.io/
 │   ├── 07-wheel/           # Quay ngẫu nhiên
 │   ├── 08-html-runner/     # Chạy thử HTML
 │   ├── 09-image-to-svg/    # Tạo ảnh SVG
-│   ├── 10-contact/         # Thông tin liên hệ
-│   └── 11-about/           # Giới thiệu bản thân
+│   └─....
 ├── posts/                  # Bài viết Markdown hiển thị ở trang chủ
-│   ├── contact.md
-│   ├── about.md
+│   ├── guides-ai.md
+│   ├── seting-nextdns.md
 │   └── ...
-└── img/                    # Ảnh tĩnh (favicon, banner...)
+└── img/                    # Nơi lưu ảnh dùng cho web
 ```
 
 ---
@@ -51,7 +49,7 @@ nguyenngocphung2000.github.io/
 
 ```
 project/
-└── 12-ten-cong-cu/
+└── ten-cong-cu/
     ├── index.html   ← HTML nội dung của tool (KHÔNG có <html>/<body>)
     ├── style.css    ← CSS riêng của tool (có thể để trống)
     └── script.js    ← Logic JS, PHẢI export hàm init()
