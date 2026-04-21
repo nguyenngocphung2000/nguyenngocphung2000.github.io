@@ -51,10 +51,11 @@ async function _prefetchTool(tabId) {
 
 function _prefetchAll(excludeTabId) {
   const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 400));
-  Object.keys(toolMap).forEach((tabId) => {
-    if (tabId !== excludeTabId) {
-      idle(() => _prefetchTool(tabId), { timeout: 10000 });
-    }
+  // Only prefetch the next 2 tools to reduce load
+  const toolIds = Object.keys(toolMap).filter(id => id !== excludeTabId);
+  const toPrefetch = toolIds.slice(0, 2); // Limit to 2
+  toPrefetch.forEach((tabId) => {
+    idle(() => _prefetchTool(tabId), { timeout: 10000 });
   });
 }
 // --- End Perf ---
@@ -263,7 +264,9 @@ switchTab(_getTabFromHash()).then(() => _prefetchAll(_getTabFromHash()));
     bg.id = 'global-star-bg';
     document.body.appendChild(bg);
   }
-  for (let i = 0; i < 35; i++) {
+  const isMobile = window.innerWidth < 768;
+  const starCount = isMobile ? 15 : 35; // Reduce stars on mobile
+  for (let i = 0; i < starCount; i++) {
     const s = document.createElement('div');
     s.className = 'global-star';
     const sz = Math.random() * 1.5 + 1;
