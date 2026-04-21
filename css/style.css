@@ -2,15 +2,19 @@
    1. CẤU HÌNH CỐT LÕI
 ---------------------------------------------------- */
 html, body { 
+    margin: 0;
+    padding: 0;
     font-family: 'Lexend', sans-serif; 
-    background: radial-gradient(circle at top right, #1e293b, #030712 70%); 
+    background-color: #1e293b;
+    background-image: radial-gradient(circle at top right, #1e293b, #030712 70%); 
     color: #f8fafc;
     min-height: 100vh; 
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 body { 
     font-family: 'Lexend', sans-serif; 
-    background: radial-gradient(circle at top right, #1e293b, #0f172a 70%); 
+    background-color: #1e293b;
+    background-image: radial-gradient(circle at top right, #1e293b, #0f172a 70%); 
     color: #cbd5e1;
     min-height: 100vh; 
     transition: background-color 0.4s ease, color 0.4s ease;
