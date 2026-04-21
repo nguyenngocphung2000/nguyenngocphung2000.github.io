@@ -46,7 +46,7 @@ async function _prefetchTool(tabId) {
   if (!toolDir) return;
   try {
     _injectCSS(tabId, toolDir);
-    const res = await fetch(toolDir + '/index.html');
+    const res = await fetch(toolDir + '/content.html');
     if (res.ok) _htmlCache[tabId] = await res.text();
   } catch (_) { /* silent prefetch fail */ }
 }
@@ -134,7 +134,7 @@ export async function switchTab(tabId, updateUrl = true) {
       if (_htmlCache[tabId]) {
         html = _htmlCache[tabId];
       } else {
-        const res = await fetch('/' + toolDir + '/index.html');
+        const res = await fetch('/' + toolDir + '/content.html');
         if (!res.ok) throw new Error('Cannot load HTML: ' + toolDir);
         html = await res.text();
       }
