@@ -9,10 +9,11 @@ export function setupTool() {
   panel.innerHTML = `
 <style>
   #xq-board-wrapper { width: 100%; max-width: 450px; margin: 0 auto; position: relative; font-family: system-ui, -apple-system, sans-serif; }
-  #xq-board-container { width: 100%; position: relative; aspect-ratio: 9/10; border: 2px solid rgba(249,115,22,0.3); border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.1); background: linear-gradient(135deg, #1e293b, #0f172a); overflow: hidden; }
+  @media (min-width: 768px) { #xq-board-wrapper { max-width: min(85%, calc((100vh - 220px) * 0.9)); } }
+  #xq-board-container { container-type: inline-size; width: 100%; position: relative; aspect-ratio: 9/10; border: 2px solid rgba(249,115,22,0.3); border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.1); background: linear-gradient(135deg, #1e293b, #0f172a); overflow: hidden; }
   .xq-svg-board { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
   #xq-pieces-layer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 10; }
-  .xq-piece { position: absolute; width: 9.5%; aspect-ratio: 1/1; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; font-family: "KaiTi", "Georgia", serif; font-weight: 900; font-size: clamp(16px, 5.5vw, 26px); border-radius: 50%; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); user-select: none; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); z-index: 20; border: 1.5px solid #475569; }
+  .xq-piece { position: absolute; width: 9.5%; aspect-ratio: 1/1; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; font-family: "KaiTi", "Georgia", serif; font-weight: 900; font-size: 5cqi; border-radius: 50%; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); user-select: none; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); z-index: 20; border: 1.5px solid #475569; }
   .xq-piece.red { color: #f87171; border-color: #ef4444; box-shadow: 0 8px 15px -2px rgba(239,68,68,0.3), inset 2px 2px 4px rgba(255,255,255,0.1); text-shadow: 0 0 8px rgba(239,68,68,0.5); }
   .xq-piece.black { color: #94a3b8; border-color: #cbd5e1; box-shadow: 0 8px 15px -2px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.1); }
   .xq-piece.rotated { transform: translate(-50%, -50%) rotate(180deg); }
@@ -26,9 +27,9 @@ export function setupTool() {
   @keyframes xqPop { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } 10% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 20% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 80% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } }
   .xq-timer-active { transform: scale(1.05); }
 </style>
-<div class="flex flex-col h-full w-full max-w-md mx-auto relative">
-  <div id="xq-top-panel" class="mb-3 transition-all duration-300"></div>
-  <div id="xq-board-wrapper">
+<div class="flex flex-col h-full w-full mx-auto relative items-center justify-center pt-2">
+  <div id="xq-top-panel" class="w-full max-w-[450px] mb-3 transition-all duration-300"></div>
+  <div id="xq-board-wrapper" class="w-full">
     <div id="xq-board-container">
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-40">
         <div style="transform: scale(0.60); white-space: nowrap;">
@@ -54,8 +55,8 @@ export function setupTool() {
       </div>
     </div>
   </div>
-  <div id="xq-bottom-panel" class="mt-3 transition-all duration-300"></div>
-  <div class="flex gap-3 mt-4">
+  <div id="xq-bottom-panel" class="w-full max-w-[450px] mt-3 transition-all duration-300"></div>
+  <div class="flex gap-3 mt-4 w-full max-w-[450px]">
     <button id="xq-btn-reset" class="flex-1 bg-slate-800/50 hover:bg-slate-800/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Làm mới tỷ số</button>
     <button id="xq-btn-flip" class="flex-1 bg-slate-700/50 hover:bg-slate-700/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Đảo bàn cờ</button>
   </div>
