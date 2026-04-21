@@ -32,7 +32,7 @@ function _injectCSS(tabId, toolDir) {
   if (_cssInjected.has(tabId)) return;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = toolDir + '/style.css';
+  link.href = '/' + toolDir + '/style.css';
   link.dataset.tool = tabId;
   document.head.appendChild(link);
   _cssInjected.add(tabId);
@@ -44,7 +44,7 @@ async function _prefetchTool(tabId) {
   if (!toolDir) return;
   try {
     _injectCSS(tabId, toolDir);
-    const res = await fetch(toolDir + '/content.html');
+    const res = await fetch('/' + toolDir + '/content.html');
     if (res.ok) _htmlCache[tabId] = await res.text();
   } catch (_) { /* silent prefetch fail */ }
 }
