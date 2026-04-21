@@ -6,6 +6,11 @@ export function init() {
 
   const manifest = [
     {
+      title: "Biến Telegram thành Cloud Drive",
+      date: "Nothing",
+      path: "posts/nothing-teledrive.md",
+},
+    {
       title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
       date: "Nothing",
       path: "posts/guide-use-ai.md",
