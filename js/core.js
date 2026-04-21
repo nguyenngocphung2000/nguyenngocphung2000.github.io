@@ -22,8 +22,6 @@ const toolMap = {
   'tab-wheel': 'project/07-wheel',
   'tab-html-runner': 'project/08-html-runner',
   'tab-image-to-svg': 'project/09-image-to-svg',
-  'tab-contact': 'project/contact',
-  'tab-about': 'project/about',
 };
 
 // --- Perf: HTML prefetch cache + idempotent CSS injection ---
