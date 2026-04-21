@@ -82,12 +82,11 @@ export function init() {
     window.onerror=function(m,u,l){window.__dL.push({m:m+" (line "+l+")",t:"err"});return false;};
   </script>`;
 
-  const APPEND = `<div id="_cn" style="position:fixed;bottom:0;left:0;width:100%;height:22vh;min-height:160px;background:rgba(24,24,27,.98);border-top:1px solid #3f3f46;color:#e4e4e7;font-family:monospace;z-index:2147483645;display:flex;flex-direction:column;">
-    <div style="background:#27272a;padding:8px 15px;font-size:12px;font-weight:bold;color:#a1a1aa;border-bottom:1px solid #3f3f46;display:flex;justify-content:space-between;align-items:center;">
+    const APPEND = `<div id="_cn" style="position:fixed;bottom:0;left:0;width:100%;height:22vh;min-height:160px;background:rgba(24,24,27,.98);border-top:1px solid #3f3f46;color:#e4e4e7;font-family:monospace;z-index:2147483645;display:flex;flex-direction:column;">
+    <div style="background:#27272a;padding:8px 15px;font-size:12px;font-weight:bold;color:#a1a1aa;border-bottom:1px solid #3f3f46;display:flex;justify-content:space-between;align-items:center;height:34px;box-sizing:border-box;">
       <span>Terminal Logs</span>
       <div style="display:flex;gap:8px;">
-        <span id="_tg" style="cursor:pointer;color:#60a5fa;" onclick="_tc()">&#11015; Thu gọn</span>
-        <span style="cursor:pointer;color:#ef4444;" onclick="document.getElementById('_cn').style.display='none'">&#10005; Đóng</span>
+        <span id="_tg" style="cursor:pointer;color:#60a5fa;" onclick="_tc()">Thu gon</span>
       </div>
     </div>
     <div id="_cb" style="flex:1;overflow-y:auto;padding:12px;font-size:13px;line-height:1.6;"></div>
@@ -96,15 +95,18 @@ export function init() {
     let _ex=true;
     function _tc(){
       const c=document.getElementById("_cn"),b=document.getElementById("_cb"),t=document.getElementById("_tg");
-      _ex=!_ex;c.style.height=_ex?"22vh":"35px";
-      b.style.display=_ex?"block":"none";t.innerHTML=_ex?"&#11015; Thu gọn":"&#11014; Mở rộng";
+      _ex=!_ex;
+      c.style.height=_ex?"22vh":"34px";
+      c.style.minHeight=_ex?"160px":"34px";
+      b.style.display=_ex?"block":"none";
+      t.innerHTML=_ex?"Thu gon":"Mo rong";
     }
     const _b=document.getElementById("_cb");
     function _p(item){
       const d=document.createElement("div");
       d.style.cssText="border-bottom:1px dashed rgba(255,255,255,.05);padding:6px 0;word-break:break-all;";
       d.style.color=item.t==="err"?"#f87171":item.t==="warn"?"#fbe331":"#e4e4e7";
-      d.innerHTML="<b>❯</b> "+item.m;
+      d.innerHTML=item.m;
       if(_b){_b.appendChild(d);_b.scrollTop=_b.scrollHeight;}
     }
     window.__dL.forEach(_p);
