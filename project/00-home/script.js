@@ -1,76 +1,4 @@
-export function setupTool() {
-  const tabId = "tab-home";
-  if (document.getElementById(tabId)) return;
-
-  const panel = document.createElement("div");
-  panel.id = tabId;
-  panel.className = "tab-panel active";
-
-  // Render UI
-  panel.innerHTML = `
-        
-        <div class="w-full max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-6">
-            <div class="space-y-6 md:space-y-8"> 
-                
-                <div class="glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-orange-100 bg-slate-800/50/80 backdrop-blur-xl relative overflow-hidden shadow-lg shadow-orange-100/50 transition-colors duration-300">
-                    
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-orange-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-10 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-[60px] opacity-10 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-                    
-                    <div class="text-left relative z-10 w-full">
-                        <div class="inline-flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold mb-3 shadow-sm border border-orange-200 transition">
-                            <span class="relative flex h-2 w-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-                            </span>
-                            Nguyễn Ngọc Phụng
-                        </div>
-                        
-                        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-200 mb-4 tracking-tight">
-                            Hi I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">Nothing</span>
-                        </h1>
-                        
-                        <div class="mb-5 relative border-l-4 border-orange-400 bg-gradient-to-r from-orange-50/20 to-transparent rounded-r-2xl p-3.5 md:p-5 bio-box">
-                            <p lang="en" class="text-slate-200 leading-relaxed text-[14px] md:text-[15px] font-medium">
-                                <strong class="text-orange-600 tracking-tight block mb-1.5 uppercase text-xs md:text-sm">Nothing yet Everything</strong> 
-                                Xin chào! Chào mừng đến với góc nhỏ của tôi. Kho lưu trữ này là nơi tập hợp vài món đồ chơi được tôi "vibe coding" ra, cùng với đủ loại mẹo vặt hay ho. Mấy công cụ này vốn được sinh ra để tự cứu lấy mình, nhưng giờ tôi quyết định mở bát chia sẻ cho tất cả mọi người. Cứ tự nhiên vọc vạch nhé, và nếu có bắt gặp bug nào... hãy nhắn tôi để tôi "vibe" ra bản vá lỗi, thông tin liên hệ ở ngay bên dưới!
-                            </p>
-                        </div>
-                        
-                        <div class="flex flex-wrap gap-2 justify-start">
-                            <span class="bg-slate-800/50 border border-gray-200 text-gray-600 px-3.5 py-1.5 rounded-full text-[11px] md:text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Application</span>
-                            <span class="bg-slate-800/50 border border-gray-200 text-gray-600 px-3.5 py-1.5 rounded-full text-[11px] md:text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Vibe_coding</span>
-                            <span class="bg-slate-800/50 border border-gray-200 text-gray-600 px-3.5 py-1.5 rounded-full text-[11px] md:text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Tips</span>
-                            <span class="bg-slate-800/50 border border-gray-200 text-gray-600 px-3.5 py-1.5 rounded-full text-[11px] md:text-xs font-semibold hover:bg-orange-500 hover:text-white hover:border-orange-500 hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#Tools</span>
-                            <span class="bg-orange-50 border border-orange-200 text-orange-600 px-3.5 py-1.5 rounded-full text-[11px] md:text-xs font-bold hover:bg-orange-600 hover:text-white hover:-translate-y-0.5 shadow-sm transition-all cursor-default">#AI_Powered</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-card p-4 sm:p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-gray-100 relative overflow-hidden bg-slate-800/50/80 backdrop-blur-md shadow-sm transition-colors duration-300">
-                    <div class="mb-5">
-                        <h2 class="text-xl md:text-2xl font-bold text-slate-200 tracking-tight">Tìm thử biết đâu có thứ cần</h2>
-                    </div>
-
-                    <div class="relative mb-5 group">
-                        <input type="text" id="guide-search" class="w-full bg-gray-50/50 backdrop-blur-sm border-2 border-gray-100 rounded-2xl py-3.5 px-5 text-base text-slate-200 focus:outline-none focus:border-orange-300 focus:ring-4 ring-orange-50 shadow-sm transition-all placeholder-gray-400 font-medium hover:border-orange-200 relative z-0" placeholder="Nhập từ khóa tìm kiếm...">
-                    </div>
-                    
-                    <div id="guide-list" class="space-y-3"></div>
-
-                    <div id="guide-no-result" class="hidden text-center p-8 text-gray-500 italic bg-gray-50/80 rounded-2xl border border-dashed border-gray-200 mt-4 shadow-sm transition-colors duration-300">
-                        <p class="font-medium text-lg text-slate-200">Không tìm thấy bài viết nào...</p>
-                        <p class="text-sm mt-1 text-gray-400">Thử tìm với từ khóa khác xem sao!</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    `;
-
-  document.getElementById("app-container").appendChild(panel);
-
-  // State & Data
+export function init() {
   const guideList = document.getElementById("guide-list");
   const searchInput = document.getElementById("guide-search");
   const noResult = document.getElementById("guide-no-result");
@@ -98,14 +26,12 @@ export function setupTool() {
       path: "posts/mac-apps.md",
     },
     {
-      title:
-        "Tổng hợp tài liệu học lập trình và công nghệ thông tin từ Freetuts",
+      title: "Tổng hợp tài liệu học lập trình và công nghệ thông tin từ Freetuts",
       date: "Tài liệu học tập",
       path: "posts/tong-hop-tai-lieu-freetuts.md",
     },
     {
-      title:
-        "Tổng hợp các nhóm crack mod hack - apk,ipa(android/ios) trên Telegram",
+      title: "Tổng hợp các nhóm crack mod hack - apk,ipa(android/ios) trên Telegram",
       date: "Phần mềm/Ứng dụng",
       path: "posts/group-telegram.md",
     },
@@ -114,6 +40,16 @@ export function setupTool() {
       date: "Thủ thuật Mac",
       path: "posts/mac-webs.md",
     },
+    {
+      title: "Thông tin liên hệ thảo luận, chém gió",
+      date: "Contact",
+      path: "posts/contact.md",
+    },
+    {
+      title: "Vài lời luyên thuyên về bản thân",
+      date: "About",
+      path: "posts/about.md",
+    }
   ];
 
   // Render List
@@ -162,6 +98,11 @@ export function setupTool() {
 
   // Handle Deep Linking / Post UI
   window.toggleGuide = async function (index, skipUrlUpdate = false) {
+    // Chỉ kích hoạt toggle nếu đang ở mục Home. Nếu ẩn (tab khác) thì thôi hoặc chuyển về home trước.
+    if(window.currentTab && window.currentTab !== "tab-home") {
+        await window.loadHomeTab();
+    }
+
     const contentDiv = document.getElementById("content-" + index);
     const iconDiv = document.getElementById("icon-" + index);
     const renderDiv = document.getElementById("md-render-" + index);
@@ -212,7 +153,7 @@ export function setupTool() {
 
           if (window.marked) {
             text = text.replace(
-              /^@time\[(.*?)\] (.*)$/gm,
+              /^@time\\[(.*?)\\] (.*)$/gm,
               '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>',
             );
             cachedContent[index] = marked.parse(text);
@@ -235,8 +176,9 @@ export function setupTool() {
       // Cuộn mượt mà tới bài viết
       setTimeout(() => {
         if (parentItem) {
+          // Bù padding header
           const y =
-            parentItem.getBoundingClientRect().top + window.scrollY - 20;
+            parentItem.getBoundingClientRect().top + window.scrollY - 80;
           window.scrollTo({ top: y, behavior: "smooth" });
         }
       }, 100);
@@ -256,18 +198,22 @@ export function setupTool() {
     }
   };
 
-  // Check URL Hash For Launching UI
-  const urlParams = new URLSearchParams(window.location.search);
-  const postSlug = urlParams.get("post");
+  // Mở post nếu có tham số
+  window.checkUrlPost = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const postSlug = urlParams.get("post");
 
-  if (postSlug) {
-    const targetIndex = manifest.findIndex((m) =>
-      m.path.endsWith(`/${postSlug}.md`),
-    );
-    if (targetIndex !== -1) {
-      setTimeout(() => {
-        window.toggleGuide(targetIndex, true);
-      }, 150);
+    if (postSlug) {
+      const targetIndex = manifest.findIndex((m) =>
+        m.path.endsWith(`/${postSlug}.md`),
+      );
+      if (targetIndex !== -1) {
+        setTimeout(() => {
+          window.toggleGuide(targetIndex, true);
+        }, 150);
+      }
     }
-  }
+  };
+
+  window.checkUrlPost();
 }

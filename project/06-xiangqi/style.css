@@ -1,0 +1,18 @@
+#xq-board-wrapper { width: 100%; max-width: 450px; margin: 0 auto; position: relative; font-family: system-ui, -apple-system, sans-serif; }
+@media (min-width: 768px) { #xq-board-wrapper { max-width: min(85%, calc((100vh - 220px) * 0.9)); } }
+#xq-board-container { container-type: inline-size; width: 100%; position: relative; aspect-ratio: 9/10; border: 2px solid rgba(249,115,22,0.3); border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.1); background: linear-gradient(135deg, #1e293b, #0f172a); overflow: hidden; }
+.xq-svg-board { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+#xq-pieces-layer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 10; }
+.xq-piece { position: absolute; width: 9.5%; aspect-ratio: 1/1; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; font-family: "KaiTi", "Georgia", serif; font-weight: 900; font-size: 5cqi; border-radius: 50%; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); user-select: none; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); z-index: 20; border: 1.5px solid #475569; }
+.xq-piece.red { color: #f87171; border-color: #ef4444; box-shadow: 0 8px 15px -2px rgba(239,68,68,0.3), inset 2px 2px 4px rgba(255,255,255,0.1); text-shadow: 0 0 8px rgba(239,68,68,0.5); }
+.xq-piece.black { color: #94a3b8; border-color: #cbd5e1; box-shadow: 0 8px 15px -2px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.1); }
+.xq-piece.rotated { transform: translate(-50%, -50%) rotate(180deg); }
+.xq-piece.selected { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14,165,233,0.4), 0 15px 25px rgba(14,165,233,0.5), inset -2px -4px 6px rgba(0,0,0,0.05) !important; z-index: 30; transform: translate(-50%, -50%) scale(1.18); color: #0ea5e9; text-shadow: 0 0 8px rgba(14,165,233,0.4); }
+.xq-piece.selected.rotated { transform: translate(-50%, -50%) rotate(180deg) scale(1.18); }
+.xq-dot { position: absolute; width: 3.5%; aspect-ratio: 1/1; background: #0ea5e9; border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer; z-index: 15; opacity: 0.6; box-shadow: 0 0 10px #0ea5e9; transition: all 0.2s; }
+.xq-dot:hover { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }
+#xq-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.85); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(15px); transition: opacity 0.3s; }
+#xq-check-alert { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; font-weight: 800; background: rgba(220, 38, 38, 0.95); color: white; padding: 12px 35px; border-radius: 9999px; box-shadow: 0 10px 30px rgba(220,38,38,0.4); backdrop-filter: blur(5px); pointer-events: none; opacity: 0; transition: opacity 0.3s, transform 0.3s; letter-spacing: 3px; white-space: nowrap; display: flex; align-items: center; justify-content: center; }
+.xq-anim-check { animation: xqPop 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes xqPop { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } 10% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 20% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 80% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } }
+.xq-timer-active { transform: scale(1.05); }

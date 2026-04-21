@@ -1,69 +1,4 @@
-export function setupTool() {
-  const tabId = "tab-xiangqi";
-  if (document.getElementById(tabId)) return;
-
-  const panel = document.createElement("div");
-  panel.id = tabId;
-  panel.className = "tab-panel active";
-
-  panel.innerHTML = `
-<style>
-  #xq-board-wrapper { width: 100%; max-width: 450px; margin: 0 auto; position: relative; font-family: system-ui, -apple-system, sans-serif; }
-  @media (min-width: 768px) { #xq-board-wrapper { max-width: min(85%, calc((100vh - 220px) * 0.9)); } }
-  #xq-board-container { container-type: inline-size; width: 100%; position: relative; aspect-ratio: 9/10; border: 2px solid rgba(249,115,22,0.3); border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 30px rgba(249,115,22,0.1); background: linear-gradient(135deg, #1e293b, #0f172a); overflow: hidden; }
-  .xq-svg-board { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-  #xq-pieces-layer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 10; }
-  .xq-piece { position: absolute; width: 9.5%; aspect-ratio: 1/1; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; font-family: "KaiTi", "Georgia", serif; font-weight: 900; font-size: 5cqi; border-radius: 50%; cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); user-select: none; background: radial-gradient(circle at 30% 30%, #334155, #0f172a); z-index: 20; border: 1.5px solid #475569; }
-  .xq-piece.red { color: #f87171; border-color: #ef4444; box-shadow: 0 8px 15px -2px rgba(239,68,68,0.3), inset 2px 2px 4px rgba(255,255,255,0.1); text-shadow: 0 0 8px rgba(239,68,68,0.5); }
-  .xq-piece.black { color: #94a3b8; border-color: #cbd5e1; box-shadow: 0 8px 15px -2px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.1); }
-  .xq-piece.rotated { transform: translate(-50%, -50%) rotate(180deg); }
-  .xq-piece.selected { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14,165,233,0.4), 0 15px 25px rgba(14,165,233,0.5), inset -2px -4px 6px rgba(0,0,0,0.05) !important; z-index: 30; transform: translate(-50%, -50%) scale(1.18); color: #0ea5e9; text-shadow: 0 0 8px rgba(14,165,233,0.4); }
-  .xq-piece.selected.rotated { transform: translate(-50%, -50%) rotate(180deg) scale(1.18); }
-  .xq-dot { position: absolute; width: 3.5%; aspect-ratio: 1/1; background: #0ea5e9; border-radius: 50%; transform: translate(-50%, -50%); cursor: pointer; z-index: 15; opacity: 0.6; box-shadow: 0 0 10px #0ea5e9; transition: all 0.2s; }
-  .xq-dot:hover { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }
-  #xq-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.85); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(15px); transition: opacity 0.3s; }
-  #xq-check-alert { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100; font-weight: 800; background: rgba(220, 38, 38, 0.95); color: white; padding: 12px 35px; border-radius: 9999px; box-shadow: 0 10px 30px rgba(220,38,38,0.4); backdrop-filter: blur(5px); pointer-events: none; opacity: 0; transition: opacity 0.3s, transform 0.3s; letter-spacing: 3px; white-space: nowrap; display: flex; align-items: center; justify-content: center; }
-  .xq-anim-check { animation: xqPop 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  @keyframes xqPop { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } 10% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 20% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 80% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } }
-  .xq-timer-active { transform: scale(1.05); }
-</style>
-<div class="flex flex-col h-full w-full mx-auto relative items-center justify-center pt-2">
-  <div id="xq-top-panel" class="w-full max-w-[450px] mb-3 transition-all duration-300"></div>
-  <div id="xq-board-wrapper" class="w-full">
-    <div id="xq-board-container">
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-40">
-        <div style="transform: scale(0.60); white-space: nowrap;">
-          <div class="flex items-center space-x-2">
-            <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm">NOTHING</div>
-            <span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mt-1">YET EVERYTHING</span>
-          </div>
-        </div>
-      </div>
-      <div id="xq-svg-container"></div>
-      <div id="xq-pieces-layer"></div>
-      <div id="xq-check-alert" class="text-base md:text-lg uppercase">CHIẾU TƯỚNG!</div>
-      <div id="xq-overlay">
-        <h2 id="xq-winner-msg" class="text-orange-500 text-lg md:text-xl xl:text-2xl font-bold mb-6 hidden text-center px-4 drop-shadow-[0_0_15px_rgba(249,115,22,0.8)] z-[200]"></h2>
-        <div class="glass-card flex flex-col items-center justify-center p-8 rounded-3xl w-11/12 max-w-[300px]">
-          <h3 class="text-slate-200 text-base md:text-lg font-black mb-6 uppercase tracking-widest text-center shadow-orange-500">Cài Đặt Thời Gian</h3>
-          <div class="flex items-center justify-center gap-3 bg-slate-800/80 p-4 rounded-xl border border-orange-500/30 w-full mb-6">
-            <input id="xq-time-input" type="number" value="10" min="1" max="90" class="w-16 bg-slate-900 border border-slate-600/50 rounded-xl py-2 text-center font-black text-orange-400 outline-none focus:ring-2 ring-orange-500/50 shadow-inner">
-            <span class="text-slate-300 font-bold text-sm">Phút / Người</span>
-          </div>
-          <button id="xq-btn-start" class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm uppercase tracking-widest px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.4)] transition active:scale-95 border border-orange-400">Bắt Đầu Chơi</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="xq-bottom-panel" class="w-full max-w-[450px] mt-3 transition-all duration-300"></div>
-  <div class="flex gap-3 mt-4 w-full max-w-[450px]">
-    <button id="xq-btn-reset" class="flex-1 bg-slate-800/50 hover:bg-slate-800/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Làm mới tỷ số</button>
-    <button id="xq-btn-flip" class="flex-1 bg-slate-700/50 hover:bg-slate-700/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Đảo bàn cờ</button>
-  </div>
-</div>`;
-
-  document.getElementById("app-container").appendChild(panel);
-
+export function init() {
   const PIECES = {
     R_G: { label: "帥", color: "red" }, R_A: { label: "仕", color: "red" }, R_E: { label: "相", color: "red" }, R_H: { label: "傌", color: "red" }, R_R: { label: "俥", color: "red" }, R_C: { label: "炮", color: "red" }, R_S: { label: "兵", color: "red" },
     B_G: { label: "將", color: "black" }, B_A: { label: "士", color: "black" }, B_E: { label: "象", color: "black" }, B_H: { label: "馬", color: "black" }, B_R: { label: "車", color: "black" }, B_C: { label: "砲", color: "black" }, B_S: { label: "卒", color: "black" }
@@ -207,12 +142,14 @@ export function setupTool() {
     }
     return moves;
   };
+
   const countObs = (b,r1,c1,r2,c2) => {
     let c = 0;
     if(r1===r2) for(let i=Math.min(c1,c2)+1; i<Math.max(c1,c2); i++) b[r1][i] && c++;
     else for(let i=Math.min(r1,r2)+1; i<Math.max(r1,r2); i++) b[i][c1] && c++;
     return c;
   };
+
   const isCheck = (b, col) => {
     let kr=-1, kc;
     for(let r=0; r<10; r++) for(let c=0; c<9; c++) if(b[r][c] === (col==="red"?"R_G":"B_G")) { kr=r; kc=c; break; }
@@ -224,6 +161,7 @@ export function setupTool() {
       if(getPseudoMoves(b, r, c).some(m => m.r===kr && m.c===kc)) return true;
     return false;
   };
+
   const getLegalMoves = (r, c) => getPseudoMoves(board, r, c).filter(m => {
     let tp = board[m.r][m.c], p = board[r][c];
     board[m.r][m.c] = p; board[r][c] = null;

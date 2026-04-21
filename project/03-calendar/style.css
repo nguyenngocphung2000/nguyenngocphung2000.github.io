@@ -1,0 +1,5 @@
+body.dark-mode .cal-grid-sel {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+    color: #f97316 !important;
+    border-color: #334155 !important;
+}

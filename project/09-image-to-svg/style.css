@@ -1,0 +1,4 @@
+body.dark-mode .svg-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; }
+body.dark-mode .svg-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; }
+body.dark-mode .svg-preview-box { background-color: rgba(15, 23, 42, 0.4) !important; border-color: #334155 !important; }
+.is-round .cropper-view-box, .is-round .cropper-face { border-radius: 50%; }

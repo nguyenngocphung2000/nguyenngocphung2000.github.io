@@ -1,55 +1,172 @@
-# NOTHING YET EVERYTHING - Vibe Coding Masterpiece 🚀
+# NOTHING YET EVERYTHING
 
-Chào mừng đến với **NOTHING YET EVERYTHING**. 
-Đây là một không gian phát triển web cá nhân, được thiết kế hoàn toàn theo tư duy **Neo-Tech** & **Glassmorphism**. Mục tiêu của dự án là hợp nhất tất cả những "tiện ích thu nhỏ" và các bài viết chia sẻ thành một ứng dụng duy nhất (Single Page App) có tốc độ load thần tốc và giao diện Dark Mode đỉnh cao.
+> *"Code không chỉ là công cụ, code là cách chúng ta rung động với thế giới kỹ thuật số."*
 
-## Kiến Trúc Dự Án (Architecture)
-Dự án được xây dựng 100% bằng HTML/JS thuần (Vanilla) cực nhẹ nhưng sử dụng CSS nội bộ được biên dịch mạnh mẽ từ **Tailwind CSS**.
-Kiến trúc này giúp dự án không phụ thuộc vào bất kỳ FrameWork nặng nề nào, dễ dàng mang đi deploy bất kỳ đâu.
+Góc lưu trữ cá nhân — tập hợp các công cụ tiện ích và bài viết được xây dựng theo phong cách **Vibe Coding**.
 
-```bash
-📦 nguyenngocphung2000.github.io
- ┣ 📂 css/              # Khung giao diện Tailwind và CSS chuẩn Glassmorphism
- ┣ 📂 data/             # Nơi chứa các nội dung Text Markdown dễ dàng chỉnh sửa
- ┃ ┣ 📜 about.md
- ┃ ┣ 📜 contact.md
- ┃ ┗ 📜 ...
- ┣ 📂 img/              # Hình ảnh (Banner)
- ┣ 📂 js/
- ┃ ┣ 📜 core.js         # Bộ não điều phối chung (Router, Event Delegation)
- ┃ ┗ 📂 tools/          # Nơi chứa toàn bộ Module chức năng riêng lẻ
- ┣ 📜 index.html        # Trang chủ duy nhất
- ┣ 📜 package.json      # Dependencies NPM
- ┗ 📜 tailwind.config.js
+🔗 **Live:** [nguyenngocphung2000.github.io](https://nguyenngocphung2000.github.io)
+
+---
+
+## Kiến trúc dự án
+
+Website chạy theo mô hình **Modular SPA** (Single Page Application) — không dùng framework, chỉ dùng Vanilla JS + HTML + TailwindCSS.
+
+```
+nguyenngocphung2000.github.io/
+├── index.html              # Root layout: header, nav, <main id="app-container">
+├── css/
+│   ├── input.css           # Tailwind source
+│   ├── tailwind.css        # Tailwind build output (đừng sửa tay)
+│   └── style.css           # Custom CSS toàn cục (glassmorphism, animations...)
+├── js/
+│   └── core.js             # Bộ não điều hướng SPA: menuConfig, toolMap, switchTab()
+├── project/                # Mỗi tool/trang là 1 thư mục con
+│   ├── 00-home/            # Trang chủ
+│   ├── 01-calc/            # Máy tính
+│   ├── 02-finance/         # Lãi suất
+│   ├── 03-calendar/        # Lịch vạn niên
+│   ├── 04-time-calc/       # Tính thời gian
+│   ├── 05-baby-name/       # Đặt tên con
+│   ├── 06-xiangqi/         # Cờ tướng
+│   ├── 07-wheel/           # Quay ngẫu nhiên
+│   ├── 08-html-runner/     # Chạy thử HTML
+│   ├── 09-image-to-svg/    # Tạo ảnh SVG
+│   ├── 10-contact/         # Thông tin liên hệ
+│   └── 11-about/           # Giới thiệu bản thân
+├── posts/                  # Bài viết Markdown hiển thị ở trang chủ
+│   ├── contact.md
+│   ├── about.md
+│   └── ...
+└── img/                    # Ảnh tĩnh (favicon, banner...)
 ```
 
-## Chỉnh Sửa Nội Dung (Edit Content)
-Bạn không cần thiết phải hiểu sâu hệ thống core để thay đổi nội dung! Tất cả dữ liệu hiển thị đã được quy ước trỏ về thư mục `data/` dạng Markdown.
+---
 
-Hãy mở thư mục `data/` bằng Notepad hoặc bất kỳ Code Editor nào (VS Code).
-- Bạn muốn thay đổi trang Liên Hệ? Mở `data/contact.md` 
-- Bạn muốn thay đổi trang Giới Thiệu? Mở `data/about.md`
+## Cách thêm Project/Tool mới
 
-Giao diện sẽ tự động chuyển hóa Markdown sang Layout HTML phát sáng đẳng cấp ngay lập tức!
+### Bước 1 — Tạo thư mục tool
 
-## Chạy Source Code Locally
-Nếu bạn mới clone dự án về máy: 
+Đặt tên theo quy ước `NN-ten-cong-cu` trong thư mục `project/`:
 
-1. Cài đặt các gói thư viện (Tailwind CSS):
-```bash
-npm install
+```
+project/
+└── 12-ten-cong-cu/
+    ├── index.html   ← HTML nội dung của tool (KHÔNG có <html>/<body>)
+    ├── style.css    ← CSS riêng của tool (có thể để trống)
+    └── script.js    ← Logic JS, PHẢI export hàm init()
 ```
 
-2. Build CSS mới nếu bạn thay đổi file `css/input.css` hay code DOM trong bộ source:
+### Bước 2 — Viết `index.html`
+
+Chỉ cần HTML fragment (không có `<html>`, `<head>`, `<body>`):
+
+```html
+<div class="w-full max-w-4xl mx-auto px-4 py-6">
+  <h2 class="text-2xl font-bold text-slate-200 mb-4">Tên Công Cụ</h2>
+  <!-- nội dung tool -->
+</div>
+```
+
+### Bước 3 — Viết `script.js`
+
+**Bắt buộc** phải export hàm `init()`. Hàm này được gọi sau khi HTML được inject vào DOM:
+
+```js
+export function init() {
+  // querySelector hoạt động bình thường vì HTML đã có trong DOM
+  const btn = document.getElementById('my-button');
+  btn.addEventListener('click', () => { /* ... */ });
+}
+```
+
+### Bước 4 — Đăng ký vào `js/core.js`
+
+Mở `js/core.js` và thêm 2 chỗ:
+
+```js
+// 1. Thêm vào menuConfig để hiện trong dropdown Projects
+const menuConfig = [
+  // ...
+  { id: 'tab-ten-cong-cu', name: 'Tên Công Cụ' }, // ← thêm ở đây
+];
+
+// 2. Thêm vào toolMap để map id → thư mục
+const toolMap = {
+  // ...
+  'tab-ten-cong-cu': 'project/12-ten-cong-cu', // ← thêm ở đây
+};
+```
+
+### Bước 5 — Build Tailwind CSS
+
+Nếu bạn dùng class Tailwind mới trong tool, cần rebuild:
+
 ```bash
 npm run build:css
 ```
 
-3. Dùng Live Server (trong VSCode) chặn lên `index.html` hoặc chạy một server tĩnh nội bộ để ngắm nhìn thành quả.
+---
 
-## GitHub Actions & Tự Động Hóa 
-Mỗi lần bạn push (đẩy) code mới lền GitHub theo nhánh `main`, hệ sinh thái của kho lưu trữ này (thông qua `.github/workflows/static.yml`) sẽ tự động giả lập máy ảo, chạy NPM để Build file CSS siêu tốc rồi mới đẩy lên GitHub Pages. Việc của bạn chỉ là viết mã, phần mệt nhất, máy chủ lo!
+## Cách thêm bài viết (Posts)
+
+Bài viết là file **Markdown** hiển thị dạng accordion ở trang chủ.
+
+### Bước 1 — Tạo file `.md` trong `posts/`
+
+```
+posts/
+└── ten-bai-viet.md
+```
+
+Viết nội dung Markdown bình thường. Hỗ trợ custom timeline với cú pháp:
+```
+@time[2024-01] Mô tả sự kiện
+```
+
+### Bước 2 — Đăng ký vào manifest trong `project/00-home/script.js`
+
+Tìm mảng `manifest` và thêm entry:
+
+```js
+const manifest = [
+  // ...
+  {
+    title: 'Tiêu đề bài viết hiển thị trên trang chủ',
+    date: 'Danh mục',           // ví dụ: 'Tips', 'About', 'Contact'
+    path: 'posts/ten-bai-viet.md',
+  },
+];
+```
 
 ---
 
-> _Code là nghệ thuật của tư duy trừu tượng, được biên dịch thành cái đẹp hữu hình._
+## Phát triển cục bộ
+
+```bash
+# Cài dependencies
+npm install
+
+# Watch & rebuild Tailwind khi thay đổi CSS
+npm run watch:css
+
+# Hoặc build 1 lần
+npm run build:css
+
+# Chạy local server (cần server vì dùng ES modules + fetch)
+npx serve .
+# Hoặc dùng Live Server extension trong VS Code
+```
+
+> ⚠️ **Không mở `index.html` trực tiếp bằng file://** — `fetch()` và `import()` sẽ bị chặn bởi CORS. Phải dùng local server.
+
+---
+
+## Liên hệ
+
+| Kênh | Link |
+|------|------|
+| GitHub | [nguyenngocphung2000](https://github.com/nguyenngocphung2000) |
+| Telegram | [@nothing3272](https://t.me/nothing3272) |
+| Facebook | [Nguyễn Ngọc Phụng](https://www.facebook.com/share/1Ayyxg5kjH/) |
+| Email Form | [Google Form](https://forms.gle/5brLdS34QMQ3ei157) |

@@ -1,0 +1,34 @@
+<div class="flex flex-col h-full w-full mx-auto relative items-center justify-center pt-2">
+  <div id="xq-top-panel" class="w-full max-w-[450px] mb-3 transition-all duration-300"></div>
+  <div id="xq-board-wrapper" class="w-full">
+    <div id="xq-board-container">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-40">
+        <div style="transform: scale(0.60); white-space: nowrap;">
+          <div class="flex items-center space-x-2">
+            <div class="bg-orange-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm">NOTHING</div>
+            <span class="font-bold text-gray-500 uppercase text-[10px] tracking-widest mt-1">YET EVERYTHING</span>
+          </div>
+        </div>
+      </div>
+      <div id="xq-svg-container"></div>
+      <div id="xq-pieces-layer"></div>
+      <div id="xq-check-alert" class="text-base md:text-lg uppercase">CHIẾU TƯỚNG!</div>
+      <div id="xq-overlay">
+        <h2 id="xq-winner-msg" class="text-orange-500 text-lg md:text-xl xl:text-2xl font-bold mb-6 hidden text-center px-4 drop-shadow-[0_0_15px_rgba(249,115,22,0.8)] z-[200]"></h2>
+        <div class="glass-card flex flex-col items-center justify-center p-8 rounded-3xl w-11/12 max-w-[300px]">
+          <h3 class="text-slate-200 text-base md:text-lg font-black mb-6 uppercase tracking-widest text-center shadow-orange-500">Cài Đặt Thời Gian</h3>
+          <div class="flex items-center justify-center gap-3 bg-slate-800/80 p-4 rounded-xl border border-orange-500/30 w-full mb-6">
+            <input id="xq-time-input" type="number" value="10" min="1" max="90" class="w-16 bg-slate-900 border border-slate-600/50 rounded-xl py-2 text-center font-black text-orange-400 outline-none focus:ring-2 ring-orange-500/50 shadow-inner">
+            <span class="text-slate-300 font-bold text-sm">Phút / Người</span>
+          </div>
+          <button id="xq-btn-start" class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm uppercase tracking-widest px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.4)] transition active:scale-95 border border-orange-400">Bắt Đầu Chơi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="xq-bottom-panel" class="w-full max-w-[450px] mt-3 transition-all duration-300"></div>
+  <div class="flex gap-3 mt-4 w-full max-w-[450px]">
+    <button id="xq-btn-reset" class="flex-1 bg-slate-800/50 hover:bg-slate-800/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Làm mới tỷ số</button>
+    <button id="xq-btn-flip" class="flex-1 bg-slate-700/50 hover:bg-slate-700/40 text-slate-200 border border-slate-600/50 font-bold py-3.5 rounded-2xl shadow-sm transition active:scale-95 text-xs uppercase tracking-wide">Đảo bàn cờ</button>
+  </div>
+</div>

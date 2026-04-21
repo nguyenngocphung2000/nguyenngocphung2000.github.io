@@ -1,0 +1,22 @@
+.wheel-modal-enter { animation: wheelPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+@keyframes wheelPopIn {
+    0% { opacity: 0; transform: scale(0.7) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.sunburst {
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0) 0deg 15deg, rgba(255,255,255,0.3) 15deg 30deg);
+    animation: spinBurst 10s linear infinite; z-index: 0; pointer-events: none;
+}
+@keyframes spinBurst { 100% { transform: rotate(360deg); } }
+
+.btn-spin-pulse { animation: spinPulse 2s infinite; }
+@keyframes spinPulse {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+.wheel-scroll::-webkit-scrollbar { width: 6px; }
+.wheel-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }

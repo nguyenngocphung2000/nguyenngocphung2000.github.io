@@ -1,0 +1,5 @@
+body.dark-mode .bn-card { background-image: linear-gradient(to bottom right, #1e293b, #0f172a) !important; border-color: #334155 !important; }
+body.dark-mode .bn-input { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; }
+body.dark-mode .bn-name-nam { background-color: rgba(30, 58, 138, 0.4) !important; border-color: rgba(59, 130, 246, 0.3) !important; color: #bfdbfe !important; }
+body.dark-mode .bn-name-nu { background-color: rgba(131, 24, 67, 0.4) !important; border-color: rgba(236, 72, 153, 0.3) !important; color: #fbcfe8 !important; }
+body.dark-mode .filter-card { background-color: rgba(30, 41, 59, 0.6) !important; border-color: rgba(99, 102, 241, 0.2) !important; }
