@@ -69,6 +69,27 @@ export function init() {
   };
   renderGuideList();
 
+  // Prefetch tất cả file markdown trong nền khi browser rảnh
+  const _idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 600));
+  manifest.forEach((guide, index) => {
+    _idle(() => {
+      if (cachedContent[index]) return; // đã có trong cache rồi
+      fetch(guide.path)
+        .then((r) => (r.ok ? r.text() : null))
+        .then((text) => {
+          if (!text || cachedContent[index]) return; // tránh ghi đè nếu user đã mở
+          if (window.marked) {
+            const processed = text.replace(
+              /^@time\\[(.*?)\\] (.*)$/gm,
+              '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>',
+            );
+            cachedContent[index] = marked.parse(processed);
+          }
+        })
+        .catch(() => {}); // silent fail
+    }, { timeout: 15000 });
+  });
+
   // Search Logic
   searchInput.addEventListener("input", (e) => {
     const term = e.target.value.toLowerCase().trim();

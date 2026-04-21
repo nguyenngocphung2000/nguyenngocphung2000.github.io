@@ -26,6 +26,41 @@ const toolMap = {
   'tab-about': 'project/about',
 };
 
+// --- Perf: HTML prefetch cache + idempotent CSS injection ---
+const _htmlCache = {};
+const _cssInjected = new Set();
+
+function _injectCSS(tabId, toolDir) {
+  if (_cssInjected.has(tabId)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = toolDir + '/style.css';
+  link.dataset.tool = tabId;
+  document.head.appendChild(link);
+  _cssInjected.add(tabId);
+}
+
+async function _prefetchTool(tabId) {
+  if (_htmlCache[tabId] || document.getElementById(tabId)) return;
+  const toolDir = toolMap[tabId];
+  if (!toolDir) return;
+  try {
+    _injectCSS(tabId, toolDir);
+    const res = await fetch(toolDir + '/index.html');
+    if (res.ok) _htmlCache[tabId] = await res.text();
+  } catch (_) { /* silent prefetch fail */ }
+}
+
+function _prefetchAll(excludeTabId) {
+  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 400));
+  Object.keys(toolMap).forEach((tabId) => {
+    if (tabId !== excludeTabId) {
+      idle(() => _prefetchTool(tabId), { timeout: 10000 });
+    }
+  });
+}
+// --- End Perf ---
+
 // UI Elements
 const desktopProjectsMenu = document.getElementById('desktop-projects-menu');
 const mobileNav = document.getElementById('mobile-nav');
@@ -93,19 +128,18 @@ export async function switchTab(tabId) {
     const toolDir = toolMap[tabId];
     if (!toolDir) { _hideLoading(); return; }
     try {
-      // Inject CSS
-      if (!document.querySelector('[data-tool="' + tabId + '"]')) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = toolDir + '/style.css';
-        link.dataset.tool = tabId;
-        document.head.appendChild(link);
-      }
+      // Inject CSS (idempotent — may already be done by prefetch)
+      _injectCSS(tabId, toolDir);
 
-      // Fetch HTML
-      const res = await fetch(toolDir + '/index.html');
-      if (!res.ok) throw new Error('Cannot load HTML: ' + toolDir);
-      const html = await res.text();
+      // Use prefetched HTML cache if available, otherwise fetch
+      let html;
+      if (_htmlCache[tabId]) {
+        html = _htmlCache[tabId];
+      } else {
+        const res = await fetch(toolDir + '/index.html');
+        if (!res.ok) throw new Error('Cannot load HTML: ' + toolDir);
+        html = await res.text();
+      }
 
       // Insert panel
       targetPanel = document.createElement('div');
@@ -184,7 +218,8 @@ if (window.location.hash) {
   const h = window.location.hash.substring(1);
   if (toolMap[h]) initialTab = h;
 }
-switchTab(initialTab);
+// Load initial tab, then prefetch all others in background during idle time
+switchTab(initialTab).then(() => _prefetchAll(initialTab));
 
 // Star background
 (() => {
