@@ -52,6 +52,24 @@ if (desktopProjectsMenu && mobileNav) {
   });
 }
 
+// Loading spinner
+function _showLoading() {
+  const app = document.getElementById('app-container');
+  let sk = document.getElementById('_load-sk');
+  if (sk) sk.remove();
+  sk = document.createElement('div');
+  sk.id = '_load-sk';
+  sk.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:300px;padding:48px 24px;';
+  sk.innerHTML = '<div style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(249,115,22,.15);border-top-color:#f97316;animation:_ldspin .7s linear infinite"></div>'
+    + '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Đang tải công cụ...</p>'
+    + '<style>@keyframes _ldspin{to{transform:rotate(360deg)}}</style>';
+  app.appendChild(sk);
+}
+function _hideLoading() {
+  const sk = document.getElementById('_load-sk');
+  if (sk) sk.remove();
+}
+
 // Tab switching
 window.loadHomeTab = async function () { await switchTab('tab-home'); };
 window.currentTab  = null;
@@ -69,8 +87,11 @@ export async function switchTab(tabId) {
   let targetPanel = document.getElementById(tabId);
 
   if (!targetPanel) {
+    // Show loading spinner while fetching
+    _showLoading();
+
     const toolDir = toolMap[tabId];
-    if (!toolDir) return;
+    if (!toolDir) { _hideLoading(); return; }
     try {
       // Inject CSS
       if (!document.querySelector('[data-tool="' + tabId + '"]')) {
@@ -99,8 +120,12 @@ export async function switchTab(tabId) {
 
     } catch (err) {
       console.error('switchTab error:', err);
+      const sk = document.getElementById('_load-sk');
+      if (sk) sk.innerHTML = '<p style="color:#f87171;text-align:center;padding:24px;">Lỗi tải: ' + err.message + '</p>';
       return;
     }
+
+    _hideLoading();
   }
 
   if (targetPanel) {
