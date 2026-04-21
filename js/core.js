@@ -95,7 +95,7 @@ function _showLoading() {
   sk.id = '_load-sk';
   sk.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:300px;padding:48px 24px;';
   sk.innerHTML = '<div style="width:44px;height:44px;border-radius:50%;border:3px solid rgba(249,115,22,.15);border-top-color:#f97316;animation:_ldspin .7s linear infinite"></div>' +
-    '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Loading...</p>' +
+    '<p style="font-size:12px;color:#52525b;font-weight:500;margin:0">Loading project...</p>' +
     '<style>@keyframes _ldspin{to{transform:rotate(360deg)}}</style>';
   app.appendChild(sk);
 }
