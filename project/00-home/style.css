@@ -1,1 +1,10 @@
-/* Empty CSS for home */
+.bio-box { background-image: linear-gradient(to right, rgba(249, 115, 22, 0.05), transparent) !important; border-left-color: #f97316 !important; }
+.guide-item { background-color: #1e293b !important; border-color: #334155 !important; }
+.guide-item h3 { color: #f8fafc !important; }
+.guide-item button:hover h3 { color: #f97316 !important; }
+.guide-item p.bg-orange-50 { background-color: rgba(249, 115, 22, 0.15) !important; border-color: rgba(249, 115, 22, 0.2) !important; color: #fb923c !important; }
+.guide-item > div[id^="content-"] { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; }
+input#guide-search { background-color: rgba(15, 23, 42, 0.6) !important; border-color: #334155 !important; color: #f8fafc !important; }
+input#guide-search::placeholder { color: #64748b !important; }
+#guide-no-result { background-color: rgba(15, 23, 42, 0.4) !important; border-color: #334155 !important; }
+#guide-no-result p.text-gray-700 { color: #cbd5e1 !important; }
