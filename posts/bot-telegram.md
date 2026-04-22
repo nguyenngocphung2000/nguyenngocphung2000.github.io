@@ -10,4 +10,4 @@ Dự án sử dụng **Bot Telegram** kết hợp với **Google Sheets** để 
 
 ## Mã nguồn & Hướng dẫn sử dụng
 
-**[Xem mã nguồn và Hướng dẫn cài đặt chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/BOTTelegram-QLCT)**
+**[Xem mã nguồn và Hướng dẫn cài đặt chi tiết tại GitHub của tôi](https://github.com/nguyenngocphung2000/tetegram-finance-bot)**

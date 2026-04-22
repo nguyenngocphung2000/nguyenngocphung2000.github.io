@@ -9,7 +9,12 @@ export function init() {
       title: "Biến Telegram thành Cloud Drive",
       date: "Nothing",
       path: "posts/nothing-teledrive.md",
-},
+    },
+    {
+      title: "Google Drive Folder Copier: Chuyển file từ folder share công khai về drive của bạn",
+      date: "Nothing",
+      path: "posts/gdrive-folder-copier.md",
+    },
     {
       title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
       date: "Nothing",
@@ -45,7 +50,8 @@ export function init() {
       date: "Thủ thuật Mac",
       path: "posts/mac-webs.md",
     }
-  ];
+];
+
 
   // Render List
   const renderGuideList = () => {
@@ -56,14 +62,17 @@ export function init() {
       item.className =
         "guide-item bg-slate-800/50 rounded-2xl overflow-hidden border border-gray-100 shadow-sm transition hover:shadow-md hover:border-orange-100 duration-300";
 
-      // Tối ưu Padding (px) cho phần đọc Markdown: Màn dọc (mobile) mở rộng viền tối đa (px-3 sm:px-4)
       item.innerHTML = `
                 <button class="w-full text-left px-4 py-4 md:px-6 md:py-5 flex items-center justify-between focus:outline-none group" onclick="toggleGuide(${index})">
                     <div class="pr-4">
                         <h3 class="font-bold text-slate-200 group-hover:text-orange-500 transition text-[15px] md:text-lg leading-snug">${guide.title}</h3>
                         <p class="inline-block mt-2 bg-orange-50 text-orange-600 border border-orange-100 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider transition-colors">${guide.date}</p>
                     </div>
-                    <div id="icon-${index}" class="text-gray-400 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 bg-gray-50 rounded-full group-hover:bg-orange-100 group-hover:text-orange-500 shrink-0 transition-colors">XEM</div>
+                    <div id="icon-wrapper-${index}" class="p-2 bg-gray-50 rounded-full group-hover:bg-orange-100 shrink-0 transition-colors">
+                        <svg id="icon-svg-${index}" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
                 </button>
                 <div id="content-${index}" class="hidden border-t border-gray-100 bg-gray-50/50 transition-colors duration-300">
                     <div class="prose-custom max-w-none px-3 py-4 sm:px-4 md:px-6 md:py-6 text-[14.5px] md:text-base leading-relaxed" id="md-render-${index}"></div>
@@ -78,20 +87,20 @@ export function init() {
   const _idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 600));
   manifest.forEach((guide, index) => {
     _idle(() => {
-      if (cachedContent[index]) return; // đã có trong cache rồi
-      fetch('/' + guide.path)
+      if (cachedContent[index]) return; 
+      fetch(guide.path)
         .then((r) => (r.ok ? r.text() : null))
         .then((text) => {
-          if (!text || cachedContent[index]) return; // tránh ghi đè nếu user đã mở
+          if (!text || cachedContent[index]) return; 
           if (window.marked) {
             const processed = text.replace(
-              /^@time\[(.*?)\] (.*)$/gm,
+              /^@time\\[(.*?)\\] (.*)$/gm,
               '<div class="md-timeline-node"><span class="md-time-badge">$1</span><div class="md-time-text">$2</div></div>',
             );
             cachedContent[index] = marked.parse(processed);
           }
         })
-        .catch(() => {}); // silent fail
+        .catch(() => {}); 
     }, { timeout: 15000 });
   });
 
@@ -114,17 +123,16 @@ export function init() {
 
   // Handle Deep Linking / Post UI
   window.toggleGuide = async function (index, skipUrlUpdate = false) {
-    // Chỉ kích hoạt toggle nếu đang ở mục Home. Nếu ẩn (tab khác) thì thôi hoặc chuyển về home trước.
     if (window.currentTab && window.currentTab !== "tab-home") {
       await window.loadHomeTab();
     }
 
     const contentDiv = document.getElementById("content-" + index);
-    const iconDiv = document.getElementById("icon-" + index);
+    const iconSvg = document.getElementById("icon-svg-" + index);
+    const iconWrapper = document.getElementById("icon-wrapper-" + index);
     const renderDiv = document.getElementById("md-render-" + index);
     const parentItem = document.getElementById("guide-item-" + index);
 
-    // Lấy tên file để tạo Link
     const currentSlug = manifest[index].path
       .split("/")
       .pop()
@@ -134,12 +142,15 @@ export function init() {
     manifest.forEach((_, i) => {
       if (i !== index) {
         const otherContent = document.getElementById("content-" + i);
-        const otherIcon = document.getElementById("icon-" + i);
+        const otherIconSvg = document.getElementById("icon-svg-" + i);
+        const otherIconWrapper = document.getElementById("icon-wrapper-" + i);
         if (otherContent && !otherContent.classList.contains("hidden")) {
           otherContent.classList.add("hidden");
-          otherIcon.innerText = "XEM";
-          otherIcon.classList.remove("bg-orange-100", "text-orange-500");
-          otherIcon.classList.add("bg-gray-50", "text-gray-400");
+          if (otherIconSvg) otherIconSvg.classList.remove("rotate-180");
+          if (otherIconWrapper) {
+            otherIconWrapper.classList.remove("bg-orange-100");
+            otherIconWrapper.classList.add("bg-gray-50");
+          }
         }
       }
     });
@@ -147,23 +158,23 @@ export function init() {
     if (contentDiv.classList.contains("hidden")) {
       // MỞ THẺ
       contentDiv.classList.remove("hidden");
-      iconDiv.innerText = "ĐÓNG";
-      iconDiv.classList.remove("bg-gray-50", "text-gray-400");
-      iconDiv.classList.add("bg-orange-100", "text-orange-500");
+      if (iconSvg) iconSvg.classList.add("rotate-180");
+      if (iconWrapper) {
+        iconWrapper.classList.remove("bg-gray-50");
+        iconWrapper.classList.add("bg-orange-100");
+      }
 
-      // Cập nhật tham số URL
       if (!skipUrlUpdate) {
         const newUrl = new URL(window.location);
         newUrl.searchParams.set("post", currentSlug);
         window.history.replaceState(null, null, newUrl);
       }
 
-      // Tải & Render Markdown nếu chưa có trong Cache
       if (!cachedContent[index]) {
         renderDiv.innerHTML =
           '<div class="text-orange-500 font-bold animate-pulse text-center py-6">Đang nạp dữ liệu bài viết...</div>';
         try {
-          const response = await fetch('/' + manifest[index].path);
+          const response = await fetch(manifest[index].path);
           if (!response.ok) throw new Error("Lỗi tải file");
           let text = await response.text();
 
@@ -189,10 +200,8 @@ export function init() {
         link.className = "text-orange-500 font-bold hover:underline";
       });
 
-      // Cuộn mượt mà tới bài viết
       setTimeout(() => {
         if (parentItem) {
-          // Bù padding header
           const y =
             parentItem.getBoundingClientRect().top + window.scrollY - 80;
           window.scrollTo({ top: y, behavior: "smooth" });
@@ -201,11 +210,12 @@ export function init() {
     } else {
       // ĐÓNG THẺ
       contentDiv.classList.add("hidden");
-      iconDiv.innerText = "XEM";
-      iconDiv.classList.remove("bg-orange-100", "text-orange-500");
-      iconDiv.classList.add("bg-gray-50", "text-gray-400");
+      if (iconSvg) iconSvg.classList.remove("rotate-180");
+      if (iconWrapper) {
+        iconWrapper.classList.remove("bg-orange-100");
+        iconWrapper.classList.add("bg-gray-50");
+      }
 
-      // Gỡ tham số URL
       if (!skipUrlUpdate) {
         const newUrl = new URL(window.location);
         newUrl.searchParams.delete("post");
@@ -214,7 +224,6 @@ export function init() {
     }
   };
 
-  // Mở post nếu có tham số
   window.checkUrlPost = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const postSlug = urlParams.get("post");
