@@ -16,14 +16,19 @@ export function init() {
       path: "posts/gdrive-folder-copier.md",
     },
     {
-      title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
-      date: "Nothing",
-      path: "posts/guide-use-ai.md",
-    },
+  title: "Phím tắt IOS hỗ trợ sao chép tệp tin và thư mục trên Google Drive về tài khoản của bạn",
+  date: "Nothing",
+  path: "posts/gdrive-copy-shortcut.md",
+},
     {
       title: "Tạo Bot Telegram quản lý tài chính với Google Sheet",
       date: "Nothing",
       path: "posts/bot-telegram.md",
+    },
+        {
+      title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
+      date: "Nothing",
+      path: "posts/guide-use-ai.md",
     },
     {
       title: "Chặn quảng cáo Web, App, Zalo bằng NextDNS",
