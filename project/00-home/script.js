@@ -30,6 +30,11 @@ export function init() {
   date: "Nothing",
   path: "posts/picture-note.md",
 },
+{
+  title: "Tự tạo bộ Sticker từ khuông mặt cực dễ thương bằng AI",
+  date: "Nothing",
+  path: "posts/baby-sticker.md",
+},
 
         {
       title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
