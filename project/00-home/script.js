@@ -25,6 +25,12 @@ export function init() {
       date: "Nothing",
       path: "posts/bot-telegram.md",
     },
+    {
+  title: "Mẹo tạo chú thích vẽ tay 'siêu cute' trên ảnh bằng AI như chuyên gia",
+  date: "Nothing",
+  path: "posts/picture-note.md",
+},
+
         {
       title: "Cách dùng các công cụ AI hiệu quả như một chuyên gia",
       date: "Nothing",
