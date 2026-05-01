@@ -225,15 +225,23 @@ export function init() {
     }
   };
 
+  const getTrueRandom = () => {
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    return array[0] / 4294967296;
+  };
+
   const spinWheel = () => {
     if (isSpinning || names.length === 0) return;
     isSpinning = true;
 
     btnSpin.classList.remove("btn-spin-pulse");
 
-    const extraDegrees = Math.floor(Math.random() * 360);
-    const totalDegrees =
-      360 * (Math.floor(Math.random() * 6) + 7) + extraDegrees;
+    const randomFloat = getTrueRandom(); 
+    const extraDegrees = randomFloat * 360; 
+    const randomSpins = Math.floor(getTrueRandom() * 6) + 7;
+    
+    const totalDegrees = (360 * randomSpins) + extraDegrees;
     currentRotation += totalDegrees;
 
     canvas.style.transition = "transform 7s cubic-bezier(0.1, 0.9, 0.15, 1)";
@@ -284,11 +292,11 @@ export function init() {
   };
 
   const removeWinner = () => {
-    let lines = inputArea.value.split("\\n");
+    let lines = inputArea.value.split("\n");
     const idx = lines.findIndex((l) => l.trim() === currentWinner);
     if (idx !== -1) {
       lines.splice(idx, 1);
-      inputArea.value = lines.join("\\n");
+      inputArea.value = lines.join("\n");
       updateNames();
     }
     closeModal();
@@ -302,7 +310,7 @@ export function init() {
   document.getElementById("btn-wheel-shuffle").addEventListener("click", () => {
     if (names.length > 0) {
       names.sort(() => Math.random() - 0.5);
-      inputArea.value = names.join("\\n");
+      inputArea.value = names.join("\n");
       updateNames();
     }
   });
@@ -310,7 +318,7 @@ export function init() {
   document.getElementById("btn-wheel-sort").addEventListener("click", () => {
     if (names.length > 0) {
       names.sort((a, b) => a.localeCompare(b, "vi"));
-      inputArea.value = names.join("\\n");
+      inputArea.value = names.join("\n");
       updateNames();
     }
     if (results.length > 0) {

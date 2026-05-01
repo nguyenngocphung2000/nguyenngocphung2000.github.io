@@ -57,7 +57,12 @@ export function init() {
       path: "posts/tong-hop-tai-lieu-freetuts.md",
     },
     {
-      title: "Tổng hợp các nhóm crack mod hack - apk,ipa(android/ios) trên Telegram",
+  title: "Tổng hợp danh sách các trang SMS/Phone verify cho các dịch vụ",
+  date: "Nothing",
+  path: "posts/sms-web.md",
+},
+    {
+      title: "Tổng hợp danh sách các nhóm crack mod hack - apk,ipa(android/ios) trên Telegram",
       date: "Phần mềm/Ứng dụng",
       path: "posts/group-telegram.md",
     },
