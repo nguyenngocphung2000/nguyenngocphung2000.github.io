@@ -62,11 +62,6 @@ export function init() {
   path: "posts/sms-web.md",
 },
     {
-      title: "Tổng hợp danh sách các nhóm crack mod hack - apk,ipa(android/ios) trên Telegram",
-      date: "Phần mềm/Ứng dụng",
-      path: "posts/group-telegram.md",
-    },
-    {
       title: "Tổng hợp các trang web chia sẻ tài nguyên ứng dụng trên Mac",
       date: "Thủ thuật Mac",
       path: "posts/mac-webs.md",
