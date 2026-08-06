@@ -116,6 +116,112 @@
     <main id="app-container" class="w-full mx-auto mt-8"></main>
 
     <script type="module" src="/js/core.js"></script>
-</body>
+<!-- PHẦN CHÂN TRANG (FOOTER) ĐỒNG BỘ GIAO DIỆN -->
+<footer style="margin-top: 80px; padding: 40px 20px 30px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-family: system-ui, -apple-system, sans-serif; color: #94a3b8; font-size: 14px;">
+  <div style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+    
+    <!-- Hàng hiển thị thông số (Tối ưu cho cả màn hình ngang/PC lẫn điện thoại) -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%;"></span>
+        <span>Đang trực tuyến: <strong id="dang-online" style="color: #f97316;">...</strong></span>
+      </div>
+      <div>
+        <span>Tổng lượt truy cập: <strong id="tong-truy-cap" style="color: #f97316;">...</strong></span>
+      </div>
+    </div>
 
+    <!-- Hàng thông tin bản quyền và châm ngôn -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 20px; font-size: 13px; color: #64748b;">
+      <div>© 2026 Nguyễn Ngọc Phụng. All rights reserved.</div>
+      <div style="color: #f97316; letter-spacing: 0.5px; font-size: 12px; text-transform: uppercase;">Nothing Yet Everything</div>
+    </div>
+
+  </div>
+</footer>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getDatabase, ref, onValue, onDisconnect, push, set, update, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCWE0qykTYZwjqAF34IfPmIonhW1r6uRVw",
+    authDomain: "ngocphungpagesdev.firebaseapp.com",
+    databaseURL: "https://ngocphungpagesdev-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ngocphungpagesdev",
+    storageBucket: "ngocphungpagesdev.firebasestorage.app",
+    messagingSenderId: "127908160862",
+    appId: "1:127908160862:web:de08c7a8c8ddbb14a61bcf",
+    measurementId: "G-189VB88Z9Q"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const totalViewsRef = ref(db, 'thong_ke/tong_truy_cap');
+  update(ref(db, 'thong_ke'), { tong_truy_cap: increment(1) });
+  
+  onValue(totalViewsRef, (snapshot) => {
+    document.getElementById('tong-truy-cap').innerText = snapshot.val() || 0;
+  });
+
+  const connectedRef = ref(db, '.info/connected');
+  const onlineUsersRef = ref(db, 'thong_ke/dang_online');
+
+  onValue(connectedRef, (snap) => {
+    if (snap.val() === true) {
+      const mySessionRef = push(onlineUsersRef);
+      onDisconnect(mySessionRef).remove().then(() => {
+        set(mySessionRef, true);
+      });
+    }
+  });
+
+  onValue(onlineUsersRef, (snap) => {
+    document.getElementById('dang-online').innerText = snap.size || 0;
+  });
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getDatabase, ref, onValue, onDisconnect, push, set, update, increment } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCWE0qykTYZwjqAF34IfPmIonhW1r6uRVw",
+    authDomain: "ngocphungpagesdev.firebaseapp.com",
+    databaseURL: "https://ngocphungpagesdev-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ngocphungpagesdev",
+    storageBucket: "ngocphungpagesdev.firebasestorage.app",
+    messagingSenderId: "127908160862",
+    appId: "1:127908160862:web:de08c7a8c8ddbb14a61bcf",
+    measurementId: "G-189VB88Z9Q"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const totalViewsRef = ref(db, 'thong_ke/tong_truy_cap');
+
+  update(ref(db, 'thong_ke'), { tong_truy_cap: increment(1) });
+  
+
+  onValue(totalViewsRef, (snapshot) => {
+    document.getElementById('tong-truy-cap').innerText = snapshot.val() || 0;
+  });
+
+  const connectedRef = ref(db, '.info/connected');
+  const onlineUsersRef = ref(db, 'thong_ke/dang_online');
+
+  onValue(connectedRef, (snap) => {
+    if (snap.val() === true) {
+      const mySessionRef = push(onlineUsersRef);
+
+      onDisconnect(mySessionRef).remove().then(() => {
+        set(mySessionRef, true);
+      });
+    }
+  });
+
+  onValue(onlineUsersRef, (snap) => {
+    document.getElementById('dang-online').innerText = snap.size || 0;
+  });
+</script>
+</body>
 </html>
